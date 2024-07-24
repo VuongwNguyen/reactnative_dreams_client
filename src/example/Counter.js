@@ -10,7 +10,9 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import EditText from '../component/EditText';
+import AppEditText from '../component/AppEditText';
+import AppButton from '../component/AppButton';
+import { Button } from 'react-native-ui-lib';
 
 export default function Counter() {
   const count = useSelector(state => state.count);
@@ -29,26 +31,44 @@ export default function Counter() {
 
   return (
     <View style={style.container}>
-      <View style={{ flexDirection: 'row' }}>
-        <EditText
-          styleContainer={{ flex: 1 }}
-          style={{ width: "100%", fontSize: 16 }}
-          floatingPlaceholderStyle={{ fontSize: 16 }}
-          placeholder={"Password"}
-          value={password}
-          onChangeText={(text) => { setPassword(text) }}
-          isPassword
-        />
-        <EditText
-          styleContainer={{ flex: 1 }}
-          style={{ width: "100%", fontSize: 16 }}
-          floatingPlaceholderStyle={{ fontSize: 16 }}
-          placeholder={"Password"}
-          value={password}
-          onChangeText={(text) => { setPassword(text) }}
-          isPassword
-        />
-      </View>
+
+      <AppEditText
+        styleContainer={{ width: "100%" }}
+        style={{ fontSize: 16 }}
+        floatingPlaceholderStyle={{ fontSize: 16 }}
+        placeholder={"Password"}
+        value={password}
+        onChangeText={(text) => { setPassword(text) }}
+        isPassword
+      />
+      <View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { console.log("Hello word") }}
+        labelStyle={{ fontSize: 15, fontWeight: "700" }}
+        label={"Save"}
+        borderRadius={8}
+        size={Button.sizes.small}
+      />
+      <View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { console.log("Hello word") }}
+        buttonStyle={{
+          width: 342, height: 70
+        }}
+        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        label={"Hello Word"}
+        borderRadius={15}
+      /><View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { console.log("Hello word") }}
+        buttonStyle={{
+          width: 342, height: 70,
+
+        }}
+        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        label={"Hello Word"}
+        borderRadius={30}
+      />
     </View>
   );
 }
