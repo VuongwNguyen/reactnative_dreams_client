@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+       <Stack.Screen name={stackName.example} component={Counter} />
       <Stack.Screen name={stackName.register} component={RegisterScreen} />
     </Stack.Navigator>
   );
