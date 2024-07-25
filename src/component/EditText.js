@@ -30,7 +30,7 @@ const EditText = (props) => {
                 <TouchableOpacity style={styles.icHide}
                     onPress={() => { setSecure(!secure) }}>
                     {
-                        secure ? <Icon  source={{ uri: 'https://icon-library.com/images/show-hide-icon/show-hide-icon-28.jpg' }} size={24} tintColor="black" /> :
+                        secure ? <Icon source={{ uri: 'https://icon-library.com/images/show-hide-icon/show-hide-icon-28.jpg' }} size={24} tintColor="black" /> :
                             <Icon source={{ uri: 'https://static.thenounproject.com/png/1483811-200.png' }} size={24} tintColor="black" />
                     }
                 </TouchableOpacity>
