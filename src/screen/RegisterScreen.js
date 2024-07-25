@@ -14,9 +14,7 @@ export default function RegisterScreen() {
   const [confirmPass, setConfirmPass] = useState('')
 
   return (
-    <KeyboardAwareScrollView>
-
-
+    <KeyboardAwareScrollView style={{ backgroundColor: "#FFFFFF" }}>
       <View style={style.container}>
         <Image width={110} height={110} source={require('../../assets/logo.png')} />
         <Text text30BL>Sign in</Text>
@@ -25,6 +23,7 @@ export default function RegisterScreen() {
         <View marginT-50 style={{ flexDirection: 'row' }}>
           <EditText
             styleContainer={style.editext}
+            style={{ fontSize: 16 }}
             placeholder={'First name'}
             value={firstName}
             floatingPlaceholderStyle={style.placeholder}
@@ -33,6 +32,7 @@ export default function RegisterScreen() {
           <View style={{ width: 30 }} />
           <EditText
             styleContainer={style.editext}
+            style={{ fontSize: 16 }}
             placeholder={'Last name'}
             value={lastName}
             floatingPlaceholderStyle={style.placeholder}
@@ -42,6 +42,7 @@ export default function RegisterScreen() {
 
         <EditText
           styleContainer={style.editext}
+          style={{ fontSize: 16 }}
           placeholder={'Email'}
           value={email}
           floatingPlaceholderStyle={style.placeholder}
@@ -49,6 +50,7 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
+          style={{ fontSize: 16 }}
           placeholder={'Phone number'}
           value={phone}
           floatingPlaceholderStyle={style.placeholder}
@@ -56,6 +58,7 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
+          style={{ fontSize: 16 }}
           placeholder={'Password'}
           value={password}
           floatingPlaceholderStyle={style.placeholder}
@@ -64,6 +67,7 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
+          style={{ fontSize: 16 }}
           placeholder={'Confirm password'}
           value={confirmPass}
           floatingPlaceholderStyle={style.placeholder}
@@ -94,7 +98,6 @@ const style = StyleSheet.create({
     marginBottom: 20
   },
   placeholder: {
-    color: Colors.grey30,
     fontSize: 16,
   },
   button: {
