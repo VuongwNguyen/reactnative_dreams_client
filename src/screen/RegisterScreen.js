@@ -37,7 +37,6 @@ export default function RegisterScreen() {
             onChangeText={setLastName}
           />
         </View>
-
         <EditText
           styleContainer={style.editext}
           placeholder={'Email'}
