@@ -15,9 +15,7 @@ export default function RegisterScreen() {
 
   return (
     <KeyboardAwareScrollView>
-
-
-      <View style={style.container}>
+      <View padding-24 flex-1 centerH>
         <Image width={110} height={110} source={require('../../assets/logo.png')} />
         <Text text30BL>Sign in</Text>
         <Text text16 marginT-12>Create a account !</Text>
@@ -81,12 +79,6 @@ export default function RegisterScreen() {
 }
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   editext: {
     flex: 1,
     width: '100%',
