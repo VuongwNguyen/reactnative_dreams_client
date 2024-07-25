@@ -89,7 +89,9 @@ const style = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    width: 375,
+    flex: 1,
+    maxHeight: 60,
+    minWidth: '100%',
     height: 60,
     marginBottom: 8,
     borderRadius: 10,
