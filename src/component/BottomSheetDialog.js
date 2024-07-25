@@ -2,13 +2,14 @@ import { Dimensions, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated'
 import AppButton from './AppButton'
+import { Icon, Text, TouchableOpacity } from 'react-native-ui-lib'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 const { width, height } = Dimensions.get("window")
 
 const BottomSheetDialog = (props) => {
-    const { onPress } = props
+    const { onPressClose, title } = props
     return (
         <>
             <AnimatedPressable
@@ -17,16 +18,11 @@ const BottomSheetDialog = (props) => {
                 style={styles.overlay}
             />
             <Animated.View style={styles.bottomSheet}>
-                <AppButton
-                    onPress={onPress}
-                    buttonStyle={{
-                        width: 342, height: 70,
+                <TouchableOpacity onPress={onPressClose}>
+                    <Icon source={require("../../assets/icons/vector.png")} />
+                </TouchableOpacity>
+                <Text text20T>Title</Text>
 
-                    }}
-                    labelStyle={{ fontSize: 19, fontWeight: "700" }}
-                    label={"Hide BottomSheet"}
-                    borderRadius={30}
-                />
             </Animated.View>
         </>
     )
@@ -48,12 +44,9 @@ const styles = StyleSheet.create({
         padding: 24,
         bottom: 0,
         shadowColor: "#fff",
-        elevation: 10,
         backgroundColor: 'white',
         zIndex: 1,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        alignSelf: 'center',
-        alignItems: 'center'
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
 })

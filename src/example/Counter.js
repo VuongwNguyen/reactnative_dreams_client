@@ -73,7 +73,7 @@ export default function Counter() {
       {
         showBottomSheet && (
           <BottomSheetDialog
-            onPress={() => { setShowBottomSheet(false) }}
+            onPressClose={() => { setShowBottomSheet(false) }}
           />
         )
       }
