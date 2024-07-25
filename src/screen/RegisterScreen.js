@@ -14,8 +14,8 @@ export default function RegisterScreen() {
   const [confirmPass, setConfirmPass] = useState('')
 
   return (
-    <KeyboardAwareScrollView style={{ backgroundColor: "#FFFFFF" }}>
-      <View style={style.container}>
+    <KeyboardAwareScrollView>
+      <View padding-24 flex-1 centerH>
         <Image width={110} height={110} source={require('../../assets/logo.png')} />
         <Text text30BL>Sign in</Text>
         <Text text16 marginT-12>Create a account !</Text>
@@ -23,7 +23,6 @@ export default function RegisterScreen() {
         <View marginT-50 style={{ flexDirection: 'row' }}>
           <EditText
             styleContainer={style.editext}
-            style={{ fontSize: 16 }}
             placeholder={'First name'}
             value={firstName}
             floatingPlaceholderStyle={style.placeholder}
@@ -32,17 +31,14 @@ export default function RegisterScreen() {
           <View style={{ width: 30 }} />
           <EditText
             styleContainer={style.editext}
-            style={{ fontSize: 16 }}
             placeholder={'Last name'}
             value={lastName}
             floatingPlaceholderStyle={style.placeholder}
             onChangeText={setLastName}
           />
         </View>
-
         <EditText
           styleContainer={style.editext}
-          style={{ fontSize: 16 }}
           placeholder={'Email'}
           value={email}
           floatingPlaceholderStyle={style.placeholder}
@@ -50,7 +46,6 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
-          style={{ fontSize: 16 }}
           placeholder={'Phone number'}
           value={phone}
           floatingPlaceholderStyle={style.placeholder}
@@ -58,7 +53,6 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
-          style={{ fontSize: 16 }}
           placeholder={'Password'}
           value={password}
           floatingPlaceholderStyle={style.placeholder}
@@ -67,7 +61,6 @@ export default function RegisterScreen() {
         />
         <EditText
           styleContainer={style.editext}
-          style={{ fontSize: 16 }}
           placeholder={'Confirm password'}
           value={confirmPass}
           floatingPlaceholderStyle={style.placeholder}
@@ -85,12 +78,6 @@ export default function RegisterScreen() {
 }
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   editext: {
     flex: 1,
     width: '100%',
@@ -98,6 +85,7 @@ const style = StyleSheet.create({
     marginBottom: 20
   },
   placeholder: {
+    color: Colors.grey30,
     fontSize: 16,
   },
   button: {
