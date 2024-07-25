@@ -1,23 +1,25 @@
 import { StyleSheet } from 'react-native'
-import { View, Button } from 'react-native-ui-lib'
+import { View, Button, Icon, Text } from 'react-native-ui-lib'
 import React, { useState } from 'react'
 
 const AppButton = (props) => {
-    const { onPress, label, buttonStyle, labelStyle, borderRadius, disabled = false, size } = props
+    const { onPress, iconLeft, label, iconRight, buttonStyle, labelStyle, borderRadius, disabled = false, size } = props
 
     return (
         <View style={styles.container}>
             <Button
                 onPress={onPress}
                 style={buttonStyle}
-                labelStyle={labelStyle}
                 backgroundColor="#0CBBF0"
-                label={label}
                 borderRadius={borderRadius}
                 disabled={disabled}
                 size={size}
                 enableShadow
-            />
+            >
+                {iconLeft && <>{iconLeft}</>}
+                <Text marginL-10 marginR-10 style={labelStyle}>{label}</Text>
+                {iconRight && <>{iconRight}</>}
+            </Button>
         </View>
     )
 }

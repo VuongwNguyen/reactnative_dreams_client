@@ -12,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import AppEditText from '../component/AppEditText';
 import AppButton from '../component/AppButton';
-import { Button } from 'react-native-ui-lib';
+import { Button, Icon } from 'react-native-ui-lib';
 import BottomSheetDialog from '../component/BottomSheetDialog';
 import AppEditTextChangeIF from '../component/AppEditTextChangeIF';
 
@@ -48,7 +48,7 @@ export default function Counter() {
       <View style={{ height: 40 }} />
       <AppButton
         onPress={() => { console.log("Hello word") }}
-        labelStyle={{ fontSize: 15, fontWeight: "700" }}
+        labelStyle={{ fontSize: 15, fontWeight: "700", color: "#FFF" }}
         label={"Save"}
         borderRadius={8}
         size={Button.sizes.small}
@@ -59,7 +59,7 @@ export default function Counter() {
         buttonStyle={{
           width: 342, height: 70
         }}
-        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        labelStyle={{ fontSize: 19, fontWeight: "700", color: "#FFF" }}
         label={"Hello Word"}
         borderRadius={15}
       /><View style={{ height: 40 }} />
@@ -69,8 +69,10 @@ export default function Counter() {
           width: 342, height: 70,
 
         }}
-        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        labelStyle={{ fontSize: 19, fontWeight: "700", color: "#FFF" }}
         label={"Show BottomSheet"}
+        iconLeft={<Icon source={require("../../assets/logo.png")} size={24} />}
+        iconRight={<Icon source={require("../../assets/logo.png")} size={24} />}
         borderRadius={30}
       />
       {
@@ -105,7 +107,7 @@ export default function Counter() {
               buttonStyle={{
                 width: 342, height: 60
               }}
-              labelStyle={{ fontSize: 19, fontWeight: "700" }}
+              labelStyle={{ fontSize: 19, fontWeight: "700", color: "#FFF" }}
               label={"CONFIRM"}
               borderRadius={30}
             />
