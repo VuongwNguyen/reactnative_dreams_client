@@ -29,7 +29,7 @@ export default function Counter() {
 
   return (
     <View style={style.container}>
-      <View style={{ flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <EditText
           styleContainer={{ flex: 1 }}
           style={{ width: "100%", fontSize: 16 }}
@@ -46,6 +46,7 @@ export default function Counter() {
           placeholder={"Password"}
           value={password}
           onChangeText={(text) => { setPassword(text) }}
+          isPassword
         />
       </View>
     </View>
