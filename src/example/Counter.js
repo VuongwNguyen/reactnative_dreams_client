@@ -14,12 +14,15 @@ import AppEditText from '../component/AppEditText';
 import AppButton from '../component/AppButton';
 import { Button } from 'react-native-ui-lib';
 import BottomSheetDialog from '../component/BottomSheetDialog';
+import AppEditTextChangeIF from '../component/AppEditTextChangeIF';
 
 export default function Counter() {
   const count = useSelector(state => state.count);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
+  const [fristName, setFristName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [showBottomSheet, setShowBottomSheet] = useState(false)
 
 
@@ -74,28 +77,26 @@ export default function Counter() {
         showBottomSheet && (
           <BottomSheetDialog
             onPressClose={() => { setShowBottomSheet(false) }}
-            textTitle={"Name"}
+            textTitle={"What your name ?"}
             textContent={"Personal information must not include third-party contact information, advertising, content, pornography, and other illegal noioij dunng to avoid account closure"}
           >
             <View style={{ flexDirection: "row" }}>
-              <AppEditText
+              <AppEditTextChangeIF
                 styleContainer={{ flex: 1 }}
                 style={{ fontSize: 16 }}
                 floatingPlaceholderStyle={{ fontSize: 16 }}
-                placeholder={"Password"}
-                value={password}
-                onChangeText={(text) => { setPassword(text) }}
-                isPassword
+                placeholder={"Frist Name"}
+                value={fristName}
+                onChangeText={(text) => { setFristName(text) }}
               />
               <View style={{ width: 15 }} />
-              <AppEditText
+              <AppEditTextChangeIF
                 styleContainer={{ flex: 1 }}
-                style={{ fontSize: 16 }}
+                style={{ fontSize: 16, paddingLeft: 10 }}
                 floatingPlaceholderStyle={{ fontSize: 16 }}
-                placeholder={"Password"}
-                value={password}
-                onChangeText={(text) => { setPassword(text) }}
-                isPassword
+                placeholder={"Last Name"}
+                value={lastName}
+                onChangeText={(text) => { setLastName(text) }}
               />
             </View>
             <View style={{ height: 30 }} />
@@ -105,8 +106,8 @@ export default function Counter() {
                 width: 342, height: 60
               }}
               labelStyle={{ fontSize: 19, fontWeight: "700" }}
-              label={"Hello Word"}
-              borderRadius={15}
+              label={"CONFIRM"}
+              borderRadius={30}
             />
 
           </BottomSheetDialog>
