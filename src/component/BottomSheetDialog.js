@@ -22,9 +22,9 @@ const BottomSheetDialog = (props) => {
                     <Icon source={require("../../assets/icons/vector.png")} />
                 </TouchableOpacity>
                 <View style={{ height: 20 }} />
-                <Text text40 style={styleTextTitle}>{textTitle}</Text>
+                <Text text40 style={[styleTextTitle]}>{textTitle}</Text>
                 <View style={{ height: 15 }} />
-                <Text text70R color={"#6c757d"} style={styleTextContent}>{textContent}</Text>
+                <Text text70R color={"#6c757d"} style={[styleTextContent, { textAlign: 'left' }]}>{textContent}</Text>
                 <View style={{ height: 15 }} />
                 {children}
             </Animated.View>

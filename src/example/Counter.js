@@ -80,7 +80,7 @@ export default function Counter() {
             textTitle={"What your name ?"}
             textContent={"Personal information must not include third-party contact information, advertising, content, pornography, and other illegal noioij dunng to avoid account closure"}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", flex: 1, justifyContent: "center", alignItems: "center" }}>
               <AppEditTextChangeIF
                 styleContainer={{ flex: 1 }}
                 style={{ fontSize: 16 }}
@@ -101,7 +101,7 @@ export default function Counter() {
             </View>
             <View style={{ height: 30 }} />
             <AppButton
-              onPress={() => { console.log("Hello word") }}
+              onPress={() => { console.log("Renamed Sussessfully!") }}
               buttonStyle={{
                 width: 342, height: 60
               }}
@@ -109,7 +109,6 @@ export default function Counter() {
               label={"CONFIRM"}
               borderRadius={30}
             />
-
           </BottomSheetDialog>
         )
       }
