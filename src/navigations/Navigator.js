@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { stackName } from './screens';
 import Counter from '../example/Counter';
-import RegisterScreen from '../screen/RegisterScreen';
 
 
 
