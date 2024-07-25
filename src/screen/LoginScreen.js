@@ -81,10 +81,10 @@ const LoginScreen = () => {
           buttonStyle={styles.button}
           labelStyle={styles.labelBtn}
         />
-        <Text text16 marginT-30>
+        <Text text16 marginT-15>
           Or
         </Text>
-        <View row marginT-15 centerH>
+        <View row marginT-10 centerH>
           <TouchableOpacity>
             <Image
               width={50}
