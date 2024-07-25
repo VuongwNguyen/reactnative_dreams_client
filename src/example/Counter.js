@@ -51,6 +51,13 @@ const style = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
   },
+  button: {
+    backgroundColor: 'orange',
+    width: '50%',
+    padding: 16,
+    marginBottom: 8,
+    borderRadius: 16,
+  },
   container: {
     flex: 1,
     padding: 16,
