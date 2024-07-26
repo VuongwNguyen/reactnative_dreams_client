@@ -19,8 +19,7 @@ export default function RegisterScreen() {
         <Image width={110} height={110} source={require('../../assets/logo.png')} />
         <Text text30BL>Sign in</Text>
         <Text text16 marginT-12>Create a account !</Text>
-
-        <View marginT-50 row>
+        <View row style={{ marginTop: '10%' }} gap-30 >
           <EditText
             styleContainer={style.editext}
             placeholder={'First name'}
@@ -28,7 +27,6 @@ export default function RegisterScreen() {
             floatingPlaceholderStyle={style.placeholder}
             onChangeText={setFirstName}
           />
-          <View width={30} />
           <EditText
             styleContainer={style.editext}
             placeholder={'Last name'}
@@ -82,7 +80,7 @@ const style = StyleSheet.create({
     flex: 1,
     width: '100%',
     maxHeight: 60,
-    marginBottom: 20
+    marginBottom: '7%'
   },
   placeholder: {
     color: Colors.grey30,
@@ -93,8 +91,7 @@ const style = StyleSheet.create({
     maxHeight: 60,
     minWidth: '100%',
     height: 60,
-    marginBottom: 8,
     borderRadius: 10,
-    marginTop: 30
+    marginTop: '10%'
   },
 });
