@@ -20,7 +20,7 @@ export default function RegisterScreen() {
         <Text text30BL>Sign in</Text>
         <Text text16 marginT-12>Create a account !</Text>
 
-        <View marginT-50 style={{ flexDirection: 'row' }}>
+        <View marginT-50 row>
           <EditText
             styleContainer={style.editext}
             placeholder={'First name'}
@@ -28,7 +28,7 @@ export default function RegisterScreen() {
             floatingPlaceholderStyle={style.placeholder}
             onChangeText={setFirstName}
           />
-          <View style={{ width: 30 }} />
+          <View width={30} />
           <EditText
             styleContainer={style.editext}
             placeholder={'Last name'}
