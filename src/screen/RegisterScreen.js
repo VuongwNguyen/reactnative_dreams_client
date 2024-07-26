@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Image, Text, View, Colors, KeyboardAwareScrollView } from 'react-native-ui-lib';
 import EditText from '../component/AppEditText';
 import AppButton from '../component/AppButton';
+import Spacing from '../rnuilib/Spacing';
 
 export default function RegisterScreen() {
 
@@ -19,7 +20,7 @@ export default function RegisterScreen() {
         <Image width={110} height={110} source={require('../../assets/logo.png')} />
         <Text text30BL>Sign in</Text>
         <Text text16 marginT-12>Create a account !</Text>
-        <View row style={{ marginTop: '10%' }} gap-30 >
+        <View row gap-30 marginT-p10>
           <EditText
             styleContainer={style.editext}
             placeholder={'First name'}
