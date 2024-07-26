@@ -19,8 +19,7 @@ export default function App() {
               onReady={() => {
                 SplashScreen.hide();
               }}>
-              {/* <Navigator /> */}
-              <LoginScreen />
+              <Navigator />
             </NavigationContainer>
           </GestureHandlerRootView>
         </SafeAreaProvider>

@@ -20,7 +20,7 @@ const LoginScreen = () => {
   const [isRemember, setIsRemember] = useState(false);
   return (
     <KeyboardAwareScrollView>
-      <View flex padding-24 center>
+      <View bg-white flex bg padding-24 center>
         <Image
           width={110}
           height={110}
