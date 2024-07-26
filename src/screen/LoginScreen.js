@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions, StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import {
   View,
@@ -12,33 +12,39 @@ import {
 import EditText from '../component/EditText';
 import AppButton from '../component/AppButton';
 import {Color} from '../rnuilib/Color';
+import {Font} from '../rnuilib/Font';
 
 Color();
+Font();
+const {width, height} = Dimensions.get('window');
+const statusBarHeight = StatusBar.currentHeight || 0;
+const logoSize = width * 0.293;
+
 const LoginScreen = () => {
   const [userAccount, setUserAccount] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   return (
     <KeyboardAwareScrollView>
-      <View bg-white flex bg padding-24 center>
+      <View bg-white padding-24 center style={styles.container}>
         <Image
-          width={110}
-          height={110}
+          width={logoSize}
+          height={logoSize}
           source={require('../../assets/images/logo.png')}
         />
-        <Text text30BL marginT-12>
+        <Text heading marginT-12>
           Welcome to Dreams
         </Text>
-        <Text text16 lightText center marginT-12 style={styles.widthBox}>
+        <Text desc center marginT-12>
           Connect with friends, discover new communities, and share your life
           with orthers.
         </Text>
 
-        <Text text60BL style={{fontWeight: 'bold'}} marginT-12>
+        <Text title style={{fontWeight: 'bold'}} marginT-12>
           Login to continue !
         </Text>
 
-        <Text text14 left marginT-40 lightText style={styles.leftText}>
+        <Text labelInput left marginT-30 style={styles.leftText}>
           Your email or phone number
         </Text>
         <EditText
@@ -46,7 +52,7 @@ const LoginScreen = () => {
           value={userAccount}
           onChangeText={setUserAccount}
         />
-        <Text text14 lightText marginT-20 style={styles.leftText}>
+        <Text labelInput marginT-10 style={styles.leftText}>
           Password
         </Text>
         <EditText
@@ -56,7 +62,7 @@ const LoginScreen = () => {
           onChangeText={setPassword}
         />
 
-        <View row spread centerV marginT-10>
+        <View row spread centerV marginT-5>
           <View flex>
             <Checkbox
               value={isRemember}
@@ -81,9 +87,7 @@ const LoginScreen = () => {
           buttonStyle={styles.button}
           labelStyle={styles.labelBtn}
         />
-        <Text text16 marginT-15>
-          Or
-        </Text>
+        <Text text16>Or</Text>
         <View row marginT-10 centerH>
           <TouchableOpacity>
             <Image
@@ -100,7 +104,7 @@ const LoginScreen = () => {
             />
           </TouchableOpacity>
         </View>
-        <View row marginT-30>
+        <View row marginT-20>
           <Text text14>You don't have an account?</Text>
           <TouchableOpacity>
             <Text text14 primary marginL-8>
@@ -116,6 +120,10 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: height - statusBarHeight,
+  },
   labelBtn: {
     fontWeight: 'bold',
   },
@@ -128,9 +136,7 @@ const styles = StyleSheet.create({
   labelCheckbox: {
     fontSize: 14,
   },
-  widthBox: {
-    width: '90%',
-  },
+
   leftText: {
     alignSelf: 'flex-start',
   },
@@ -145,8 +151,8 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     minWidth: '100%',
     height: 60,
-    marginBottom: 8,
+    marginBottom: 20,
     borderRadius: 10,
-    marginTop: 30,
+    marginTop: 20,
   },
 });
