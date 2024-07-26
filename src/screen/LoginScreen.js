@@ -19,7 +19,7 @@ Font();
 const {width, height} = Dimensions.get('window');
 const statusBarHeight = StatusBar.currentHeight || 0;
 const logoSize = width * 0.293;
-
+const descFontSize = width * 0.042;
 const LoginScreen = () => {
   const [userAccount, setUserAccount] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +35,7 @@ const LoginScreen = () => {
         <Text heading marginT-12>
           Welcome to Dreams
         </Text>
-        <Text desc center marginT-12>
+        <Text style={styles.descText} lightText center marginT-12>
           Connect with friends, discover new communities, and share your life
           with orthers.
         </Text>
@@ -44,44 +44,49 @@ const LoginScreen = () => {
           Login to continue !
         </Text>
 
-        <Text labelInput left marginT-30 style={styles.leftText}>
-          Your email or phone number
-        </Text>
-        <EditText
-          styleContainer={styles.editText}
-          value={userAccount}
-          onChangeText={setUserAccount}
-        />
-        <Text labelInput marginT-10 style={styles.leftText}>
-          Password
-        </Text>
-        <EditText
-          styleContainer={styles.editText}
-          value={password}
-          isPassword
-          onChangeText={setPassword}
-        />
-
-        <View row spread centerV marginT-5>
-          <View flex>
-            <Checkbox
-              value={isRemember}
-              onValueChange={() => setIsRemember(!isRemember)}
-              size={24}
-              borderRadius={12}
-              color={Colors.primary}
-              label="Remember me ?"
-              labelStyle={styles.labelCheckbox}
+        <View style={{width: '100%', gap: 10}}>
+          <View>
+            <Text labelInput left marginT-30 style={styles.leftText}>
+              Your email or phone number
+            </Text>
+            <EditText
+              styleContainer={styles.editText}
+              value={userAccount}
+              onChangeText={setUserAccount}
             />
           </View>
 
-          <TouchableOpacity>
-            <Text text14 primary>
-              Forgot password ?
+          <View>
+            <Text labelInput marginT-10 style={styles.leftText}>
+              Password
             </Text>
-          </TouchableOpacity>
-        </View>
+            <EditText
+              styleContainer={styles.editText}
+              value={password}
+              isPassword
+              onChangeText={setPassword}
+            />
+          </View>
+          <View row spread centerV marginT-5>
+            <View flex>
+              <Checkbox
+                value={isRemember}
+                onValueChange={() => setIsRemember(!isRemember)}
+                size={24}
+                borderRadius={12}
+                color={Colors.primary}
+                label="Remember me ?"
+                labelStyle={styles.labelCheckbox}
+              />
+            </View>
 
+            <TouchableOpacity>
+              <Text text14 primary>
+                Forgot password ?
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <AppButton
           label={'SIGN IN'}
           buttonStyle={styles.button}
@@ -120,6 +125,9 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  descText: {
+    fontSize: descFontSize,
+  },
   container: {
     width: '100%',
     height: height - statusBarHeight,
@@ -141,7 +149,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   editText: {
-    flex: 1,
     width: '100%',
     maxHeight: 60,
     marginBottom: 20,
