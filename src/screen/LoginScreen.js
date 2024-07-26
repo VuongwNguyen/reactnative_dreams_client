@@ -42,7 +42,7 @@ const LoginScreen = () => {
           Your email or phone number
         </Text>
         <EditText
-          styleContainer={styles.editext}
+          styleContainer={styles.editText}
           value={userAccount}
           onChangeText={setUserAccount}
         />
@@ -50,7 +50,7 @@ const LoginScreen = () => {
           Password
         </Text>
         <EditText
-          styleContainer={styles.editext}
+          styleContainer={styles.editText}
           value={password}
           isPassword
           onChangeText={setPassword}
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   leftText: {
     alignSelf: 'flex-start',
   },
-  editext: {
+  editText: {
     flex: 1,
     width: '100%',
     maxHeight: 60,
