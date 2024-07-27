@@ -45,7 +45,7 @@
 2. **Cú Pháp Commit Message**
 "type": "subject"
 
-3. ## Các Loại Commit (Types)
+3. **Các Loại Commit (Types)**
 
 - **feat**: Thêm một tính năng mới.
   - Ví dụ: `feat: add login functionality`
@@ -62,7 +62,7 @@
 - **chore**: Các thay đổi nhỏ hoặc không ảnh hưởng đến sản phẩm (cập nhật dependencies, cấu hình build, v.v.).
   - Ví dụ: `chore: update npm dependencies`
 
-4. ## Quy tắc Viết Tiêu Đề (Subject)
+4. **Quy tắc Viết Tiêu Đề (Subject)**
 
 - Sử dụng thì hiện tại (present tense).
 - Không viết hoa chữ cái đầu tiên.
