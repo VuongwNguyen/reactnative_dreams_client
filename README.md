@@ -43,7 +43,7 @@
    - Tiêu đề nên có độ dài tối đa là 50 ký tự và câu mô tả không quá 72 ký tự.
 
 2. **Cú Pháp Commit Message**
-"<type>: <subject>"
+"type": "subject"
 
 3. ## Các Loại Commit (Types)
 
