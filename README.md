@@ -1,79 +1,70 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Quy tắc Đặt Tên Biến và Viết Commit
 
-# Getting Started
+## Quy tắc Đặt Tên Biến
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+1. **Biến Thường**
+   - Sử dụng **camelCase** cho tên biến thường.
+   - Ví dụ: `userName`, `totalPrice`, `isActive`.
 
-## Step 1: Start the Metro Server
+2. **Hằng Số**
+   - Sử dụng **UPPER_CASE_SNAKE_CASE** cho tên hằng số.
+   - Ví dụ: `MAX_CONNECTIONS`, `DEFAULT_TIMEOUT`.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+3. **Tên Hàm**
+   - Sử dụng **camelCase** cho tên hàm.
+   - Tên hàm nên bắt đầu bằng động từ.
+   - Ví dụ: `getUserInfo`, `calculateTotal`, `isUserActive`.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+4. **Tên Lớp**
+   - Sử dụng **PascalCase** cho tên lớp.
+   - Ví dụ: `UserService`, `ProductRepository`.
 
-```bash
-# using npm
-npm start
+5. **Biến Toàn Cục (Global Variables)**
+   - Tránh sử dụng biến toàn cục nếu có thể.
+   - Nếu phải sử dụng, hãy đặt tên biến bắt đầu bằng `g_` hoặc `global_`.
+   - Ví dụ: `g_appConfig`, `globalUserCount`.
 
-# OR using Yarn
-yarn start
-```
+6. **Biến Thành Viên Lớp (Class Member Variables)**
+   - Sử dụng **camelCase** và bắt đầu bằng `_` (underscore) nếu là biến private.
+   - Ví dụ: `_userName`, `_totalPrice`.
 
-## Step 2: Start your Application
+7. **Biến Mảng và Danh Sách**
+   - Đặt tên biến thể hiện rõ rằng đây là một mảng hoặc danh sách.
+   - Ví dụ: `userList`, `productArray`.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+8. **Biến Boolean**
+   - Đặt tên biến bắt đầu bằng `is`, `has`, `can`, hoặc `should`.
+   - Ví dụ: `isLoggedIn`, `hasAccess`, `canEdit`.
 
-### For Android
+## Quy tắc Viết Commit
 
-```bash
-# using npm
-npm run android
+1. **Cấu trúc Commit Message**
+   - Commit message nên bao gồm một dòng tiêu đề (summary) ngắn gọn, theo sau bởi mô tả chi tiết hơn (nếu cần).
+   - Tiêu đề nên có độ dài tối đa là 50 ký tự và câu mô tả không quá 72 ký tự.
 
-# OR using Yarn
-yarn android
-```
+2. **Cú Pháp Commit Message**
+<type>: <subject>
 
-### For iOS
+3. ## Các Loại Commit (Types)
 
-```bash
-# using npm
-npm run ios
+- **feat**: Thêm một tính năng mới.
+  - Ví dụ: `feat: add login functionality`
+- **fix**: Sửa lỗi.
+  - Ví dụ: `fix: correct user login error`
+- **docs**: Thay đổi về tài liệu.
+  - Ví dụ: `docs: update API documentation`
+- **style**: Thay đổi về mã mà không ảnh hưởng đến logic (dấu cách, dấu chấm phẩy, v.v.).
+  - Ví dụ: `style: format code in user controller`
+- **refactor**: Thay đổi mã mà không sửa lỗi hoặc thêm tính năng.
+  - Ví dụ: `refactor: improve performance of data processing`
+- **test**: Thêm hoặc sửa các bài kiểm tra.
+  - Ví dụ: `test: add unit tests for user service`
+- **chore**: Các thay đổi nhỏ hoặc không ảnh hưởng đến sản phẩm (cập nhật dependencies, cấu hình build, v.v.).
+  - Ví dụ: `chore: update npm dependencies`
 
-# OR using Yarn
-yarn ios
-```
+4. ## Quy tắc Viết Tiêu Đề (Subject)
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Sử dụng thì hiện tại (present tense).
+- Không viết hoa chữ cái đầu tiên.
+- Không kết thúc bằng dấu chấm câu.
+  - Ví dụ: `fix: resolve issue with user authentication`
