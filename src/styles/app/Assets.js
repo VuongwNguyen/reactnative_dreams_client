@@ -2,6 +2,7 @@
 /* icon assets by fontawesome6 library */
 export const Assets = {
     icon: {
+        arrowLeft: "arrow-left",
         close: 'close',
         eyeClose: 'eye-slash',
         eyeOpen: 'eye',
@@ -9,7 +10,7 @@ export const Assets = {
         user: 'user',
         back: 'arrow-left',// feather
         nationaly: 'earth-asia',
-        notification: 'bell', 
+        notification: 'bell',
         message: 'comment', // foundation
         logout: 'log-out',// feather 
         home: 'home', // entypo
@@ -22,7 +23,7 @@ export const Assets = {
         theme: 'theme-light-dark', // MaterialCommunityIcons
         birthday: 'birthday-cake',// fontAwesome
     },
-    image:{}
+    image: {}
 }
 
 
