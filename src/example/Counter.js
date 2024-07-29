@@ -1,15 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dec, inc } from '../store/slices/example';
 import { useTranslation } from 'react-i18next';
 import i18n from '../lang';
-import Animated, {
-  Easing,
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+
 
 export default function Counter() {
   const count = useSelector(state => state.count);
