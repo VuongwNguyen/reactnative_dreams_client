@@ -17,6 +17,9 @@ export const changePasswordStyle = {
     fontWeight: '600',
     color: 'black',
   },
+  spacingHeight: {
+    height: 40,
+  },
   bodyContainer: {
     flexDirection: 'column',
     gap: 30,

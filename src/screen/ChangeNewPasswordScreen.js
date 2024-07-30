@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import {Assets} from '../styles';
-import {changePasswordStyle} from '../styles/ChangePasswordStyle/ChangePasswordStyle';
+import {changePasswordStyle} from '../styles/changepassword/ChangePasswordStyle';
 const ChangeNewPasswordScreen = () => {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -45,7 +45,7 @@ const ChangeNewPasswordScreen = () => {
         </TouchableOpacity>
         <Text style={changePasswordStyle.headerText}>Change your password</Text>
       </View>
-      <View style={styles.spacingHeight} />
+      <View style={changePasswordStyle.spacingHeight} />
 
       <View style={changePasswordStyle.bodyContainer}>
         <View style={changePasswordStyle.textContanier}>
@@ -93,10 +93,3 @@ const ChangeNewPasswordScreen = () => {
 };
 
 export default ChangeNewPasswordScreen;
-
-const styles = StyleSheet.create({
-  spacingHeight: {
-    height: 40,
-    paddingHorizontal: 16,
-  },
-});
