@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import { Assets } from '../styles';
-import { forgotPasswordStyles } from '../styles/ForgotPasswordStyle/ForgotPasswordStyle';
-import { OtpStyles } from '../styles/OtpStyle/OtpStyle';
+import { forgotPasswordStyles } from '../styles/forgotpasswordstyle/ForgotPasswordStyle';
+import { OtpStyles } from '../styles/otpstyle/OtpStyle';
 
 const OtpScreen = () => {
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];

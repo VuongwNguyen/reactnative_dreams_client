@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import { Assets } from '../styles';
-import { forgotPasswordStyles } from '../styles/ForgotPasswordStyle/ForgotPasswordStyle';
+import { forgotPasswordStyles } from '../styles/forgotpasswordstyle/ForgotPasswordStyle';
 
 const ForgotPasswordScreen = () => {
     const [value, setValue] = useState('');
