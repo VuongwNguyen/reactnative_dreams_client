@@ -6,8 +6,7 @@ export const AppHeaderStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    width: '100%',
-    height: 60,
+    maxHeight: 35
   },
   title: {
     fontSize: 20,

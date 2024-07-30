@@ -5,7 +5,7 @@ import { Assets } from '../styles';
 import { AppHeaderStyle } from '../styles/components/AppHeaderStyle';
 
 const AppHeader = (props) => {
-  const { title, goBack, rightButton, rightButtonAction, rightButtonTitle } = props
+  const { title, goBack, rightButton=false, rightButtonAction, rightButtonTitle } = props
   return (
     <View style={AppHeaderStyle.container}>
       <TouchableOpacity onPress={goBack}>
