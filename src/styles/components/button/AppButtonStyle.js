@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../app/Colors'
 
-export const AuthButtonStyle = StyleSheet.create({
+export const AppButtonStyle = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary.color,
     flex: 1,
