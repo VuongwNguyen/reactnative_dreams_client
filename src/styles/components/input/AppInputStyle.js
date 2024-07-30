@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../../app/Colors'
 
 export const AppInputStyle = StyleSheet.create({
   container: {
@@ -7,7 +6,7 @@ export const AppInputStyle = StyleSheet.create({
     maxHeight: 60,
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: Colors.background.backgroundColor,
+    paddingHorizontal: 10
   },
   label: {
     fontSize: 12,
@@ -15,7 +14,7 @@ export const AppInputStyle = StyleSheet.create({
     color: '#6C757D',
     position: 'absolute',
     bottom: 12,
-    left: 0,
+    left: 10,
   },
   groupInputContainer: {
     flexDirection: 'row',
