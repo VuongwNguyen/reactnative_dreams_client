@@ -2,7 +2,7 @@ import {Text, TouchableOpacity, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
 import React from 'react'
 import { Assets } from '../styles';
-import { AppHeaderStyle } from '../styles/components/AppHeaderStyle';
+import { AppHeaderStyle } from '../styles/components/header/AppHeaderStyle';
 
 const AppHeader = (props) => {
   const { title='', goBack, rightButton=false, rightButtonAction, rightButtonTitle='' } = props

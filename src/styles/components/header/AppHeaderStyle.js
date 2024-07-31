@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../app/Colors'
+import { Colors } from '../../app/Colors'
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {

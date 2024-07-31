@@ -12,7 +12,7 @@ import Animated, {
 import { AppInputStyle } from '../styles/components/input/AppInputStyle';
 
 const AppInput = (props) => {
-  const { value, setValue, placeholder, isPassword = false, positionStyle } = props
+  const { value = '', setValue, placeholder, isPassword = false, positionStyle } = props
   const [canReadPass, setCanReadPass] = useState(isPassword)
   const translateY = useSharedValue(0);
   const label = useSharedValue(placeholder);
@@ -52,18 +52,17 @@ const AppInput = (props) => {
         <TextInput
           style={AppInputStyle.input}
           value={value}
-          onChangeText={setValue}
+          onChangeText={t => setValue(t)}
           secureTextEntry={canReadPass}
-          onFocus={() => triggerAnimation(-24, true,value)}
-          onBlur={() => triggerAnimation(0, false,value)}
+          onFocus={() => triggerAnimation(-24, true, value)}
+          onBlur={() => triggerAnimation(0, false, value)}
         />
         {
           isPassword && <TouchableOpacity onPress={() => setCanReadPass(!canReadPass)}>
-            {canReadPass ? <FontAwesome6 name={Assets.icon.eyeClose} {...AppInputStyle.eyeIcon} /> : <FontAwesome6 name={Assets.icon.eyeOpen} {...AppInputStyle.eyeIcon} />}
+            <FontAwesome6 name={canReadPass ? Assets.icon.eyeClose : Assets.icon.eyeOpen} color="black" size={16} />
           </TouchableOpacity>
         }
       </View>
-      <View style={AppInputStyle.line}></View>
     </View>
   )
 }
