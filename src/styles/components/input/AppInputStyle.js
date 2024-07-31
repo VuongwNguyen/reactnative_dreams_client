@@ -14,7 +14,7 @@ export const AppInputStyle = StyleSheet.create({
     fontWeight: '400',
     color: '#6C757D',
     position: 'absolute',
-    bottom: 12,
+    bottom: 5,
     left: 10,
   },
   groupInputContainer: {
@@ -24,7 +24,8 @@ export const AppInputStyle = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
-    fontSize: 16
+    fontSize: 16,
+    paddingBottom: 0
   },
   eyeIcon: { size: 24, color: 'black' },
 })
