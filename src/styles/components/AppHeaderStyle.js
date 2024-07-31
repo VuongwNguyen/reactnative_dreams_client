@@ -6,14 +6,13 @@ export const AppHeaderStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    maxHeight: 35
+    maxHeight: 35,
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    flex: 1,
     color: 'black',
-    paddingHorizontal: 20
   },
   rightButton: {
     width: 60,

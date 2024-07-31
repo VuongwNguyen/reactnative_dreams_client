@@ -4,9 +4,10 @@ export const AppInputStyle = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: 60,
-    width: '100%',
     justifyContent: 'center',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderColor: '#6C757D'
   },
   label: {
     fontSize: 12,
@@ -26,5 +27,4 @@ export const AppInputStyle = StyleSheet.create({
     fontSize: 16
   },
   eyeIcon: { size: 24, color: 'black' },
-  line: { height: 1, width: '100%', backgroundColor: '#D9D9D9' }
 })
