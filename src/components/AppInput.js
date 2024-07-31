@@ -12,7 +12,7 @@ import Animated, {
 import { AppInputStyle } from '../styles/components/input/AppInputStyle';
 
 const AppInput = (props) => {
-  const { value = '', setValue, placeholder, isPassword = false, positionStyle } = props
+  const { value='', setValue, placeholder, isPassword = false, positionStyle } = props
   const [canReadPass, setCanReadPass] = useState(isPassword)
   const translateY = useSharedValue(0);
   const label = useSharedValue(placeholder);
