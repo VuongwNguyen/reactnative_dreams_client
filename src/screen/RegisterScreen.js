@@ -4,9 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { RegisterStyle } from '../styles/RegisterStyle/ResgisterStyle'
 import { Assets } from '../styles'
-import AppInput from '~/components/AppInput'
-import AppButton from '~/components/AppButton';
-import AppHeader from '~/components/AppHeader';
+import AppInput from '../components/AppInput'
+import AppButton from '../components/AppButton';
 
 const RegisterScreen = () => {
   const validationSchema = Yup.object().shape({
