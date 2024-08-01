@@ -3,6 +3,9 @@ export const OtpStyles = {
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
+    spacingHeight: {
+        height: 40,
+    },
     headerContainer: {
         flexDirection: 'row',
         gap: 35,
@@ -61,7 +64,6 @@ export const OtpStyles = {
     button: {
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#0CBBF0",
         shadowColor: "rgba(0, 0, 0, 0.25)",
         shadowOffset: {
             width: 5,
@@ -111,5 +113,21 @@ export const OtpStyles = {
             height: 4
         },
         textShadowRadius: 4
+    },
+    textCodeSentResend: {
+        width: "100%",
+        textAlign: "center",
+        fontSize: 15,
+        letterSpacing: 0,
+        lineHeight: 25,
+        color: "#2a2b2c",
+    },
+    testTime: {
+        fontSize: 15,
+        letterSpacing: 0,
+        lineHeight: 25,
+        fontWeight: "700",
+        color: "#0cbbf0",
+
     }
 }
