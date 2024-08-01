@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import { Assets } from '../styles';
-import { forgotPasswordStyles } from '../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import { OtpStyles } from '../styles/otpstyle/OtpStyle';
 
 const OtpScreen = () => {
@@ -48,18 +47,18 @@ const OtpScreen = () => {
     }
 
     return (
-        <View style={forgotPasswordStyles.container}>
-            <View style={forgotPasswordStyles.headerContainer}>
+        <View style={OtpStyles.container}>
+            <View style={OtpStyles.headerContainer}>
                 <TouchableOpacity>
                     <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={forgotPasswordStyles.headerText}>Enter The One Time Password</Text>
+                <Text style={OtpStyles.headerText}>Enter The One Time Password</Text>
             </View>
             <View style={styles.spacingHeight} />
-            <View style={forgotPasswordStyles.formContainer}>
-                <View style={forgotPasswordStyles.textContanier}>
-                    <Text style={forgotPasswordStyles.textTitle}>Enter OTP</Text>
-                    <Text style={forgotPasswordStyles.textSub}>
+            <View style={OtpStyles.formContainer}>
+                <View style={OtpStyles.textContanier}>
+                    <Text style={OtpStyles.textTitle}>Enter OTP</Text>
+                    <Text style={OtpStyles.textSub}>
                         An Authentication code has been sent to {"\n"}
                         <Text style={OtpStyles.textEmailOrPhone}>example@example.com</Text>
                     </Text>
@@ -78,8 +77,8 @@ const OtpScreen = () => {
                         />
                     ))}
                 </View>
-                <TouchableOpacity style={forgotPasswordStyles.button} onPress={handleCheckOutOTP}>
-                    <Text style={forgotPasswordStyles.buttonText}>NEXT</Text>
+                <TouchableOpacity style={OtpStyles.button} onPress={handleCheckOutOTP}>
+                    <Text style={OtpStyles.buttonText}>NEXT</Text>
                 </TouchableOpacity>
             </View>
         </View>
