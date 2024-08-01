@@ -12,7 +12,7 @@ import Animated, {
 import { AppInputStyle } from '../styles/components/input/AppInputStyle';
 
 const AppInput = (props) => {
-  const { value='', setValue, placeholder, isPassword = false, positionStyle } = props
+  const { value='', setValue=(t) => {}, placeholder, isPassword = false, positionStyle, isError = false} = props
   const [canReadPass, setCanReadPass] = useState(isPassword)
   const translateY = useSharedValue(0);
   const label = useSharedValue(placeholder);
@@ -44,7 +44,7 @@ const AppInput = (props) => {
   });
 
   return (
-    <View style={[positionStyle, AppInputStyle.container]}>
+    <View style={[positionStyle, isError ? AppInputStyle.containerError : AppInputStyle.container]}>
       <Animated.Text style={[AppInputStyle.label, labelAnimatedStyle]}>
         {label.value}
       </Animated.Text>

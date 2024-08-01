@@ -13,6 +13,8 @@ export const AppHeaderStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+    flex: 1,
+    textAlign: 'center'
   },
   rightButton: {
     width: 60,
@@ -21,6 +23,10 @@ export const AppHeaderStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10
+  },
+  emptyRightButton: {
+    width: 60,
+    height: 30,
   },
   titleRightButton: {
     color: 'white'
