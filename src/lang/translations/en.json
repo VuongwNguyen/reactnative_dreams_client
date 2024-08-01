@@ -1,4 +1,11 @@
 {
   "hello": "Hello world",
-  "counter": "Counter"
+  "counter": "Counter",
+  "change_pw_title": "Change your password",
+  "change_pw": "Change password",
+  "pw_rule": "The new password must be more than 6 characters, contain uppercase letters, lowercase letters, and special characters",
+  "current_pw": "Current password",
+  "new_pw": "New password",
+  "confirm_new_pw": "Confirm new password",
+  "save_btn": "Save"
 }

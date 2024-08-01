@@ -1,92 +1,114 @@
 import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import {TextInput} from 'react-native-gesture-handler';
-import Feather from 'react-native-vector-icons/Feather';
-import {Assets} from '../styles';
+import React from 'react';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+import {useTranslation} from 'react-i18next';
+import i18n from '../lang';
 import {changePasswordStyle} from '../styles/changepassword/ChangePasswordStyle';
+import AppHeader from '../components/AppHeader';
+import AppInput from '../components/AppInput';
+
+const passwordValidationSchema = Yup.object().shape({
+  currentPassword: Yup.string()
+    .min(6, 'Password must be at least 6 characters long')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]/,
+      'Password must contain both letters and numbers',
+    )
+    .required('Required'),
+
+  newPassword: Yup.string()
+    .min(6, 'Password must be at least 6 characters long')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]/,
+      'Password must contain both letters and numbers',
+    )
+    .required('Required'),
+
+  passwordConfirm: Yup.string()
+    .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+    .required('Required'),
+});
+
 const ChangePasswordScreen = () => {
-  const [value, setValue] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
-  const animation = useRef(new Animated.Value(0)).current;
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    Animated.timing(animation, {
-      toValue: isFocused || value ? 1 : 0,
-      duration: 200,
-      useNativeDriver: false, // UseNativeDriver must be false for non-layout properties
-    }).start();
-  }, [isFocused, value]);
-
-  const labelStyle = {
-    transform: [
-      {
-        translateY: animation.interpolate({
-          inputRange: [0, 1],
-          outputRange: [20, -5], // Di chuyển lên khi có giá trị hoặc khi focus
-        }),
-      },
-    ],
-    fontSize: animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [16, 12], // Kích thước chữ nhỏ hơn khi label ở trên
-    }),
-    color: animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['#a9a9a9', '#000000'], // Màu sắc thay đổi khi label ở trên
-    }),
-  };
+  const {t} = useTranslation();
 
   return (
     <View style={changePasswordStyle.container}>
-      <View style={changePasswordStyle.headerContainer}>
-        <TouchableOpacity>
-          <Feather name={Assets.icon.back} size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={changePasswordStyle.headerText}>Change your password</Text>
-      </View>
-      <View style={changePasswordStyle.spacingHeight} />
+      <AppHeader title={t('change_pw_title')} />
 
+      <View style={changePasswordStyle.spacingHeight} />
       <View style={changePasswordStyle.bodyContainer}>
         <View style={changePasswordStyle.textContanier}>
-          <Text style={changePasswordStyle.textTitle}>Change password</Text>
-          <Text style={changePasswordStyle.textSub}>
-            The new password must be more than 6 characters, contain uppercase
-            letters, lowercase letters, and special characters
-          </Text>
-        </View>
-        {/* input Group */}
-        <View style={changePasswordStyle.inputGroup}>
-          <View style={changePasswordStyle.wraperTextInput}>
-            <TextInput
-              ref={inputRef}
-              placeholder=""
-              value={value}
-              onChangeText={text => setValue(text)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              style={changePasswordStyle.textInput}
-            />
-            <Animated.Text
-              style={[changePasswordStyle.placeholder, labelStyle]}
-              onPress={() => {
-                setIsFocused(true);
-                inputRef.current.focus();
-              }}>
-              Your email or phone number
-            </Animated.Text>
-          </View>
+          <Text style={changePasswordStyle.textTitle}>{t('change_pw')}</Text>
+          <Text style={changePasswordStyle.textSub}>{t('pw_rule')}</Text>
         </View>
 
-        {/*  */}
-
-        <TouchableOpacity
-          style={changePasswordStyle.button}
-          onPress={() => {
-            setIsFocused(false);
+        <Formik
+          initialValues={{
+            currentPassword: '',
+            newPassword: '',
+            passwordConfirm: '',
+          }}
+          validationSchema={passwordValidationSchema}
+          onSubmit={values => {
+            console.log(values);
           }}>
-          <Text style={changePasswordStyle.buttonText}>SAVE</Text>
-        </TouchableOpacity>
+          {({handleChange, handleSubmit, values, errors, touched}) => (
+            <View style={changePasswordStyle.inputGroup}>
+              <View>
+                <AppInput
+                  setValue={handleChange('currentPassword')}
+                  value={values.currentPassword}
+                  placeholder={t('current_pw')}
+                  positionStyle={changePasswordStyle.input}
+                />
+                {errors.currentPassword && touched.currentPassword ? (
+                  <Text style={changePasswordStyle.errorText}>
+                    {errors.currentPassword}
+                  </Text>
+                ) : null}
+              </View>
+
+              <View>
+                <AppInput
+                  setValue={handleChange('newPassword')}
+                  value={values.newPassword}
+                  placeholder={t('new_pw')}
+                  positionStyle={changePasswordStyle.input}
+                />
+                {errors.newPassword && touched.newPassword ? (
+                  <Text style={changePasswordStyle.errorText}>
+                    {errors.newPassword}
+                  </Text>
+                ) : null}
+              </View>
+
+              {/*  */}
+              <View>
+                <AppInput
+                  setValue={handleChange('passwordConfirm')}
+                  value={values.passwordConfirm}
+                  placeholder={t('confirm_new_pw')}
+                  positionStyle={changePasswordStyle.input}
+                />
+                {errors.passwordConfirm && touched.passwordConfirm ? (
+                  <Text style={changePasswordStyle.errorText}>
+                    {errors.passwordConfirm}
+                  </Text>
+                ) : null}
+              </View>
+
+              <TouchableOpacity
+                style={changePasswordStyle.button}
+                onPress={handleSubmit}>
+                <Text style={changePasswordStyle.buttonText}>
+                  {t('save_btn')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
       </View>
     </View>
   );

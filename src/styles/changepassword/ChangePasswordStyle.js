@@ -1,4 +1,8 @@
 export const changePasswordStyle = {
+  input: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -41,26 +45,7 @@ export const changePasswordStyle = {
     color: '#6c757d',
     letterSpacing: 0,
   },
-  //
-  wraperTextInput: {
-    position: 'relative',
-  },
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    paddingLeft: 5,
-    fontSize: 16,
-    color: 'black',
-    borderRadius: 5,
-    backgroundColor: 'transparent',
-  },
-  placeholder: {
-    position: 'absolute',
-    backgroundColor: '',
-    bottom: 30,
-  },
-  //
+
   inputGroup: {
     gap: 20,
   },
@@ -86,5 +71,9 @@ export const changePasswordStyle = {
     lineHeight: 22,
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  errorText: {
+    fontSize: 12,
+    color: 'red',
   },
 };
