@@ -22,7 +22,11 @@ export const Assets = {
         theme: 'theme-light-dark', // MaterialCommunityIcons
         birthday: 'birthday-cake',// fontAwesome
     },
-    image:{}
+    image:{
+        logo:require('../../../assets/logo.png'),
+        google:require('../../../assets/google.png'),
+        github:require('../../../assets/github.png')
+    }
 }
 
 
