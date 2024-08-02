@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors, Scaling, Spacings} from '../../';
+import {Colors, Scaling, Spacings, Typography} from '../../';
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {
@@ -17,5 +17,9 @@ export const AppHeaderStyle = StyleSheet.create({
     color: Colors.white,
     paddingVertical: Spacings.sm,
     paddingHorizontal: Spacings.md,
+  },
+  title: {
+    ...Typography.navTitle,
+    color: Colors.black,
   },
 });

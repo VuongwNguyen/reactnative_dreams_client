@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {Colors,Scaling} from '../../';
+import {Colors, Scaling} from '../../';
+import {Typography} from '../../';
 
 export const AppButtonStyle = StyleSheet.create({
   container: {
@@ -10,9 +11,8 @@ export const AppButtonStyle = StyleSheet.create({
     alignItems: 'center',
     borderRadius: Scaling.md,
   },
-  label: {
+  title: {
+    ...Typography.button,
     color: Colors.white,
-    fontWeight: 'bold',
-    fontSize: Scaling.lg,
   },
 });

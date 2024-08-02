@@ -49,34 +49,13 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NunitoSans_7pt_Condensed-Black.ttf</string>
-		<string>NunitoSans_7pt_Condensed-BlackItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-Bold.ttf</string>
-		<string>NunitoSans_7pt_Condensed-BoldItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-ExtraBold.ttf</string>
-		<string>NunitoSans_7pt_Condensed-ExtraBoldItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-ExtraLight.ttf</string>
-		<string>NunitoSans_7pt_Condensed-ExtraLightItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-Italic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-Light.ttf</string>
-		<string>NunitoSans_7pt_Condensed-LightItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-Medium.ttf</string>
-		<string>NunitoSans_7pt_Condensed-MediumItalic.ttf</string>
-		<string>NunitoSans_7pt_Condensed-Regular.ttf</string>
-		<string>NunitoSans_7pt_Condensed-SemiBold.ttf</string>
-		<string>NunitoSans_7pt_Condensed-SemiBoldItalic.ttf</string>
-		<string>Roboto-Black.ttf</string>
-		<string>Roboto-BlackItalic.ttf</string>
-		<string>Roboto-Bold.ttf</string>
-		<string>Roboto-BoldItalic.ttf</string>
-		<string>Roboto-Italic.ttf</string>
-		<string>Roboto-Light.ttf</string>
-		<string>Roboto-LightItalic.ttf</string>
-		<string>Roboto-Medium.ttf</string>
-		<string>Roboto-MediumItalic.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Thin.ttf</string>
-		<string>Roboto-ThinItalic.ttf</string>
+		<string>InterBold.ttf</string>
+		<string>InterRegular.ttf</string>
+		<string>NunitoSansBold.ttf</string>
+		<string>NunitoSansExtraBold.ttf</string>
+		<string>NunitoSansRegular.ttf</string>
+		<string>NunitoSansSemiBold.ttf</string>
+		<string>RobotoBold.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -3,12 +3,12 @@ import React from 'react';
 import {AppButtonStyle} from '../styles/components/button/ButtonStyle';
 
 const AppButton = props => {
-  const {title = '', onPress, positionStyle = {}} = props;
+  const {title = '', onPress} = props;
   return (
     <TouchableOpacity
-      style={[positionStyle, AppButtonStyle.container]}
+      style={ AppButtonStyle.container}
       onPress={onPress}>
-      <Text style={AppButtonStyle.label}>{title}</Text>
+      <Text style={AppButtonStyle.title}>{title}</Text>
     </TouchableOpacity>
   );
 };

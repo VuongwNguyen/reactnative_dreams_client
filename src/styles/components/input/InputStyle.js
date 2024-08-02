@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Spacings} from '../../';
+import {Spacings, Typography} from '../../';
 
 export const AppInputStyle = StyleSheet.create({
   label: {
@@ -12,6 +12,7 @@ export const AppInputStyle = StyleSheet.create({
     padding: 0,
     margin: 0,
     flex: 1,
+    ...Typography.edtValue
   },
   container: {
     borderColor: 'black',

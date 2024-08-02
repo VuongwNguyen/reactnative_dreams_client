@@ -1,8 +1,15 @@
-import {StyleSheet} from 'react-native';
-
 export const Fonts = {
-    NunitonSans:{
-        // example
-        regular: 'NunitoSans_7pt_Condensed-regular',
-    }
+  nunitonSans: {
+    bold: 'NunitoSansBold',
+    extrabold: 'NunitoSansExtraBold',
+    regular: 'NunitoSansRegular',
+    semibold: 'NunitoSansSemiBold',
+  },
+  inter: {
+    bold: 'InterBold',
+    regular: 'InterRegular',
+  },
+  roboto: {
+    semibold: 'RobotoBold',
+  },
 };
