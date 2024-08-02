@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Formik } from "formik";
-import { RegisterStyle } from "~/styles/RegisterStyle/ResgisterStyle";
-import { registerSchema } from "~/configs/validateSchema/registerSchema";
-import { View } from "react-native";
-import AppInput from "~/components/AppInput";
-import AppButton from "~/components/AppButton";
-import { useTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { View, Text } from 'react-native';
+import AppButton from '~/components/AppButton';
+import AppInput from '~/components/AppInput';
+import { useFormikHook } from '~/hooks/useFomikHook';
+import { RegisterStyle } from '~/styles/RegisterStyle/ResgisterStyle';
 
-export const MyForm = () => {
-  const [error, setError] = useState(false)
+const MyForm = () => {
   const { t } = useTranslation();
+  const formik = useFormikHook({}, () => { });
+  const [error, setError] = useState(false)
   const handleError = (errors) => {
     if (errors.firstName) {
       setError({ field: 'firstName', message: errors.firstName })
@@ -37,66 +37,63 @@ export const MyForm = () => {
     }
     setError({ field: '', message: '' })
   }
+  const { handleSubmit, handleChange, values, errors } = formik;
+
   return (
-    <Formik
-      initialValues={{ firstName: '', lastName: '', email: '', phoneNumber: '', password: '', confirmPassword: '' }}
-      validationSchema={registerSchema}
-      onSubmit={(values) => {
-      }}
-    >
-      {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-        <View style={RegisterStyle.containerForm}>
-          {error.message && <Text style={{ color: 'red', fontSize: 18, alignSelf: 'center' }}>
-            {error.message}
-          </Text>}
-          <View style={RegisterStyle.groupNameContainer}>
-            <View style={RegisterStyle.groupName}>
-              <AppInput
-                placeholder={t('firstName')}
-                value={values.firstName}
-                setValue={handleChange('firstName')}
-              />
-            </View>
-            <View style={RegisterStyle.groupName}>
-              <AppInput
-                placeholder={t('lastName')}
-                value={values.lastName}
-                setValue={handleChange('lastName')}
-              />
-            </View>
-          </View>
+    <View style={RegisterStyle.containerForm}>
+      {error.message &&
+        <Text style={RegisterStyle.textError}>
+          {error.message}
+        </Text>
+      }
+      <View style={RegisterStyle.groupNameContainer}>
+        <View style={RegisterStyle.groupName}>
           <AppInput
-            placeholder='Email'
-            value={values.email}
-            setValue={handleChange('email')}
-          />
-          <AppInput
-            placeholder={t('phoneNumber')}
-            value={values.phoneNumber}
-            setValue={handleChange('phoneNumber')}
-          />
-          <AppInput
-            placeholder={t('password')}
-            isPassword
-            value={values.password}
-            setValue={handleChange('password')}
-          />
-          <AppInput
-            placeholder={t('confirmPassword')}
-            isPassword
-            value={values.confirmPassword}
-            setValue={handleChange('confirmPassword')}
-          />
-          <AppButton
-            positionStyle={RegisterStyle.button}
-            onPress={() => {
-              handleSubmit()
-              handleError(errors, touched)
-            }}
-            title={t('register')}
+            placeholder={t('register.lastName')}
+            value={values.lastName}
+            setValue={handleChange('lastName')}
           />
         </View>
-      )}
-    </Formik>
+        <View style={RegisterStyle.groupName}>
+          <AppInput
+            placeholder={t('register.firstName')}
+            value={values.firstName}
+            setValue={handleChange('firstName')}
+          />
+        </View>
+      </View>
+      <AppInput
+        placeholder='Email'
+        value={values.email}
+        setValue={handleChange('email')}
+      />
+      <AppInput
+        placeholder={t('register.phoneNumber')}
+        value={values.phoneNumber}
+        setValue={handleChange('phoneNumber')}
+      />
+      <AppInput
+        placeholder={t('register.password')}
+        isPassword
+        value={values.password}
+        setValue={handleChange('password')}
+      />
+      <AppInput
+        placeholder={t('register.confirmPassword')}
+        isPassword
+        value={values.confirmPassword}
+        setValue={handleChange('confirmPassword')}
+      />
+      <AppButton
+        positionStyle={RegisterStyle.button}
+        onPress={() => {
+          handleSubmit()
+          handleError(errors)
+        }}
+        title={t('register.register')}
+      />
+    </View>
   )
 };
+
+export default MyForm;

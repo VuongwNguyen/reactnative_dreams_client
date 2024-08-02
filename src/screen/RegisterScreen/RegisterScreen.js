@@ -3,7 +3,7 @@ import React from 'react'
 import { RegisterStyle } from '../../styles/RegisterStyle/ResgisterStyle'
 import { Assets } from '../../styles'
 import { useTranslation } from 'react-i18next';
-import { MyForm } from './MyForm';
+import MyForm from './MyForm';
 
 const RegisterScreen = () => {
   const { t } = useTranslation();
@@ -19,13 +19,13 @@ const RegisterScreen = () => {
       >
         <View style={RegisterStyle.containerHeader}>
           <Image style={RegisterStyle.logo} source={Assets.image.logo} />
-          <Text style={RegisterStyle.headerText}>{t('welcome')}</Text>
-          <Text>{t('createAnAccount')}</Text>
+          <Text style={RegisterStyle.headerText}>{t('register.welcome')}</Text>
+          <Text>{t('register.createAnAccount')}</Text>
         </View>
         <MyForm/>
         <View style={RegisterStyle.containerLink}>
-          <Text>{t('alreadyHaveAnAccount')}</Text>
-          <Text style={RegisterStyle.link}>{t('login')}</Text>
+          <Text>{t('register.alreadyHaveAnAccount')}</Text>
+          <Text style={RegisterStyle.link}>{t('register.login')}</Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

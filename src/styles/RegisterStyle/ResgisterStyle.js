@@ -39,6 +39,7 @@ export const RegisterStyle = StyleSheet.create({
     marginVertical: 10
   },
   groupNameContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
     gap: 30
@@ -51,5 +52,10 @@ export const RegisterStyle = StyleSheet.create({
   link: {
     color: Colors.primary.color,
     fontWeight: 'bold'
+  },
+  textError: {
+    color: 'red',
+    fontSize: 18,
+    alignSelf: 'center'
   }
 })
