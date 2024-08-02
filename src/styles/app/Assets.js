@@ -1,4 +1,3 @@
-
 /* icon assets by fontawesome6 library */
 export const Assets = {
     icon: {
@@ -27,8 +26,4 @@ export const Assets = {
         google:require('../../../assets/google.png'),
         github:require('../../../assets/github.png')
     }
-}
-
-
-
-
+};
