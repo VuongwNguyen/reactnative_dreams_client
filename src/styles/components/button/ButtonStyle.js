@@ -1,18 +1,18 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../app/Colors';
+import {Colors,Scaling} from '../../';
 
 export const AppButtonStyle = StyleSheet.create({
   container: {
-    backgroundColor: Colors.primary.color,
+    backgroundColor: Colors.primary,
     flex: 1,
     maxHeight: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: Scaling.md,
   },
   label: {
-    color: 'white',
+    color: Colors.white,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: Scaling.lg,
   },
 });

@@ -1,9 +1,9 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {AppButtonStyle} from '../styles/components/button/AppButtonStyle';
+import {AppButtonStyle} from '../styles/components/button/ButtonStyle';
 
 const AppButton = props => {
-  const {title = '', onPress, positionStyle} = props;
+  const {title = '', onPress, positionStyle = {}} = props;
   return (
     <TouchableOpacity
       style={[positionStyle, AppButtonStyle.container]}
