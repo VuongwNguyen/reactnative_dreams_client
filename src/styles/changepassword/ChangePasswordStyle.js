@@ -1,8 +1,6 @@
+import {Dimensions} from 'react-native';
+const {width, height} = Dimensions.get('window');
 export const changePasswordStyle = {
-  input: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -26,7 +24,7 @@ export const changePasswordStyle = {
   },
   bodyContainer: {
     flexDirection: 'column',
-    gap: 30,
+    gap: height * 0.037,
   },
   textContanier: {
     flexDirection: 'column',
@@ -45,9 +43,11 @@ export const changePasswordStyle = {
     color: '#6c757d',
     letterSpacing: 0,
   },
-
+  input: {
+    height: height * 0.073,
+  },
   inputGroup: {
-    gap: 20,
+    gap: 10,
   },
   //
   button: {
@@ -75,5 +75,16 @@ export const changePasswordStyle = {
   errorText: {
     fontSize: 12,
     color: 'red',
+  },
+  btn: {
+    backgroundColor: 'red',
+  },
+  btnContainer: {
+    width: '100%',
+    height: 30,
+    backgroundColor: 'blue',
+  },
+  btnContainer1: {
+    backgroundColor: 'blue',
   },
 };

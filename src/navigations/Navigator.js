@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {stackName} from './screens';
 import Counter from '../example/Counter';
-import ChangePasswordScreen from '../screen/ChangePasswordScreen';
+import ChangePasswordScreen from '../screen/changepassword/ChangePasswordScreen';
 const Stack = createStackNavigator();
 
 export function Navigator() {

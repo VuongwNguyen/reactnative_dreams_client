@@ -1,11 +1,19 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
-  "change_pw_title": "Đổi mật khẩu",
-  "change_pw": "Đổi mật khẩu của bạn",
-  "pw_rule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt",
-  "current_pw": "Mật khẩu hiện tại",
-  "new_pw": "Mật khẩu mới",
-  "confirm_new_pw": "Xác nhận mật khẩu mới",
-  "save_btn": "Lưu"
+  "changePwScreen": {
+    "changePwTitle": "Đổi mật khẩu",
+    "changePw": "Đổi mật khẩu của bạn",
+    "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+    "currentPw": "Mật khẩu hiện tại",
+    "newPw": "Mật khẩu mới",
+    "confirmNewPw": "Xác nhận mật khẩu mới",
+    "save": "Lưu",
+    "error": {
+      "required": "Bắt buộc",
+      "min": "Mật khẩu phải tối thiếu 6 kí tự",
+      "invalid": "Mật khẩu không hợp lệ",
+      "notMatch": "Xác nhận mật khẩu không khớp"
+    }
+  }
 }

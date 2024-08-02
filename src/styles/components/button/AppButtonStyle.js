@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Colors } from '../../app/Colors'
+import {StyleSheet} from 'react-native';
+import {Colors} from '../../app/Colors';
 
 export const AppButtonStyle = StyleSheet.create({
   container: {
@@ -8,11 +8,11 @@ export const AppButtonStyle = StyleSheet.create({
     maxHeight: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
   },
   label: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18
-  }
-})
+    fontSize: 18,
+  },
+});
