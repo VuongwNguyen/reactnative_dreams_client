@@ -1,6 +1,7 @@
 {
   "hello": "Hello world",
   "counter": "Counter",
+  "headerTextOtp": "OTP Verification",
   "textTitleOtp": "Enter OTP",
   "textSubOtp": "An Authentication code has been sent to",
   "buttonTextOtp": "NEXT",

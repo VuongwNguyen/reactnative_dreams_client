@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { stackName } from './screens';
 import Counter from '../example/Counter';
 
-import OtpScreen from '../screen/OtpScreen';
+import OtpScreen from '../screen/otpscreen/OtpScreen';
 
 const Stack = createStackNavigator();
 
