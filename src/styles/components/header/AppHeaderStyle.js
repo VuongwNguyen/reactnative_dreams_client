@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Colors } from '../../app/Colors'
+import {StyleSheet} from 'react-native';
+import {Colors} from '../../app/Colors';
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {
@@ -22,13 +22,13 @@ export const AppHeaderStyle = StyleSheet.create({
     backgroundColor: Colors.primary.color,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10
+    borderRadius: 10,
   },
   emptyRightButton: {
     width: 60,
     height: 30,
   },
   titleRightButton: {
-    color: 'white'
-  }
-})
+    color: 'white',
+  },
+});
