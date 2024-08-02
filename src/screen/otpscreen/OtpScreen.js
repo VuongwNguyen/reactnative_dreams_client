@@ -11,9 +11,7 @@ import { handleCheckOutOTP } from './Handle';
 const OtpScreen = () => {
     const { t } = useTranslation();
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-    const [otp, setOtp] = useState(['', '', '', '']);
     const [error, setError] = useState(false);
-    const otpTest = "1234";
 
 
 
@@ -35,13 +33,11 @@ const OtpScreen = () => {
                     </Text>
                 </View>
                 <FormmikOtp
-                    otp={otp}
-                    setOtp={setOtp}
                     inputRefs={inputRefs}
                     t={t}
                     error={error}
                     setError={setError}
-                    handleCheckOutOTP={handleCheckOutOTP(otpTest, setOtp, setError, inputRefs, Alert)}
+                    handleCheckOutOTP={handleCheckOutOTP(setError, inputRefs, Alert)}
                 />
                 <Text style={OtpStyles.textCodeSentResend}>{t("textCodeSentResendOtp")} <Text style={OtpStyles.testTime}>00:50</Text></Text>
             </View>

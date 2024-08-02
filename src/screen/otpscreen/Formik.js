@@ -8,7 +8,7 @@ import { handleChangeText, handleKeyPress } from "./Handle";
 
 
 export const FormmikOtp = (props) => {
-    const { otp, setOtp, inputRefs, t, error, setError, handleCheckOutOTP } = props;
+    const { inputRefs, t, error, setError, handleCheckOutOTP } = props;
 
     const validationSchema = Yup.object().shape({
         otp: Yup.array()
@@ -36,8 +36,8 @@ export const FormmikOtp = (props) => {
                                 ]}
                                 maxLength={1}
                                 keyboardType='number-pad'
-                                onChangeText={text => handleChangeText(otp, setOtp, setError, inputRefs, text, index, setFieldValue)}
-                                onKeyPress={e => handleKeyPress(e, otp, setOtp, inputRefs, index, setFieldValue)}
+                                onChangeText={text => handleChangeText(setError, inputRefs, text, index, setFieldValue)}
+                                onKeyPress={e => handleKeyPress(e, inputRefs, index, setFieldValue)}
                                 onBlur={handleBlur(`otp[${index}]`)}
                                 value={values.otp[index]}
                             />
