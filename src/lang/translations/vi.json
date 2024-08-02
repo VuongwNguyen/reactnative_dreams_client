@@ -1,4 +1,14 @@
 {
   "hello": "Xin Chào",
-  "counter": "Đếm"
+  "counter": "Đếm",
+  "welcome": "Chào mừng bạn đến với Ứng dụng!",
+  "createAnAccount": "Tạo tài khoản",
+  "firstName": "Tên",
+  "lastName": "Họ",
+  "phoneNumber": "Số điện thoại",
+  "password": "Mật khẩu",
+  "confirmPassword": "Xác nhán mật khẩu",
+  "register": "Đăng ký",
+  "login": "Đăng nhập",
+  "alreadyHaveAnAccount": "Đã có tài khoản"
 }

@@ -7,10 +7,9 @@ export const RegisterStyle = StyleSheet.create({
     padding: 24,
   },
   containerForm: {
-    gap: 30,
     flex: 1,
+    gap: 30,
     marginVertical: 30,
-    flexDirection: 'column',
   },
   containerHeader: {
     flex: 1,
@@ -37,15 +36,17 @@ export const RegisterStyle = StyleSheet.create({
     lineHeight: 22,
     fontWeight: '600',
     color: 'black',
+    marginVertical: 10
   },
-  row: {
+  groupNameContainer: {
     flexDirection: 'row',
-    width: '100%',
+    alignItems: 'stretch',
+    gap: 30
   },
   groupName: {
     flex: 1,
-    flexDirection: 'row',
-    gap: 30
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
   link: {
     color: Colors.primary.color,

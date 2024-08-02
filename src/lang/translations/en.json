@@ -1,4 +1,14 @@
 {
   "hello": "Hello world",
-  "counter": "Counter"
+  "counter": "Counter",
+  "welcomme": "Welcome to App!",
+  "createAnAccount": "Create an account",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "phoneNumber": "Phone number",
+  "password": "Password",
+  "confirmPassword": "Confirm password",
+  "register": "Register",
+  "login": "Login",
+  "alreadyHaveAnAccount": "Already have an account?"
 }
