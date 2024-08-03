@@ -5,7 +5,7 @@ export const ChangePasswordSchema = () => {
   const {t} = useTranslation();
   return Yup.object().shape({
     currentPassword: Yup.string()
-      .min(6, t('changePwScreen.error.pw.min'))
+      .min(6, t('changePwScreen.error.min'))
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
         t('changePwScreen.error.invalid'),

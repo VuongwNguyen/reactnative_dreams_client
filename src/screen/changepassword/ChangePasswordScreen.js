@@ -12,17 +12,18 @@ import {useTranslation} from 'react-i18next';
 
 import FormikForm from './FormikForm';
 import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordStyle';
-import AppHeader from '../../components/AppHeader';
-import AppInput from '../../components/AppInput';
-import AppButton from '../../components/AppButton';
+import AppHeader from '../../components/Header';
 
 const ChangePasswordScreen = () => {
   const {t} = useTranslation();
-
+  const goBackScreen = () => {};
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={changePasswordStyle.container}>
-        <AppHeader title={t('changePwScreen.changePwTitle')} />
+        <AppHeader
+          title={t('changePwScreen.changePwTitle')}
+          goBack={goBackScreen}
+        />
 
         <View style={changePasswordStyle.spacingHeight} />
         <View style={changePasswordStyle.bodyContainer}>

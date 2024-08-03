@@ -7,7 +7,7 @@ export const Typography = StyleSheet.create({
     fontSize: 30,
     fontStyle: 'normal',
     fontWeight: '800',
-    lineHeight: 18,
+    // lineHeight: 18,
     letterSpacing: -0.17,
   },
   subTitle: {

@@ -1,90 +1,46 @@
 import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('window');
+import {Colors, Spacings, Typography} from '../';
 export const changePasswordStyle = {
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    padding: 16,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    gap: 35,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: 19,
-    lineHeight: 22,
-    fontWeight: '600',
-    color: 'black',
+    padding: Spacings.lg,
   },
   spacingHeight: {
-    height: 40,
+    padding: Spacings.lg,
   },
   bodyContainer: {
     flexDirection: 'column',
-    gap: height * 0.037,
+    gap: 30,
   },
   textContanier: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    gap: 30,
+    gap: Spacings.lg,
   },
   textTitle: {
-    fontSize: 30,
-    letterSpacing: 0,
-    fontWeight: '800',
+    ...Typography.title,
     color: 'black',
   },
   textSub: {
-    fontSize: 16,
-    lineHeight: 25,
-    color: '#6c757d',
-    letterSpacing: 0,
+    ...Typography.bsdDescription,
+    color: Colors.secondary,
   },
   input: {
-    height: height * 0.073,
+    maxHeight: 60,
+    justifyContent: 'center',
   },
   inputGroup: {
-    gap: 10,
+    gap: 15,
   },
-  //
   button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0CBBF0',
-    shadowColor: 'rgba(0, 0, 0, 0.25)',
-    shadowOffset: {
-      width: 5,
-      height: 4,
-    },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
-    width: '100%',
-    height: 70,
-    borderRadius: 15,
-  },
-  buttonText: {
-    fontSize: 19,
-    lineHeight: 22,
-    fontWeight: '700',
-    color: '#FFFFFF',
+    marginTop: 30,
+    height: 50,
   },
   errorText: {
     fontSize: 12,
-    color: 'red',
-  },
-  btn: {
-    backgroundColor: 'red',
-  },
-  btnContainer: {
-    width: '100%',
-    height: 30,
-    backgroundColor: 'blue',
-  },
-  btnContainer1: {
-    backgroundColor: 'blue',
+    marginTop: Spacings.xs,
+    marginBottom: Spacings.sm,
+    color: Colors.error,
   },
 };
