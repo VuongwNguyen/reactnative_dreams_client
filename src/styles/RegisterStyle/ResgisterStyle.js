@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Typography } from '../'
+import { Colors, Spacings, Typography } from '../'
 
 export const RegisterStyle = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: Spacings.lg,
   },
   containerForm: {
     flex: 1,
@@ -14,7 +14,6 @@ export const RegisterStyle = StyleSheet.create({
   containerHeader: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   containerLink: {
     height: 50,
@@ -31,12 +30,11 @@ export const RegisterStyle = StyleSheet.create({
     height: 120,
   },
   headerText: {
-    // fontWeight: 'bold',
-    // fontSize: 19,
-    // lineHeight: 22,
-    // fontWeight: '600',
     ...Typography.title,
     color: 'black',
+    alignContent: 'center',
+    textAlign: 'center',
+    lineHeight: 30,
     marginVertical: 10
   },
   groupNameContainer: {
@@ -51,12 +49,12 @@ export const RegisterStyle = StyleSheet.create({
     alignItems: 'stretch',
   },
   link: {
-    color: Colors.primary.color,
+    color: Colors.primary,
     fontWeight: 'bold'
   },
   textError: {
-    color: 'red',
-    fontSize: 18,
+    ...Typography.bsdDescription,
+    color: Colors.error,
     alignSelf: 'center'
   },
   scrollView:{

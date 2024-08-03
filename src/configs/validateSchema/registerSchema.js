@@ -18,7 +18,7 @@ export const registerSchema = () => {
       .min(8, t('register.error.password.minLength'))
       .required(t('register.error.password.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('register.error.confirmPassword.invalid'))
+      .oneOf([Yup.ref('password'), null], t('register.error.confirmPassword.oneOf'))
       .required(t('register.error.confirmPassword.required')),
   });
 }

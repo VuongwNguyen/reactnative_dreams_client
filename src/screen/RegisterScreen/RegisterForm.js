@@ -1,49 +1,39 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text } from 'react-native';
-import AppButton from '~/components/AppButton';
-import AppInput from '~/components/AppInput';
-import { useFormikHook } from '~/hooks/useFomikHook';
-import { RegisterStyle } from '~/styles/RegisterStyle/ResgisterStyle';
+import AppButton from '../../components/Button';
+import AppInput from '../../components/Input';
+import { useFormikHook } from '../../hooks/useFomikHook';
+import { RegisterStyle } from '../../styles/RegisterStyle/ResgisterStyle';
 
-const MyForm = () => {
+const RegisterForm = () => {
   const { t } = useTranslation();
-  const formik = useFormikHook({}, () => { });
   const [error, setError] = useState(false)
   const handleError = (errors) => {
-    if (errors.firstName) {
-      setError({ field: 'firstName', message: errors.firstName })
-      return
-    }
-    if (errors.lastName) {
-      setError({ field: 'lastName', message: errors.lastName })
-      return
-    }
-    if (errors.email) {
-      setError({ field: 'email', message: errors.email })
-      return
-    }
-    if (errors.phoneNumber) {
-      setError({ field: 'phoneNumber', message: errors.phoneNumber })
-      return
-    }
-    if (errors.password) {
-      setError({ field: 'password', message: errors.password })
-      return
-    }
-    if (errors.confirmPassword) {
-      setError({ field: 'confirmPassword', message: errors.confirmPassword })
-      return
-    }
-    setError({ field: '', message: '' })
+    setError(
+      errors.lastName ||
+      errors.firstName ||
+      errors.email ||
+      errors.phoneNumber ||
+      errors.password ||
+      errors.confirmPassword
+    )
   }
-  const { handleSubmit, handleChange, values, errors } = formik;
+  const formik = useFormikHook({
+    'firstName': '',
+    'lastName': '',
+    'email': '',
+    'phoneNumber': '',
+    'password': '',
+    'confirmPassword': '',
+  }, () => { });
+  const { handleSubmit, handleChange, values, errors, touched} = formik;
 
   return (
     <View style={RegisterStyle.containerForm}>
-      {error.message &&
+      {error &&
         <Text style={RegisterStyle.textError}>
-          {error.message}
+          {error}
         </Text>
       }
       <View style={RegisterStyle.groupNameContainer}>
@@ -88,7 +78,7 @@ const MyForm = () => {
         positionStyle={RegisterStyle.button}
         onPress={() => {
           handleSubmit()
-          handleError(errors)
+          handleError(errors,touched)
         }}
         title={t('register.register')}
       />
@@ -96,4 +86,4 @@ const MyForm = () => {
   )
 };
 
-export default MyForm;
+export default RegisterForm;
