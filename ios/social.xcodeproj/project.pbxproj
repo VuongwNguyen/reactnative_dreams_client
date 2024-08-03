@@ -14,6 +14,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-social-socialTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-social-socialTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		F2124A015181430496F1DF02 /* InterBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D41E60F2F4643479DD9918E /* InterBold.ttf */; };
+		9D6D2A9C2648425DBC3CE204 /* InterRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59EA3BBF9A3747459C1C2787 /* InterRegular.ttf */; };
+		75F2F0D514F9411891D56A19 /* NunitoSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7435DE2085584C54A5B0004A /* NunitoSansBold.ttf */; };
+		4BE660ED38894A91960975F3 /* NunitoSansExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80117335318340D3AD791DBA /* NunitoSansExtraBold.ttf */; };
+		F027F83DF23A40238B88B407 /* NunitoSansRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6A4DB5C7F94494F8B428D41 /* NunitoSansRegular.ttf */; };
+		212A1FA660E94BDDB00934CC /* NunitoSansSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 350AC21AF19F4205B07770C6 /* NunitoSansSemiBold.ttf */; };
+		AFD1713DCA9E48ED9BA5CB25 /* RobotoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBFA4AE64630400BB4611FD0 /* RobotoBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +43,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = social/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = social/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = social/main.m; sourceTree = "<group>"; };
-	    13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = social/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = social/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-social-socialTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-social-socialTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-social.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-social.debug.xcconfig"; path = "Target Support Files/Pods-social/Pods-social.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-social.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-social.release.xcconfig"; path = "Target Support Files/Pods-social/Pods-social.release.xcconfig"; sourceTree = "<group>"; };
@@ -45,6 +52,13 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = social/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-social-socialTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-social-socialTests.release.xcconfig"; path = "Target Support Files/Pods-social-socialTests/Pods-social-socialTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		9D41E60F2F4643479DD9918E /* InterBold.ttf */ = {isa = PBXFileReference; name = "InterBold.ttf"; path = "../assets/fonts/InterBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		59EA3BBF9A3747459C1C2787 /* InterRegular.ttf */ = {isa = PBXFileReference; name = "InterRegular.ttf"; path = "../assets/fonts/InterRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7435DE2085584C54A5B0004A /* NunitoSansBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansBold.ttf"; path = "../assets/fonts/NunitoSansBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80117335318340D3AD791DBA /* NunitoSansExtraBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansExtraBold.ttf"; path = "../assets/fonts/NunitoSansExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C6A4DB5C7F94494F8B428D41 /* NunitoSansRegular.ttf */ = {isa = PBXFileReference; name = "NunitoSansRegular.ttf"; path = "../assets/fonts/NunitoSansRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		350AC21AF19F4205B07770C6 /* NunitoSansSemiBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansSemiBold.ttf"; path = "../assets/fonts/NunitoSansSemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CBFA4AE64630400BB4611FD0 /* RobotoBold.ttf */ = {isa = PBXFileReference; name = "RobotoBold.ttf"; path = "../assets/fonts/RobotoBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +138,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				27C0944952584D1C9876E868 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +164,21 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		27C0944952584D1C9876E868 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				9D41E60F2F4643479DD9918E /* InterBold.ttf */,
+				59EA3BBF9A3747459C1C2787 /* InterRegular.ttf */,
+				7435DE2085584C54A5B0004A /* NunitoSansBold.ttf */,
+				80117335318340D3AD791DBA /* NunitoSansExtraBold.ttf */,
+				C6A4DB5C7F94494F8B428D41 /* NunitoSansRegular.ttf */,
+				350AC21AF19F4205B07770C6 /* NunitoSansSemiBold.ttf */,
+				CBFA4AE64630400BB4611FD0 /* RobotoBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +275,13 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F2124A015181430496F1DF02 /* InterBold.ttf in Resources */,
+				9D6D2A9C2648425DBC3CE204 /* InterRegular.ttf in Resources */,
+				75F2F0D514F9411891D56A19 /* NunitoSansBold.ttf in Resources */,
+				4BE660ED38894A91960975F3 /* NunitoSansExtraBold.ttf in Resources */,
+				F027F83DF23A40238B88B407 /* NunitoSansRegular.ttf in Resources */,
+				212A1FA660E94BDDB00934CC /* NunitoSansSemiBold.ttf in Resources */,
+				AFD1713DCA9E48ED9BA5CB25 /* RobotoBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
