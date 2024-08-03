@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../app/Colors';
+import {Colors, Scaling, Spacings, Typography} from '../../';
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {
@@ -9,26 +9,21 @@ export const AppHeaderStyle = StyleSheet.create({
     maxHeight: 35,
     justifyContent: 'space-between',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-    flex: 1,
-    textAlign: 'center'
-  },
   rightButton: {
-    width: 60,
-    height: 30,
-    backgroundColor: Colors.primary.color,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
+    backgroundColor: Colors.primary,
+    borderRadius: Scaling.xs,
   },
   emptyRightButton: {
     width: 60,
     height: 30,
   },
   titleRightButton: {
-    color: 'white',
+    color: Colors.white,
+    paddingVertical: Spacings.sm,
+    paddingHorizontal: Spacings.md,
+  },
+  title: {
+    ...Typography.navTitle,
+    color: Colors.black,
   },
 });

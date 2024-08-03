@@ -1,16 +1,18 @@
 import {StyleSheet} from 'react-native';
+import {Spacings, Typography} from '../../';
 
 export const AppInputStyle = StyleSheet.create({
   label: {
     position: 'absolute',
     alignSelf: 'center',
     opacity: 0,
-    left: 4,
+    left: Spacings.xs,
   },
   input: {
     padding: 0,
     margin: 0,
     flex: 1,
+    ...Typography.edtValue
   },
   container: {
     borderColor: 'black',
@@ -18,11 +20,11 @@ export const AppInputStyle = StyleSheet.create({
     alignItems: 'stretch',
     borderBottomWidth: 1,
     borderBottomColor: 'black',
-    paddingLeft: 4,
+    paddingLeft: Spacings.xs,
   },
   icon: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 4,
+    padding: Spacings.xs,
   },
 });
