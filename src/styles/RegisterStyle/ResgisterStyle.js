@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../app/Colors'
+import { Colors, Typography } from '../'
 
 export const RegisterStyle = StyleSheet.create({
   container: {
@@ -31,10 +31,11 @@ export const RegisterStyle = StyleSheet.create({
     height: 120,
   },
   headerText: {
-    fontWeight: 'bold',
-    fontSize: 19,
-    lineHeight: 22,
-    fontWeight: '600',
+    // fontWeight: 'bold',
+    // fontSize: 19,
+    // lineHeight: 22,
+    // fontWeight: '600',
+    ...Typography.title,
     color: 'black',
     marginVertical: 10
   },
@@ -57,5 +58,8 @@ export const RegisterStyle = StyleSheet.create({
     color: 'red',
     fontSize: 18,
     alignSelf: 'center'
+  },
+  scrollView:{
+    flexGrow: 1
   }
 })

@@ -5,7 +5,7 @@ export const Typography = StyleSheet.create({
     fontFamily: '',
     fontSize: 30,
     fontStyle: 'normal',
-    fontWeight: 800,
+    fontWeight: "800",
     lineHeight: 18,
     letterSpacing: -0.17,
   },
@@ -21,7 +21,7 @@ export const Typography = StyleSheet.create({
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontSize: 19,
-    fontWeight: 600,
+    fontWeight: "600",
     lineHeight: 22,
   },
   edtHint: {

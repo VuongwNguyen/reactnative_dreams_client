@@ -3,7 +3,7 @@ import React from 'react'
 import { RegisterStyle } from '../../styles/RegisterStyle/ResgisterStyle'
 import { Assets } from '../../styles'
 import { useTranslation } from 'react-i18next';
-import MyForm from './MyForm';
+import MyForm from './RegisterForm';
 
 const RegisterScreen = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const RegisterScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
       <ScrollView
-        style={{ flexGrow: 1 }}
+        style={RegisterStyle.scrollView}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
       >
