@@ -1,32 +1,28 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {useFormik} from 'formik';
-import {ChangePasswordSchema} from '../../configs/validationschema/ChangePasswordSchema';
 import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordStyle';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
 import {useTranslation} from 'react-i18next';
+import useFormikHook from './useFormik';
+
 const FormikForm = () => {
   const {t} = useTranslation();
 
-  const formik = useFormik({
-    initialValues: {
-      currentPassword: '',
-      newPassword: '',
-      passwordConfirm: '',
-    },
-    validationSchema: ChangePasswordSchema,
-    onSubmit: (values, {resetForm}) => {
-      console.log(values);
-      resetForm();
-    },
+  const formik = useFormikHook({
+    currentPassword: '',
+    newPassword: '',
+    passwordConfirm: '',
+  }, () => {
+    console.log('submit',values.newPassword);
   });
+  const {handleSubmit, handleChange, values, errors} = formik;
   return (
     <View style={changePasswordStyle.inputGroup}>
       <View style={changePasswordStyle.input}>
         <AppInput
           value={formik.values.currentPassword}
-          setValue={formik.handleChange('currentPassword')}
+          setValue={handleChange('currentPassword')}
           placeholder={t('changePwScreen.currentPw')}
         />
         {formik.errors.currentPassword && formik.touched.currentPassword ? (
@@ -39,7 +35,7 @@ const FormikForm = () => {
       <View style={changePasswordStyle.input}>
         <AppInput
           value={formik.values.newPassword}
-          setValue={formik.handleChange('newPassword')}
+          setValue={handleChange('newPassword')}
           placeholder={t('changePwScreen.newPw')}
         />
         {formik.errors.newPassword && formik.touched.newPassword ? (
@@ -52,7 +48,7 @@ const FormikForm = () => {
       <View style={changePasswordStyle.input}>
         <AppInput
           value={formik.values.passwordConfirm}
-          setValue={formik.handleChange('passwordConfirm')}
+          setValue={handleChange('passwordConfirm')}
           placeholder={t('changePwScreen.confirmNewPw')}
         />
         {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
@@ -65,7 +61,7 @@ const FormikForm = () => {
       <View style={changePasswordStyle.btnContainer}>
         <AppButton
           title={t('save')}
-          onPress={formik.handleSubmit}
+          onPress={handleSubmit}
           positionStyle={changePasswordStyle.btn}
         />
       </View>
