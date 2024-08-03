@@ -1,41 +1,40 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { View, Text } from 'react-native';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {View, Text} from 'react-native';
 import AppButton from '../../components/Button';
 import AppInput from '../../components/Input';
-import { useFormikHook } from '../../hooks/useFomikHook';
-import { RegisterStyle } from '../../styles/RegisterStyle/ResgisterStyle';
+import {useFormikHook} from '../../hooks/useFomikHook';
+import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 
 const RegisterForm = () => {
-  const { t } = useTranslation();
-  const [error, setError] = useState(false)
-  const handleError = (errors) => {
+  const {t} = useTranslation();
+  const [error, setError] = useState(false);
+  const handleError = errors => {
     setError(
       errors.lastName ||
-      errors.firstName ||
-      errors.email ||
-      errors.phoneNumber ||
-      errors.password ||
-      errors.confirmPassword
-    )
-  }
-  const formik = useFormikHook({
-    'firstName': '',
-    'lastName': '',
-    'email': '',
-    'phoneNumber': '',
-    'password': '',
-    'confirmPassword': '',
-  }, () => { });
-  const { handleSubmit, handleChange, values, errors, touched} = formik;
+        errors.firstName ||
+        errors.email ||
+        errors.phoneNumber ||
+        errors.password ||
+        errors.confirmPassword,
+    );
+  };
+  const formik = useFormikHook(
+    {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    },
+    () => {},
+  );
+  const {handleSubmit, handleChange, values, errors, touched} = formik;
 
   return (
     <View style={RegisterStyle.containerForm}>
-      {error &&
-        <Text style={RegisterStyle.textError}>
-          {error}
-        </Text>
-      }
+      {error && <Text style={RegisterStyle.textError}>{error}</Text>}
       <View style={RegisterStyle.groupNameContainer}>
         <View style={RegisterStyle.groupName}>
           <AppInput
@@ -53,7 +52,7 @@ const RegisterForm = () => {
         </View>
       </View>
       <AppInput
-        placeholder='Email'
+        placeholder="Email"
         value={values.email}
         setValue={handleChange('email')}
       />
@@ -77,13 +76,13 @@ const RegisterForm = () => {
       <AppButton
         positionStyle={RegisterStyle.button}
         onPress={() => {
-          handleSubmit()
-          handleError(errors,touched)
+          handleSubmit();
+          handleError(errors, touched);
         }}
         title={t('register.register')}
       />
     </View>
-  )
+  );
 };
 
 export default RegisterForm;

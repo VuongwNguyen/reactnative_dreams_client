@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Colors, Spacings, Typography } from '../'
+import {StyleSheet} from 'react-native';
+import {Colors, Spacings, Typography} from '../';
 
 export const RegisterStyle = StyleSheet.create({
   container: {
@@ -8,8 +8,9 @@ export const RegisterStyle = StyleSheet.create({
   },
   containerForm: {
     flex: 1,
-    gap: 30,
-    marginVertical: 30,
+    justifyContent: 'space-between',
+    minHeight: 350,
+    marginVertical: 20,
   },
   containerHeader: {
     flex: 1,
@@ -20,10 +21,23 @@ export const RegisterStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10
+    gap: 10,
   },
   button: {
-    marginTop: 30
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0CBBF0",
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowOffset: {
+        width: 5,
+        height: 4
+    },
+    shadowRadius: 4,
+    elevation: 4,
+    shadowOpacity: 1,
+    width: "100%",
+    height: 70,
+    borderRadius: 15
   },
   logo: {
     width: 120,
@@ -35,13 +49,12 @@ export const RegisterStyle = StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
     lineHeight: 30,
-    marginVertical: 10
+    marginVertical: 10,
   },
   groupNameContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    gap: 30
+    gap: 30,
   },
   groupName: {
     flex: 1,
@@ -50,14 +63,14 @@ export const RegisterStyle = StyleSheet.create({
   },
   link: {
     color: Colors.primary,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textError: {
     ...Typography.bsdDescription,
     color: Colors.error,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
-  scrollView:{
-    flexGrow: 1
-  }
-})
+  scrollView: {
+    flexGrow: 1,
+  },
+});

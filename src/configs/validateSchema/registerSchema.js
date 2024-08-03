@@ -1,13 +1,11 @@
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import * as Yup from 'yup';
 
 export const registerSchema = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   return Yup.object().shape({
-    firstName: Yup.string()
-      .required(t('register.error.firstName.required')),
-    lastName: Yup.string()
-      .required(t('register.error.lastName.required')),
+    firstName: Yup.string().required(t('register.error.firstName.required')),
+    lastName: Yup.string().required(t('register.error.lastName.required')),
     email: Yup.string()
       .email(t('register.error.email.invalid'))
       .required(t('register.error.email.required')),
@@ -18,7 +16,10 @@ export const registerSchema = () => {
       .min(8, t('register.error.password.minLength'))
       .required(t('register.error.password.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('register.error.confirmPassword.oneOf'))
+      .oneOf(
+        [Yup.ref('password'), null],
+        t('register.error.confirmPassword.oneOf'),
+      )
       .required(t('register.error.confirmPassword.required')),
   });
-}
+};
