@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors, Scaling,Typography} from '../..';
+import {Colors, Scaling, Typography} from '../..';
 
 export const ButtonStyle = StyleSheet.create({
   container: {
@@ -13,5 +13,6 @@ export const ButtonStyle = StyleSheet.create({
   title: {
     ...Typography.button,
     color: Colors.white,
+    textTransform: 'uppercase',
   },
 });

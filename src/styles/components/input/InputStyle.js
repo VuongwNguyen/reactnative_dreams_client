@@ -12,7 +12,7 @@ export const AppInputStyle = StyleSheet.create({
     padding: 0,
     margin: 0,
     flex: 1,
-    ...Typography.edtValue
+    ...Typography.edtValue,
   },
   container: {
     borderColor: 'black',

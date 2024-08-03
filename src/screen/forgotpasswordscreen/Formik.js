@@ -1,18 +1,12 @@
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {forgotPasswordStyles} from '../../styles/forgotpassword/ForgotPasswordStyle';
+import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import AppInput from '../../components/Input';
 import {useTranslation} from 'react-i18next';
 
 export const FormikFG = props => {
   const {t} = useTranslation();
-
-  const validationSchema = Yup.object().shape({
-    emailAddress: Yup.string()
-      .email(t('forgotPasswordScreen.errorText.invalidEmail'))
-      .required(t('forgotPasswordScreen.errorText.required')),
-  });
   const formik = useFormik({
     initialValues: {
       emailAddress: '',
@@ -51,7 +45,6 @@ export const FormikFG = props => {
         style={forgotPasswordStyles.button}
         onPress={formik.handleSubmit}>
         <Text style={forgotPasswordStyles.buttonText}>
-          {' '}
           {t('forgotPasswordScreen.buttonText')}
         </Text>
       </TouchableOpacity>

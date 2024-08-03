@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import {TextInput} from 'react-native-gesture-handler';
+import {Text, View, TouchableOpacity} from 'react-native';
+import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {Assets} from '../../styles';
 import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
@@ -9,7 +8,6 @@ import {FormikFG} from './Formik';
 
 const ForgotPasswordScreen = () => {
   const {t} = useTranslation();
-
   return (
     <View style={forgotPasswordStyles.container}>
       <View style={forgotPasswordStyles.headerContainer}>

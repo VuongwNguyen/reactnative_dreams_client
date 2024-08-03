@@ -4,9 +4,7 @@ import {ButtonStyle} from './../styles/components/button/ButtonStyle';
 const AppButton = props => {
   const {title = '', onPress} = props;
   return (
-    <TouchableOpacity
-      style={ ButtonStyle.container}
-      onPress={onPress}>
+    <TouchableOpacity style={ButtonStyle.container} onPress={onPress}>
       <Text style={ButtonStyle.title}>{title}</Text>
     </TouchableOpacity>
   );

@@ -37,8 +37,6 @@
         "required": "Mật khẩu xác nhận không được trống",
         "oneOf": "Mật không không khớp"
       }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     }
   },
   "otpScreen": {
@@ -57,10 +55,6 @@
     "errorText": {
       "invalidEmail": "Email không hợp lệ",
       "required": "Bắt buộc"
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     },
     "otpScreen": {
       "headerTextOtp": "Xác Minh OTP",
@@ -75,11 +69,11 @@
       "textTitle": "Quên mật khẩu?",
       "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
       "placeholder": "Địa chỉ email của bạn",
+      "buttonText": "TIẾP TỤC",
       "errorText": {
         "invalidEmail": "Email không hợp lệ",
         "required": "Bắt buộc"
-      },
-      "buttonText": "TIẾP TỤC"
+      }
     }
   }
 }
