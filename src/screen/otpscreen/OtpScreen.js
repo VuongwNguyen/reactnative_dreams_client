@@ -23,7 +23,7 @@ const OtpScreen = () => {
                 </TouchableOpacity>
                 <Text style={OtpStyles.headerText}>{t("headerTextOtp")}</Text>
             </View>
-            <View style={styles.spacingHeight} />
+            <View style={OtpStyles.spacingHeight} />
             <View style={OtpStyles.formContainer}>
                 <View style={OtpStyles.textContanier}>
                     <Text style={OtpStyles.textTitle}>{t("textTitleOtp")}</Text>
@@ -37,7 +37,7 @@ const OtpScreen = () => {
                     t={t}
                     error={error}
                     setError={setError}
-                    handleCheckOutOTP={handleCheckOutOTP(setError, inputRefs, Alert)}
+                    handleCheckOutOTP={handleCheckOutOTP(setError, inputRefs, t("ErrorOtp"), Alert)}
                 />
                 <Text style={OtpStyles.textCodeSentResend}>{t("textCodeSentResendOtp")} <Text style={OtpStyles.testTime}>00:50</Text></Text>
             </View>
@@ -46,9 +46,3 @@ const OtpScreen = () => {
 };
 
 export default OtpScreen;
-
-const styles = StyleSheet.create({
-    spacingHeight: {
-        height: 40,
-    },
-});

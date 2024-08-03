@@ -5,5 +5,6 @@
   "textTitleOtp": "Enter OTP",
   "textSubOtp": "An Authentication code has been sent to",
   "buttonTextOtp": "NEXT",
-  "textCodeSentResendOtp": "Code Sent. Resend Code in"
+  "textCodeSentResendOtp": "Code Sent. Resend Code in",
+  "ErrorOtp": "OTP is incorrect"
 }

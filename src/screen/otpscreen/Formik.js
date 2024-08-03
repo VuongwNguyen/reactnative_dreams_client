@@ -2,7 +2,7 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import * as Yup from "yup"
 import { Formik } from 'formik';
 import { OtpStyles } from "../../styles/otpstyle/OtpStyle";
-import { handleChangeText, handleKeyPress } from "./Handle";
+import { onChangeText, onKeyPress } from "./Handle";
 
 
 
@@ -10,18 +10,10 @@ import { handleChangeText, handleKeyPress } from "./Handle";
 export const FormmikOtp = (props) => {
     const { inputRefs, t, error, setError, handleCheckOutOTP } = props;
 
-    const validationSchema = Yup.object().shape({
-        otp: Yup.array()
-            .of(Yup.string().length(1, 'Must be exactly 1 character'))
-            .min(4, 'OTP must be 4 characters long')
-            .max(4, 'OTP must be 4 characters long')
-            .required('Required'),
-    });
 
     return (
         <Formik
             initialValues={{ otp: ['', '', '', ''] }}
-            validationSchema={validationSchema}
             onSubmit={handleCheckOutOTP}>
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
                 <View style={{ flexDirection: "column", gap: 30 }}>
@@ -36,8 +28,8 @@ export const FormmikOtp = (props) => {
                                 ]}
                                 maxLength={1}
                                 keyboardType='number-pad'
-                                onChangeText={text => handleChangeText(setError, inputRefs, text, index, setFieldValue)}
-                                onKeyPress={e => handleKeyPress(e, inputRefs, index, setFieldValue)}
+                                onChangeText={text => onChangeText(setError, inputRefs, text, index, setFieldValue)}
+                                onKeyPress={e => onKeyPress(e, inputRefs, index, setFieldValue)}
                                 onBlur={handleBlur(`otp[${index}]`)}
                                 value={values.otp[index]}
                             />
