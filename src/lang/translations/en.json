@@ -8,5 +8,16 @@
     "buttonTextOtp": "NEXT",
     "textCodeSentResendOtp": "Code Sent. Resend Code in",
     "ErrorOtp": "OTP is incorrect"
+  },
+  "forgotPasswordScreen": {
+    "headerText": "Forgot Password",
+    "textTitle": "Forgot password?",
+    "textSub": " Enter your email address or phone number. If an account exists, you’ll get an activation code.",
+    "placeholder": "Your email address",
+    "errorText": {
+      "invalidEmail": "Invalid Email",
+      "required": "Required"
+    },
+    "buttonText": "CONTINUE"
   }
 }

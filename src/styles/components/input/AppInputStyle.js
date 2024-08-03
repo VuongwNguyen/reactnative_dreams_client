@@ -1,28 +1,30 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export const AppInputStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    maxHeight: 60,
+    width: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 10
+  },
   label: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#6C757D',
     position: 'absolute',
-    alignSelf: 'center',
-    opacity: 0,
-    left: 4,
+    bottom: 12,
+    left: 10,
+  },
+  groupInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
-    padding: 0,
-    margin: 0,
     flex: 1,
+    height: 40,
+    fontSize: 16
   },
-  container: {
-    borderColor: 'black',
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    paddingLeft: 4,
-  },
-  icon: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 4,
-  },
-});
+  eyeIcon: { size: 24, color: 'black' },
+  line: { height: 1, width: '100%', backgroundColor: '#D9D9D9' }
+})

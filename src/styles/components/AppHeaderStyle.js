@@ -1,18 +1,19 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '../../app/Colors';
+import { StyleSheet } from 'react-native'
+import { Colors } from '../app/Colors'
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    maxHeight: 35,
-    justifyContent: 'space-between',
+    maxHeight: 35
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    flex: 1,
     color: 'black',
+    paddingHorizontal: 20
   },
   rightButton: {
     width: 60,
@@ -20,9 +21,9 @@ export const AppHeaderStyle = StyleSheet.create({
     backgroundColor: Colors.primary.color,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 10
   },
   titleRightButton: {
-    color: 'white',
-  },
-});
+    color: 'white'
+  }
+})
