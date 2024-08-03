@@ -1,6 +1,14 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
+  "otpScreen": {
+    "headerTextOtp": "Xác Minh OTP",
+    "textTitleOtp": "Nhập OTP",
+    "textSubOtp": "Một mã xác thực đã được gửi tới",
+    "buttonTextOtp": "TIẾP",
+    "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+    "ErrorOtp": "OTP không chính xác"
+  },
   "forgotPasswordScreen": {
     "headerText": "Quên Mật Khẩu",
     "textTitle": "Quên mật khẩu?",
