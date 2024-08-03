@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useFormik } from "formik"
 import { View, Text, TouchableOpacity } from 'react-native';
 import { forgotPasswordStyles } from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
-import AppInput from '../../components/AppInput';
+import AppInput from '../../components/Input';
 import { useTranslation } from 'react-i18next';
 
 
@@ -25,6 +25,7 @@ export const FormikFG = (props) => {
             }
         }
     )
+    const { handleSubmit, handleChange, values, errors, touched } = formik;
 
     return (
         <View style={forgotPasswordStyles.formContainer}>
@@ -36,9 +37,9 @@ export const FormikFG = (props) => {
             </View>
             <View style={forgotPasswordStyles.input}>
                 <AppInput
-                    value={formik.values.emailAddress}
-                    setValue={formik.handleChange("emailAddress")}
-                    placeholder="Email Address"
+                    values={values.emailAddress}
+                    setValue={handleChange("emailAddress")}
+                    placeholder={t("forgotPasswordScreen.placeholder")}
                 />
                 {
                     formik.errors.emailAddress &&

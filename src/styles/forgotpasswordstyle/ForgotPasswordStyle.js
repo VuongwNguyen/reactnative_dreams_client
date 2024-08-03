@@ -52,8 +52,7 @@ export const forgotPasswordStyles = {
     errorText: {
         fontSize: 12,
         color: 'red',
-        marginTop: 10,
-        marginLeft: 10,
+        marginTop: 5,
     },
     button: {
         justifyContent: "center",
