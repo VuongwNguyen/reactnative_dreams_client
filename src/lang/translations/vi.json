@@ -1,4 +1,14 @@
 {
   "hello": "Xin Chào",
-  "counter": "Đếm"
+  "counter": "Đếm",
+  "forgotPasswordScreen": {
+    "headerText": "Quên Mật Khẩu",
+    "textTitle": "Quên mật khẩu?",
+    "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
+    "errorText": {
+      "invalidEmail": "Email không hợp lệ",
+      "required": "Bắt buộc"
+    },
+    "buttonText": "TIẾP TỤC"
+  }
 }

@@ -1,3 +1,6 @@
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
+
 export const forgotPasswordStyles = {
     container: {
         flex: 1,
@@ -16,6 +19,9 @@ export const forgotPasswordStyles = {
         lineHeight: 22,
         fontWeight: '600',
         color: 'black',
+    },
+    spacingHeight: {
+        height: 40,
     },
     formContainer: {
         flexDirection: 'column',
@@ -40,23 +46,14 @@ export const forgotPasswordStyles = {
         color: '#6c757d',
         letterSpacing: 0,
     },
-    wraperTextInput: {
-        position: 'relative',
+    input: {
+        height: height * 0.073,
     },
-    textInput: {
-        height: 40,
-        borderColor: 'gray',
-        borderBottomWidth: 1,
-        paddingLeft: 5,
-        fontSize: 16,
-        color: 'black',
-        borderRadius: 5,
-        backgroundColor: 'transparent',
-    },
-    placeholder: {
-        position: 'absolute',
-        backgroundColor: "",
-        bottom: 30,
+    errorText: {
+        fontSize: 12,
+        color: 'red',
+        marginTop: 10,
+        marginLeft: 10,
     },
     button: {
         justifyContent: "center",
