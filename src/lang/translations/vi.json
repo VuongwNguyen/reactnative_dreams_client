@@ -1,7 +1,7 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
-  "register":{
+  "register": {
     "welcome": "Chào mừng đến với Dreams!",
     "createAnAccount": "Tạo tài khoản",
     "firstName": "Tên",
@@ -15,11 +15,11 @@
     "error": {
       "firstName": {
         "required": "Tên không được trống",
-        "maxLength":"Tên không quá 20 ký tự"
+        "maxLength": "Tên không quá 20 ký tự"
       },
       "lastName": {
         "required": "Họ không được trống",
-        "maxLength":"Họ không quá 20 ký tự"
+        "maxLength": "Họ không quá 20 ký tự"
       },
       "email": {
         "required": "Email không được trống",
@@ -38,6 +38,7 @@
         "oneOf": "Mật không không khớp"
       }
     }
+  },
   "otpScreen": {
     "headerTextOtp": "Xác Minh OTP",
     "textTitleOtp": "Nhập OTP",
