@@ -1,6 +1,43 @@
 {
   "hello": "Hello world",
   "counter": "Counter",
+  "register": {
+    "welome": "Welcome to Dreams!",
+    "createAnAccount": "Create an account",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phoneNumber": "Phone number",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "register": "Register",
+    "login": "Login",
+    "alreadyHaveAnAccount": "Already have an account",
+    "error": {
+      "firstName": {
+        "required": "First name cannot be empty",
+        "maxLength": "First name must be at most 20 characters long"
+      },
+      "lastName": {
+        "required": "Last name cannot be empty",
+        "maxLength": "Last name must be at most 20 characters long"
+      },
+      "email": {
+        "required": "Email cannot be empty",
+        "invalid": "Email is invalid"
+      },
+      "phoneNumber": {
+        "required": "Phone number cannot be empty",
+        "invalid": "Phone number is invalid"
+      },
+      "password": {
+        "required": "Password cannot be empty",
+        "minLength": "Password must be at least 8 characters long"
+      },
+      "confirmPassword": {
+        "required": "Confirm password cannot be empty",
+        "oneOf": "Passwords must match"
+      }
+    }
   "otpScreen": {
     "headerTextOtp": "OTP Verification",
     "textTitleOtp": "Enter OTP",

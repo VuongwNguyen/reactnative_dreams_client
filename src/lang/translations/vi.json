@@ -1,6 +1,43 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
+  "register":{
+    "welcome": "Chào mừng đến với Dreams!",
+    "createAnAccount": "Tạo tài khoản",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "alreadyHaveAnAccount": "Đã đăng ký",
+    "error": {
+      "firstName": {
+        "required": "Tên không được trống",
+        "maxLength":"Tên không quá 20 ký tự"
+      },
+      "lastName": {
+        "required": "Họ không được trống",
+        "maxLength":"Họ không quá 20 ký tự"
+      },
+      "email": {
+        "required": "Email không được trống",
+        "invalid": "Email không hợp lệ"
+      },
+      "phoneNumber": {
+        "required": "Số điện thoại không được trống",
+        "invalid": "Số điện thoại không hợp lệ"
+      },
+      "password": {
+        "required": "Mật khẩu không đươc trống",
+        "minLength": "Mật khẩu phải nhiều hơn 8 ký tự"
+      },
+      "confirmPassword": {
+        "required": "Mật khẩu xác nhận không được trống",
+        "oneOf": "Mật không không khớp"
+      }
+    }
   "otpScreen": {
     "headerTextOtp": "Xác Minh OTP",
     "textTitleOtp": "Nhập OTP",
