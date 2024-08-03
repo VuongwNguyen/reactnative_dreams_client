@@ -13,10 +13,6 @@ export const AppHeaderStyle = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: Scaling.xs,
   },
-  emptyRightButton: {
-    width: 60,
-    height: 30,
-  },
   titleRightButton: {
     color: Colors.white,
     paddingVertical: Spacings.sm,
