@@ -1,14 +1,13 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {AppButtonStyle} from '../styles/components/button/ButtonStyle';
-
+import {ButtonStyle} from './../styles/components/button/ButtonStyle';
 const AppButton = props => {
   const {title = '', onPress} = props;
   return (
     <TouchableOpacity
-      style={ AppButtonStyle.container}
+      style={ ButtonStyle.container}
       onPress={onPress}>
-      <Text style={AppButtonStyle.title}>{title}</Text>
+      <Text style={ButtonStyle.title}>{title}</Text>
     </TouchableOpacity>
   );
 };
