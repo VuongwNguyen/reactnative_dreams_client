@@ -21,14 +21,14 @@ const OtpScreen = () => {
                 <TouchableOpacity>
                     <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={OtpStyles.headerText}>{t("headerTextOtp")}</Text>
+                <Text style={OtpStyles.headerText}>{t("otpScreen.headerTextOtp")}</Text>
             </View>
             <View style={OtpStyles.spacingHeight} />
             <View style={OtpStyles.formContainer}>
                 <View style={OtpStyles.textContanier}>
-                    <Text style={OtpStyles.textTitle}>{t("textTitleOtp")}</Text>
+                    <Text style={OtpStyles.textTitle}>{t("otpScreen.textTitleOtp")}</Text>
                     <Text style={OtpStyles.textSub}>
-                        {t("textSubOtp")} {"\n"}
+                        {t("otpScreen.textSubOtp")} {"\n"}
                         <Text style={OtpStyles.textEmailOrPhone}>example@example.com</Text>
                     </Text>
                 </View>
@@ -37,9 +37,9 @@ const OtpScreen = () => {
                     t={t}
                     error={error}
                     setError={setError}
-                    handleCheckOutOTP={handleCheckOutOTP(setError, inputRefs, t("ErrorOtp"), Alert)}
+                    handleCheckOutOTP={handleCheckOutOTP(setError, inputRefs, t("otpScreen.ErrorOtp"), Alert)}
                 />
-                <Text style={OtpStyles.textCodeSentResend}>{t("textCodeSentResendOtp")} <Text style={OtpStyles.testTime}>00:50</Text></Text>
+                <Text style={OtpStyles.textCodeSentResend}>{t("otpScreen.textCodeSentResendOtp")} <Text style={OtpStyles.testTime}>00:50</Text></Text>
             </View>
         </View>
     );

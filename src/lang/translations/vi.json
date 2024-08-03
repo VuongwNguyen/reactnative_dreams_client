@@ -1,10 +1,12 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
-  "headerTextOtp": "Xác Minh OTP",
-  "textTitleOtp": "Nhập OTP",
-  "textSubOtp": "Một mã xác thực đã được gửi tới",
-  "buttonTextOtp": "TIẾP",
-  "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
-  "ErrorOtp": "OTP không chính xác"
+  "otpScreen": {
+    "headerTextOtp": "Xác Minh OTP",
+    "textTitleOtp": "Nhập OTP",
+    "textSubOtp": "Một mã xác thực đã được gửi tới",
+    "buttonTextOtp": "TIẾP",
+    "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+    "ErrorOtp": "OTP không chính xác"
+  }
 }

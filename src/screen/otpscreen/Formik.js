@@ -16,7 +16,7 @@ export const FormmikOtp = (props) => {
             initialValues={{ otp: ['', '', '', ''] }}
             onSubmit={handleCheckOutOTP}>
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
-                <View style={{ flexDirection: "column", gap: 30 }}>
+                <View style={OtpStyles.formContainer}>
                     <View style={OtpStyles.wraperInputContainer}>
                         {inputRefs.map((ref, index) => (
                             <TextInput
@@ -43,7 +43,7 @@ export const FormmikOtp = (props) => {
                         onPress={handleSubmit}
                         disabled={values.otp.some(val => val === '')}
                     >
-                        <Text style={OtpStyles.buttonText}>{t("buttonTextOtp")}</Text>
+                        <Text style={OtpStyles.buttonText}>{t("otpScreen.buttonTextOtp")}</Text>
                     </TouchableOpacity>
                 </View>
 
