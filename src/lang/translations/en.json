@@ -38,6 +38,7 @@
         "oneOf": "Passwords must match"
       }
     }
+  },
   "otpScreen": {
     "headerTextOtp": "OTP Verification",
     "textTitleOtp": "Enter OTP",
