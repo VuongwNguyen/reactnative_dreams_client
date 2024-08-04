@@ -1,11 +1,11 @@
-import {StyleSheet} from 'react-native';
-import {Spacings, Typography} from '../../';
+import { StyleSheet } from 'react-native';
+import { Spacings, Typography } from '../../';
 
 export const AppInputStyle = StyleSheet.create({
   label: {
     position: 'absolute',
     alignSelf: 'center',
-    opacity: 0,
+    // opacity: 0,
     left: Spacings.xs,
   },
   input: {
