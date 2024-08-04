@@ -56,6 +56,7 @@
       "invalidEmail": "Email không hợp lệ",
       "required": "Bắt buộc"
     },
+<<<<<<< HEAD
     "otpScreen": {
       "headerTextOtp": "Xác Minh OTP",
       "textTitleOtp": "Nhập OTP",
@@ -74,6 +75,23 @@
         "invalidEmail": "Email không hợp lệ",
         "required": "Bắt buộc"
       }
+=======
+    "buttonText": "TIẾP TỤC"
+  },
+  "changePwScreen": {
+    "changePwTitle": "Đổi mật khẩu",
+    "changePw": "Đổi mật khẩu của bạn",
+    "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+    "currentPw": "Mật khẩu hiện tại",
+    "newPw": "Mật khẩu mới",
+    "confirmNewPw": "Xác nhận mật khẩu mới",
+    "save": "Lưu",
+    "error": {
+      "required": "Bắt buộc",
+      "min": "Mật khẩu phải tối thiếu 6 kí tự",
+      "invalid": "Mật khẩu không hợp lệ",
+      "notMatch": "Xác nhận mật khẩu không khớp"
+>>>>>>> 988f665798f44c1eb81e9b6c9844f914d0675123
     }
   }
 }
