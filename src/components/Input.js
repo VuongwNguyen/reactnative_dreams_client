@@ -1,7 +1,7 @@
-import {TextInput, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
-import {Assets} from '../styles';
-import {AppInputStyle} from '../styles/components/input/InputStyle';
+import { TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { Assets } from '../styles';
+import { AppInputStyle } from '../styles/components/input/InputStyle';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Animated, {
   Extrapolation,
@@ -14,7 +14,7 @@ import Animated, {
 const TextInputAnimated = Animated.createAnimatedComponent(TextInput);
 
 export default function AppInput(props) {
-  const {placeholder, value, setValue, isPassword} = props;
+  const { placeholder, value, setValue, isPassword } = props;
   const translateY = useSharedValue(0);
   const label = useSharedValue(placeholder);
   const [isHide, setIsHide] = useState(false);
@@ -39,10 +39,10 @@ export default function AppInput(props) {
           translateY: translateY.value,
         },
       ],
-      opacity: interpolate(
+      fontSize: interpolate(
         translateY.value,
-        [0, -16 * 2],
-        [0, 1],
+        [16, 12],
+        [16, 14],
         Extrapolation.CLAMP,
       ),
     };
@@ -57,7 +57,6 @@ export default function AppInput(props) {
         value={value}
         style={AppInputStyle.input}
         onChangeText={t => setValue(t)}
-        placeholder={label}
         secureTextEntry={isPassword && isHide}
         onFocus={() => {
           triggerAnimation(-10 * 2, true);
