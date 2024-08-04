@@ -3,8 +3,9 @@ import {useTranslation} from 'react-i18next';
 import {View, Text} from 'react-native';
 import AppButton from '../../components/Button';
 import AppInput from '../../components/Input';
-import {useFormikHook} from '../../hooks/useFomikHook';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import {registerSchema} from '../../configs/validateSchema/registerSchema';
 
 const RegisterForm = () => {
   const {t} = useTranslation();
@@ -19,7 +20,7 @@ const RegisterForm = () => {
         errors.confirmPassword,
     );
   };
-  const formik = useFormikHook(
+  const formik = useFormikH(
     {
       firstName: '',
       lastName: '',
@@ -28,7 +29,11 @@ const RegisterForm = () => {
       password: '',
       confirmPassword: '',
     },
-    () => {},
+    registerSchema,
+    (val, {resetForm}) => {
+      console.log(val);
+      resetForm();
+    },
   );
   const {handleSubmit, handleChange, values, errors, touched} = formik;
 

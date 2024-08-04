@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import React from 'react';
-import {Assets,Sizing, Typography} from '../styles';
+import {Assets, Sizing, Typography} from '../styles';
 import {AppHeaderStyle} from '../styles/components/header/HeaderStyle';
 
 const AppHeader = props => {

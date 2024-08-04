@@ -56,21 +56,40 @@
       "invalidEmail": "Email không hợp lệ",
       "required": "Bắt buộc"
     },
-    "buttonText": "TIẾP TỤC"
-  },
-  "changePwScreen": {
-    "changePwTitle": "Đổi mật khẩu",
-    "changePw": "Đổi mật khẩu của bạn",
-    "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
-    "currentPw": "Mật khẩu hiện tại",
-    "newPw": "Mật khẩu mới",
-    "confirmNewPw": "Xác nhận mật khẩu mới",
-    "save": "Lưu",
-    "error": {
-      "required": "Bắt buộc",
-      "min": "Mật khẩu phải tối thiếu 6 kí tự",
-      "invalid": "Mật khẩu không hợp lệ",
-      "notMatch": "Xác nhận mật khẩu không khớp"
+
+    "otpScreen": {
+      "headerTextOtp": "Xác Minh OTP",
+      "textTitleOtp": "Nhập OTP",
+      "textSubOtp": "Một mã xác thực đã được gửi tới",
+      "buttonTextOtp": "TIẾP",
+      "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+      "ErrorOtp": "OTP không chính xác"
+    },
+    "forgotPasswordScreen": {
+      "headerText": "Quên Mật Khẩu",
+      "textTitle": "Quên mật khẩu?",
+      "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
+      "placeholder": "Địa chỉ email của bạn",
+      "buttonText": "TIẾP TỤC",
+      "errorText": {
+        "invalidEmail": "Email không hợp lệ",
+        "required": "Bắt buộc"
+      }
+    },
+    "changePwScreen": {
+      "changePwTitle": "Đổi mật khẩu",
+      "changePw": "Đổi mật khẩu của bạn",
+      "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+      "currentPw": "Mật khẩu hiện tại",
+      "newPw": "Mật khẩu mới",
+      "confirmNewPw": "Xác nhận mật khẩu mới",
+      "save": "Lưu",
+      "error": {
+        "required": "Bắt buộc",
+        "min": "Mật khẩu phải tối thiếu 6 kí tự",
+        "invalid": "Mật khẩu không hợp lệ",
+        "notMatch": "Xác nhận mật khẩu không khớp"
+      }
     }
   }
 }
