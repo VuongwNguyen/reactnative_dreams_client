@@ -7,6 +7,13 @@ import {useTranslation} from 'react-i18next';
 
 export const FormikFG = props => {
   const {t} = useTranslation();
+
+  const validationSchema = Yup.object().shape({
+    emailAddress: Yup.string()
+      .email(t('forgotPasswordScreen.errorText.invalidEmail'))
+      .required(t('forgotPasswordScreen.errorText.required')),
+  });
+
   const formik = useFormik({
     initialValues: {
       emailAddress: '',
