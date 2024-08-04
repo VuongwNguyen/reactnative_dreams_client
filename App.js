@@ -7,6 +7,7 @@ import {Provider as ReduxProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Navigator} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 
 export default function App() {
   React.useEffect(() => {
@@ -22,15 +23,17 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <GestureHandlerRootView>
-            <NavigationContainer
-            // onReady={() => {
-            //   SplashScreen.hide();
-            // }}
-            >
-              <Navigator />
-            </NavigationContainer>
-          </GestureHandlerRootView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <GestureHandlerRootView>
+              <NavigationContainer
+              // onReady={() => {
+              //   SplashScreen.hide();
+              // }}
+              >
+                <Navigator />
+              </NavigationContainer>
+            </GestureHandlerRootView>
+          </TouchableWithoutFeedback>
         </SafeAreaProvider>
       </PersistGate>
     </ReduxProvider>

@@ -5,7 +5,7 @@ import FormikForm from './FormikForm';
 import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordStyle';
 import AppHeader from '../../components/Header';
 
-const ChangePasswordScreen = () => {
+const ChangeNewPasswordScreen = () => {
   const {t} = useTranslation();
   const goBackScreen = () => {};
   return (
@@ -23,7 +23,7 @@ const ChangePasswordScreen = () => {
         <View style={changePasswordStyle.bodyContainer}>
           <View style={changePasswordStyle.textContanier}>
             <Text style={changePasswordStyle.textTitle}>
-              {t('changePwScreen.changePw')}
+              {t('changePwScreen.changeNewPw')}
             </Text>
             <Text style={changePasswordStyle.textSub}>
               {t('changePwScreen.pwRule')}
@@ -36,4 +36,4 @@ const ChangePasswordScreen = () => {
   );
 };
 
-export default ChangePasswordScreen;
+export default ChangeNewPasswordScreen;

@@ -4,62 +4,44 @@ import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordSty
 import AppInput from '../../components/Input';
 import AppButton from '../../components/Button';
 import {useTranslation} from 'react-i18next';
-import { Typography } from '../../styles';
 import {useFormikH} from '../../configs/hooks/useFormikH';
-import { ChangePasswordSchema } from '../../configs/validateSchema/ChangePasswordSchema';
+import {ChangeNewPasswordSchema} from '../../configs/validateSchema/ChangeNewPasswordSchema';
 const FormikForm = () => {
   const {t} = useTranslation();
 
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
-      currentPassword: '',
-      newPassword: '',
-      passwordConfirm: '',
+      newPw: '',
+      newPwConfirm: '',
     },
-    ChangePasswordSchema,
+    ChangeNewPasswordSchema,
     (values, {resetForm}) => {
       console.log(values);
       resetForm();
     },
   );
-
   return (
     <View style={changePasswordStyle.inputGroup}>
       <View style={changePasswordStyle.input}>
         <AppInput
-          value={values.currentPassword}
-          setValue={handleChange('currentPassword')}
-          placeholder={t('changePwScreen.currentPw')}
-        />
-        {errors.currentPassword && (
-          <Text style={Typography.errorText}>
-            {errors.currentPassword}
-          </Text>
-        )}
-      </View>
-
-      <View style={changePasswordStyle.input}>
-        <AppInput
-          value={values.newPassword}
-          setValue={handleChange('newPassword')}
+          value={values.newPw}
+          setValue={handleChange('newPw')}
           placeholder={t('changePwScreen.newPw')}
         />
-        {errors.newPassword && (
-          <Text style={Typography.errorText}>
-            {errors.newPassword}
-          </Text>
+        {errors.newPw && (
+          <Text style={changePasswordStyle.errorText}>{errors.newPw}</Text>
         )}
       </View>
 
       <View style={changePasswordStyle.input}>
         <AppInput
-          value={values.passwordConfirm}
-          setValue={handleChange('passwordConfirm')}
+          value={values.newPwConfirm}
+          setValue={handleChange('newPwConfirm')}
           placeholder={t('changePwScreen.confirmNewPw')}
         />
-        {errors.passwordConfirm && (
-          <Text style={Typography.errorText}>
-            {errors.passwordConfirm}
+        {errors.newPwConfirm && (
+          <Text style={changePasswordStyle.errorText}>
+            {errors.newPwConfirm}
           </Text>
         )}
       </View>

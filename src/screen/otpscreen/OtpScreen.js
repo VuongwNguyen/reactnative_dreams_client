@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import Feather from 'react-native-vector-icons/Feather';
 import {Assets} from '../../styles';
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
-import {FormmikOtp} from './Formik';
+import {FormmikOtp} from './FormikForm';
 import {handleCheckOutOTP} from './Handle';
 
 const OtpScreen = () => {
