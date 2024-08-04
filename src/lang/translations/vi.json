@@ -61,6 +61,7 @@
   "changePwScreen": {
     "changePwTitle": "Đổi mật khẩu",
     "changePw": "Đổi mật khẩu của bạn",
+    "changeNewPw": "Thay đổi mật khẩu mới",
     "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
     "currentPw": "Mật khẩu hiện tại",
     "newPw": "Mật khẩu mới",

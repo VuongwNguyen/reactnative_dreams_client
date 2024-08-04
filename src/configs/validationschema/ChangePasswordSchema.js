@@ -15,7 +15,7 @@ export const ChangePasswordSchema = () => {
     newPassword: Yup.string()
       .min(6, t('changePwScreen.error.min'))
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
         t('changePwScreen.error.invalid'),
       )
       .required(t('changePwScreen.error.required')),

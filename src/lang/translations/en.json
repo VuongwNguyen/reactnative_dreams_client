@@ -60,6 +60,7 @@
   },
   "changePwScreen": {
     "changePwTitle": "Change your password",
+    "changeNewPw": "Change new password",
     "changePw": "Change password",
     "pwRule": "The new password must be more than 6 characters, contain uppercase letters, lowercase letters, numbers and special characters",
     "currentPw": "Current password",
