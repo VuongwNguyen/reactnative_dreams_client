@@ -1,6 +1,63 @@
 {
   "hello": "Xin Chào",
   "counter": "Đếm",
+  "register": {
+    "welcome": "Chào mừng đến với Dreams!",
+    "createAnAccount": "Tạo tài khoản",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "alreadyHaveAnAccount": "Đã đăng ký",
+    "error": {
+      "firstName": {
+        "required": "Tên không được trống",
+        "maxLength": "Tên không quá 20 ký tự"
+      },
+      "lastName": {
+        "required": "Họ không được trống",
+        "maxLength": "Họ không quá 20 ký tự"
+      },
+      "email": {
+        "required": "Email không được trống",
+        "invalid": "Email không hợp lệ"
+      },
+      "phoneNumber": {
+        "required": "Số điện thoại không được trống",
+        "invalid": "Số điện thoại không hợp lệ"
+      },
+      "password": {
+        "required": "Mật khẩu không đươc trống",
+        "minLength": "Mật khẩu phải nhiều hơn 8 ký tự"
+      },
+      "confirmPassword": {
+        "required": "Mật khẩu xác nhận không được trống",
+        "oneOf": "Mật không không khớp"
+      }
+    }
+  },
+  "otpScreen": {
+    "headerTextOtp": "Xác Minh OTP",
+    "textTitleOtp": "Nhập OTP",
+    "textSubOtp": "Một mã xác thực đã được gửi tới",
+    "buttonTextOtp": "TIẾP",
+    "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+    "ErrorOtp": "OTP không chính xác"
+  },
+  "forgotPasswordScreen": {
+    "headerText": "Quên Mật Khẩu",
+    "textTitle": "Quên mật khẩu?",
+    "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
+    "placeholder": "Địa chỉ email của bạn",
+    "errorText": {
+      "invalidEmail": "Email không hợp lệ",
+      "required": "Bắt buộc"
+    },
+    "buttonText": "TIẾP TỤC"
+  },
   "changePwScreen": {
     "changePwTitle": "Đổi mật khẩu",
     "changePw": "Đổi mật khẩu của bạn",

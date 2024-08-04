@@ -6,6 +6,9 @@ export const changePasswordStyle = {
     backgroundColor: '#FFFFFF',
     padding: Spacings.lg,
   },
+  headerContainer: {
+    height: Spacings.xl,
+  },
   spacingHeight: {
     padding: Spacings.lg,
   },
@@ -27,6 +30,7 @@ export const changePasswordStyle = {
     color: Colors.secondary,
   },
   input: {
+    minHeight: 50,
     maxHeight: 60,
     justifyContent: 'center',
   },

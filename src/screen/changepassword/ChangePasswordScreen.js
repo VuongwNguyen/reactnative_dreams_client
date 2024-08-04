@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import {Text, View, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import React from 'react';
 
 import {useTranslation} from 'react-i18next';
@@ -20,12 +13,15 @@ const ChangePasswordScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={changePasswordStyle.container}>
-        <AppHeader
-          title={t('changePwScreen.changePwTitle')}
-          goBack={goBackScreen}
-        />
+        <View style={changePasswordStyle.headerContainer}>
+          <AppHeader
+            title={t('changePwScreen.changePwTitle')}
+            goBack={goBackScreen}
+          />
+        </View>
 
         <View style={changePasswordStyle.spacingHeight} />
+
         <View style={changePasswordStyle.bodyContainer}>
           <View style={changePasswordStyle.textContanier}>
             <Text style={changePasswordStyle.textTitle}>
