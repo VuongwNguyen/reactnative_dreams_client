@@ -57,5 +57,20 @@
       "required": "Required"
     },
     "buttonText": "CONTINUE"
+  },
+  "changePwScreen": {
+    "changePwTitle": "Change your password",
+    "changePw": "Change password",
+    "pwRule": "The new password must be more than 6 characters, contain uppercase letters, lowercase letters, numbers and special characters",
+    "currentPw": "Current password",
+    "newPw": "New password",
+    "confirmNewPw": "Confirm new password",
+    "save": "Save",
+    "error": {
+      "required": "Required",
+      "min": "Password must be at least 6 characters long",
+      "invalid": "Password is invalid",
+      "notMatch": "Confirm password is doesn't match"
+    }
   }
 }
