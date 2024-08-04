@@ -1,26 +1,28 @@
 import axios from 'axios';
 
-const baseURL = 'http://example.com';
+const AxiosInstance = (contentType = 'application/json') => {
+  const axiosInstance = axios.create({
+    baseURL: 'https://api.example.com',
+  });
+  axiosInstance.interceptors.request.use(
+    async config => {
+      // const token = localStorage.getItem("token");
+      const token = '';
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': contentType,
+        security: 'secure_code',
+      };
+      return config;
+    },
+    err => Promise.reject(err),
+  );
+  axiosInstance.interceptors.response.use(
+    res => res.data,
+    err => Promise.reject(err),
+  );
 
-export const axiosInstance = axios.create({
-  baseURL,
-  timeout: 10000,
-});
-
-axiosInstance.interceptors.request.use(
-  config => {
-    return config;
-  },
-  error => {
-    console.log(error);
-  },
-);
-
-axiosInstance.interceptors.response.use(
-  response => {
-    return response.data;
-  },
-  error => {
-    console.log(error);
-  },
-);
+  return axiosInstance;
+};
+export default AxiosInstance;

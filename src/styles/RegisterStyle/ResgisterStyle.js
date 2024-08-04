@@ -24,20 +24,20 @@ export const RegisterStyle = StyleSheet.create({
     gap: 10,
   },
   button: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0CBBF0",
-    shadowColor: "rgba(0, 0, 0, 0.25)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0CBBF0',
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOffset: {
-        width: 5,
-        height: 4
+      width: 5,
+      height: 4,
     },
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: "100%",
+    width: '100%',
     height: 70,
-    borderRadius: 15
+    borderRadius: 15,
   },
   logo: {
     width: 120,
@@ -66,7 +66,7 @@ export const RegisterStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   textError: {
-    ...Typography.bsdDescription,
+    ...Typography.edtHint,
     color: Colors.error,
     alignSelf: 'center',
   },

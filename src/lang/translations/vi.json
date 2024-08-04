@@ -52,11 +52,11 @@
     "textTitle": "Quên mật khẩu?",
     "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
     "placeholder": "Địa chỉ email của bạn",
+    "buttonText": "TIẾP TỤC",
     "errorText": {
       "invalidEmail": "Email không hợp lệ",
       "required": "Bắt buộc"
-    },
-    "buttonText": "TIẾP TỤC"
+    }
   },
   "changePwScreen": {
     "changePwTitle": "Đổi mật khẩu",
