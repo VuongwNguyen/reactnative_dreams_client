@@ -14,27 +14,27 @@
     "alreadyHaveAnAccount": "Đã đăng ký",
     "error": {
       "firstName": {
-        "required": "Tên không được trống",
+        "required": "Bắt buộc",
         "maxLength": "Tên không quá 20 ký tự"
       },
       "lastName": {
-        "required": "Họ không được trống",
+        "required": "Bắt buộc",
         "maxLength": "Họ không quá 20 ký tự"
       },
       "email": {
-        "required": "Email không được trống",
+        "required": "Bắt buộc",
         "invalid": "Email không hợp lệ"
       },
       "phoneNumber": {
-        "required": "Số điện thoại không được trống",
+        "required": "Bắt buộc",
         "invalid": "Số điện thoại không hợp lệ"
       },
       "password": {
-        "required": "Mật khẩu không đươc trống",
+        "required": "Bắt buộc",
         "minLength": "Mật khẩu phải nhiều hơn 8 ký tự"
       },
       "confirmPassword": {
-        "required": "Mật khẩu xác nhận không được trống",
+        "required": "Bắt buộc",
         "oneOf": "Mật không không khớp"
       }
     }

@@ -4,22 +4,22 @@ import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordSty
 import AppInput from '../../components/Input';
 import AppButton from '../../components/Button';
 import {useTranslation} from 'react-i18next';
-import useFormikHook from './useFomik';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import {ChangeNewPasswordSchema} from '../../configs/validateSchema/ChangeNewPasswordSchema';
 const FormikForm = () => {
   const {t} = useTranslation();
 
-  const formik = useFormikHook(
+  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       newPw: '',
       newPwConfirm: '',
     },
-
+    ChangeNewPasswordSchema,
     (values, {resetForm}) => {
       console.log(values);
       resetForm();
     },
   );
-  const {handleSubmit, handleChange, values, errors, touched} = formik;
   return (
     <View style={changePasswordStyle.inputGroup}>
       <View style={changePasswordStyle.input}>
@@ -28,9 +28,9 @@ const FormikForm = () => {
           setValue={handleChange('newPw')}
           placeholder={t('changePwScreen.newPw')}
         />
-        {errors.newPw && touched.newPw ? (
+        {errors.newPw && (
           <Text style={changePasswordStyle.errorText}>{errors.newPw}</Text>
-        ) : null}
+        )}
       </View>
 
       <View style={changePasswordStyle.input}>
@@ -39,20 +39,15 @@ const FormikForm = () => {
           setValue={handleChange('newPwConfirm')}
           placeholder={t('changePwScreen.confirmNewPw')}
         />
-        {errors.newPwConfirm && formik.touched.newPwConfirm ? (
+        {errors.newPwConfirm && (
           <Text style={changePasswordStyle.errorText}>
             {errors.newPwConfirm}
           </Text>
-        ) : null}
+        )}
       </View>
 
       <View style={changePasswordStyle.button}>
-        <AppButton
-          title={t('changePwScreen.save')}
-          onPress={() => {
-            handleSubmit();
-          }}
-        />
+        <AppButton title={t('changePwScreen.save')} onPress={handleSubmit} />
       </View>
     </View>
   );

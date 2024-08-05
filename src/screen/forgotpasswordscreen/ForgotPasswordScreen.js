@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Assets} from '../../styles';
 import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import {useTranslation} from 'react-i18next';
-import {FormikFG} from './Formik';
+import {FormikFG} from './FormikForm';
 
 const ForgotPasswordScreen = () => {
   const {t} = useTranslation();

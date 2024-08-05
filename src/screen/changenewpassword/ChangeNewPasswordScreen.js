@@ -1,8 +1,6 @@
 import {Text, View, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import React from 'react';
-
 import {useTranslation} from 'react-i18next';
-
 import FormikForm from './FormikForm';
 import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordStyle';
 import AppHeader from '../../components/Header';

@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Fonts} from '../app/Fonts';
+import { Fonts } from './Fonts';
+import { Spacings } from './Spacings';
+import { Colors } from './Colors';
 
 export const Typography = StyleSheet.create({
   title: {
@@ -91,5 +93,9 @@ export const Typography = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '700',
     lineHeight: 22,
+  },
+  errorText: {
+    fontSize: 12,
+    color: Colors.error,
   },
 });

@@ -4,23 +4,25 @@ import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordSty
 import AppInput from '../../components/Input';
 import AppButton from '../../components/Button';
 import {useTranslation} from 'react-i18next';
-import useFormikHook from './useFormik';
+import { Typography } from '../../styles';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import { ChangePasswordSchema } from '../../configs/validateSchema/ChangePasswordSchema';
 const FormikForm = () => {
   const {t} = useTranslation();
 
-  const formik = useFormikHook(
+  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       currentPassword: '',
       newPassword: '',
       passwordConfirm: '',
     },
-
+    ChangePasswordSchema,
     (values, {resetForm}) => {
       console.log(values);
       resetForm();
     },
   );
-  const {handleSubmit, handleChange, values, errors, touched} = formik;
+
   return (
     <View style={changePasswordStyle.inputGroup}>
       <View style={changePasswordStyle.input}>
@@ -29,11 +31,11 @@ const FormikForm = () => {
           setValue={handleChange('currentPassword')}
           placeholder={t('changePwScreen.currentPw')}
         />
-        {errors.currentPassword && touched.currentPassword ? (
-          <Text style={changePasswordStyle.errorText}>
+        {errors.currentPassword && (
+          <Text style={Typography.errorText}>
             {errors.currentPassword}
           </Text>
-        ) : null}
+        )}
       </View>
 
       <View style={changePasswordStyle.input}>
@@ -42,11 +44,11 @@ const FormikForm = () => {
           setValue={handleChange('newPassword')}
           placeholder={t('changePwScreen.newPw')}
         />
-        {errors.newPassword && touched.newPassword ? (
-          <Text style={changePasswordStyle.errorText}>
+        {errors.newPassword && (
+          <Text style={Typography.errorText}>
             {errors.newPassword}
           </Text>
-        ) : null}
+        )}
       </View>
 
       <View style={changePasswordStyle.input}>
@@ -55,20 +57,15 @@ const FormikForm = () => {
           setValue={handleChange('passwordConfirm')}
           placeholder={t('changePwScreen.confirmNewPw')}
         />
-        {errors.passwordConfirm && formik.touched.passwordConfirm ? (
-          <Text style={changePasswordStyle.errorText}>
+        {errors.passwordConfirm && (
+          <Text style={Typography.errorText}>
             {errors.passwordConfirm}
           </Text>
-        ) : null}
+        )}
       </View>
 
       <View style={changePasswordStyle.button}>
-        <AppButton
-          title={t('changePwScreen.save')}
-          onPress={() => {
-            handleSubmit();
-          }}
-        />
+        <AppButton title={t('changePwScreen.save')} onPress={handleSubmit} />
       </View>
     </View>
   );

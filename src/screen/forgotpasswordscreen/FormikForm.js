@@ -1,30 +1,24 @@
 import * as Yup from 'yup';
-import {useFormik} from 'formik';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import AppInput from '../../components/Input';
 import {useTranslation} from 'react-i18next';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import {forgotPasswordSchema} from '../../configs/validateSchema/forgotPasswordSchema';
 
 export const FormikFG = props => {
   const {t} = useTranslation();
 
-  const validationSchema = Yup.object().shape({
-    emailAddress: Yup.string()
-      .email(t('forgotPasswordScreen.errorText.invalidEmail'))
-      .required(t('forgotPasswordScreen.errorText.required')),
-  });
-
-  const formik = useFormik({
-    initialValues: {
+  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
+    {
       emailAddress: '',
     },
-    validationSchema: validationSchema,
-    onSubmit: (values, {resetForm}) => {
+    forgotPasswordSchema,
+    (values, {resetForm}) => {
       console.log(values);
       resetForm();
     },
-  });
-  const {handleSubmit, handleChange, values, errors, touched} = formik;
+  );
 
   return (
     <View style={forgotPasswordStyles.formContainer}>
@@ -42,15 +36,15 @@ export const FormikFG = props => {
           setValue={handleChange('emailAddress')}
           placeholder={t('forgotPasswordScreen.placeholder')}
         />
-        {formik.errors.emailAddress && (
+        {errors.emailAddress && (
           <Text style={forgotPasswordStyles.errorText}>
-            {formik.errors.emailAddress}
+            {errors.emailAddress}
           </Text>
         )}
       </View>
       <TouchableOpacity
         style={forgotPasswordStyles.button}
-        onPress={formik.handleSubmit}>
+        onPress={handleSubmit}>
         <Text style={forgotPasswordStyles.buttonText}>
           {t('forgotPasswordScreen.buttonText')}
         </Text>
