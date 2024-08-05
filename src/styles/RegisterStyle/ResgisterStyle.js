@@ -1,9 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {Colors, Spacings, Typography} from '../';
 
 export const RegisterStyle = StyleSheet.create({
   container: {
-    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
     padding: Spacings.lg,
   },
   containerForm: {
