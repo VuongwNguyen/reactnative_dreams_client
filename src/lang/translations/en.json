@@ -2,7 +2,7 @@
   "hello": "Hello world",
   "counter": "Counter",
   "register": {
-    "welome": "Welcome to Dreams!",
+    "welome": "Sign in",
     "createAnAccount": "Create an account",
     "firstName": "First name",
     "lastName": "Last name",
@@ -37,6 +37,28 @@
         "required": "Confirm password cannot be empty",
         "oneOf": "Passwords must match"
       }
+    }
+  },
+  "loginScreen": {
+    "welcome": "Welcome to Dreams!",
+    "title":"Login to continue!", 
+    "subTitle":"Connect with friends, discover new communities, and share your life with orthers.Connect with friends, discover new communities, and share your life with orthers.",
+    "password": "Password",
+    "login":"Login",
+    "or":"OR",
+    "remmberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "notAccount":"Don't have an account?",
+    "register": "Register",
+    "error": {
+      "email": {
+        "required": "Email cannot be empty",
+        "invalid": "Email is invalid"
+      },
+      "password": {
+        "required": "Password cannot be empty"
+      },
+      "verify":"Account or password is incorrect"
     }
   },
   "otpScreen": {

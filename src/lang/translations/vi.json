@@ -2,7 +2,7 @@
   "hello": "Xin Chào",
   "counter": "Đếm",
   "register": {
-    "welcome": "Chào mừng đến với Dreams!",
+    "welcome": "Đăng ký tài khoản",
     "createAnAccount": "Tạo tài khoản",
     "firstName": "Tên",
     "lastName": "Họ",
@@ -14,29 +14,51 @@
     "alreadyHaveAnAccount": "Đã đăng ký",
     "error": {
       "firstName": {
-        "required": "Bắt buộc",
+        "required": "Tên là bắt buộc",
         "maxLength": "Tên không quá 20 ký tự"
       },
       "lastName": {
-        "required": "Bắt buộc",
+        "required": "Họ là bắt buộc",
         "maxLength": "Họ không quá 20 ký tự"
       },
       "email": {
-        "required": "Bắt buộc",
+        "required": "Email là bắt buộc",
         "invalid": "Email không hợp lệ"
       },
       "phoneNumber": {
-        "required": "Bắt buộc",
+        "required": "Số điện thoại là bắt buộc",
         "invalid": "Số điện thoại không hợp lệ"
       },
       "password": {
-        "required": "Bắt buộc",
+        "required": "Mật khẩu là bắt buộc",
         "minLength": "Mật khẩu phải nhiều hơn 8 ký tự"
       },
       "confirmPassword": {
-        "required": "Bắt buộc",
+        "required": "Xác nhận mật khẩu là bắt buộc",
         "oneOf": "Mật không không khớp"
       }
+    }
+  },
+  "loginScreen": {
+    "welcome": "Chào mừng đến với Dreams!",
+    "title": "Đăng nhập để tiếp tục",
+    "subTitle": "Kết nối với bạn bè, khám phá cộng đồng mới và chia sẻ cuộc sống của bạn với những người khác.",
+    "password": "Mật khẩu",
+    "login": "Đăng nhập",
+    "or": "Hoặc",
+    "remmberMe": "Nhớ tài khoản",
+    "forgotPassword": "Quên mật khẩu?",
+    "notAccount": "Chưa tài khoản ?",
+    "register": "Đăng ký",
+    "error": {
+      "email": {
+        "required": "Email không được trống",
+        "invalid": "Email không hợp lệ"
+      },
+      "password": {
+        "required": "Password không được trống"
+      },
+      "verify": "Tài khoản hoặc mật khẩu không đúng"
     }
   },
   "otpScreen": {
