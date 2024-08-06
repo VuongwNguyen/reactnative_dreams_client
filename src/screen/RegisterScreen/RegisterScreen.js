@@ -15,7 +15,7 @@ const RegisterScreen = () => {
   const {t} = useTranslation();
   return (
     <KeyboardAvoidingView>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={RegisterStyle.container}>
             <View style={RegisterStyle.containerHeader}>

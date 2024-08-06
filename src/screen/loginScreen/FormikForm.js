@@ -28,7 +28,7 @@ const FormikForm = () => {
     <View style={RegisterStyle.containerForm}>
       <View>
         <Input
-          placeholder="Email"
+          placeholder={t('loginScreen.emailOrPhoneNumber')}
           value={values.email}
           setValue={handleChange('email')}
         />

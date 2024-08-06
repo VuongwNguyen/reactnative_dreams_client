@@ -50,6 +50,7 @@
     "forgotPassword": "Quên mật khẩu?",
     "notAccount": "Chưa tài khoản ?",
     "register": "Đăng ký",
+    "emailOrPhoneNumber":"Email hoặc số điện thoại",
     "error": {
       "email": {
         "required": "Email không được trống",

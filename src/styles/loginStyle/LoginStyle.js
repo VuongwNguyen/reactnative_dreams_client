@@ -99,6 +99,9 @@ export const LoginStyle = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
   },
+  subTitle:{
+    textAlign: 'center',
+  },
   image: {
     width: 50,
     height: 50,
