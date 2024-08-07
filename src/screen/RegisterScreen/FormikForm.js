@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {registerSchema} from '../../configs/validateSchema/registerSchema';
-import {Typography} from '../../styles';
+import {Assets, Typography} from '../../styles';
+import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 
 const RegisterForm = () => {
   const {t} = useTranslation();
@@ -92,11 +93,23 @@ const RegisterForm = () => {
           <Text style={Typography.errorText}>{errors.confirmPassword}</Text>
         )}
       </View>
-
-      <Button
-        onPress={handleSubmit}
-        title={t('register.register')}
-      />
+      <Button onPress={handleSubmit} title={t('register.register')} />
+      <View style={{
+        alignItems:'center',
+        justifyContent:'space-evenly',
+        flexDirection:'column',
+        flex:1,
+        }}>
+        <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
+        <View style={LoginStyle.differentLoginContainer}>
+          <TouchableOpacity>
+            <Image style={LoginStyle.image} source={Assets.image.google} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image style={LoginStyle.image} source={Assets.image.github} />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };

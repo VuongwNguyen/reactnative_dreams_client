@@ -23,8 +23,8 @@ export const Assets = {
     birthday: 'birthday-cake', // fontAwesome
   },
   image: {
-    logo: require('../../../assets/logo.png'),
-    google: require('../../../assets/google.png'),
-    github: require('../../../assets/github.png'),
+    logo: require('../../../assets/images/logo.png'),
+    github: require('../../../assets/images/github.png'),
+    google: require('../../../assets/images/google.png'),
   },
 };
