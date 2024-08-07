@@ -11,7 +11,7 @@
     "confirmPassword": "Confirm password",
     "register": "Register",
     "login": "Login",
-    "alreadyHaveAnAccount": "Already have an account",
+    "alreadyHaveAnAccount": "Already have an account?",
     "error": {
       "firstName": {
         "required": "First name cannot be empty",
@@ -52,9 +52,9 @@
     "register": "Register",
     "emailOrPhoneNumber": "Email or Phone number",
     "error": {
-      "email": {
-        "required": "Email cannot be empty",
-        "invalid": "Email is invalid"
+      "emailOrPhoneNumber": {
+        "required": "Email or Phone number cannot be empty",
+        "invalid": "Email or Phone number is invalid"
       },
       "password": {
         "required": "Password cannot be empty"

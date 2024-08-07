@@ -11,7 +11,7 @@
     "confirmPassword": "Xác nhận mật khẩu",
     "register": "Đăng ký",
     "login": "Đăng nhập",
-    "alreadyHaveAnAccount": "Đã đăng ký",
+    "alreadyHaveAnAccount": "Đã đăng ký?",
     "error": {
       "firstName": {
         "required": "Tên là bắt buộc",
@@ -46,18 +46,18 @@
     "password": "Mật khẩu",
     "login": "Đăng nhập",
     "or": "Hoặc",
-    "remmberMe": "Nhớ tài khoản",
+    "rememberMe": "Nhớ tài khoản",
     "forgotPassword": "Quên mật khẩu?",
     "notAccount": "Chưa tài khoản ?",
     "register": "Đăng ký",
     "emailOrPhoneNumber":"Email hoặc số điện thoại",
     "error": {
-      "email": {
-        "required": "Email không được trống",
-        "invalid": "Email không hợp lệ"
+      "emailOrPhoneNumber": {
+        "required": "Email hoặc số điện thoại không được trống",
+        "invalid": "Email hoặc số điện thoại không hợp lệ"
       },
       "password": {
-        "required": "Password không được trống"
+        "required": "Mật khẩu không được trống"
       },
       "verify": "Tài khoản hoặc mật khẩu không đúng"
     }

@@ -3,19 +3,20 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
 import {Assets} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import FormikForm from './FormikForm';
-import { LoginStyle } from '../../styles/loginStyle/LoginStyle';
+import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 
 const LoginScreen = () => {
   const {t} = useTranslation();
   return (
     <KeyboardAvoidingView>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={false}>
         <View style={LoginStyle.container}>
           <View style={LoginStyle.containerHeader}>
             <Image style={LoginStyle.logo} source={Assets.image.logo} />
@@ -30,7 +31,9 @@ const LoginScreen = () => {
           </View>
           <View style={LoginStyle.containerLink}>
             <Text>{t('loginScreen.notAccount')}</Text>
-            <Text style={LoginStyle.link}>{t('loginScreen.login')}</Text>
+            <TouchableOpacity>
+            <Text style={LoginStyle.link}>{t('loginScreen.register')}</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
