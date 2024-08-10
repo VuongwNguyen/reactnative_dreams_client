@@ -1,5 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {APILogin} from '../api/AccountAPI';
+import { createSlice } from '@reduxjs/toolkit';
+import { APILogin } from '../api/AccountAPI';
+import { apiSendOtpResetPW } from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -15,10 +16,16 @@ export const accountSlice = createSlice({
       state.user = action.payload;
     },
   },
-  extraReducers: {
-    [APILogin.fulfilled]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(APILogin.pending, (state) => {
+      console.log('APILogin.pending');
+    });
+    builder.addCase(APILogin.fulfilled, (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
-    },
+    });
+    builder.addCase(APILogin.rejected, (state, action) => {
+      console.log('APILogin.rejected', action.error);
+    });
   },
 });
