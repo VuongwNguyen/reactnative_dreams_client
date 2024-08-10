@@ -22,27 +22,3 @@ export const accountSlice = createSlice({
     });
   },
 });
-
-// resetPassword Reducer
-export const resetPasswordSlice = createSlice({
-  name: 'resetPassword',
-  initialState: {
-    resetPasswordState: '',
-    resetPasswordData: {},
-  },
-  reducers: {},
-  extraReducers: builder => {
-    builder
-      .addCase(APIResetPassword.pending, (state, action) => {
-        state.resetPasswordState = 'loading';
-      })
-      .addCase(APIResetPassword.fulfilled, (state, action) => {
-        state.resetPasswordState = 'succeeded';
-        state.resetPasswordData = action.payload.resetPasswordData;
-      })
-      .addCase(APIResetPassword.rejected, (state, action) => {
-        state.resetPasswordState = 'failed';
-        console.log(action.error.message);
-      });
-  },
-});

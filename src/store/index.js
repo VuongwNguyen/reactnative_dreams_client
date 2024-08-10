@@ -19,7 +19,6 @@ const persisConfig = {
 
 const rootReducer = combineReducers({
   account: slices.accountSlice.reducer, // Add your reducers here
-  resetPassword: slices.resetPasswordSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persisConfig, rootReducer);

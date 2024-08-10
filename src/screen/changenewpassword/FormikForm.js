@@ -6,16 +6,13 @@ import AppButton from '../../components/Button';
 import {useTranslation} from 'react-i18next';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {ChangeNewPasswordSchema} from '../../configs/validateSchema/ChangeNewPasswordSchema';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {APIResetPassword} from '../../store/api/AccountAPI';
 const FormikForm = () => {
   const {t} = useTranslation();
   const emailReset = 'kimchi220204@gmail.com';
 
   const dispatch = useDispatch();
-  const {resetPasswordState, resetPasswordData} = useSelector(
-    state => state.resetPassword,
-  );
 
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {

@@ -11,7 +11,6 @@ import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {Assets} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import MyForm from './FormikForm';
-import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 
 const RegisterScreen = () => {
   const {t} = useTranslation();
