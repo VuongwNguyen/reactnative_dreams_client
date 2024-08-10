@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {useFormikH} from '../../configs/hooks/useFormikH';
-import {registerSchema} from '../../configs/validateSchema/registerSchema';
 import {Assets, Typography} from '../../styles';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
+import {useDispatch} from 'react-redux';
+import {APILogin} from '../../store/api/AccountAPI';
 
 const FormikForm = () => {
+  const dispatch = useDispatch();
   const {t} = useTranslation();
   const [isRememberMe, setIsRememberMe] = useState(false);
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -20,8 +22,21 @@ const FormikForm = () => {
     },
     loginSchema,
     (val, {resetForm}) => {
-      console.log(val);
-      resetForm();
+      dispatch(
+        APILogin({
+          UserIF: val.emailOrPhoneNumber,
+          password: val.password,
+        }),
+      )
+        .unwrap()
+        .then(res => {
+          if (isRememberMe) {
+          }
+          resetForm();
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
     },
   );
 
@@ -33,7 +48,7 @@ const FormikForm = () => {
           value={values.emailOrPhoneNumber}
           setValue={handleChange('emailOrPhoneNumber')}
         />
-        {errors.emailOrPhoneNumber && (
+        {errors.emailOrPhoneNumber && touched.emailOrPhoneNumber && (
           <Text style={Typography.errorText}>{errors.emailOrPhoneNumber}</Text>
         )}
       </View>
@@ -44,7 +59,7 @@ const FormikForm = () => {
           value={values.password}
           setValue={handleChange('password')}
         />
-        {errors.password && (
+        {errors.password && touched.password && (
           <Text style={Typography.errorText}>{errors.password}</Text>
         )}
       </View>
