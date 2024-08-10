@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
@@ -8,9 +8,12 @@ import {useFormikH} from '../../configs/hooks/useFormikH';
 import {registerSchema} from '../../configs/validateSchema/registerSchema';
 import {Assets, Typography} from '../../styles';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
+import {useDispatch} from 'react-redux';
+import {APIRegister} from '../../store/api/AccountAPI';
 
 const RegisterForm = () => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       firstName: '',
@@ -22,8 +25,22 @@ const RegisterForm = () => {
     },
     registerSchema,
     (val, {resetForm}) => {
-      console.log(val);
-      resetForm();
+      dispatch(
+        APIRegister({
+          first_name: val.firstName,
+          last_name: val.lastName,
+          email: val.email,
+          phone: val.phoneNumber,
+          password: val.password,
+        }),
+      )
+        .unwrap()
+        .then(res => {
+          resetForm();
+        })
+        .catch(err => {          
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
     },
   );
 
@@ -36,7 +53,7 @@ const RegisterForm = () => {
             value={values.lastName}
             setValue={handleChange('lastName')}
           />
-          {errors.lastName && (
+          {errors.lastName && touched.lastName && (
             <Text style={Typography.errorText}>{errors.lastName}</Text>
           )}
         </View>
@@ -46,7 +63,7 @@ const RegisterForm = () => {
             value={values.firstName}
             setValue={handleChange('firstName')}
           />
-          {errors.firstName && (
+          {errors.firstName && touched.firstName && (
             <Text style={Typography.errorText}>{errors.firstName}</Text>
           )}
         </View>
@@ -57,7 +74,7 @@ const RegisterForm = () => {
           value={values.email}
           setValue={handleChange('email')}
         />
-        {errors.email && (
+        {errors.email && touched.email && (
           <Text style={Typography.errorText}>{errors.email}</Text>
         )}
       </View>
@@ -67,7 +84,7 @@ const RegisterForm = () => {
           value={values.phoneNumber}
           setValue={handleChange('phoneNumber')}
         />
-        {errors.phoneNumber && (
+        {errors.phoneNumber && touched.phoneNumber && (
           <Text style={Typography.errorText}>{errors.phoneNumber}</Text>
         )}
       </View>
@@ -78,7 +95,7 @@ const RegisterForm = () => {
           value={values.password}
           setValue={handleChange('password')}
         />
-        {errors.password && (
+        {errors.password && touched.password && (
           <Text style={Typography.errorText}>{errors.password}</Text>
         )}
       </View>
@@ -89,16 +106,17 @@ const RegisterForm = () => {
           value={values.confirmPassword}
           setValue={handleChange('confirmPassword')}
         />
-        {errors.confirmPassword && (
+        {errors.confirmPassword && touched.confirmPassword && (
           <Text style={Typography.errorText}>{errors.confirmPassword}</Text>
         )}
       </View>
       <Button onPress={handleSubmit} title={t('register.register')} />
-      <View style={{
-        alignItems:'center',
-        justifyContent:'space-evenly',
-        flexDirection:'column',
-        flex:1,
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+          flexDirection: 'column',
+          flex: 1,
         }}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>

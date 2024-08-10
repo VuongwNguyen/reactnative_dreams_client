@@ -18,7 +18,7 @@ const persisConfig = {
 };
 
 const rootReducer = combineReducers({
-  account: slices.accountSlice, // Add your reducers here
+  account: slices.accountSlice.reducer, // Add your reducers here
 });
 
 const persistedReducer = persistReducer(persisConfig, rootReducer);
@@ -33,5 +33,4 @@ export const store = configureStore({
     });
   },
 });
-const Persistor = persistStore(store);
-export default Persistor;
+export const persistor = persistStore(store);
