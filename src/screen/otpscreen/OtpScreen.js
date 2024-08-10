@@ -1,16 +1,20 @@
-import React, {useRef, useState} from 'react';
-import {Text, View, TouchableOpacity, Alert} from 'react-native';
-import {useTranslation} from 'react-i18next';
+import React, { useRef, useState } from 'react';
+import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import Feather from 'react-native-vector-icons/Feather';
-import {Assets} from '../../styles';
-import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
-import {FormmikOtp} from './FormikForm';
-import {handleCheckOutOTP} from './Handle';
+import { Assets } from '../../styles';
+import { OtpStyles } from '../../styles/otpstyle/OtpStyle';
+import { FormmikOtp } from './FormikForm';
+import { handleCheckOutOTP } from './Handle';
+import { useDispatch, useSelector } from 'react-redux';
 
 const OtpScreen = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [error, setError] = useState(false);
+  const useAppDispatch = () => useDispatch();
+  const useAppSelector = useSelector;
+  const dispatch = useAppDispatch();
 
   return (
     <View style={OtpStyles.container}>
@@ -37,6 +41,7 @@ const OtpScreen = () => {
           handleCheckOutOTP={handleCheckOutOTP(
             setError,
             inputRefs,
+            dispatch,
             t('otpScreen.ErrorOtp'),
             Alert,
           )}

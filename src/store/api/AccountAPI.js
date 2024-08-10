@@ -1,9 +1,9 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import AxiosInstance from '../../configs/axiosInstance';
 
 export const APILogin = createAsyncThunk(
   'account/login',
-  async (data, {rejectWithValue}) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().post('account/login', data);
       return response;
@@ -13,9 +13,37 @@ export const APILogin = createAsyncThunk(
   },
 );
 
+
+export const apiSendOtpResetPW = createAsyncThunk(
+  "account/send-code-reset-password",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().post("/api/account/send-code-reset-password", data);
+      console.log(response);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const apiVerifyCodeResetPW = createAsyncThunk(
+  "account/verify-code-reset-password",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().post("/api/account/verify-code-reset-password", data);
+      console.log(response);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
 export const APIRegister = createAsyncThunk(
   'account/register',
-  async (data, {rejectWithValue}) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().post('account/register', data);
       console.log(response, 'register response');
