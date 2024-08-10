@@ -41,3 +41,17 @@ export const apiVerifyCodeResetPW = createAsyncThunk(
   }
 )
 
+export const APIRegister = createAsyncThunk(
+  'account/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().post('account/register', data);
+      console.log(response, 'register response');
+      return response;
+    } catch (error) {
+      console.log('register error');
+
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
