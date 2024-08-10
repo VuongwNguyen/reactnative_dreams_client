@@ -25,18 +25,8 @@ export const onKeyPress = (e, inputRefs, index, setFieldValue) => {
 
 export const handleCheckOutOTP =
   (setError, inputRefs, dispatch, t, Alert) => (values, actions) => {
-    const otpTest = '1234';
-    const Otp = values.otp.join('');
-    // if (Otp === otpTest) {
-    //   // Chuyển màn hình
-    //   actions.resetForm();
-    //   setError(false);
-    // } else {
-    //   Alert.alert(t);
-    //   setError(true);
-    //   inputRefs[3].current.focus();
-    // }
     try {
+      const Otp = values.otp.join('');
       const body = {
         email: "tienmap038@gmail.com",
         code: Otp
