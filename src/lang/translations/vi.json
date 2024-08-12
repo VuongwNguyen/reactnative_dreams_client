@@ -115,5 +115,26 @@
       "invalid": "Mật khẩu không hợp lệ",
       "notMatch": "Xác nhận mật khẩu không khớp"
     }
+  },
+  "profileScreen":{
+    "profile":"Hồ sơ",
+    "followers":"Người theo dõi",
+    "following":"Đang theo dõi",
+    "posts":"Bài viết",
+    "inbox":"Nhắn tin",
+    "follow":"Theo dõi",
+    "information":"Thông tin",
+    "posted":"Đã đăng",
+    "infomationTab":{
+      "curlive":"Nơi ở hiện tại",
+      "nationality":"Quốc tịch",
+      "home":"Quê quán",
+      "school":"Trường",
+      "gender":"Giới tínhh",
+      "dob":"Ngày sinh",
+      "bobby":"Sở thích",
+      "relation":"Tình trạng quan hệ",
+      "zodiac":"Cung hoàng đạo"
+    }
   }
 }

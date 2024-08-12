@@ -16,7 +16,7 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.nunitonSans.regular,
     fontSize: 16,
     fontStyle: 'normal',
-    fontWeight: 400,
+    fontWeight: '400',
     lineHeight: 25,
     letterSpacing: -0.17,
   },
