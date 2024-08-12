@@ -7,12 +7,13 @@ import ForgotPasswordScreen from '../screen/forgotpasswordscreen/ForgotPasswordS
 import ChangeNewPasswordScreen from '../screen/changenewpassword/ChangeNewPasswordScreen';
 import OtpScreen from '../screen/otpscreen/OtpScreen';
 // import RegisterScreen from '../screen/registerscreen/RegisterScreen';
+import HomeScreen from '../screen/homescreen/HomeScreen';
 const Stack = createStackNavigator();
 
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={stackName.example} component={OtpScreen} />
+      <Stack.Screen name={stackName.example} component={HomeScreen} />
     </Stack.Navigator>
   );
 }
