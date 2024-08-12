@@ -11,12 +11,13 @@ export const InfomationTabStyle = StyleSheet.create({
   itemContainer:{
     flexDirection:'row',
     alignItems:'center',
-    gap:10,
-    paddingVertical:12
+    gap:5,
+    paddingVertical:7
   },
   icon:{
     width:24,
-    height:24
+    height:24,
+    marginRight:5
   },
   title:{
     ...Typography.cmtName,

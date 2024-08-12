@@ -23,12 +23,12 @@ export const ProfileStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 15,
   },
   grouptButtonContainer:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical:15
+    marginVertical:5
   },
   buttonContainer: {
     width: 150,
@@ -39,7 +39,7 @@ export const ProfileStyle = StyleSheet.create({
   },
   activeTabContainer: {
     flex: 1,
-    height: 51,
+    height: 41,
     borderBottomWidth: 2,
     borderColor: Colors.primary,
     justifyContent: 'center',
@@ -47,7 +47,7 @@ export const ProfileStyle = StyleSheet.create({
   },
   inactiveTabContainer: {
     flex: 1,
-    height: 50,
+    height: 40,
     borderBottomWidth: 0.5,
     borderColor: 'black',
     justifyContent: 'center',

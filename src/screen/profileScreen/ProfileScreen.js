@@ -1,7 +1,7 @@
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
-import AppHeader from '../../components/Header';
+import Header from '../../components/Header';
 import InfomationTab from './InfomationTab';
 import {useTranslation} from 'react-i18next';
 
@@ -39,7 +39,7 @@ const ProfileScreen = () => {
   const [activeTab, setActiveTab] = useState(INFOMATION_TAB);
   return (
     <ScrollView style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} />
+      <Header title={t('profile')} />
       <View style={ProfileStyle.infoContainer}>
         <Image
           style={ProfileStyle.avatar}
