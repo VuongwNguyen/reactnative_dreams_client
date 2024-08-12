@@ -41,14 +41,14 @@
   },
   "loginScreen": {
     "welcome": "Welcome to Dreams!",
-    "title":"Login to continue!", 
-    "subTitle":"Connect with friends, discover new communities, and share your life with orthers.Connect with friends, discover new communities, and share your life with orthers.",
+    "title": "Login to continue!",
+    "subTitle": "Connect with friends, discover new communities, and share your life with orthers.Connect with friends, discover new communities, and share your life with orthers.",
     "password": "Password",
-    "login":"Login",
-    "or":"OR",
+    "login": "Login",
+    "or": "OR",
     "remmberMe": "Remember me",
     "forgotPassword": "Forgot password?",
-    "notAccount":"Don't have an account?",
+    "notAccount": "Don't have an account?",
     "register": "Register",
     "emailOrPhoneNumber": "Email or Phone number",
     "error": {
@@ -59,7 +59,7 @@
       "password": {
         "required": "Password cannot be empty"
       },
-      "verify":"Account or password is incorrect"
+      "verify": "Account or password is incorrect"
     }
   },
   "otpScreen": {
@@ -95,6 +95,27 @@
       "min": "Password must be at least 6 characters long",
       "invalid": "Password is invalid",
       "notMatch": "Confirm password is doesn't match"
+    }
+  },
+  "profileScreen": {
+    "profile":"Profile",
+    "followers":"Followers",
+    "following":"Following",
+    "posts":"Posts",
+    "inbox":"Inbox",
+    "follow":"Follow",
+    "information":"Information",
+    "posted":"Posted",
+    "infomationTab":{
+      "curlive":"Currently living in",
+      "nationality":"Nationality",
+      "home":"Hometown",
+      "school":"School",
+      "gender":"Gender",
+      "dob":"Birthday",
+      "bobby":"Hobby",
+      "relation":"Relationship",
+      "zodiac":"Zodiac sign"
     }
   }
 }
