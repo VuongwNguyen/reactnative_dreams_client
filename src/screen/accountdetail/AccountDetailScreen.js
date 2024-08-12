@@ -14,8 +14,50 @@ import TagInf from './TagInf';
 import {Assets} from '../../styles';
 import AppButton from '../../components/Button';
 
+const basicInfArr = [
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+];
+const otherInfArr = [
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+];
+const showBasicInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {basicInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+        />
+      ))}
+    </View>
+  );
+};
+
+const showOtherInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {otherInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+        />
+      ))}
+    </View>
+  );
+};
 const AccountDetailScreen = () => {
   const {t} = useTranslation();
+
   const goBackScreen = () => {};
   const onSave = () => {};
   return (
@@ -23,12 +65,10 @@ const AccountDetailScreen = () => {
       style={accountDetailStyle.container}
       showsVerticalScrollIndicator={false}
       scrollEnabled={true}>
-      <View style={accountDetailStyle.headerContainer}>
-        <AppHeader
-          title={t('accountDetailScreen.infTitle')}
-          goBack={goBackScreen}
-        />
-      </View>
+      <AppHeader
+        title={t('accountDetailScreen.infTitle')}
+        goBack={goBackScreen}
+      />
 
       <View style={accountDetailStyle.bodyContainer}>
         <View style={accountDetailStyle.avtContainer}>
@@ -42,50 +82,13 @@ const AccountDetailScreen = () => {
           <Text style={accountDetailStyle.typeInf}>
             {t('accountDetailScreen.basic')}
           </Text>
-          <View style={accountDetailStyle.infBox}>
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-          </View>
+          {showBasicInf()}
         </View>
         <View style={accountDetailStyle.groupInfContainer}>
           <Text style={accountDetailStyle.typeInf}>
             {t('accountDetailScreen.other')}
           </Text>
-          <View style={accountDetailStyle.infBox}>
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-            <TagInf
-              tagTitle={t('accountDetailScreen.username')}
-              content={'usernam'}
-              icon={Assets.icon.user}
-            />
-          </View>
+          {showOtherInf()}
         </View>
         <View style={accountDetailStyle.button}>
           <AppButton title={t('accountDetailScreen.save')} onPress={onSave} />

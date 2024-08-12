@@ -1,7 +1,5 @@
-import {ModalTransition} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 import {Colors, Spacings, Typography} from '../../styles';
-import {Button, Dimensions} from 'react-native';
-import {jsiConfigureProps} from 'react-native-reanimated/lib/typescript/core';
+import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
 const avtSize = width * 0.32;
 const avtRadius = avtSize / 2;
@@ -10,13 +8,10 @@ const changeBtnRadius = changeBtnSize / 2;
 export const accountDetailStyle = {
   container: {
     flex: 1,
-    height: 1000,
     backgroundColor: '#FFFFFF',
     padding: Spacings.lg,
   },
-  headerContainer: {
-    height: Spacings.xl,
-  },
+
   bodyContainer: {
     flex: 1,
     gap: 30,
@@ -57,6 +52,6 @@ export const accountDetailStyle = {
     Colors: Colors.secondary,
   },
   button: {
-    height: 50,
+    minHeight: 50,
   },
 };
