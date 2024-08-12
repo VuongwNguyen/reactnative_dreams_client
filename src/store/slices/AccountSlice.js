@@ -1,5 +1,6 @@
+
 import { createSlice } from '@reduxjs/toolkit';
-import { APILogin, APIRegister } from '../api/AccountAPI';
+import { APILogin, APIRegister, APIResetPassword } from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
