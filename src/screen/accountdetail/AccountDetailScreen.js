@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import {useTranslation} from 'react-i18next';
@@ -21,6 +14,8 @@ const basicInfArr = [
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
 ];
 const otherInfArr = [
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
+  {title: 'Title', icon: Assets.icon.user, content: 'content'},
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
@@ -61,10 +56,7 @@ const AccountDetailScreen = () => {
   const goBackScreen = () => {};
   const onSave = () => {};
   return (
-    <ScrollView
-      style={accountDetailStyle.container}
-      showsVerticalScrollIndicator={false}
-      scrollEnabled={true}>
+    <ScrollView style={accountDetailStyle.container}>
       <AppHeader
         title={t('accountDetailScreen.infTitle')}
         goBack={goBackScreen}
@@ -99,10 +91,3 @@ const AccountDetailScreen = () => {
 };
 
 export default AccountDetailScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginHorizontal: 'auto',
-  },
-});

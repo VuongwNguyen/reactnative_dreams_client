@@ -8,14 +8,17 @@ const changeBtnRadius = changeBtnSize / 2;
 export const accountDetailStyle = {
   container: {
     flex: 1,
+    height: height,
     backgroundColor: '#FFFFFF',
     padding: Spacings.lg,
   },
 
   bodyContainer: {
     flex: 1,
+    flexDirection: 'column',
     gap: 30,
     marginTop: Spacings.lg,
+    marginBottom: Spacings.xl,
   },
 
   avtContainer: {
