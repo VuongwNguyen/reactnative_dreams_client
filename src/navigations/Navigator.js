@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name={stackName.example} component={AccountDetailScreen} />
+      <Stack.Screen name={stackName.example} component={Example} />
     </Stack.Navigator>
   );
 }
