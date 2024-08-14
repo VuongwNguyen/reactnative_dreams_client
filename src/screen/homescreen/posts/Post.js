@@ -38,9 +38,7 @@ const Post = (props) => {
                     dataImages.length > 0 &&
                     <View style={PostStyles.swiperContainer}>
                         <Swiper
-                            height={'100%'}
                             index={index}
-                            paginationStyle={{ bottom: 8 }}
                             dot={
                                 <View style={PostStyles.dot} />
                             }
@@ -49,7 +47,7 @@ const Post = (props) => {
                             }
                         >
                             {dataImages.map((image, index) => {
-                                return <Image source={{ uri: image }} style={PostStyles.img} resizeMode='contain' key={index} backgroundColor='#F6F6F6' />
+                                return <Image source={{ uri: image }} style={PostStyles.img} resizeMode='contain' key={index} />
                             })}
                         </Swiper>
                     </View>

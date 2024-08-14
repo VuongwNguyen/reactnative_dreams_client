@@ -54,16 +54,6 @@ export const PostStyles = {
     swiperContainer: {
         width: '100%',
         height: height * 0.33,
-        backgroundColor: '#F6F6F6',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 4,
-        elevation: 3,
-        shadowOpacity: 0.5,
-
     },
     dot: {
         backgroundColor: "gray",
@@ -86,7 +76,6 @@ export const PostStyles = {
         marginBottom: 3
     },
     img: {
-        width: '100%',
-        height: height * 0.33,
+        flex: 1
     },
 }
