@@ -26,5 +26,9 @@ export const Assets = {
     logo: require('../../../assets/images/logo.png'),
     github: require('../../../assets/images/github.png'),
     google: require('../../../assets/images/google.png'),
+    comment: require('../../../assets/icons/comment.png'),
+    heart: require('../../../assets/icons/heart.png'),
+    share: require('../../../assets/icons/share.png'),
+    more: require('../../../assets/icons/more.png'),
   },
 };

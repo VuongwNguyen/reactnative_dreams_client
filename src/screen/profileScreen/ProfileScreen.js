@@ -4,6 +4,7 @@ import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import Header from '../../components/Header';
 import InfomationTab from './InfomationTab';
 import {useTranslation} from 'react-i18next';
+import PostedTab from './PostedTab';
 
 const INFOMATION_TAB = 'Information';
 const POSTED_TAB = 'Posted';
@@ -83,7 +84,7 @@ const ProfileScreen = () => {
         />
       </View>
       <View style={ProfileStyle.contentContainer}>
-        {activeTab === INFOMATION_TAB ? <InfomationTab /> : <Text>Posted</Text>}
+        {activeTab === INFOMATION_TAB ? <InfomationTab /> : <PostedTab />}
       </View>
     </ScrollView>
   );

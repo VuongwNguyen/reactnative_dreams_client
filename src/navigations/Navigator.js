@@ -9,6 +9,7 @@ import ChangePasswordScreen from '../screen/changepassword/ChangePasswordScreen'
 import ChangeNewPasswordScreen from '../screen/changenewpassword/ChangeNewPasswordScreen';
 
 import OtpScreen from '../screen/otpscreen/OtpScreen';
+import ProfileScreen from '../screen/profileScreen/ProfileScreen';
 
 
 const Stack = createStackNavigator();
@@ -17,7 +18,7 @@ export function Navigator() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name={stackName.example}
-        component={ChangeNewPasswordScreen}
+        component={ProfileScreen}
       />
     </Stack.Navigator>
   );
