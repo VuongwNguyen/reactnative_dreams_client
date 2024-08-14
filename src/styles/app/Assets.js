@@ -32,5 +32,10 @@ export const Assets = {
     ic_camera: require('../../../assets/images/ic_camera.png'),
     ic_gallery: require('../../../assets/images/ic_gallery.png'),
     ic_delete: require('../../../assets/images/ic_delete.png'),
+    camera: require('../../../assets/images/camera.png'),
+    photo: require('../../../assets/images/photo.png'),
+    video: require('../../../assets/images/video.png'),
+    more: require('../../../assets/images/more.png'),
+    remove: require('../../../assets/images/remove.png'),
   },
 };
