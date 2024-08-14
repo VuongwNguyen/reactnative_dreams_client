@@ -8,7 +8,7 @@ import ChangePasswordScreen from '../screen/changepassword/ChangePasswordScreen'
 import ChangeNewPasswordScreen from '../screen/changenewpassword/ChangeNewPasswordScreen';
 import HomeScreen from '../screen/homescreen/HomeScreen';
 import OtpScreen from '../screen/otpscreen/OtpScreen';
-
+import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 
 const Stack = createStackNavigator();
 export function Navigator() {
