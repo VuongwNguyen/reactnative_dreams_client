@@ -4,12 +4,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
 import { HomeStyles } from '../../styles/homestyle/homestyle';
 import { Assets } from '../../styles';
+import { useTranslation } from 'react-i18next';
 
 
 
 
 const HomeScreen = () => {
-    const inputSearch = useRef(null)
+    const inputSearch = useRef(null);
+    const { t } = useTranslation()
     return (
         <View style={HomeStyles.container}>
             <View style={HomeStyles.header}>
@@ -18,7 +20,7 @@ const HomeScreen = () => {
                     <TextInput
                         ref={inputSearch}
                         style={HomeStyles.inputSearch}
-                        placeholder='Search...'
+                        placeholder={t("homeScreen.search")}
                     />
                     <Feather
                         name={Assets.icon.search}

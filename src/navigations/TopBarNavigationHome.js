@@ -3,11 +3,13 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import TrendingPostTab from '../screen/homescreen/TrendingPostTab';
 import FollowedPostTab from '../screen/homescreen/FollowedPostTab';
+import { useTranslation } from 'react-i18next';
 
 
 const Tab = createMaterialTopTabNavigator();
 
 const TopBarNavigationHome = () => {
+    const { t } = useTranslation()
     return (
         <Tab.Navigator
             screenOptions={{
@@ -24,8 +26,8 @@ const TopBarNavigationHome = () => {
                 tabBarPressColor: 'transparent'
             }}
         >
-            <Tab.Screen name="Trending" component={TrendingPostTab} />
-            <Tab.Screen name="Followed" component={FollowedPostTab} />
+            <Tab.Screen name={t("homeScreen.trending")} component={TrendingPostTab} />
+            <Tab.Screen name={t("homeScreen.followed")} component={FollowedPostTab} />
         </Tab.Navigator>
     )
 }

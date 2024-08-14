@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get('window');
 
 
 const Post = (props) => {
-    const { avatar, name, date, textContent, dataImages, like, comment, share, index } = props
+    const { avatar, name, date, textContent, dataImages, like, comment, share, index, isFollowed } = props
     return (
         <View style={PostStyles.postText}>
             <View style={PostStyles.headerPost}>
@@ -19,7 +19,11 @@ const Post = (props) => {
                     <View style={{ flex: 1, flexDirection: 'row', gap: 5, alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={PostStyles.footerContent}>
                             <Text style={PostStyles.name}>{name}</Text>
-                            <Ionicons name="add" size={20} color="#0CBBF0" />
+                            {
+                                !isFollowed ?
+                                    <Ionicons name="add" size={20} color="#0CBBF0" /> :
+                                    <></>
+                            }
                         </View>
                         <Image source={require('../../../../assets/icons/option.png')} />
                     </View>
