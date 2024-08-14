@@ -6,9 +6,11 @@ const avtRadius = avtSize / 2;
 const changeBtnSize = avtSize / 3;
 const changeBtnRadius = changeBtnSize / 2;
 export const accountDetailStyle = {
+  scrollContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    height: height,
     backgroundColor: '#FFFFFF',
     padding: Spacings.lg,
   },
@@ -18,7 +20,6 @@ export const accountDetailStyle = {
     flexDirection: 'column',
     gap: 30,
     marginTop: Spacings.lg,
-    marginBottom: Spacings.xl,
   },
 
   avtContainer: {
@@ -53,8 +54,5 @@ export const accountDetailStyle = {
   typeInf: {
     ...Typography.typeInf,
     Colors: Colors.secondary,
-  },
-  button: {
-    minHeight: 50,
   },
 };
