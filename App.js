@@ -23,17 +23,17 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <GestureHandlerRootView>
-              <NavigationContainer
-              // onReady={() => {
-              //   SplashScreen.hide();
-              // }}
-              >
-                <Navigator />
-              </NavigationContainer>
-            </GestureHandlerRootView>
-          </TouchableWithoutFeedback>
+          {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+          <GestureHandlerRootView>
+            <NavigationContainer
+            // onReady={() => {
+            //   SplashScreen.hide();
+            // }}
+            >
+              <Navigator />
+            </NavigationContainer>
+          </GestureHandlerRootView>
+          {/* </TouchableWithoutFeedback> */}
         </SafeAreaProvider>
       </PersistGate>
     </ReduxProvider>

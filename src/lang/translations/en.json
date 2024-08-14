@@ -97,6 +97,25 @@
       "notMatch": "Confirm password is doesn't match"
     }
   },
+
+  "accountDetailScreen": {
+    "infTitle": "Information",
+    "basic": "Basic Information",
+    "other": "Others",
+    "username": "Username",
+    "nickname": "Nickname",
+    "birthDay": "Day of birth",
+    "nationality": "Nationality",
+    "hometown": "Hometown",
+    "gender": "Gender",
+    "desc": "Description",
+    "hobby": "Hoppy",
+    "education": "Education",
+    "zodiaque": "Zodiaque",
+    "location": "Location",
+    "save": "Save"
+},
+
   "profileScreen": {
     "profile":"Profile",
     "followers":"Followers",
@@ -117,5 +136,5 @@
       "relation":"Relationship",
       "zodiac":"Zodiac sign"
     }
-  }
+}
 }
