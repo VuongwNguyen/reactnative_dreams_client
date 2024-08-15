@@ -21,6 +21,20 @@ export const Assets = {
     privacy: 'lock',
     theme: 'theme-light-dark', // MaterialCommunityIcons
     birthday: 'birthday-cake', // fontAwesome
+    camera: 'camera', // feather
+    video: 'video', // feather
+    gallery: 'image-outline', // Ionicons
+    heart: 'heart-outlined', // Entypo
+    heartFill: 'heart', // Entypo
+    share: 'share',
+    option: 'options-vertical', // SimpleLineIcons
+    close: 'close-circle-sharp', // Ionicons
+    optionHambuger: 'menu', // Ionicons
+    comment: 'comment', // EvilIcons
+    send: 'send', // Ionicons
+    follow: 'plus', // AntDesign
+    setting: 'settings-suggest', // MaterialIcons
+    change: 'sync', // AntDesign
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
