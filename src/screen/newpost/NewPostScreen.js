@@ -6,7 +6,10 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 import React, {useState} from 'react';
 import AppHeader from '../../components/Header';
 import {useTranslation} from 'react-i18next';
@@ -17,6 +20,7 @@ import useImagePicker from './ImagePickerPost';
 
 const NewPostScreen = () => {
   const {t} = useTranslation();
+  const [isPreviewed, setIsPreviewed] = useState(true);
   const {images, setImages, openImageLibrary, onOpenCamera} = useImagePicker();
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -35,13 +39,21 @@ const NewPostScreen = () => {
             <TouchableOpacity
               style={newPostStyle.removeIcon}
               onPress={() => handleRemoveImage(index)}>
-              <Image source={Assets.image.remove} />
+              <Ionicons name={Assets.icon.close} size={20} color="white" />
             </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
     );
   };
+
+  Keyboard.addListener('keyboardDidShow', () => {
+    setIsPreviewed(false);
+  });
+
+  Keyboard.addListener('keyboardDidHide', () => {
+    setIsPreviewed(true);
+  });
 
   const data = [
     {label: 'Public', value: 'public'},
@@ -59,64 +71,70 @@ const NewPostScreen = () => {
         rightButton={true}
         rightButtonTitle={t('newPostScreen.post')}
       />
-      <View style={newPostStyle.bodyContainer}>
-        <View style={newPostStyle.accountContainer}>
-          <Image style={newPostStyle.avt} source={Assets.image.avt} />
-          <View style={newPostStyle.inf}>
-            <Text style={newPostStyle.userName}>Username</Text>
-            <Dropdown
-              data={data}
-              labelField="label"
-              valueField="value"
-              value={value}
-              onChange={item => {
-                setValue(item.value);
-              }}
-              style={newPostStyle.dropdown}
+      <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
+        <View style={newPostStyle.bodyContainer}>
+          <View style={newPostStyle.accountContainer}>
+            <Image style={newPostStyle.avt} source={Assets.image.avt} />
+            <View style={newPostStyle.inf}>
+              <Text style={newPostStyle.userName}>Username</Text>
+              <Dropdown
+                data={data}
+                labelField="label"
+                valueField="value"
+                value={value}
+                onChange={item => {
+                  setValue(item.value);
+                }}
+                style={newPostStyle.dropdown}
+              />
+            </View>
+          </View>
+
+          <View style={newPostStyle.postContainer}>
+            <TextInput
+              multiline={true}
+              placeholder={t('newPostScreen.openLine')}
+              placeholderTextColor={Colors.secondary}
+              value={openLine}
+              onChangeText={text => setOpenLine(text)}
+              style={newPostStyle.openLine}
+            />
+            <TextInput
+              multiline={true}
+              placeholder={t('newPostScreen.contentPost')}
+              placeholderTextColor={Colors.secondary}
+              value={postContent}
+              onChangeText={text => setPostContent(text)}
+              style={newPostStyle.contentPost}
             />
           </View>
-        </View>
-
-        <View style={newPostStyle.postContainer}>
-          <TextInput
-            multiline={true}
-            placeholder={t('newPostScreen.openLine')}
-            placeholderTextColor={Colors.secondary}
-            value={openLine}
-            onChangeText={text => setOpenLine(text)}
-            style={newPostStyle.openLine}
-          />
-          <TextInput
-            multiline={true}
-            placeholder={t('newPostScreen.contentPost')}
-            placeholderTextColor={Colors.secondary}
-            value={postContent}
-            onChangeText={text => setPostContent(text)}
-            style={newPostStyle.contentPost}
-          />
-        </View>
-        <View style={newPostStyle.showAttachContainer}>
-          {images?.[0]?.uri ? renderImg() : ''}
-          <View style={newPostStyle.attachmentContainer}>
-            <TouchableOpacity
-              style={newPostStyle.iconBtn}
-              onPress={() => onOpenCamera()}>
-              <Image source={Assets.image.camera} />
-            </TouchableOpacity>
-            <TouchableOpacity style={newPostStyle.iconBtn}>
-              <Image source={Assets.image.video} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={newPostStyle.iconBtn}
-              onPress={() => openImageLibrary()}>
-              <Image source={Assets.image.photo} />
-            </TouchableOpacity>
-            <TouchableOpacity style={newPostStyle.iconBtn}>
-              <Image source={Assets.image.more} />
-            </TouchableOpacity>
+          <View style={newPostStyle.showAttachContainer}>
+            {images?.[0]?.uri && isPreviewed ? renderImg() : ''}
+            <View style={newPostStyle.attachmentContainer}>
+              <TouchableOpacity
+                style={newPostStyle.iconBtn}
+                onPress={() => onOpenCamera()}>
+                <Feather name={Assets.icon.camera} size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity style={newPostStyle.iconBtn}>
+                <Feather name={Assets.icon.video} size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={newPostStyle.iconBtn}
+                onPress={() => openImageLibrary()}>
+                <Ionicons name={Assets.icon.gallery} size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity style={newPostStyle.iconBtn}>
+                <Ionicons
+                  name={Assets.icon.optionHambuger}
+                  size={24}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

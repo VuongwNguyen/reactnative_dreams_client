@@ -72,18 +72,19 @@ export const newPostStyle = {
   },
   removeIcon: {
     position: 'absolute',
-    top: 5,
-    left: 5,
+    top: 0,
+    left: 0,
   },
   imgContainer: {
-    marginTop: '30%',
-    width: '100%',
     height: imgPostHeight,
     flexDirection: 'row',
     gap: 15,
   },
   showAttachContainer: {
-    flexDirection: 'column',
+    paddingTop: 0,
     gap: 20,
+  },
+  scrollContainer: {
+    flex: 1,
   },
 };

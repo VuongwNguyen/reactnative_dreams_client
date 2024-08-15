@@ -26,7 +26,6 @@ const useImagePicker = () => {
     const response = await launchCamera(cameraOptions);
     if (response?.assets) {
       setImages(response.assets);
-      console.log(images[0].uri);
     } else {
       Alert.alert('Có lỗi xảy ra', response.errorMessage);
     }
