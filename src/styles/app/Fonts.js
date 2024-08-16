@@ -4,6 +4,7 @@ export const Fonts = {
     extrabold: 'NunitoSansExtraBold',
     regular: 'NunitoSansRegular',
     semibold: 'NunitoSansSemiBold',
+    bolditalic: 'NunitoSansBoldItalic',
   },
   inter: {
     bold: 'InterBold',

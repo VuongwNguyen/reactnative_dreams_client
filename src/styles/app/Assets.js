@@ -43,5 +43,6 @@ export const Assets = {
     google: require('../../../assets/images/google.png'),
     avt: require('../../../assets/images/avt.jpg'),
     right_arrow: require('../../../assets/images/right_arrow.png'),
+    share: require('../../../assets/images/share.png'),
   },
 };
