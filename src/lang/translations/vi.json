@@ -158,5 +158,13 @@
       "relation": "Tình trạng quan hệ",
       "zodiac": "Cung hoàng đạo"
     }
+  },
+  "postDetailScreen": {
+    "post": "Bài viết",
+    "reply": "Trả lời",
+    "view": "Xem",
+    "moreReplies": "câu trả lời khác",
+    "hideReplies": "Ẩn câu trả lời",
+    "writeComment": "Viết bình luận"
   }
 }

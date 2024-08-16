@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { FlatList, Image, postDetailStyleheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AppHeader from '../../components/Header';
-
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Post from '../homescreen/posts/Post';
 import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
 import { Assets } from '../../styles';
+import { useTranslation } from 'react-i18next';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
 const CommentItem = ({ comment, level = 0 }) => {
+    const { t } = useTranslation();
     const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
     const [showAllReplies, setShowAllReplies] = useState(false);
 
@@ -41,7 +42,7 @@ const CommentItem = ({ comment, level = 0 }) => {
                             <Text style={{ fontSize: 13, lineHeight: 22, fontWeight: '500', color: '#6c757d' }}>{comment.createdAt}</Text>
                         </View>
                         <Text style={{ fontSize: 16, lineHeight: 22, color: '#000' }}>{comment.content}</Text>
-                        <Text style={{ fontSize: 15, lineHeight: 22, fontWeight: '500', color: '#6c757d' }}>Reply</Text>
+                        <Text style={{ fontSize: 15, lineHeight: 22, fontWeight: '500', color: '#6c757d' }}>{t("postDetailScreen.reply")}</Text>
                     </View>
                     <TouchableOpacity style={{ flexDirection: 'column', height: 80, alignItems: 'center', justifyContent: 'center' }}>
                         <AntDesign name="hearto" size={20} color="black" />
@@ -68,9 +69,9 @@ const CommentItem = ({ comment, level = 0 }) => {
                     {!showAllReplies && visibleReplies < comment.replies.length && (
                         <TouchableOpacity style={{ marginLeft: 50, }} onPress={handleViewMoreReplies}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 1 }} />
+                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 0.5 }} />
                                 <Text style={postDetailStyle.showMoreText}>
-                                    View {Math.min(comment.replies.length - visibleReplies, INCREMENT_REPLIES)} more replies
+                                    {t("postDetailScreen.view")} {Math.min(comment.replies.length - visibleReplies, INCREMENT_REPLIES)} {t("postDetailScreen.moreReplies")}
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -78,9 +79,9 @@ const CommentItem = ({ comment, level = 0 }) => {
                     {visibleReplies >= comment.replies.length && (
                         <TouchableOpacity style={{ marginLeft: 50, }} onPress={handleHideReplies}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 1 }} />
+                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 0.5 }} />
                                 <Text style={postDetailStyle.showMoreText}>
-                                    Hide replies
+                                    {t("postDetailScreen.hideReplies")}
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -93,6 +94,7 @@ const CommentItem = ({ comment, level = 0 }) => {
 
 
 const PostDetailScreen = () => {
+    const { t } = useTranslation();
     const [post, setPost] = useState(postDetail);
     return (
         <View style={postDetailStyle.container}>
@@ -109,7 +111,7 @@ const PostDetailScreen = () => {
                             <TouchableOpacity>
                                 <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
                             </TouchableOpacity>
-                            <Text style={postDetailStyle.headerText}>Post</Text>
+                            <Text style={postDetailStyle.headerText}>{t("postDetailScreen.post")}</Text>
                         </View>
                         <Post
                             name={post.name}
@@ -128,7 +130,7 @@ const PostDetailScreen = () => {
                 <Image style={postDetailStyle.avatarFooter} source={{ uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg' }} />
                 <TextInput
                     style={postDetailStyle.inputComment}
-                    placeholder='Write comments'
+                    placeholder={t("postDetailScreen.writeComment")}
                 />
                 <TouchableOpacity style={postDetailStyle.buttonSendComment} >
                     <Ionicons name='send-sharp' size={30} color='black' />

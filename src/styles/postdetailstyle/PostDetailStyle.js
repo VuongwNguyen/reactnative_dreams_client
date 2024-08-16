@@ -18,7 +18,7 @@ export const postDetailStyle = {
         color: 'black',
     },
     commentItem: {
-        marginBottom: 12,
+        marginBottom: 10,
         marginLeft: 10,
         paddingRight: 10,
     },
@@ -43,7 +43,7 @@ export const postDetailStyle = {
         marginTop: 8,
     },
     showMoreText: {
-        fontSize: 15,
+        fontSize: 14,
         lineHeight: 22,
         fontWeight: '500',
         color: '#6c757d',

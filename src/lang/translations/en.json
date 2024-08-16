@@ -139,5 +139,13 @@
     "search": "Search...",
     "trending": "Trending",
     "followed": "Followed"
+  },
+  "postDetailScreen": {
+    "post": "Post",
+    "reply": "Reply",
+    "view": "View",
+    "moreReplies": "more replies",
+    "hideRelies": "Hide replies",
+    "writeComment": "Viết bình luận"
   }
 }
