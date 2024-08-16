@@ -12,9 +12,9 @@ const FollowedPostTab = () => {
             <ScrollView style={{ marginTop: 10 }}
                 showsVerticalScrollIndicator={false}>
                 {
-                    dataPosts.map(post => (
+                    dataPosts.map((post, index) => (
                         <Post
-                            key={post.id}
+                            key={index}
                             name={post.name}
                             date={post.date}
                             avatar={post.avatar}
@@ -60,8 +60,12 @@ const postsData = [
         date: '5h ago',
         textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
         images: [
-            'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            {
+                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            }
         ],
         like: '1.9k',
         comment: '1.9k',
@@ -74,8 +78,15 @@ const postsData = [
         date: '5h ago',
         textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
         images: [
-            'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            {
+                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            }
         ],
         like: '1.9k',
         comment: '1.9k',
@@ -88,7 +99,51 @@ const postsData = [
         date: '5h ago',
         textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
         images: [
-            'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
+            {
+                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            }
+        ],
+        like: '1.9k',
+        comment: '1.9k',
+        share: '1.9k',
+    },
+    {
+        id: 5,
+        name: "user 5",
+        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+        date: '5h ago',
+        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+        images: [
+            {
+                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            },
+            {
+                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
+            }
         ],
         like: '1.9k',
         comment: '1.9k',

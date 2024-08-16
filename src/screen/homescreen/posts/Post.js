@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { PostStyles } from '../../../styles/poststyle/PostStyle'
+import GridImage from '../../../components/GirdImage'
 const { width, height } = Dimensions.get('window');
 
 
@@ -36,21 +37,7 @@ const Post = (props) => {
                 </Text>
                 {
                     dataImages.length > 0 &&
-                    <View style={PostStyles.swiperContainer}>
-                        <Swiper
-                            index={index}
-                            dot={
-                                <View style={PostStyles.dot} />
-                            }
-                            activeDot={
-                                <View style={PostStyles.activeDot} />
-                            }
-                        >
-                            {dataImages.map((image, index) => {
-                                return <Image source={{ uri: image }} style={PostStyles.img} resizeMode='contain' key={index} />
-                            })}
-                        </Swiper>
-                    </View>
+                    <GridImage arrImages={dataImages} />
                 }
             </View>
             <View style={PostStyles.footerPost}>

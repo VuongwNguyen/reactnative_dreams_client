@@ -9,12 +9,13 @@ import ChangeNewPasswordScreen from '../screen/changenewpassword/ChangeNewPasswo
 import HomeScreen from '../screen/homescreen/HomeScreen';
 import OtpScreen from '../screen/otpscreen/OtpScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
+import PostDetailScreen from '../screen/postdetailscreen/PostDetailScreen';
 
 const Stack = createStackNavigator();
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={stackName.example} component={HomeScreen} />
+      <Stack.Screen name={stackName.example} component={PostDetailScreen} />
     </Stack.Navigator>
   );
 }
