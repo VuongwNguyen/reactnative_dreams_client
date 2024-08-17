@@ -97,25 +97,49 @@
       "notMatch": "Confirm password is doesn't match"
     }
   },
+  "accountDetailScreen": {
+    "infTitle": "Information",
+    "basic": "Basic Information",
+    "other": "Others",
+    "username": "Username",
+    "nickname": "Nickname",
+    "birthDay": "Day of birth",
+    "nationality": "Nationality",
+    "hometown": "Hometown",
+    "gender": "Gender",
+    "desc": "Description",
+    "hobby": "Hoppy",
+    "education": "Education",
+    "zodiaque": "Zodiaque",
+    "location": "Location",
+    "save": "Save"
+  },
+
   "profileScreen": {
-    "profile":"Profile",
-    "followers":"Followers",
-    "following":"Following",
-    "posts":"Posts",
-    "inbox":"Inbox",
-    "follow":"Follow",
-    "information":"Information",
-    "posted":"Posted",
-    "infomationTab":{
-      "curlive":"Currently living in",
-      "nationality":"Nationality",
-      "home":"Hometown",
-      "school":"School",
-      "gender":"Gender",
-      "dob":"Birthday",
-      "bobby":"Hobby",
-      "relation":"Relationship",
-      "zodiac":"Zodiac sign"
+    "profile": "Profile",
+    "followers": "Followers",
+    "following": "Following",
+    "posts": "Posts",
+    "inbox": "Inbox",
+    "follow": "Follow",
+    "information": "Information",
+    "posted": "Posted",
+    "infomationTab": {
+      "curlive": "Currently living in",
+      "nationality": "Nationality",
+      "home": "Hometown",
+      "school": "School",
+      "gender": "Gender",
+      "dob": "Birthday",
+      "bobby": "Hobby",
+      "relation": "Relationship",
+      "zodiac": "Zodiac sign"
     }
+  },
+  "newPostScreen": {
+    "title": "Create post",
+    "openLine": "write an opening line...",
+    "contentPost": "Write something...",
+    "post": "Post"
   }
 }

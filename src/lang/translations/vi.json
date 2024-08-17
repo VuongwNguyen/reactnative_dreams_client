@@ -50,7 +50,7 @@
     "forgotPassword": "Quên mật khẩu?",
     "notAccount": "Chưa tài khoản ?",
     "register": "Đăng ký",
-    "emailOrPhoneNumber":"Email hoặc số điện thoại",
+    "emailOrPhoneNumber": "Email hoặc số điện thoại",
     "error": {
       "emailOrPhoneNumber": {
         "required": "Email hoặc số điện thoại không được trống",
@@ -116,25 +116,48 @@
       "notMatch": "Xác nhận mật khẩu không khớp"
     }
   },
-  "profileScreen":{
-    "profile":"Hồ sơ",
-    "followers":"Người theo dõi",
-    "following":"Đang theo dõi",
-    "posts":"Bài viết",
-    "inbox":"Nhắn tin",
-    "follow":"Theo dõi",
-    "information":"Thông tin",
-    "posted":"Đã đăng",
-    "infomationTab":{
-      "curlive":"Nơi ở hiện tại",
-      "nationality":"Quốc tịch",
-      "home":"Quê quán",
-      "school":"Trường",
-      "gender":"Giới tínhh",
-      "dob":"Ngày sinh",
-      "bobby":"Sở thích",
-      "relation":"Tình trạng quan hệ",
-      "zodiac":"Cung hoàng đạo"
+  "profileScreen": {
+    "profile": "Hồ sơ",
+    "followers": "Người theo dõi",
+    "following": "Đang theo dõi",
+    "posts": "Bài viết",
+    "inbox": "Nhắn tin",
+    "follow": "Theo dõi",
+    "information": "Thông tin",
+    "posted": "Đã đăng",
+    "infomationTab": {
+      "curlive": "Nơi ở hiện tại",
+      "nationality": "Quốc tịch",
+      "home": "Quê quán",
+      "school": "Trường",
+      "gender": "Giới tínhh",
+      "dob": "Ngày sinh",
+      "bobby": "Sở thích",
+      "relation": "Tình trạng quan hệ",
+      "zodiac": "Cung hoàng đạo"
     }
+  },
+  "accountDetailScreen": {
+    "infTitle": "Thông tin",
+    "basic": "Thông tin cơ bản",
+    "other": "Thông tin khác",
+    "username": "Tên người dùng",
+    "nickname": "Biệt danh",
+    "birthDay": "Ngày sinh",
+    "nationality": "Quốc tịch",
+    "hometown": "Quê quán",
+    "gender": "Giới tính",
+    "desc": "Mô tả ",
+    "hobby": "Sở thích",
+    "education": "Giáo dục",
+    "zodiaque": "Cung hoàng đạo",
+    "location": "Nơi ở",
+    "save": "Lưu"
+  },
+  "newPostScreen": {
+    "title": "Tạo bài viết",
+    "openLine": "Viết dòng mở đầu...",
+    "contentPost": "Viết gì đó...",
+    "post": "Post"
   }
 }

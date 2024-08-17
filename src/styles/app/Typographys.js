@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
-import { Fonts } from './Fonts';
-import { Spacings } from './Spacings';
-import { Colors } from './Colors';
+import {Fonts} from './Fonts';
+import {Colors} from './Colors';
 
 export const Typography = StyleSheet.create({
   title: {
@@ -59,12 +58,23 @@ export const Typography = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 8,
   },
+  postTitle: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 15,
+    fontStyle: 'italic',
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    textTransform: 'capitalize',
+    color: Colors.black,
+    lineHeight: 22,
+  },
   postContent: {
     fontFamily: Fonts.nunitonSans.semibold,
     fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '600',
     lineHeight: 21,
+    color: Colors.black,
   },
   postName: {
     fontFamily: Fonts.nunitonSans.bold,
@@ -72,6 +82,7 @@ export const Typography = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '700',
     lineHeight: 22,
+    color: Colors.black,
   },
   cmtContent: {
     fontFamily: Fonts.nunitonSans.regular,
@@ -97,5 +108,14 @@ export const Typography = StyleSheet.create({
   errorText: {
     fontSize: 12,
     color: Colors.error,
+  },
+  tagInf: {
+    fontFamily: Fonts.inter.regular,
+    fontSize: 15,
+    lineHeight: 18,
+  },
+  typeInf: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 17,
   },
 });
