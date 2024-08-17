@@ -1,13 +1,10 @@
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import Header from '../../components/Header';
-import InfomationTab from './InfomationTab';
 import {useTranslation} from 'react-i18next';
-import PostedTab from './PostedTab';
+import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 
-const INFOMATION_TAB = 'Information';
-const POSTED_TAB = 'Posted';
 const ProfileScreen = () => {
   const {t} = useTranslation();
   const InforItem = ({title = '', subtitle = ''}) => {
@@ -18,26 +15,6 @@ const ProfileScreen = () => {
       </View>
     );
   };
-  const TabItem = props => {
-    const {title = '', onPress, isActive} = props;
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={
-          isActive
-            ? ProfileStyle.activeTabContainer
-            : ProfileStyle.inactiveTabContainer
-        }>
-        <Text
-          style={
-            isActive ? ProfileStyle.activeTabText : ProfileStyle.inactiveTabText
-          }>
-          {title}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-  const [activeTab, setActiveTab] = useState(INFOMATION_TAB);
   return (
     <ScrollView style={ProfileStyle.container}>
       <Header title={t('profile')} />
@@ -71,21 +48,7 @@ const ProfileScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={ProfileStyle.rowContainer}>
-        <TabItem
-          onPress={() => setActiveTab(INFOMATION_TAB)}
-          title={t('profileScreen.information')}
-          isActive={INFOMATION_TAB === activeTab}
-        />
-        <TabItem
-          onPress={() => setActiveTab(POSTED_TAB)}
-          title={t('profileScreen.posted')}
-          isActive={POSTED_TAB === activeTab}
-        />
-      </View>
-      <View style={ProfileStyle.contentContainer}>
-        {activeTab === INFOMATION_TAB ? <InfomationTab /> : <PostedTab />}
-      </View>
+      <TopBarNavigationProfile/>
     </ScrollView>
   );
 };
