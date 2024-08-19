@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={stackName.example} component={PostDetailScreen} />
+      <Stack.Screen name={stackName.example} component={HomeScreen} />
     </Stack.Navigator>
   );
 }

@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Post from './posts/Post'
+import ItemPost from '../../components/ItemPost'
 
 
 const FollowedPostTab = () => {
@@ -12,19 +13,8 @@ const FollowedPostTab = () => {
             <ScrollView style={{ marginTop: 10 }}
                 showsVerticalScrollIndicator={false}>
                 {
-                    dataPosts.map((post, index) => (
-                        <Post
-                            key={index}
-                            name={post.name}
-                            date={post.date}
-                            avatar={post.avatar}
-                            textContent={post.textContent}
-                            dataImages={post.images}
-                            like={post.like}
-                            comment={post.comment}
-                            share={post.share}
-                            isFollowed={isFollowed}
-                        />
+                    dataPosts.map((item, index) => (
+                        <ItemPost key={index} item={item} />
                     ))
                 }
             </ScrollView>
@@ -43,110 +33,71 @@ const styles = StyleSheet.create({
 
 const postsData = [
     {
-        id: 1,
-        name: "user 1",
-        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-        date: '5h ago',
-        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-        images: [],
-        like: '1.9k',
-        comment: '1.9k',
-        share: '1.9k',
+        name: 'Velerie Hiddersley 1',
+        avatar:
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        hour: '1 hour ago',
+        title:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        content:
+            'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+        image: [
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        ],
+        like: 0,
+        comment: 0,
+        share: 0,
     },
     {
-        id: 2,
-        name: "user 2",
-        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-        date: '5h ago',
-        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-        images: [
-            {
-                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            }
-        ],
-        like: '1.9k',
-        comment: '1.9k',
-        share: '1.9k',
+        name: 'Velerie Hiddersley 2',
+        avatar:
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        hour: '1 hour ago',
+        title:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        content:
+            'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+        image: [],
+        like: 0,
+        comment: 0,
+        share: 0,
     },
     {
-        id: 3,
-        name: "user 3",
-        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-        date: '5h ago',
-        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-        images: [
-            {
-                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            }
+        name: 'Velerie Hiddersley 3',
+        avatar:
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        hour: '1 hour ago',
+        title:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        content:
+            'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+        image: [
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+            'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
+            'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg'
         ],
-        like: '1.9k',
-        comment: '1.9k',
-        share: '1.9k',
+        like: 8,
+        comment: 0,
+        share: 0,
     },
     {
-        id: 4,
-        name: "user 4",
-        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-        date: '5h ago',
-        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-        images: [
-            {
-                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            }
+        name: 'Velerie Hiddersley 4',
+        avatar:
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        hour: '1 hour ago',
+        title:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        content:
+            'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+        image: [
+            'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+            'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
+            'https://i.pinimg.com/236x/c4/72/c5/c472c5aa885fee264dba6bc30d9db057.jpg',
+            'https://i.pinimg.com/236x/db/12/ca/db12caeb3afa6e2df4e93e2fc01d6518.jpg',
+            'https://i.pinimg.com/474x/aa/e3/a0/aae3a00dcb0c1ab098bf43f2f83a6332.jpg'
         ],
-        like: '1.9k',
-        comment: '1.9k',
-        share: '1.9k',
-    },
-    {
-        id: 5,
-        name: "user 5",
-        avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-        date: '5h ago',
-        textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-        images: [
-            {
-                uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0',
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            },
-            {
-                uri: 'https://www.japantimes.co.jp/uploads/imported_images/uploads/2022/12/np_file_200317.jpeg'
-            }
-        ],
-        like: '1.9k',
-        comment: '1.9k',
-        share: '1.9k',
+        like: 0,
+        comment: 0,
+        share: 0,
     }
 ]

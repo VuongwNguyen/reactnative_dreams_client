@@ -9,6 +9,7 @@ import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
 import { Assets } from '../../styles';
 import { useTranslation } from 'react-i18next';
 import CommetItem from '../../components/CommetItem';
+import ItemPost from '../../components/ItemPost';
 
 
 
@@ -37,15 +38,8 @@ const PostDetailScreen = () => {
                             </TouchableOpacity>
                             <Text style={postDetailStyle.headerText}>{t("postDetailScreen.post")}</Text>
                         </View>
-                        <Post
-                            name={post.name}
-                            date={post.date}
-                            avatar={post.avatar}
-                            textContent={post.textContent}
-                            dataImages={post.images}
-                            like={post.like}
-                            comment={post.comment}
-                            share={post.share}
+                        <ItemPost
+                            item={post}
                         />
                     </>
                 }
@@ -70,19 +64,22 @@ export default PostDetailScreen;
 
 
 const postDetail = {
-    id: 1,
-    name: "user 1",
-    avatar: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-    date: '5h ago',
-    textContent: 'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    images: [
-        {
-            uri: 'https://th.bing.com/th/id/R.dc173c88b61f33adea0a33847cbb2080?rik=1tsrYlLvrzv%2bvQ&pid=ImgRaw&r=0'
-        }
+    name: 'Velerie Hiddersley',
+    avatar:
+        'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+    hour: '1 hour ago',
+    title:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    content:
+        'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+    image: [
+        'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+        'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
+        'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg'
     ],
-    like: '1.9k',
-    comment: '1.9k',
-    share: '1.9k',
+    like: 8,
+    comment: 0,
+    share: 0,
 };
 
 const comments = [
