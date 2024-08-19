@@ -1,78 +1,10 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {FlatList} from 'react-native';
 import React from 'react';
-import ItemPost from '../components/ItemPost';
+import ItemPost from '../../components/ItemPost';
 
-const abc = {
-  name: 'Velerie Hiddersley',
-  avatar:
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  hour: '1 hour ago',
-  title:
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  content:
-    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-  image: [
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-  ],
-  like: 0,
-  comment: 0,
-  share: 0,
-};
-
-const abc1 = {
-  name: 'Velerie Hiddersley',
-  avatar:
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  hour: '1 hour ago',
-  title:
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  content:
-    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-  image: [
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  ],
-  like: 0,
-  comment: 0,
-  share: 0,
-};
-
-const abc0 = {
-  name: 'Velerie Hiddersley',
-  avatar:
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  hour: '1 hour ago',
-  title:
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  content:
-    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-  image: [],
-  like: 0,
-  comment: 0,
-  share: 0,
-};
-
-const abc3 = {
-  name: 'Velerie Hiddersley',
-  avatar:
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  hour: '1 hour ago',
-  title:
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-  content:
-    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-  image: [
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-    'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg'
-  ],
-  like: 8,
-  comment: 0,
-  share: 0,
-};
-
-const abc5 = {
-  name: 'Velerie Hiddersley',
+const data = [
+  {
+    name: 'Velerie Hiddersley',
   avatar:
     'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
   hour: '1 hour ago',
@@ -90,28 +22,84 @@ const abc5 = {
   like: 0,
   comment: 0,
   share: 0,
-};
+  },
+  {
+    name: 'Velerie Hiddersley',
+  avatar:
+    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+  hour: '1 hour ago',
+  title:
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  content:
+    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+  image: [
+    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+    'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
+    'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg'
+  ],
+  like: 8,
+  comment: 0,
+  share: 0,
+  },
+  {
+    name: 'Velerie Hiddersley',
+  avatar:
+    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+  hour: '1 hour ago',
+  title:
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  content:
+    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+  image: [],
+  like: 0,
+  comment: 0,
+  share: 0,
+  },
+  {
+    name: 'Velerie Hiddersley',
+  avatar:
+    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+  hour: '1 hour ago',
+  title:
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+  content:
+    'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+  image: [
+    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+  ],
+  like: 0,
+  comment: 0,
+  share: 0,
+  },
+  {
+    name: 'Velerie Hiddersley',
+    avatar:
+      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+    hour: '1 hour ago',
+    title:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    content:
+      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
+    image: [
+      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
+    ],
+    like: 0,
+    comment: 0,
+    share: 0,
+  }
+]
 
-const Example = () => {
+const PostedTab = () => {
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ItemPost item={abc} />
-        <ItemPost Post item={abc1} />
-        <ItemPost Post item={abc0} />
-        <ItemPost Post item={abc3} />
-        <ItemPost Post item={abc5} />
-      </ScrollView>
-    </View>
+      <FlatList
+        scrollEnabled={false}
+        nestedScrollEnabled={true}
+        data={data}
+        renderItem={({item}) => <ItemPost item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+      />
   );
 };
 
-export default Example;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    gap: 30,
-  },
-});
+export default PostedTab;

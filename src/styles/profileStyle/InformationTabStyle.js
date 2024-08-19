@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native'
 import { Typography } from '../app/Typographys'
+import { Colors } from '../app/Colors'
 export const InfomationTabStyle = StyleSheet.create({
   container:{
     flex:1,
+    backgroundColor: Colors.background
   },
   rowContainer:{
     flexDirection:'row',

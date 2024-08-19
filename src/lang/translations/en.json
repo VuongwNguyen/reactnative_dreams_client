@@ -147,5 +147,11 @@
     "moreReplies": "more replies",
     "hideRelies": "Hide replies",
     "writeComment": "Viết bình luận"
+  },
+  "newPostScreen": {
+    "title": "Create post",
+    "openLine": "write an opening line...",
+    "contentPost": "Write something...",
+    "post": "Post"
   }
 }

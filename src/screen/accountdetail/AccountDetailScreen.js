@@ -12,8 +12,12 @@ import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle'
 import {useTranslation} from 'react-i18next';
 import AppHeader from '../../components/Header';
 import TagInf from './TagInf';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const basicInfArr = [
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
   {title: 'Title', icon: Assets.icon.user, content: 'content'},
@@ -88,7 +92,7 @@ const AccountDetailScreen = () => {
               onPress={() => {
                 setModalVisible(true);
               }}>
-              <Image source={Assets.image.ic_change} />
+              <AntDesign name={Assets.icon.change} color="white" size={24} />
             </TouchableOpacity>
           </View>
           {/* View modal */}
@@ -112,9 +116,10 @@ const AccountDetailScreen = () => {
                         onOpenCamera();
                         setModalVisible(false);
                       }}>
-                      <Image
-                        source={Assets.image.ic_camera}
-                        style={accountDetailStyle.optionIconSize}
+                      <Feather
+                        name={Assets.icon.camera}
+                        size={24}
+                        color={Colors.primary}
                       />
                       <Text style={accountDetailStyle.optionText}>Camera</Text>
                     </TouchableOpacity>
@@ -124,10 +129,12 @@ const AccountDetailScreen = () => {
                         openImageLibrary();
                         setModalVisible(false);
                       }}>
-                      <Image
-                        source={Assets.image.ic_gallery}
-                        style={accountDetailStyle.optionIconSize}
+                      <Ionicons
+                        name={Assets.icon.gallery}
+                        size={24}
+                        color={Colors.primary}
                       />
+
                       <Text style={accountDetailStyle.optionText}>Gallery</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -136,9 +143,10 @@ const AccountDetailScreen = () => {
                         setImage('');
                         setModalVisible(false);
                       }}>
-                      <Image
-                        source={Assets.image.ic_delete}
-                        style={accountDetailStyle.optionIconSize}
+                      <FontAwesome
+                        name={Assets.icon.trash}
+                        size={24}
+                        color={Colors.secondary}
                       />
                       <Text style={accountDetailStyle.optionText}>Remove</Text>
                     </TouchableOpacity>

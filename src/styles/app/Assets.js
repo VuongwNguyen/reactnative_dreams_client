@@ -35,16 +35,14 @@ export const Assets = {
     follow: 'plus', // AntDesign
     setting: 'settings-suggest', // MaterialIcons
     change: 'sync', // AntDesign
+    trash: 'trash-o', // FontAwsome
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
     github: require('../../../assets/images/github.png'),
     google: require('../../../assets/images/google.png'),
     avt: require('../../../assets/images/avt.jpg'),
-    ic_change: require('../../../assets/images/ic_change.png'),
     right_arrow: require('../../../assets/images/right_arrow.png'),
-    ic_camera: require('../../../assets/images/ic_camera.png'),
-    ic_gallery: require('../../../assets/images/ic_gallery.png'),
-    ic_delete: require('../../../assets/images/ic_delete.png'),
+    share: require('../../../assets/images/share.png'),
   },
 };

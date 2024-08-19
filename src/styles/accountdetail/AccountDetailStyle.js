@@ -35,10 +35,14 @@ export const accountDetailStyle = {
     width: changeBtnSize,
     height: changeBtnSize,
     borderRadius: changeBtnRadius,
+    backgroundColor: Colors.primary,
     position: 'absolute',
     bottom: -15,
     right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+
   groupInfContainer: {
     gap: 10,
   },
@@ -64,7 +68,7 @@ export const accountDetailStyle = {
     position: 'absolute',
     left: '12%',
     top: 0.25 * height,
-    minWidth: '75%',
+    width: '75%',
     marginHorizontal: 'auto',
     backgroundColor: Colors.white,
     alignItems: 'center',

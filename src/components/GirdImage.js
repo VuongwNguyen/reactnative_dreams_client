@@ -14,7 +14,7 @@ const GridImage = props => {
             key={index}
             onPress={openImage}
             style={[styles.gridImageContainer, {width: '48%'}]}>
-            <Image source={{uri: item.uri}} style={styles.gridImage} />
+            <Image source={{uri: item}} style={styles.gridImage} />
           </TouchableOpacity>
         ))}
       </View>
@@ -30,14 +30,14 @@ const GridImage = props => {
               key={index}
               onPress={openImage}
               style={[styles.gridImageContainer, {width: '48%'}]}>
-              <Image source={{uri: item.uri}} style={styles.gridImage} />
+              <Image source={{uri: item}} style={styles.gridImage} />
             </TouchableOpacity>
           ))}
         </View>
         <TouchableOpacity
           onPress={openImage}
           style={[styles.gridImageContainer, {width: '100%'}]}>
-          <Image source={{uri: arrImages[2].uri}} style={styles.gridImage} />
+          <Image source={{uri: arrImages[2]}} style={styles.gridImage} />
         </TouchableOpacity>
       </View>
     );
@@ -49,7 +49,7 @@ const GridImage = props => {
         key={index}
         onPress={openImage}
         style={styles.gridImageContainer}>
-        <Image source={{uri: item.uri}} style={styles.gridImage} />
+        <Image source={{uri: item}} style={styles.gridImage} />
         {index === 3 && arrImages.length > 4 && (
           <View style={styles.moreOverlay}>
             <Text style={styles.moreText}>+{arrImages?.length - 4}</Text>
@@ -62,7 +62,7 @@ const GridImage = props => {
   return (
     <View style={styles.container}>
       {arrImages.length === 1 ? (
-        <Image source={{uri: arrImages[0].uri}} style={styles.mainImage} />
+        <Image source={{uri: arrImages[0]}} style={styles.mainImage} />
       ) : arrImages.length === 2 ? (
         renderTwoImages()
       ) : arrImages.length === 3 ? (
@@ -78,8 +78,8 @@ export default GridImage;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    backgroundColor: '#fff',
+    paddingHorizontal: 8,
+    // backgroundColor: '#fff',
   },
   mainImageContainer: {
     marginBottom: 10,
