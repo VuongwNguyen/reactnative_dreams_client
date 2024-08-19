@@ -97,7 +97,6 @@
       "notMatch": "Confirm password is doesn't match"
     }
   },
-
   "accountDetailScreen": {
     "infTitle": "Information",
     "basic": "Basic Information",
