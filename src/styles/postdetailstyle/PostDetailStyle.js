@@ -1,6 +1,7 @@
 export const postDetailStyle = {
     container: {
         flex: 1,
+        height: '100%',
         backgroundColor: '#fff',
     },
     headerContainer: {
@@ -18,9 +19,9 @@ export const postDetailStyle = {
         color: 'black',
     },
     commentItem: {
-        marginBottom: 10,
-        marginLeft: 10,
-        paddingRight: 10,
+        flex: 1,
+        marginBottom: 5,
+
     },
     commentRow: {
         flexDirection: 'row',
@@ -38,7 +39,11 @@ export const postDetailStyle = {
         color: '#888',
         marginTop: 4,
     },
+    replyList: {
+        width: "100%",
+    },
     replyItem: {
+        flex: 1,
         marginLeft: 20,
         marginTop: 8,
     },
@@ -53,7 +58,7 @@ export const postDetailStyle = {
         gap: 10,
         paddingHorizontal: 10,
         paddingVertical: 10,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     avatarFooter: {
         width: 40,

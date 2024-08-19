@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList, Image, postDetailStyleheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AppHeader from '../../components/Header';
 import Feather from 'react-native-vector-icons/Feather';
@@ -8,100 +8,24 @@ import Post from '../homescreen/posts/Post';
 import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
 import { Assets } from '../../styles';
 import { useTranslation } from 'react-i18next';
+import CommetItem from '../../components/CommetItem';
 
-const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
-const INCREMENT_REPLIES = 9;
 
-const CommentItem = ({ comment, level = 0 }) => {
-    const { t } = useTranslation();
-    const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
-    const [showAllReplies, setShowAllReplies] = useState(false);
 
-    const handleViewMoreReplies = () => {
-        setVisibleReplies((prev) => prev + INCREMENT_REPLIES);
-    };
-
-    const handleShowAllReplies = () => {
-        setVisibleReplies(comment.replies.length);
-        setShowAllReplies(true);
-    };
-
-    const handleHideReplies = () => {
-        setVisibleReplies(INITIAL_REPLIES);
-        setShowAllReplies(false);
-    };
-
-    return (
-        <View style={[postDetailStyle.commentItem,]}>
-            <View style={postDetailStyle.commentRow}>
-                <Image style={{ width: 40, height: 40, borderRadius: 999 }} source={{ uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg' }} />
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'column', flex: 1, paddingRight: 20 }}>
-                        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                            <Text style={{ fontSize: 16, lineHeight: 22, fontWeight: '700', color: 'black' }}>{comment.user}</Text>
-                            <Text style={{ fontSize: 13, lineHeight: 22, fontWeight: '500', color: '#6c757d' }}>{comment.createdAt}</Text>
-                        </View>
-                        <Text style={{ fontSize: 16, lineHeight: 22, color: '#000' }}>{comment.content}</Text>
-                        <Text style={{ fontSize: 15, lineHeight: 22, fontWeight: '500', color: '#6c757d' }}>{t("postDetailScreen.reply")}</Text>
-                    </View>
-                    <TouchableOpacity style={{ flexDirection: 'column', height: 80, alignItems: 'center', justifyContent: 'center' }}>
-                        <AntDesign name="hearto" size={20} color="black" />
-                        <Text>999</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-            {comment.replies.length > 0 && (
-                <>
-                    <FlatList
-                        data={comment.replies.slice(0, visibleReplies)}
-                        renderItem={({ item }) => (
-                            <View style={postDetailStyle.replyItem}>
-                                <CommentItem comment={item} level={level + 1} />
-                            </View>
-                        )}
-                        keyExtractor={(item) => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        style={postDetailStyle.replyList}
-
-                    />
-                    {!showAllReplies && visibleReplies < comment.replies.length && (
-                        <TouchableOpacity style={{ marginLeft: 50, }} onPress={handleViewMoreReplies}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 0.5 }} />
-                                <Text style={postDetailStyle.showMoreText}>
-                                    {t("postDetailScreen.view")} {Math.min(comment.replies.length - visibleReplies, INCREMENT_REPLIES)} {t("postDetailScreen.moreReplies")}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                    {visibleReplies >= comment.replies.length && (
-                        <TouchableOpacity style={{ marginLeft: 50, }} onPress={handleHideReplies}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                <View style={{ height: 1, width: 40, borderColor: '#6c757d', borderWidth: 0.5 }} />
-                                <Text style={postDetailStyle.showMoreText}>
-                                    {t("postDetailScreen.hideReplies")}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                </>
-            )}
-        </View>
-    );
-};
 
 
 const PostDetailScreen = () => {
     const { t } = useTranslation();
+    const inputRef = useRef(null)
     const [post, setPost] = useState(postDetail);
     return (
         <View style={postDetailStyle.container}>
             <FlatList
                 style={{ flex: 1 }}
                 data={comments}
-                renderItem={({ item }) => <CommentItem comment={item} />}
+                renderItem={({ item }) => <View style={{ padding: 10 }}>
+                    <CommetItem comment={item} inputRef={inputRef} />
+                </View>}
                 keyExtractor={(item) => item.id}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -129,6 +53,7 @@ const PostDetailScreen = () => {
             <View style={postDetailStyle.footer}>
                 <Image style={postDetailStyle.avatarFooter} source={{ uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg' }} />
                 <TextInput
+                    ref={inputRef}
                     style={postDetailStyle.inputComment}
                     placeholder={t("postDetailScreen.writeComment")}
                 />
