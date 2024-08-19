@@ -59,7 +59,7 @@ export const APIRegister = createAsyncThunk(
 
 export const APIResetPassword = createAsyncThunk(
   'account/reset-password',
-  async (data, {rejectWithValue}) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().post(
         'account/reset-password',

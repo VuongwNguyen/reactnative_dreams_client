@@ -116,6 +116,11 @@
       "notMatch": "Xác nhận mật khẩu không khớp"
     }
   },
+  "homeScreen": {
+    "search": "Tìm kiếm...",
+    "trending": "Xu hướng",
+    "followed": "Đã theo dõi"
+  },
   "profileScreen": {
     "profile": "Hồ sơ",
     "followers": "Người theo dõi",
@@ -153,6 +158,14 @@
     "zodiaque": "Cung hoàng đạo",
     "location": "Nơi ở",
     "save": "Lưu"
+  },
+  "postDetailScreen": {
+    "post": "Bài viết",
+    "reply": "Trả lời",
+    "view": "Xem",
+    "moreReplies": "câu trả lời khác",
+    "hideReplies": "Ẩn câu trả lời",
+    "writeComment": "Viết bình luận"
   },
   "newPostScreen": {
     "title": "Tạo bài viết",
