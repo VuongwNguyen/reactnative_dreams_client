@@ -36,6 +36,8 @@ export const Assets = {
     setting: 'settings-suggest', // MaterialIcons
     change: 'sync', // AntDesign
     trash: 'trash-o', // FontAwsome
+    graduation: 'graduation-cap', // FontAwesome
+    zodiac:'zodiac-pisces' // MaterialCommunityIcons
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
