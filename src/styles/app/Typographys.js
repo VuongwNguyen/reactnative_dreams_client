@@ -118,4 +118,9 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.inter.bold,
     fontSize: 17,
   },
+  privacySettingDesc: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 18,
+    lineHeight: 24,
+  },
 });

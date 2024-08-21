@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {tagInfStyle} from '../../styles/accountdetail/TagInfStyle';
 import Feather from 'react-native-vector-icons/Feather';
@@ -26,5 +26,3 @@ const TagInf = props => {
 };
 
 export default TagInf;
-
-const styles = StyleSheet.create({});

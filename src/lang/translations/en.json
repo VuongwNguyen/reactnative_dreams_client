@@ -153,5 +153,9 @@
     "openLine": "write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
+  },
+  "privacySettingScreen": {
+    "title": "Privacy Setting",
+    "desc": "Please review this info form your profile and decide who you’re comfortable with seeing it. Your profile may have more than is listed here."
   }
 }

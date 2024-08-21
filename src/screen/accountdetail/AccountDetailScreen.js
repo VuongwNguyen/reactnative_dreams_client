@@ -68,7 +68,6 @@ const AccountDetailScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const goBackScreen = () => {};
-  const onSave = () => {};
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={accountDetailStyle.container}>
