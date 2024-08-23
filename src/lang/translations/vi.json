@@ -172,5 +172,8 @@
     "openLine": "Viết dòng mở đầu...",
     "contentPost": "Viết gì đó...",
     "post": "Post"
+  },
+  "notificationScreen": {
+    "title": "Thông báo"
   }
 }

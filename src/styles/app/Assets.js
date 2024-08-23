@@ -41,7 +41,7 @@ export const Assets = {
     logo: require('../../../assets/images/logo.png'),
     github: require('../../../assets/images/github.png'),
     google: require('../../../assets/images/google.png'),
-    avt: require('../../../assets/images/avt.jpg'),
+    avt: require('../../../assets/images/avt.png'),
     right_arrow: require('../../../assets/images/right_arrow.png'),
     share: require('../../../assets/images/share.png'),
   },
