@@ -9,6 +9,8 @@ const PrivacySettingItem = props => {
   const {t} = useTranslation();
   const {title, content, status} = props;
   const [icStatus, setIcStatus] = useState(status);
+  const [value, setValue] = useState(status);
+
   const data = [
     {label: 'Public', value: 'public'},
     {label: 'Private', value: 'private'},
@@ -29,7 +31,7 @@ const PrivacySettingItem = props => {
           data={data}
           labelField="label"
           valueField="value"
-          value={status}
+          value={value}
           onChange={item => {
             setValue(item.value);
             setIcStatus(item.value);
