@@ -27,7 +27,7 @@ const NotificationScreen = props => {
           />
         </View>
       </View>
-      <View style={notificationStyle.bodyContainer}>
+      <View>
         <View style={notificationStyle.tagContainer}>
           {optionsArr.map((item, index) => (
             <TouchableOpacity

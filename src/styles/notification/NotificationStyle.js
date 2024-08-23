@@ -39,9 +39,9 @@ export const notificationStyle = {
     borderColor: Colors.black,
   },
   tagLabelSelected: {
-    ...Typography.tagNotificationSelected,
+    ...Typography.tagOptionSelected,
   },
   tagLabelUnSelected: {
-    ...Typography.tagNotificationUnSelected,
+    ...Typography.tagOptionUnSelected,
   },
 };
