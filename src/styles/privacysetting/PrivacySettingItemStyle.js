@@ -1,4 +1,6 @@
 import {Colors, Scaling, Spacings, Typography} from '../../styles';
+import {Dimensions} from 'react-native';
+const {width, height} = Dimensions.get('window');
 export const privacySettingItemStyle = {
   container: {
     width: '100%',
@@ -25,7 +27,7 @@ export const privacySettingItemStyle = {
     color: Colors.secondary,
   },
   dropdown: {
-    minWidth: '35%',
+    minWidth: width * 0.35,
     paddingHorizontal: Spacings.sm,
     paddingVertical: Spacings.sm,
     borderWidth: 1,
