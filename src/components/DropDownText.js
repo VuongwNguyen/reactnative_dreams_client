@@ -15,7 +15,7 @@ const DropDownText = (props) => {
       <View>
       {expand && contents.map(content => (
         <Text style={DropDownTextStyle.content}>
-          {content}
+          {'\t' + content}
         </Text>
       ))}
       </View>
