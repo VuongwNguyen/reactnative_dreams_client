@@ -25,17 +25,12 @@ export const notificationItemStyle = {
     height: avtSize,
     borderRadius: avtSize / 2,
   },
-  textContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
+
   username: {
     ...Typography.userNotification,
   },
 
   content: {
-    maxWidth: '95%',
     ...Typography.contentNotification,
   },
   time: {
@@ -43,6 +38,7 @@ export const notificationItemStyle = {
     paddingLeft: 15,
   },
   centerBox: {
+    flex: 1,
     gap: 10,
   },
   followButton: {

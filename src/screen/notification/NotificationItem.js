@@ -13,7 +13,7 @@ const NotificationItem = props => {
       <View style={notificationItemStyle.mainContainer}>
         <Image source={avt} style={notificationItemStyle.avt} />
         <View style={notificationItemStyle.centerBox}>
-          <Text style={notificationItemStyle.content} numberOfLines={2}>
+          <Text style={notificationItemStyle.content}>
             <Text style={notificationItemStyle.username}>{username}</Text>{' '}
             {content}
           </Text>

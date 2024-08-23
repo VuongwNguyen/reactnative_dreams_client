@@ -6,9 +6,12 @@ import {useTranslation} from 'react-i18next';
 import {Assets} from '../../styles';
 import NotificationItem from './NotificationItem';
 
-const NotificationScreen = () => {
+const NotificationScreen = props => {
   const {t} = useTranslation();
-  const goBackScreen = () => {};
+  const {navigation} = props;
+  const goBackScreen = () => {
+    navigation.goBack();
+  };
   const optionsArr = ['All', 'New'];
   const [isSelected, setIsSelected] = useState(optionsArr[0]);
 
