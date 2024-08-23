@@ -46,5 +46,7 @@ export const Assets = {
     avt: require('../../../assets/images/avt.jpg'),
     right_arrow: require('../../../assets/images/right_arrow.png'),
     share: require('../../../assets/images/share.png'),
+    arrow_down: require('../../../assets/icons/arrow-down.png'),
+    arrow_up: require('../../../assets/icons/arrow-up.png'),
   },
 };
