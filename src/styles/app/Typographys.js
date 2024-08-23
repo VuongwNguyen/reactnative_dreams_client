@@ -118,6 +118,25 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.inter.bold,
     fontSize: 17,
   },
+  tagOptionSelected: {
+    fontFamily: Fonts.nunitonSans.semibold,
+    fontSize: 14,
+    color: Colors.white,
+  },
+  tagOptionUnSelected: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 14,
+    color: Colors.black,
+  },
+  smallTextInSearch: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+  },
+  searchAccountName: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 16,
+    color: Colors.black,
+  },
   userNotification: {
     fontFamily: Fonts.nunitonSans.bold,
     fontSize: 14,
@@ -137,16 +156,6 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.nunitonSans.regular,
     fontSize: 12,
     lineHeight: 14,
-    color: Colors.black,
-  },
-  tagNotificationSelected: {
-    fontFamily: Fonts.nunitonSans.semibold,
-    fontSize: 14,
-    color: Colors.white,
-  },
-  tagNotificationUnSelected: {
-    fontFamily: Fonts.nunitonSans.regular,
-    fontSize: 14,
     color: Colors.black,
   },
 });
