@@ -175,6 +175,8 @@
   },
   "privacySettingScreen": {
     "title": "Cài đặt quyền riêng tư",
-    "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây."
+    "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây.",
+    "public": "Cộng đồng",
+    "private": "Riêng tư"
   }
 }

@@ -37,7 +37,7 @@ export const Assets = {
     change: 'sync', // AntDesign
     trash: 'trash-o', // FontAwsome
     graduation: 'graduation-cap', // FontAwesome
-    zodiac:'zodiac-pisces' // MaterialCommunityIcons
+    zodiac: 'zodiac-pisces', // MaterialCommunityIcons
     public: 'globe',
     private: 'lock',
   },

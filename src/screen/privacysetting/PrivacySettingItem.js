@@ -4,13 +4,15 @@ import {privacySettingItemStyle} from '../../styles/privacysetting/PrivacySettin
 import {Dropdown} from 'react-native-element-dropdown';
 import Feather from 'react-native-vector-icons/Feather';
 import {Assets, Sizing} from '../../styles';
+import {useTranslation} from 'react-i18next';
 const PrivacySettingItem = props => {
+  const {t} = useTranslation();
   const {title, content, status} = props;
+  const [icStatus, setIcStatus] = useState(status);
   const data = [
     {label: 'Public', value: 'public'},
     {label: 'Private', value: 'private'},
   ];
-  const [value, setValue] = useState(data[0].value);
   return (
     <View style={privacySettingItemStyle.container}>
       <View style={privacySettingItemStyle.infContainer}>
@@ -20,26 +22,31 @@ const PrivacySettingItem = props => {
           <Text style={privacySettingItemStyle.content}>{content}</Text>
         </View>
       </View>
-      <Dropdown
-        placeholderStyle={privacySettingItemStyle.dropdownText}
-        selectedTextStyle={privacySettingItemStyle.dropdownText}
-        data={data}
-        labelField="label"
-        valueField="value"
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-        }}
-        renderLeftIcon={() => (
-          <Feather
-            color={'black'}
-            name={status == 'public' ? Assets.icon.public : Assets.icon.privacy}
-            size={20}
-            style={privacySettingItemStyle.icon}
-          />
-        )}
-        style={privacySettingItemStyle.dropdown}
-      />
+      <View style={privacySettingItemStyle.dropdownContainer}>
+        <Dropdown
+          placeholderStyle={privacySettingItemStyle.dropdownText}
+          selectedTextStyle={privacySettingItemStyle.dropdownText}
+          data={data}
+          labelField="label"
+          valueField="value"
+          value={status}
+          onChange={item => {
+            setValue(item.value);
+            setIcStatus(item.value);
+          }}
+          renderLeftIcon={() => (
+            <Feather
+              color={'black'}
+              name={
+                icStatus == 'public' ? Assets.icon.public : Assets.icon.privacy
+              }
+              size={20}
+              style={privacySettingItemStyle.icon}
+            />
+          )}
+          style={privacySettingItemStyle.dropdown}
+        />
+      </View>
     </View>
   );
 };

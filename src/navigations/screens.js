@@ -7,7 +7,7 @@ import OtpScreen from '../screen/otpscreen/OtpScreen';
 import PostDetailScreen from '../screen/postdetailscreen/PostDetailScreen';
 import ProfileScreen from '../screen/profileScreen/ProfileScreen';
 import LoginScreen from '../screen/loginScreen/LoginScreen';
-import RegisterScreen from '../screen/registerScreen/RegisterScreen';
+import RegisterScreen from '../screen/RegisterScreen/RegisterScreen';
 import NewPostScreen from '../screen/newpost/NewPostScreen';
 import BottomTab from '../navigations/BottomTab';
 
