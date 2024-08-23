@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const GridImage = props => {
   const {arrImages = []} = props;
