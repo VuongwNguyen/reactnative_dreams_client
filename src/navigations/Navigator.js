@@ -10,12 +10,14 @@ import HomeScreen from '../screen/homescreen/HomeScreen';
 import OtpScreen from '../screen/otpscreen/OtpScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import PostDetailScreen from '../screen/postdetailscreen/PostDetailScreen';
+import MessageScreen from '../screen/chatscreen/MessageScreen';
+
 
 const Stack = createStackNavigator();
 export function Navigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={stackName.example} component={HomeScreen} />
+      <Stack.Screen name={stackName.example} component={MessageScreen} />
     </Stack.Navigator>
   );
 }
