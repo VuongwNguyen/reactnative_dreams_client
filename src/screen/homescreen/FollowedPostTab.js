@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 import Post from './posts/Post';
 import ItemPost from '../../components/ItemPost';
 
@@ -8,7 +8,7 @@ const FollowedPostTab = () => {
   const [isFollowed, setIsFollowed] = useState(true);
   return (
     <View style={styles.container}>
-      <ScrollView style={{ marginTop: 10 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{marginTop: 10}} showsVerticalScrollIndicator={false}>
         {dataPosts.map((item, index) => (
           <ItemPost key={index} item={item} />
         ))}
