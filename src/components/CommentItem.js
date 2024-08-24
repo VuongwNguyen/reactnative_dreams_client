@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
-const CommetItem = memo((props) => {
+const CommentItem = memo((props) => {
     const { comment, level = 0, inputRef } = props
     const { t } = useTranslation();
     const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
@@ -89,7 +89,7 @@ const CommetItem = memo((props) => {
     )
 })
 
-export default CommetItem
+export default CommentItem
 
 const styles = StyleSheet.create({
     container: {
