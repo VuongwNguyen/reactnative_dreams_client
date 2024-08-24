@@ -1,28 +1,29 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
-import {Assets, Colors, Fonts, Typography} from './../styles';
+import {Assets, Colors, Typography} from './../styles';
 import GridImage from './GirdImage';
+import {itemPostStyle} from './../styles/components/itemPost/itemPostStyle';
 
 export default ItemPost = props => {
   const {item, isLike = true} = props;
   const [like, setLike] = useState(isLike);
   return (
-    <View style={styles.container}>
+    <View style={itemPostStyle.container}>
       {/* header */}
-      <View style={styles.header}>
-        {/* avater */}
-        <Image source={{uri: item.avatar}} style={styles.avatar} />
+      <View style={itemPostStyle.header}>
+        {/* avatar */}
+        <Image source={{uri: item.avatar}} style={itemPostStyle.avatar} />
         {/* name, hour */}
         <View>
           <Text style={Typography.postName}>{item.name}</Text>
-          <Text style={styles.headerLabel}>{item.hour}</Text>
+          <Text style={itemPostStyle.headerLabel}>{item.hour}</Text>
         </View>
       </View>
       {/* content */}
-      <View style={styles.content}>
+      <View style={itemPostStyle.content}>
         {/* title */}
         <Text numberOfLines={2} style={Typography.postTitle}>
           {item.title}
@@ -38,10 +39,10 @@ export default ItemPost = props => {
       {/* image */}
       {item.image.length > 0 && <GridImage arrImages={item.image} />}
       {/* interact */}
-      <View style={styles.interactContainer}>
+      <View style={itemPostStyle.interactContainer}>
         {/* like */}
         <TouchableOpacity
-          style={styles.itemInteract}
+          style={itemPostStyle.itemInteract}
           onPress={() => setLike(!like)}>
           {like ? (
             <Entypo
@@ -52,72 +53,21 @@ export default ItemPost = props => {
           ) : (
             <Entypo name={Assets.icon.heart} size={24} color={Colors.black} />
           )}
-          <Text style={styles.interactLabel}>{item.like}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item.like}</Text>
         </TouchableOpacity>
         {/* comment */}
-        <TouchableOpacity style={styles.itemInteract}>
+        <TouchableOpacity style={itemPostStyle.itemInteract}>
           <EvilIcon name={Assets.icon.comment} size={24} color={Colors.black} />
-          <Text style={styles.interactLabel}>{item.comment}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item.comment}</Text>
         </TouchableOpacity>
         {/* share */}
-        <TouchableOpacity style={styles.itemInteract}>
-          <Image source={Assets.image.share} style={styles.image}></Image>
-          <Text style={styles.interactLabel}>{item.share}</Text>
+        <TouchableOpacity style={itemPostStyle.itemInteract}>
+          <Image source={Assets.image.share} style={itemPostStyle.image}></Image>
+          <Text style={itemPostStyle.interactLabel}>{item.share}</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  headerLabel: {
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 22,
-    fontStyle: 'normal',
-    fontFamily: Fonts.nunitonSans.regular,
-  },
-  container: {
-    paddingHorizontal: 5,
-    gap: 10,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginLeft: 10,
-  },
-  content: {
-    gap: 10,
-  },
-  interactContainer: {
-    alignContent: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderTopWidth: 0.5,
-    borderColor: Colors.secondary,
-    padding: 5,
-    paddingHorizontal: 10,
-  },
-  interactLabel: {
-    fontFamily: Fonts.roboto.semibold,
-    fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: '400',
-    lineHeight: 18,
-    marginLeft: 5,
-  },
-  itemInteract: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  image: {
-    width: 20,
-    height: 20,
-  },
-});
+

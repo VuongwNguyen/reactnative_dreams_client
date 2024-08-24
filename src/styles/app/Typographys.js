@@ -118,4 +118,44 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.inter.bold,
     fontSize: 17,
   },
+  tagOptionSelected: {
+    fontFamily: Fonts.nunitonSans.semibold,
+    fontSize: 14,
+    color: Colors.white,
+  },
+  tagOptionUnSelected: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 14,
+    color: Colors.black,
+  },
+  smallTextInSearch: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+  },
+  searchAccountName: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 16,
+    color: Colors.black,
+  },
+  userNotification: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 14,
+    color: 'black',
+  },
+  contentNotification: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 14,
+    color: 'black',
+  },
+  timeNotification: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+    color: Colors.secondary,
+  },
+  followLabel: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+    lineHeight: 14,
+    color: Colors.black,
+  },
 });

@@ -1,6 +1,6 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
