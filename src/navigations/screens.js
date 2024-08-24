@@ -10,7 +10,7 @@ import LoginScreen from '../screen/loginScreen/LoginScreen';
 import RegisterScreen from '../screen/RegisterScreen/RegisterScreen';
 import NewPostScreen from '../screen/newpost/NewPostScreen';
 import BottomTab from '../navigations/BottomTab';
-
+import NotificationScreen from '../screen/notification/NotificationScreen';
 export const stackName = {
   example: 'Example',
   login: {name: 'login', component: LoginScreen},
@@ -31,7 +31,7 @@ export const stackName = {
 
 export const tabName = {
   home: {name: 'home', component: HomeScreen},
-  notification: {name: 'notification', component: HomeScreen},
+  notification: {name: 'notification', component: NotificationScreen},
   search: {name: 'search', component: HomeScreen},
   profile: {name: 'profile', component: HomeScreen},
 };

@@ -38,14 +38,15 @@ export const Assets = {
     trash: 'trash-o', // FontAwsome
     graduation: 'graduation-cap', // FontAwesome
     zodiac: 'zodiac-pisces', // MaterialCommunityIcons
+    x: 'x', //Feather
+    checked: 'check', //Feather
     public: 'globe',
-    private: 'lock',
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
     github: require('../../../assets/images/github.png'),
     google: require('../../../assets/images/google.png'),
-    avt: require('../../../assets/images/avt.jpg'),
+    avt: require('../../../assets/images/avt.png'),
     right_arrow: require('../../../assets/images/right_arrow.png'),
     share: require('../../../assets/images/share.png'),
     arrow_down: require('../../../assets/icons/arrow-down.png'),
