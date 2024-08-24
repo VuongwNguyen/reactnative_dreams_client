@@ -9,7 +9,7 @@ const resources = {
   vi: {translation: vi}
 };
 
-const lng = 'vi';
+const lng = 'en';
 
 i18n.use(initReactI18next).init({
   compatibilityJSON: 'v3',

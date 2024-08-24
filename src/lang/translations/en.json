@@ -153,5 +153,8 @@
     "openLine": "write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
+  },
+  "notificationScreen": {
+    "title": "Notifications"
   }
 }

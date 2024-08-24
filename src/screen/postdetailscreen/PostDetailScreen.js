@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, Image, postDetailStyleheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import AppHeader from '../../components/Header';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Post from '../homescreen/posts/Post';
-import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
-import { Assets } from '../../styles';
 import { useTranslation } from 'react-i18next';
+import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommetItem from '../../components/CommetItem';
 import ItemPost from '../../components/ItemPost';
+import { Assets } from '../../styles';
+import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
 
 
 
