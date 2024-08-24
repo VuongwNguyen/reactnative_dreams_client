@@ -8,6 +8,8 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {Navigator} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import PrivacySettingScreen from './src/screen/privacysetting/PrivacySettingScreen';
+import DropdownComponent from './src/screen/privacysetting/TestDropDown';
 
 export default function App() {
   React.useEffect(() => {
@@ -25,13 +27,8 @@ export default function App() {
         <SafeAreaProvider>
           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <GestureHandlerRootView>
-            <NavigationContainer
-            // onReady={() => {
-            //   SplashScreen.hide();
-            // }}
-            >
-              <Navigator />
-            </NavigationContainer>
+            <PrivacySettingScreen />
+            {/* <DropdownComponent /> */}
           </GestureHandlerRootView>
           {/* </TouchableWithoutFeedback> */}
         </SafeAreaProvider>

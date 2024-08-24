@@ -40,6 +40,7 @@ export const Assets = {
     zodiac: 'zodiac-pisces', // MaterialCommunityIcons
     x: 'x', //Feather
     checked: 'check', //Feather
+    public: 'globe',
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
