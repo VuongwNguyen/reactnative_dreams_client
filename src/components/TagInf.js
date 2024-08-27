@@ -1,14 +1,15 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import {tagInfStyle} from '../../styles/accountdetail/TagInfStyle';
-import Feather from 'react-native-vector-icons/Feather';
-import {Assets, Sizing} from '../../styles';
+import {tagInfStyle} from './../styles/accountdetail/TagInfStyle';
+import {Assets, Sizing} from './../styles';
+import {OptionIcon} from './../styles/app/OptionIcon';
+
 const TagInf = props => {
-  const {tagTitle, content, icon, action = {}} = props;
+  const {tagTitle, content, icon = {}, action = {}, func = () => {}} = props;
   return (
-    <View style={tagInfStyle.container}>
+    <TouchableOpacity onPress={func} style={tagInfStyle.container}>
       <View style={tagInfStyle.infContainer}>
-        <Feather name={icon} size={Sizing.lg} color="black" />
+        <OptionIcon icon={icon} />
         <View style={tagInfStyle.textContainer}>
           <Text style={tagInfStyle.tagTitle}>{tagTitle}</Text>
           <Text style={tagInfStyle.content}>{content}</Text>
@@ -21,10 +22,8 @@ const TagInf = props => {
           color="gray"
         />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default TagInf;
-
-const styles = StyleSheet.create({});
