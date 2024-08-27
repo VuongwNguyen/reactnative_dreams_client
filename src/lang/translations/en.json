@@ -153,5 +153,12 @@
     "openLine": "write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
+  },
+  "createGroupScreen": {
+    "newgroup": "New Group",
+    "create": "CREATE",
+    "groupname": "Group Name",
+    "search": "Search...",
+    "suggest": "Suggest"
   }
 }
