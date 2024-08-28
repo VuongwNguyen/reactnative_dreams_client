@@ -10,6 +10,7 @@ import HomeScreen from '../screen/homescreen/HomeScreen';
 import OtpScreen from '../screen/otpscreen/OtpScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import PostDetailScreen from '../screen/postdetailscreen/PostDetailScreen';
+import CreateGroupChatScreen from '../screen/creategroupchat/CreateGroupChatScreen';
 import MessageScreen from '../screen/chatscreen/MessageScreen';
 import ChatScreen from '../screen/chatscreen/ChatScreen';
 
