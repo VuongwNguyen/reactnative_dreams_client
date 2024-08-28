@@ -6,12 +6,15 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import {Assets, Colors, Typography} from './../styles';
 import GridImage from './GirdImage';
 import {itemPostStyle} from './../styles/components/itemPost/itemPostStyle';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 export default ItemPost = props => {
-  const {item, isLike = true} = props;
+  const {item, isLike = true, handelItem} = props;
   const [like, setLike] = useState(isLike);
   return (
-    <View style={itemPostStyle.container}>
+    <TouchableWithoutFeedback
+      style={itemPostStyle.container}
+      onPress={()=>handelItem()}>
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
@@ -62,12 +65,12 @@ export default ItemPost = props => {
         </TouchableOpacity>
         {/* share */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
-          <Image source={Assets.image.share} style={itemPostStyle.image}></Image>
+          <Image
+            source={Assets.image.share}
+            style={itemPostStyle.image}></Image>
           <Text style={itemPostStyle.interactLabel}>{item.share}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
-
-
