@@ -7,12 +7,16 @@ import OtpScreen from '../screen/otpscreen/OtpScreen';
 import PostDetailScreen from '../screen/postdetailscreen/PostDetailScreen';
 import ProfileScreen from '../screen/profileScreen/ProfileScreen';
 import LoginScreen from '../screen/loginScreen/LoginScreen';
-import RegisterScreen from '../screen/RegisterScreen/RegisterScreen';
+import RegisterScreen from '../screen/registerScreen/RegisterScreen';
 import NewPostScreen from '../screen/newpost/NewPostScreen';
 import BottomTab from '../navigations/BottomTab';
 import NotificationScreen from '../screen/notification/NotificationScreen';
+import ChatScreen from '../screen/chatscreen/ChatScreen';
+import SearchSceen from '../screen/search/SearchSceen';
+import PrivacySettingScreen from '../screen/privacysetting/PrivacySettingScreen';
+import EmtyScreen from './../screen/emtyScreen/EmtyScreen';
+
 export const stackName = {
-  example: 'Example',
   login: {name: 'login', component: LoginScreen},
   register: {name: 'register', component: RegisterScreen},
   profile: {name: 'profile', component: ProfileScreen},
@@ -27,11 +31,14 @@ export const stackName = {
   otp: {name: 'otp', component: OtpScreen},
   newPost: {name: 'newPost', component: NewPostScreen},
   bottomTab: {name: 'bottomTab', component: BottomTab},
+  search: {name: 'search', component: SearchSceen},
+  privacySetting: {name: 'privacySetting', component: PrivacySettingScreen},
 };
 
 export const tabName = {
-  home: {name: 'home', component: HomeScreen},
-  notification: {name: 'notification', component: NotificationScreen},
-  search: {name: 'search', component: HomeScreen},
-  profile: {name: 'profile', component: HomeScreen},
+  home: {name: 'navigation.home', component: HomeScreen},
+  chat: {name: 'navigation.chat', component: ChatScreen},
+  notification: {name: 'navigation.notification', component: NotificationScreen},
+  setting: {name: 'navigation.setting', component: PrivacySettingScreen},
+  EmtyScreen: {name: 'EmtyScreen', component: EmtyScreen},
 };
