@@ -173,6 +173,13 @@
     "contentPost": "Viết gì đó...",
     "post": "Post"
   },
+  "createGroupScreen": {
+    "newgroup": "Nhóm Mới",
+    "create": "TẠO",
+    "groupname": "Tên Nhóm",
+    "search": "Tìm kiếm...",
+    "suggest": "Đề xuất"
+  },
   "notificationScreen": {
     "title": "Thông báo"
   },
