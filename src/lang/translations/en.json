@@ -162,5 +162,97 @@
     "desc": "Please review this info form your profile and decide who you’re comfortable with seeing it. Your profile may have more than is listed here.",
     "public": "Public",
     "private": "Private"
+  },
+  "educationDialog": {
+    "title": "What is your education?",
+    "desc": "Please select your highest level of education to help us provide better recommendations and connect you with people of similar backgrounds.",
+    "level1": "Basic Education",
+    "level2": "Undergraduate Education",
+    "level3": "Postgraduate Education",
+    "placeholder": "Choose your educaton level",
+    "school": "Your school",
+    "confirm": "CONFIRM"
+  },
+  "usernameDialog": {
+    "title": "What is your name?",
+    "desc": "Enter your username. This will be visible to other users.",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "confirm": "CONFIRM"
+  },
+  "nicknameDialog": {
+    "title": "What is your nickname?",
+    "desc": "Enter your nickname. This nickname will appear on your profile.",
+    "nickname": "Nickname",
+    "confirm": "CONFIRM"
+  },
+  "nationalityDialog": {
+    "title": "What is your nationality?",
+    "desc": "Please select your nationality from the list below. This information will help us to tailor content and suggestions specifically for you.",
+    "placeholder": "Select your country",
+    "search": "Search...",
+    "confirm": "CONFIRM"
+  },
+  "locationDialog": {
+    "title": "Where do you live?",
+    "desc": "Enter your location to easily connect friends around that area.",
+    "placeholder": "Your location",
+    "confirm": "CONFIRM"
+  },
+  "hometownDialog": {
+    "title": "What is your hometown?",
+    "desc": "Tell us where you were born or raised so we can help you connect with people from your hometown.",
+    "placeholder": "Your hometown ",
+    "confirm": "CONFIRM"
+  },
+  "hobbyDialog": {
+    "title": "What are your hobbies?",
+    "desc": "Tell me what your preferences relate to in order to get the right recommendations.",
+    "placeholder": "Other hobby",
+    "confirm": "CONFIRM",
+    "music": "Music",
+    "game": "Games",
+    "sport": "Sports",
+    "movie": "Movies",
+    "book": "Books",
+    "pet": "Pets",
+    "tech": "Technology",
+    "cooking": "Cooking",
+    "travel": "Travelling",
+    "photo": "Taking photos",
+    "other": "Other"
+  },
+  "genderDialog": {
+    "title": "What are your gender?",
+    "desc": "Please select your gender.",
+    "male": "Male",
+    "female": "Female",
+    "confirm": "CONFIRM"
+  },
+  "dateOfBirthDialog": {
+    "title": "What are your date of birth?",
+    "desc": "Select your date of birth so we can provide an experience that is age-appropriate for you. And you can determine your age and zodiac sign.",
+    "placeholder": "Select your date of birth",
+    "age": "Age",
+    "zodiac": "Zodiac",
+    "confirm": "CONFIRM",
+    "aquarius": "Aquarius",
+    "pisces": "Pisces",
+    "aries": "Aries",
+    "taurus": "Taurus",
+    "gemini": "Gemini",
+    "cancer": "Cancer",
+    "leo": "Leo",
+    "virgo": "Virgo",
+    "libra": "Libra",
+    "scorpio": "Scorpio",
+    "sagittarius": "Sagittarius",
+    "capricorn": "Capricorn"
+  },
+  "descDialog": {
+    "title": "Enter your description",
+    "desc": "Provide more descriptive information about you.",
+    "placeholder": "Something about you",
+    "confirm": "CONFIRM"
   }
 }

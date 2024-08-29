@@ -9,7 +9,16 @@ import {Navigator} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import PrivacySettingScreen from './src/screen/privacysetting/PrivacySettingScreen';
-import DropdownComponent from './src/screen/privacysetting/TestDropDown';
+import UsernameDialog from './src/components/bottomsheet/UsernameDialog';
+import NicknameDialog from './src/components/bottomsheet/NicknameDialog';
+import LocationDialog from './src/components/bottomsheet/LocationDialog';
+import HobbyDialog from './src/components/bottomsheet/HobbyDialog';
+import GenderDialog from './src/components/bottomsheet/GenderDialog';
+import DateOfBirthDialog from './src/components/bottomsheet/DateOfBirthDialog';
+import NationalityDialog from './src/components/bottomsheet/NationalittyDialog';
+import EducationDialog from './src/components/bottomsheet/EducationDialog';
+import HometownDialog from './src/components/bottomsheet/HomeTownDialog';
+import DescriptionDialog from './src/components/bottomsheet/DescriptionDialog';
 
 export default function App() {
   React.useEffect(() => {
@@ -27,8 +36,7 @@ export default function App() {
         <SafeAreaProvider>
           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <GestureHandlerRootView>
-            <PrivacySettingScreen />
-            {/* <DropdownComponent /> */}
+            <HobbyDialog />
           </GestureHandlerRootView>
           {/* </TouchableWithoutFeedback> */}
         </SafeAreaProvider>

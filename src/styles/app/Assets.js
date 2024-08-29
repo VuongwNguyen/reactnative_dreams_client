@@ -41,6 +41,9 @@ export const Assets = {
     x: 'x', //Feather
     checked: 'check', //Feather
     public: 'globe',
+    male: 'male-outline', //Ionicons
+    female: 'female-outline', //Ionicons
+    calendar: 'calendar', //Ionicons
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
@@ -51,5 +54,26 @@ export const Assets = {
     share: require('../../../assets/images/share.png'),
     arrow_down: require('../../../assets/icons/arrow-down.png'),
     arrow_up: require('../../../assets/icons/arrow-up.png'),
+    game: require('../../../assets/images/game.png'),
+    sport: require('../../../assets/images/sport.png'),
+    food: require('../../../assets/images/food.png'),
+    travelling: require('../../../assets/images/travel.png'),
+    technology: require('../../../assets/images/tech.png'),
+    book: require('../../../assets/images/book.png'),
+    film: require('../../../assets/images/film.png'),
+    music: require('../../../assets/images/music.png'),
+    pet: require('../../../assets/images/pet.png'),
+    photo: require('../../../assets/images/camera.png'),
+    vietnam: require('../../../assets/images/vietnam.png'),
+    us: require('../../../assets/images/us.png'),
+    uk: require('../../../assets/images/uk.png'),
+    thailand: require('../../../assets/images/thailand.png'),
+    laos: require('../../../assets/images/lao.png'),
+    korea: require('../../../assets/images/korea.png'),
+    japan: require('../../../assets/images/japan.png'),
+    france: require('../../../assets/images/france.png'),
+    cambodia: require('../../../assets/images/cambodia.png'),
+    malaysia: require('../../../assets/images/malay.png'),
+    nationality: require('../../../assets/images/nationality.png'),
   },
 };

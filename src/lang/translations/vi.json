@@ -181,5 +181,97 @@
     "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây.",
     "public": "Cộng đồng",
     "private": "Riêng tư"
+  },
+  "educationDialog": {
+    "title": "Trình độ học vấn của bạn là gì",
+    "desc": "Vui lòng chọn trình độ học vấn cao nhất của bạn để chúng tôi có thể cung cấp những đề xuất tốt hơn và kết nối bạn với những người có cấp bậc tương tự.",
+    "level1": "Cấp độ cơ bản",
+    "level2": "Cấp độ đại học ",
+    "level3": "Cấp độ sau đại học",
+    "placeholder": "Chọn cấp độ học vấn ",
+    "school": "Trường học của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "usernameDialog": {
+    "title": "Tên của bạn là gì",
+    "desc": "Nhập tên người dùng của bạn. Tên này sẽ hiển thị cho những người dùng khác.",
+    "firstname": "Họ",
+    "lastname": "Tên",
+    "confirm": "XÁC NHẬN"
+  },
+  "nicknameDialog": {
+    "title": "Biệt danh của bạn là gì?",
+    "desc": "Nhập biệt danh của bạn. Biệt danh này sẽ xuất hiện trên hồ sơ của bạn.",
+    "nickname": "Biệt danh",
+    "confirm": "XÁC NHẬN"
+  },
+  "nationalityDialog": {
+    "title": "Quốc tịch của bạn là gì?",
+    "desc": "Vui lòng chọn quốc tịch của bạn từ danh sách bên dưới. Thông tin này sẽ giúp chúng tôi điều chỉnh nội dung và đề xuất cụ thể cho bạn.",
+    "placeholder": "Chọn quốc gia của bạn",
+    "search": "Tìm kiếm...",
+    "confirm": "XÁC NHẬN"
+  },
+  "locationDialog": {
+    "title": "Bạn sống ở đâu?",
+    "desc": "Nhập vị trí của bạn để dễ dàng kết nối với bạn bè xung quanh khu vực đó.",
+    "placeholder": "Vị trí của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "hometownDialog": {
+    "title": "Quê hương của bạn là gì",
+    "desc": "Hãy cho chúng tôi biết nơi bạn sinh ra hoặc lớn lên để chúng tôi có thể giúp bạn kết nối với đồng hương.",
+    "placeholder": "Quê hương của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "hobbyDialog": {
+    "title": "Sở thích của bạn là gì?",
+    "desc": "Hãy cho tôi biết sở thích của bạn liên quan đến điều gì để có được đề xuất phù hợp.",
+    "placeholder": "Sở thích khác",
+    "confirm": "XÁC NHẬN",
+    "music": "Âm  nhạc",
+    "game": "Games",
+    "sport": "Thể thao",
+    "movie": "Xem phim",
+    "book": "Đọc sách",
+    "pet": "Thú cưng",
+    "tech": "Công nghệ",
+    "cooking": "Nấu ăn",
+    "travel": "Du lịch",
+    "photo": "Chụp ảnh",
+    "other": "Khác"
+  },
+  "genderDialog": {
+    "title": "Giới tính của bạn là gì?",
+    "desc": "Hãy chọn giới tính của bạn.",
+    "male": "Nam",
+    "female": "Nữ",
+    "confirm": "XÁC NHẬN"
+  },
+  "dateOfBirthDialog": {
+    "title": "Ngày sinh của bạn là gì?",
+    "desc": "Chọn ngày sinh của bạn để chúng tôi có thể cung cấp trải nghiệm phù hợp với độ tuổi của bạn. Và bạn có thể xác định tuổi và cung hoàng đạo của mình",
+    "placeholder": "Chọn ngày sinh",
+    "age": "Tuổi",
+    "zodiac": "Cung hoàng đạo",
+    "confirm": "XÁC NHẬN",
+    "aquarius": "Bảo Bình",
+    "pisces": "Song Ngư",
+    "aries": "Bạch Dương",
+    "taurus": "Kim Ngưu",
+    "gemini": "Song Tử",
+    "cancer": "Cự Giải",
+    "leo": "Sư Tử",
+    "virgo": "Xử Nữ",
+    "libra": "Thiên Bình",
+    "scorpio": "Bọ Cạp",
+    "sagittarius": "Nhân Mã",
+    "capricorn": "Ma Kết"
+  },
+  "descDialog": {
+    "title": "Nhập mô tả về bạn",
+    "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
+    "placeholder": "Điều gì đó về bạn",
+    "confirm": "XÁC NHẬN"
   }
 }
