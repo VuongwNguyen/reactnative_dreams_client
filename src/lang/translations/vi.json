@@ -173,6 +173,13 @@
     "contentPost": "Viết gì đó...",
     "post": "Post"
   },
+  "createGroupScreen": {
+    "newgroup": "Nhóm Mới",
+    "create": "TẠO",
+    "groupname": "Tên Nhóm",
+    "search": "Tìm kiếm...",
+    "suggest": "Đề xuất"
+  },
   "notificationScreen": {
     "title": "Thông báo"
   },
@@ -273,5 +280,11 @@
     "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
     "placeholder": "Điều gì đó về bạn",
     "confirm": "XÁC NHẬN"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "chat": "Tin nhắn",
+    "notification": "Thông báo",
+    "setting": "Cài đặt"
   }
 }

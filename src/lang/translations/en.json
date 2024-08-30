@@ -145,7 +145,7 @@
     "reply": "Reply",
     "view": "View",
     "moreReplies": "more replies",
-    "hideRelies": "Hide replies",
+    "hideReplies": "Hide replies",
     "writeComment": "Viết bình luận"
   },
   "newPostScreen": {
@@ -153,6 +153,13 @@
     "openLine": "write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
+  },
+  "createGroupScreen": {
+    "newgroup": "New Group",
+    "create": "CREATE",
+    "groupname": "Group Name",
+    "search": "Search...",
+    "suggest": "Suggest"
   },
   "notificationScreen": {
     "title": "Notifications"
@@ -254,5 +261,11 @@
     "desc": "Provide more descriptive information about you.",
     "placeholder": "Something about you",
     "confirm": "CONFIRM"
+  },
+  "navigation": {
+    "home": "Home",
+    "chat": "Messages",
+    "notification": "Notifications",
+    "setting": "Settings"
   }
 }
