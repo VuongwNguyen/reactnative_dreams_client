@@ -163,4 +163,35 @@ export const Typography = StyleSheet.create({
     lineHeight: 14,
     color: Colors.black,
   },
+  titleDialog: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 24,
+    color: Colors.black,
+  },
+  descDialog: {
+    fontFamily: Fonts.inter.regular,
+    fontSize: 16,
+    lineHeight: 20,
+    color: Colors.secondary,
+  },
+  btnLabelDialog: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 20,
+    color: Colors.white,
+  },
+  normalTextDialog: {
+    fontFamily: Fonts.inter.regular,
+    fontSize: 16,
+    lineHeight: 19,
+    color: Colors.black,
+  },
+  genderLabel: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 16,
+  },
+  derivedField: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 20,
+    color: Colors.black,
+  },
 });
