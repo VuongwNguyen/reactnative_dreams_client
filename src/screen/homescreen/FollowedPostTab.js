@@ -25,7 +25,7 @@ const FollowedPostTab = (props) => {
     )
 }
 
-export default FollowedPostTab
+export default FollowedPostTab;
 
 const styles = StyleSheet.create({
     container: {

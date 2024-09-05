@@ -27,7 +27,6 @@ const useImagePicker = () => {
     if (response?.assets) {
       setImage(response.assets);
     } else {
-      Alert.alert('Có lỗi xảy ra', response.errorMessage);
     }
   };
 
@@ -36,7 +35,6 @@ const useImagePicker = () => {
     if (response?.assets) {
       setImage(response.assets);
     } else {
-      Alert.alert('Có lỗi xảy ra', response.errorMessage);
     }
   };
 

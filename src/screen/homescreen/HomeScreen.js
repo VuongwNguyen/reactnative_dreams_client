@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, Image, TextInput } from 'react-native'
+import { View, Image, TextInput, TouchableOpacity } from 'react-native';
 import React, { useRef } from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';

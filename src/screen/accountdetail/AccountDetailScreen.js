@@ -11,27 +11,14 @@ import React, {useState} from 'react';
 import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import {useTranslation} from 'react-i18next';
 import AppHeader from '../../components/Header';
-import TagInf from './TagInf';
+import TagInf from '../../components/TagInf';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-const basicInfArr = [
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-];
-const otherInfArr = [
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-  {title: 'Title', icon: Assets.icon.user, content: 'content'},
-];
+import {basicInfArr, otherInfArr} from './InfoArr';
 const showBasicInf = () => {
   return (
     <View style={accountDetailStyle.infBox}>
@@ -41,6 +28,7 @@ const showBasicInf = () => {
           tagTitle={item.title}
           content={item.content}
           icon={item.icon}
+          func={item.func}
         />
       ))}
     </View>
@@ -56,6 +44,7 @@ const showOtherInf = () => {
           tagTitle={item.title}
           content={item.content}
           icon={item.icon}
+          func={item.func}
         />
       ))}
     </View>
@@ -68,7 +57,6 @@ const AccountDetailScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const goBackScreen = () => {};
-  const onSave = () => {};
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={accountDetailStyle.container}>

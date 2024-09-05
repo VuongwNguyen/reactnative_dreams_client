@@ -5,6 +5,8 @@ import { date } from 'yup'
 import ItemPost from '../../components/ItemPost'
 import Animated from 'react-native-reanimated'
 
+import ItemPost from '../../components/ItemPost';
+import { stackName } from '../../navigations/screens';
 
 
 const TrendingPostTab = (props) => {
@@ -32,9 +34,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-
-})
-
+});
 
 const postsData = [
     {

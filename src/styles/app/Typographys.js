@@ -118,4 +118,80 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.inter.bold,
     fontSize: 17,
   },
+  privacySettingDesc: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 18,
+    lineHeight: 24,
+  },
+  tagOptionSelected: {
+    fontFamily: Fonts.nunitonSans.semibold,
+    fontSize: 14,
+    color: Colors.white,
+  },
+  tagOptionUnSelected: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 14,
+    color: Colors.black,
+  },
+  smallTextInSearch: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+  },
+  searchAccountName: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 16,
+    color: Colors.black,
+  },
+  userNotification: {
+    fontFamily: Fonts.nunitonSans.bold,
+    fontSize: 14,
+    color: 'black',
+  },
+  contentNotification: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 14,
+    color: 'black',
+  },
+  timeNotification: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+    color: Colors.secondary,
+  },
+  followLabel: {
+    fontFamily: Fonts.nunitonSans.regular,
+    fontSize: 12,
+    lineHeight: 14,
+    color: Colors.black,
+  },
+  titleDialog: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 24,
+    color: Colors.black,
+  },
+  descDialog: {
+    fontFamily: Fonts.inter.regular,
+    fontSize: 16,
+    lineHeight: 20,
+    color: Colors.secondary,
+  },
+  btnLabelDialog: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 20,
+    color: Colors.white,
+  },
+  normalTextDialog: {
+    fontFamily: Fonts.inter.regular,
+    fontSize: 16,
+    lineHeight: 19,
+    color: Colors.black,
+  },
+  genderLabel: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 16,
+  },
+  derivedField: {
+    fontFamily: Fonts.inter.bold,
+    fontSize: 20,
+    color: Colors.black,
+  },
 });

@@ -1,23 +1,40 @@
-import {StyleSheet} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+import {tabName} from './screens';
+import {useTranslation} from 'react-i18next';
 
-const style = StyleSheet.create({
-  counter: {
-    fontWeight: 'bold',
-    color: 'black',
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  button: {
-    backgroundColor: 'orange',
-    width: '50%',
-    padding: 16,
-    marginBottom: 8,
-    borderRadius: 16,
-  },
-  container: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const tab = createBottomTabNavigator();
+const stack = createStackNavigator();
+
+const BottomTab = () => {
+  const {t} = useTranslation();
+  return (
+    <tab.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName={tabName.home.name}>
+      <tab.Screen
+        name={t(tabName.home.name)}
+        component={tabName.home.component}
+      />
+      <tab.Screen
+        name={t(tabName.chat.name)}
+        component={tabName.chat.component}
+      />
+      <tab.Screen
+        name={tabName.EmtyScreen.name}
+        component={tabName.EmtyScreen.component}
+      />
+      <tab.Screen
+        name={t(tabName.notification.name)}
+        component={tabName.notification.component}
+      />
+      <tab.Screen
+        name={t(tabName.setting.name)}
+        component={tabName.setting.component}
+      />
+    </tab.Navigator>
+  );
+};
+
+export default BottomTab;
