@@ -1,12 +1,12 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import {stackName} from './screens';
+import { createStackNavigator } from '@react-navigation/stack';
+import { stackName } from './screens';
 
 const Stack = createStackNavigator();
 
 export function Navigator() {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={stackName.bottomTab.name}>
       <Stack.Screen
         name={stackName.register.name}
