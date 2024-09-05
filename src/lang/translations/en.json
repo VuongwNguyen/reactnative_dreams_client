@@ -145,7 +145,7 @@
     "reply": "Reply",
     "view": "View",
     "moreReplies": "more replies",
-    "hideRelies": "Hide replies",
+    "hideReplies": "Hide replies",
     "writeComment": "Viết bình luận"
   },
   "newPostScreen": {
@@ -153,5 +153,27 @@
     "openLine": "write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
+  },
+  "createGroupScreen": {
+    "newgroup": "New Group",
+    "create": "CREATE",
+    "groupname": "Group Name",
+    "search": "Search...",
+    "suggest": "Suggest"
+  },
+  "notificationScreen": {
+    "title": "Notifications"
+  },
+  "privacySettingScreen": {
+    "title": "Privacy Setting",
+    "desc": "Please review this info form your profile and decide who you’re comfortable with seeing it. Your profile may have more than is listed here.",
+    "public": "Public",
+    "private": "Private"
+  },
+  "navigation": {
+    "home": "Home",
+    "chat": "Messages",
+    "notification": "Notifications",
+    "setting": "Settings"
   }
 }

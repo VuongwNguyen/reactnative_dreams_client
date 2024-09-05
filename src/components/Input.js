@@ -1,7 +1,7 @@
-import { TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
-import { Assets } from '../styles';
-import { AppInputStyle } from '../styles/components/input/InputStyle';
+import {TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Assets} from '../styles';
+import {AppInputStyle} from '../styles/components/input/InputStyle';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Animated, {
   Extrapolation,
@@ -14,7 +14,7 @@ import Animated, {
 const TextInputAnimated = Animated.createAnimatedComponent(TextInput);
 
 export default function AppInput(props) {
-  const { placeholder, value, setValue, isPassword } = props;
+  const {placeholder, value, setValue, isPassword} = props;
   const translateY = useSharedValue(0);
   const label = useSharedValue(placeholder);
   const [isHide, setIsHide] = useState(false);
