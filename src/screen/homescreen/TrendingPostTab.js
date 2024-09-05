@@ -3,21 +3,24 @@ import React, { useState } from 'react'
 import Post from './posts/Post'
 import { date } from 'yup'
 import ItemPost from '../../components/ItemPost'
+import Animated from 'react-native-reanimated'
 
 
 
-const TrendingPostTab = () => {
+const TrendingPostTab = (props) => {
+    const { scrollHandler } = props
     const [dataPosts, setDataPosts] = useState(postsData)
     return (
         <View style={styles.container}>
-            <ScrollView style={{ marginTop: 10 }}
+            <Animated.ScrollView style={{ marginTop: 10 }}
+                onScroll={scrollHandler}
                 showsVerticalScrollIndicator={false}>
                 {
                     dataPosts.map((item, index) => (
                         <ItemPost key={index} item={item} />
                     ))
                 }
-            </ScrollView >
+            </Animated.ScrollView>
         </View >
     )
 }

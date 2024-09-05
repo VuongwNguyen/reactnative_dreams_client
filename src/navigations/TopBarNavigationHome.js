@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 
 const Tab = createMaterialTopTabNavigator();
 
-const TopBarNavigationHome = () => {
+const TopBarNavigationHome = (props) => {
+    const { scrollHandler } = props;
     const { t } = useTranslation()
     return (
         <Tab.Navigator
@@ -26,8 +27,8 @@ const TopBarNavigationHome = () => {
                 tabBarPressColor: 'transparent'
             }}
         >
-            <Tab.Screen name={t("homeScreen.trending")} component={TrendingPostTab} />
-            <Tab.Screen name={t("homeScreen.followed")} component={FollowedPostTab} />
+            <Tab.Screen name={t("homeScreen.trending")} children={() => <TrendingPostTab scrollHandler={scrollHandler} />} />
+            <Tab.Screen name={t("homeScreen.followed")} children={() => <FollowedPostTab scrollHandler={scrollHandler} />} />
         </Tab.Navigator>
     )
 }

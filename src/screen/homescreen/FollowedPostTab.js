@@ -2,22 +2,25 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Post from './posts/Post'
 import ItemPost from '../../components/ItemPost'
+import Animated from 'react-native-reanimated'
 
 
-const FollowedPostTab = () => {
+const FollowedPostTab = (props) => {
+    const { scrollHandler } = props
     const [dataPosts, setDataPosts] = useState(postsData)
     const [isFollowed, , setIsFollowed] = useState(true)
     dataPosts.l
     return (
         <View style={styles.container}>
-            <ScrollView style={{ marginTop: 10 }}
+            <Animated.ScrollView style={{ marginTop: 10 }}
+                onScroll={scrollHandler}
                 showsVerticalScrollIndicator={false}>
                 {
                     dataPosts.map((item, index) => (
                         <ItemPost key={index} item={item} />
                     ))
                 }
-            </ScrollView>
+            </Animated.ScrollView >
         </View >
     )
 }
