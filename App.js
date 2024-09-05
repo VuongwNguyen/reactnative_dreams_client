@@ -18,7 +18,7 @@ import GenderDialog from './src/components/bottomsheet/GenderDialog';
 import DateOfBirthDialog from './src/components/bottomsheet/DateOfBirthDialog';
 import NationalityDialog from './src/components/bottomsheet/NationalittyDialog';
 import EducationDialog from './src/components/bottomsheet/EducationDialog';
-import HometownDialog from './src/components/bottomsheet/HomeTownDialog';
+// import HometownDialog from './src/components/bottomsheet/HomeTownDialog';
 import DescriptionDialog from './src/components/bottomsheet/DescriptionDialog';
 
 export default function App() {
@@ -36,9 +36,9 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
           <GestureHandlerRootView>
-//             <HobbyDialog />
+            {/* <HobbyDialog /> */}
             <NavigationContainer>
-                <Navigator />
+              <Navigator />
             </NavigationContainer>
           </GestureHandlerRootView>
         </SafeAreaProvider>
