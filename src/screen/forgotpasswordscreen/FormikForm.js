@@ -1,33 +1,32 @@
-import * as Yup from 'yup';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { forgotPasswordStyles } from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import AppInput from '../../components/Input';
-import { useTranslation } from 'react-i18next';
-import { useFormikH } from '../../configs/hooks/useFormikH';
-import { forgotPasswordSchema } from '../../configs/validateSchema/forgotPasswordSchema';
-import { useDispatch, useSelector } from 'react-redux';
-import { apiSendOtpResetPW } from '../../store/api/AccountAPI';
+import {useTranslation} from 'react-i18next';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import {forgotPasswordSchema} from '../../configs/validateSchema/forgotPasswordSchema';
+import {useDispatch, useSelector} from 'react-redux';
+import {apiSendOtpResetPW} from '../../store/api/AccountAPI';
 
 export const FormikFG = props => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const useAppDispatch = () => useDispatch();
   const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
 
-  const { handleSubmit, handleChange, values, errors, touched } = useFormikH(
+  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       emailAddress: '',
     },
     forgotPasswordSchema,
-    (values, { resetForm }) => {
+    (values, {resetForm}) => {
       try {
         const body = {
           email: values.emailAddress,
-        }
-        dispatch(apiSendOtpResetPW(body))
+        };
+        dispatch(apiSendOtpResetPW(body));
       } catch (error) {
-        console.log("Error", error)
+        console.log('Error', error);
       }
     },
   );

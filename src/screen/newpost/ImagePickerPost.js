@@ -1,5 +1,5 @@
 import {Alert} from 'react-native';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const useImagePicker = () => {

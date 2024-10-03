@@ -32,7 +32,7 @@ const LoginScreen = () => {
           <View style={LoginStyle.containerLink}>
             <Text>{t('loginScreen.notAccount')}</Text>
             <TouchableOpacity>
-            <Text style={LoginStyle.link}>{t('loginScreen.register')}</Text>
+              <Text style={LoginStyle.link}>{t('loginScreen.register')}</Text>
             </TouchableOpacity>
           </View>
         </View>

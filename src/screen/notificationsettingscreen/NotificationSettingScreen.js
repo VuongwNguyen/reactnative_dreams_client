@@ -1,5 +1,5 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Header from '../../components/Header';
 import SwitchButton from '../../components/SwitchButton';
 import {NotificationSettingStyle} from '../../styles/notificationsettingstyle/NotificationSettingStyle';
@@ -21,7 +21,7 @@ const data = [
 
 const NotificationSettingScreen = () => {
   const [settingList, setSettingList] = useState(data);
-  const handleSave = (index,data) => {
+  const handleSave = (index, data) => {
     const newSettingList = [...data];
     newSettingList[index].value = !newSettingList[index].value;
     setSettingList(newSettingList);
@@ -36,12 +36,16 @@ const NotificationSettingScreen = () => {
       />
       <View style={NotificationSettingStyle.content}>
         {settingList.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => handleSave(index,settingList)} style={NotificationSettingStyle.row} >
-          <Text style={NotificationSettingStyle.title}>
-            {item.title}
-          </Text>
-          <SwitchButton isOn={item.value} onPress={() => handleSave(index,settingList)}/>
-        </TouchableOpacity>
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleSave(index, settingList)}
+            style={NotificationSettingStyle.row}>
+            <Text style={NotificationSettingStyle.title}>{item.title}</Text>
+            <SwitchButton
+              isOn={item.value}
+              onPress={() => handleSave(index, settingList)}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </View>

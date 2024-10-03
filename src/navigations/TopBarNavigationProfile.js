@@ -27,7 +27,10 @@ const TopBarNavigationProfile = () => {
         },
         tabBarPressColor: 'transparent',
       }}>
-      <Tab.Screen name={t('profileScreen.information')} component={InfomationTab} />
+      <Tab.Screen
+        name={t('profileScreen.information')}
+        component={InfomationTab}
+      />
       <Tab.Screen name={t('profileScreen.posted')} component={PostedTab} />
     </Tab.Navigator>
   );

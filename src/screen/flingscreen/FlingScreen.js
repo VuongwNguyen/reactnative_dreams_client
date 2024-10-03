@@ -43,8 +43,16 @@ const FlingScreen = () => {
               }}
             />
             <Text style={FlingStyle.name}>{item.name}</Text>
-            <TouchableOpacity style={item.folowwing ? FlingStyle.flowwing : FlingStyle.flowwed}>
-              <Text style={item.folowwing ? FlingStyle.flowwingText : FlingStyle.flowwedText}>{item.folowwing ? 'Followed' : 'Follow'}</Text>
+            <TouchableOpacity
+              style={item.folowwing ? FlingStyle.flowwing : FlingStyle.flowwed}>
+              <Text
+                style={
+                  item.folowwing
+                    ? FlingStyle.flowwingText
+                    : FlingStyle.flowwedText
+                }>
+                {item.folowwing ? 'Followed' : 'Follow'}
+              </Text>
             </TouchableOpacity>
           </View>
         )}

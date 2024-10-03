@@ -9,7 +9,7 @@ import {
 import React, {useState} from 'react';
 import {searchStyle} from '../../styles/search/SearchStyle';
 import Feather from 'react-native-vector-icons/Feather';
-import {Assets, Colors, Scaling, Sizing, Typography} from '../../styles';
+import {Assets, Colors, Sizing} from '../../styles';
 import ItemPost from '../../components/ItemPost';
 import SearchAccountComponent from './SearchAccountComponent';
 const SearchSceen = props => {

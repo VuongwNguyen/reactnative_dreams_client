@@ -1,4 +1,4 @@
-import { apiVerifyCodeResetPW } from "../../store/api/AccountAPI";
+import {apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
 
 export const onChangeText = (
   setError,
@@ -28,11 +28,9 @@ export const handleCheckOutOTP =
     try {
       const Otp = values.otp.join('');
       const body = {
-        email: "tienmap038@gmail.com",
-        code: Otp
-      }
-      dispatch(apiVerifyCodeResetPW(body))
-    } catch (error) {
-
-    }
+        email: 'tienmap038@gmail.com',
+        code: Otp,
+      };
+      dispatch(apiVerifyCodeResetPW(body));
+    } catch (error) {}
   };

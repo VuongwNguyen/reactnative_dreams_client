@@ -1,6 +1,5 @@
-
-import { createSlice } from '@reduxjs/toolkit';
-import { APILogin, APIRegister, APIResetPassword } from '../api/AccountAPI';
+import {createSlice} from '@reduxjs/toolkit';
+import {APILogin, APIRegister, APIResetPassword} from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -16,7 +15,7 @@ export const accountSlice = createSlice({
       state.user = action.payload;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(APILogin.fulfilled, (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;

@@ -2,7 +2,7 @@ import {Text, View, ScrollView} from 'react-native';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import AppHeader from '../../components/Header';
-import {Assets, Colors} from '../../styles';
+import {Assets} from '../../styles';
 
 import {privacySettingStyle} from '../../styles/privacysetting/PrivacySettingStyle';
 import PrivacySettingItem from './PrivacySettingItem';
