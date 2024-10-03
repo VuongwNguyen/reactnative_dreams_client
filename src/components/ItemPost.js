@@ -14,7 +14,7 @@ export default ItemPost = props => {
   return (
     <TouchableWithoutFeedback
       style={itemPostStyle.container}
-      onPress={()=>handelItem()}>
+      onPress={() => handelItem()}>
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}

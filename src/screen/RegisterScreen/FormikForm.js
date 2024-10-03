@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
 import Button from '../../components/Button';
@@ -38,7 +38,7 @@ const RegisterForm = () => {
         .then(res => {
           resetForm();
         })
-        .catch(err => {          
+        .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     },

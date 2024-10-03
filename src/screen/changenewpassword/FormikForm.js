@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Text, ToastAndroid, View} from 'react-native';
 import {changePasswordStyle} from '../../styles/changepassword/ChangePasswordStyle';
 import AppInput from '../../components/Input';

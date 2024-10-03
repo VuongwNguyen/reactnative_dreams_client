@@ -48,7 +48,7 @@ const ProfileScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TopBarNavigationProfile/>
+      <TopBarNavigationProfile />
     </ScrollView>
   );
 };

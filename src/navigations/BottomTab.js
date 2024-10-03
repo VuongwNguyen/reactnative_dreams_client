@@ -1,22 +1,28 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {stackName, tabName} from './screens';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
+import {OptionIcon} from './../styles/app/OptionIcon';
+import {Assets} from '../styles';
 
 const tab = createBottomTabNavigator();
 
-const icons = ['home', 'message', 'notification', 'user'];
+// const icons = ['home', 'message', 'notification', 'user'];
+
+const icons = [
+  {type: 'Entypo', icon: Assets.icon.home},
+  {type: 'Foundation', icon: Assets.icon.message},
+  {type: 'Entypo', icon: Assets.icon.notification},
+  {type: 'MaterialIcons', icon: Assets.icon.setting},
+];
 
 const TabBar = ({state, descriptors, navigation}) => {
   const renderIcon = (forcus, index) => {
     return (
-      <EntypoIcon
-        name={icons[index]}
-        size={20}
-        color={forcus ? '#0CBBF0' : '#6C757D'}
-      />
+      <View>
+        <OptionIcon icon={icons[index]} />
+      </View>
     );
   };
 
@@ -50,7 +56,10 @@ const TabBar = ({state, descriptors, navigation}) => {
         };
 
         return (
-          <TouchableOpacity style={[styles.button]} onPress={onPress}>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={onPress}
+            key={index}>
             {route.name === stackName.newPost ? (
               <Image
                 source={require('../../assets/images/add.png')}
@@ -111,6 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#E0EAFF',
+    gap: 20,
   },
   button: {
     flex: 1,

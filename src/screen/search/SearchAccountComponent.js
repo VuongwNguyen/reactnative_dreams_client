@@ -3,7 +3,7 @@ import React from 'react';
 import {searchAccountStyle} from '../../styles/search/SearchAccountStyle';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import {Assets, Scaling, Sizing, Colors} from '../../styles';
+import {Assets, Sizing} from '../../styles';
 const SearchAccountComponent = props => {
   const {avt, name, location, status} = props;
   return (

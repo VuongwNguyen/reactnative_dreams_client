@@ -13,8 +13,7 @@ import NotificationScreen from '../screen/notification/NotificationScreen';
 import ChatScreen from '../screen/chatscreen/ChatScreen';
 import SearchSceen from '../screen/search/SearchSceen';
 import PrivacySettingScreen from '../screen/privacysetting/PrivacySettingScreen';
-import EmtyScreen from './../screen/emtyScreen/EmtyScreen';
-import RegisterScreen from '../screen/RegisterScreen/RegisterScreen';
+import RegisterScreen from '../screen/registerScreen/RegisterScreen';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -40,5 +39,4 @@ export const tabName = {
   chat: {name: 'navigation.chat', component: ChatScreen},
   notification: {name: 'navigation.notification', component: NotificationScreen},
   setting: {name: 'navigation.setting', component: PrivacySettingScreen},
-  add: {name: 'add', component: stackName.newPost.component},
 };
