@@ -1,21 +1,51 @@
-import React, { useRef, useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import React, {useRef, useState} from 'react';
+import {Text, View, TouchableOpacity, Alert, ToastAndroid} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import Feather from 'react-native-vector-icons/Feather';
-import { Assets } from '../../styles';
-import { OtpStyles } from '../../styles/otpstyle/OtpStyle';
-import { FormmikOtp } from './FormikForm';
-import { handleCheckOutOTP } from './Handle';
-import { useDispatch, useSelector } from 'react-redux';
+import {Assets} from '../../styles';
+import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
+import {FormmikOtp} from './FormikForm';
+import {useDispatch, useSelector} from 'react-redux';
+import {APISendOtpCode} from '../../store/api/AccountAPI';
+import {stackName} from '../../navigations/screens';
 
-const OtpScreen = () => {
-  const { t } = useTranslation();
+const OtpScreen = props => {
+  const {navigation, route} = props;
+  const email = props.route?.params?.email;
+  const isForgot = props.route?.params?.isForgot;
+  const {t} = useTranslation();
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [error, setError] = useState(false);
   const useAppDispatch = () => useDispatch();
   const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
 
+  const handleCheckOutOTP =
+    (email, setError, inputRefs, dispatch, t, Alert) => (values, actions) => {
+      try {
+        const Otp = values.otp.join('');
+        const body = {
+          email: email,
+          code: Otp,
+        };
+        console.log(body);
+
+        dispatch(APISendOtpCode(body))
+          .unwrap()
+          .then(res => {
+            if (!!isForgot) {
+              navigation.navigate(stackName.changeNewPassword.name, {
+                email: email,
+              });
+            } else {
+              navigation.navigate(stackName.login.name);
+            }
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
+      } catch (error) {}
+    };
   return (
     <View style={OtpStyles.container}>
       <View style={OtpStyles.headerContainer}>
@@ -30,7 +60,7 @@ const OtpScreen = () => {
           <Text style={OtpStyles.textTitle}>{t('otpScreen.textTitleOtp')}</Text>
           <Text style={OtpStyles.textSub}>
             {t('otpScreen.textSubOtp')} {'\n'}
-            <Text style={OtpStyles.textEmailOrPhone}>example@example.com</Text>
+            <Text style={OtpStyles.textEmailOrPhone}>{email}</Text>
           </Text>
         </View>
         <FormmikOtp
@@ -39,6 +69,7 @@ const OtpScreen = () => {
           error={error}
           setError={setError}
           handleCheckOutOTP={handleCheckOutOTP(
+            email,
             setError,
             inputRefs,
             dispatch,

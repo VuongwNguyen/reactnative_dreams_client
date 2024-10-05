@@ -12,6 +12,8 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import {stackName} from '../../navigations/screens';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const getInterpolation = (
   value,
@@ -27,7 +29,8 @@ const getInterpolation = (
   });
 };
 
-const HomeScreen = () => {
+const HomeScreen = props => {
+  const {navigation} = props;
   const inputSearch = useRef(null);
   const {t} = useTranslation();
   const translationY = useSharedValue(0);
@@ -46,20 +49,37 @@ const HomeScreen = () => {
       padding: padding,
     };
   });
+
+  const handleSearch = () => {
+    const searchText = inputSearch.current.value;
+
+    navigation.navigate(stackName.search.name, {
+      searchText: searchText,
+    });
+  };
   return (
     <View style={HomeStyles.container}>
       <Animated.View style={[HomeStyles.header, headerStyle]}>
-        <Image
-          style={HomeStyles.avatar}
-          source={{
-            uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-          }}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(stackName.personalProfile.name);
+          }}>
+          <Image
+            style={HomeStyles.avatar}
+            source={{
+              uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+            }}
+          />
+        </TouchableOpacity>
         <View style={HomeStyles.wraperInputSearch}>
           <TextInput
             ref={inputSearch}
             style={HomeStyles.inputSearch}
             placeholder={t('homeScreen.search')}
+            // onPressIn={() => {
+            //   navigation.navigate(stackName.search.name);
+            // }}
+            onSubmitEditing={handleSearch}
           />
           <Feather
             name={Assets.icon.search}

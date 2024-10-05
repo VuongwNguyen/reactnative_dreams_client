@@ -1,5 +1,5 @@
-import {apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
-
+import {ToastAndroid} from 'react-native';
+import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
 export const onChangeText = (
   setError,
   inputRefs,
@@ -24,13 +24,22 @@ export const onKeyPress = (e, inputRefs, index, setFieldValue) => {
 };
 
 export const handleCheckOutOTP =
-  (setError, inputRefs, dispatch, t, Alert) => (values, actions) => {
+  (email, setError, inputRefs, dispatch, t, Alert) => (values, actions) => {
     try {
       const Otp = values.otp.join('');
       const body = {
-        email: 'tienmap038@gmail.com',
+        email: email,
         code: Otp,
       };
-      dispatch(apiVerifyCodeResetPW(body));
+      console.log(body);
+
+      dispatch(APISendOtpCode(body))
+        .unwrap()
+        .then(res => {
+          navigation.navigate(stackName.login.name);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
     } catch (error) {}
   };

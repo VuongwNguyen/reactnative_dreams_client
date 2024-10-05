@@ -7,19 +7,29 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Feather from 'react-native-vector-icons/Feather';
 import SwitchButton from '../../components/SwitchButton';
 import {SettingStyle} from '../../styles/settingstyle/SettingStyle';
+import {stackName} from '../../navigations/screens';
 
 const LIGHT = 'light';
 const DARK = 'dark';
-const SettingScreen = () => {
+const SettingScreen = props => {
+  const {navigation} = props;
   const [currentThemeMode, setCurrentThemeMode] = useState(LIGHT);
   return (
     <View style={SettingStyle.container}>
       <Header title="Settings" />
-      <TouchableOpacity style={SettingStyle.itemSettingContainer}>
+      <TouchableOpacity
+        style={SettingStyle.itemSettingContainer}
+        onPress={() => {
+          navigation.navigate(stackName.privacySetting.name);
+        }}>
         <FontAwesome6 name={Assets.icon.privacy} size={20} color={'black'} />
         <Text style={SettingStyle.title}>Privacy & Safety</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={SettingStyle.itemSettingContainer}>
+      <TouchableOpacity
+        style={SettingStyle.itemSettingContainer}
+        onPress={() => {
+          navigation.navigate(stackName.notificationSetting.name);
+        }}>
         <FontAwesome6
           name={Assets.icon.notification}
           size={20}
@@ -27,7 +37,11 @@ const SettingScreen = () => {
         />
         <Text style={SettingStyle.title}>Notifications</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={SettingStyle.itemSettingContainer}>
+      <TouchableOpacity
+        style={SettingStyle.itemSettingContainer}
+        onPress={() => {
+          navigation.navigate(stackName.languageSetting.name);
+        }}>
         <MaterialCommunityIcons
           name={Assets.icon.translate}
           size={20}
@@ -35,7 +49,11 @@ const SettingScreen = () => {
         />
         <Text style={SettingStyle.title}>Language</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={SettingStyle.itemSettingContainer}>
+      <TouchableOpacity
+        style={SettingStyle.itemSettingContainer}
+        onPress={() => {
+          navigation.navigate(stackName.privacyPolicy.name);
+        }}>
         <FontAwesome6
           name={Assets.icon.notification}
           size={20}
@@ -44,7 +62,7 @@ const SettingScreen = () => {
         <Text style={SettingStyle.title}>Privacy Policy</Text>
       </TouchableOpacity>
       <View style={SettingStyle.line} />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={SettingStyle.itemSettingContainer}
         onPress={() =>
           setCurrentThemeMode(currentThemeMode === LIGHT ? DARK : LIGHT)
@@ -61,10 +79,23 @@ const SettingScreen = () => {
             setCurrentThemeMode(currentThemeMode === LIGHT ? DARK : LIGHT)
           }
         />
+
+      </TouchableOpacity> */}
+          <TouchableOpacity
+        style={SettingStyle.itemSettingContainer}
+        onPress={() => {
+          navigation.navigate(stackName.changePassword.name);
+        }}>
+        <FontAwesome6
+          name={Assets.icon.notification}
+          size={20}
+          color={'black'}
+        />
+        <Text style={SettingStyle.title}>Change password</Text>
       </TouchableOpacity>
       <TouchableOpacity style={SettingStyle.itemSettingContainer}>
         <Feather name={Assets.icon.logout} size={20} color={'red'} />
-        <Text style={SettingStyle.titleRed}>Profile</Text>
+        <Text style={SettingStyle.titleRed}>Log out</Text>
       </TouchableOpacity>
     </View>
   );

@@ -6,7 +6,7 @@ export const ProfileStyle = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 10,
-    backgroundColor: Colors.background
+    backgroundColor: Colors.background,
   },
   contentContainer: {
     flex: 1,
@@ -16,9 +16,9 @@ export const ProfileStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  rowAlign:{
+  rowAlign: {
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems: 'center',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -26,10 +26,10 @@ export const ProfileStyle = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
   },
-  grouptButtonContainer:{
+  grouptButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical:5
+    marginVertical: 5,
   },
   buttonContainer: {
     width: 150,
@@ -37,6 +37,23 @@ export const ProfileStyle = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  editBtnContainer: {
+    width: '100%',
+    marginVertical: 15,
+  },
+  btnEditProfile: {
+    width: '90%',
+    margin: 'auto',
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    paddingVertical: 15,
+  },
+  editBtnLabel: {
+    ...Typography.postName,
+    color: 'white',
   },
   activeTabContainer: {
     flex: 1,
@@ -84,7 +101,7 @@ export const ProfileStyle = StyleSheet.create({
     marginVertical: 10,
     marginRight: 5,
   },
-  nickname:{
+  nickname: {
     ...Typography.postName,
     fontSize: 15,
   },
@@ -92,7 +109,7 @@ export const ProfileStyle = StyleSheet.create({
     ...Typography.postName,
     color: 'black',
   },
-  subtitle:{
-    ...Typography.subTitle
-  }
+  subtitle: {
+    ...Typography.subTitle,
+  },
 });

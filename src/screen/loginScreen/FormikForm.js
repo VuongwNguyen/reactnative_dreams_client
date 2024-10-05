@@ -10,8 +10,11 @@ import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
 import {useDispatch} from 'react-redux';
 import {APILogin} from '../../store/api/AccountAPI';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 const FormikForm = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [isRememberMe, setIsRememberMe] = useState(false);
@@ -33,6 +36,7 @@ const FormikForm = () => {
           if (isRememberMe) {
           }
           resetForm();
+          navigation.navigate(stackName.bottomTab.name);
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -70,9 +74,10 @@ const FormikForm = () => {
           <View style={LoginStyle.dot}>
             {isRememberMe && <View style={LoginStyle.checkBox} />}
           </View>
-          <Text>{t('loginScreen.rememberMe')}</Text>
+          <Text>{t('loginScreen.remmberMe')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>

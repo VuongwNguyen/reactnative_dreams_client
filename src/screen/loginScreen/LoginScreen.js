@@ -11,9 +11,11 @@ import {Assets} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import FormikForm from './FormikForm';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
+import {stackName} from '../../navigations/screens';
 
-const LoginScreen = () => {
+const LoginScreen = props => {
   const {t} = useTranslation();
+  const {navigation} = props;
   return (
     <KeyboardAvoidingView>
       <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={false}>
@@ -31,7 +33,10 @@ const LoginScreen = () => {
           </View>
           <View style={LoginStyle.containerLink}>
             <Text>{t('loginScreen.notAccount')}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.register.name);
+              }}>
               <Text style={LoginStyle.link}>{t('loginScreen.register')}</Text>
             </TouchableOpacity>
           </View>

@@ -17,8 +17,10 @@ import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
+import {stackName} from '../../navigations/screens';
 
-const NewPostScreen = () => {
+const NewPostScreen = props => {
+  const {navigation} = props;
   const {t} = useTranslation();
   const [isPreviewed, setIsPreviewed] = useState(true);
   const {images, setImages, openImageLibrary, onOpenCamera} = useImagePicker();
@@ -62,19 +64,23 @@ const NewPostScreen = () => {
   const [value, setValue] = useState(data[0].value);
   const [openLine, setOpenLine] = useState('');
   const [postContent, setPostContent] = useState('');
-  const goBack = () => {};
   return (
     <View style={newPostStyle.container}>
       <AppHeader
         title={t('newPostScreen.title')}
-        goBack={goBack}
         rightButton={true}
         rightButtonTitle={t('newPostScreen.post')}
       />
       <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
         <View style={newPostStyle.bodyContainer}>
           <View style={newPostStyle.accountContainer}>
-            <Image style={newPostStyle.avt} source={Assets.image.avt} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.profile.name);
+              }}>
+              <Image style={newPostStyle.avt} source={Assets.image.avt} />
+            </TouchableOpacity>
+
             <View style={newPostStyle.inf}>
               <Text style={newPostStyle.userName}>Username</Text>
               <Dropdown
