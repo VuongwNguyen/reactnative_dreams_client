@@ -42,6 +42,14 @@
       "sha1": "8a4ace9392d06bcb7f8ea2f5169b07e4c383a90d"
     },
     {
+      "path": "assets/fonts/Roboto-Bold.ttf",
+      "sha1": "1e8baa650d943f2b78f1b77dbfe3ba1fb590e21a"
+    },
+    {
+      "path": "assets/fonts/Roboto-Regular.ttf",
+      "sha1": "ce57fc6c6705cb20661ac325fac5d4598b6efbca"
+    },
+    {
       "path": "assets/fonts/RobotoBold.ttf",
       "sha1": "1e8baa650d943f2b78f1b77dbfe3ba1fb590e21a"
     }

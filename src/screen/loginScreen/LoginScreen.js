@@ -17,7 +17,7 @@ const LoginScreen = props => {
   const {t} = useTranslation();
   const {navigation} = props;
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView style={LoginStyle.viewContainer}>
       <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={false}>
         <View style={LoginStyle.container}>
           <View style={LoginStyle.containerHeader}>
@@ -28,7 +28,7 @@ const LoginScreen = props => {
             <Text style={LoginStyle.subTitle}>{t('loginScreen.subTitle')}</Text>
             <Text style={LoginStyle.titleText}>{t('loginScreen.title')}</Text>
           </View>
-          <View style={{flex: 1}}>
+          <View>
             <FormikForm />
           </View>
           <View style={LoginStyle.containerLink}>

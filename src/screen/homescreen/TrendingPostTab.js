@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
 
-
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
   const [dataPosts, setDataPosts] = useState(postsData);
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 10,
   },
 });
 

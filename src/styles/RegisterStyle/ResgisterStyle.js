@@ -2,18 +2,21 @@ import {Dimensions, StyleSheet} from 'react-native';
 import {Colors, Spacings, Typography} from '../';
 
 export const RegisterStyle = StyleSheet.create({
+  viewContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    padding: Spacings.lg,
+    flex: 1,
+    padding: 16,
+    gap: 30,
   },
   containerForm: {
-    flex: 1,
-    marginVertical: 20,
     gap: 25,
   },
   containerHeader: {
     alignItems: 'center',
+    gap: 12,
   },
   containerLink: {
     flexDirection: 'row',
@@ -28,10 +31,7 @@ export const RegisterStyle = StyleSheet.create({
   headerText: {
     ...Typography.title,
     color: 'black',
-    alignContent: 'center',
-    textAlign: 'center',
     lineHeight: 30,
-    marginVertical: 10,
   },
   groupNameContainer: {
     flexDirection: 'row',
@@ -51,8 +51,5 @@ export const RegisterStyle = StyleSheet.create({
     ...Typography.edtHint,
     color: Colors.error,
     alignSelf: 'center',
-  },
-  scrollView: {
-    flexGrow: 1,
   },
 });

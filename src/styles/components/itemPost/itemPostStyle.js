@@ -10,7 +10,6 @@ export const itemPostStyle = StyleSheet.create({
     fontFamily: Fonts.nunitonSans.regular,
   },
   container: {
-    paddingHorizontal: 5,
     gap: 10,
   },
   header: {

@@ -12,13 +12,12 @@ export const APILogin = createAsyncThunk(
     }
   },
 );
-// chita
 export const APIVerifyAccount = createAsyncThunk(
-  'account/send-email-verify',
+  'account/send-verify-email',
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        'account/send-email-verify',
+        'account/send-verify-email',
         data,
       );
       return response;
@@ -28,26 +27,23 @@ export const APIVerifyAccount = createAsyncThunk(
   },
 );
 export const APISendOtpCode = createAsyncThunk(
-  'account/send-code-verify',
+  'account/verify-email',
   async (data, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post(
-        'account/send-code-verify',
-        data,
-      );
+      const response = await AxiosInstance().post('account/verify-email', data);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   },
 );
-// 
+
 export const apiSendOtpResetPW = createAsyncThunk(
   'account/send-code-reset-password',
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        '/api/account/send-code-reset-password',
+        '/account/send-code-reset-password',
         data,
       );
       console.log(response);
@@ -63,7 +59,7 @@ export const apiVerifyCodeResetPW = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        '/api/account/verify-code-reset-password',
+        '/account/verify-code-reset-password',
         data,
       );
       console.log(response);
@@ -99,7 +95,22 @@ export const APIResetPassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(rejectWithValue(error.response.data));
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const APIChangePassword = createAsyncThunk(
+  'account/change-password',
+  async (data, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post(
+        'account/change-password',
+        data,
+      );
+      return response;
+    } catch (error) {
+      // console.log(rejectWithValue(error.response.data));
       return rejectWithValue(error.response.data);
     }
   },

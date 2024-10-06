@@ -17,8 +17,8 @@ const RegisterScreen = props => {
   const {t} = useTranslation();
   const {navigation} = props;
   return (
-    <KeyboardAvoidingView>
-      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={false}>
+    <KeyboardAvoidingView style={RegisterStyle.viewContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={RegisterStyle.container}>
           <View style={RegisterStyle.containerHeader}>
             <Image style={RegisterStyle.logo} source={Assets.image.logo} />
@@ -27,7 +27,7 @@ const RegisterScreen = props => {
             </Text>
             <Text>{t('register.createAnAccount')}</Text>
           </View>
-          <View style={{flex: 1}}>
+          <View>
             <MyForm />
           </View>
           <View style={RegisterStyle.containerLink}>

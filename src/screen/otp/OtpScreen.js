@@ -6,7 +6,7 @@ import {Assets} from '../../styles';
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {FormmikOtp} from './FormikForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {APISendOtpCode} from '../../store/api/AccountAPI';
+import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
 import {stackName} from '../../navigations/screens';
 
 const OtpScreen = props => {
@@ -20,32 +20,39 @@ const OtpScreen = props => {
   const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
 
-  const handleCheckOutOTP =
-    (email, setError, inputRefs, dispatch, t, Alert) => (values, actions) => {
-      try {
-        const Otp = values.otp.join('');
-        const body = {
-          email: email,
-          code: Otp,
-        };
-        console.log(body);
+  const handleCheckOutOTP = () => (values, actions) => {
+    try {
+      const Otp = values.otp.join('');
+      const body = {
+        email: email,
+        code: Otp,
+      };
+      // console.log(body);
 
-        dispatch(APISendOtpCode(body))
+      if (!!isForgot) {
+        dispatch(apiVerifyCodeResetPW(body))
           .unwrap()
           .then(res => {
-            if (!!isForgot) {
-              navigation.navigate(stackName.changeNewPassword.name, {
-                email: email,
-              });
-            } else {
-              navigation.navigate(stackName.login.name);
-            }
+            navigation.navigate(stackName.changeNewPassword.name, {
+              email: email,
+            });
           })
           .catch(err => {
             ToastAndroid.show(err.message, ToastAndroid.SHORT);
           });
-      } catch (error) {}
-    };
+      } else {
+        dispatch(APISendOtpCode(body))
+          .unwrap()
+          .then(res => {
+            navigation.navigate(stackName.login.name);
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
+      }
+    } catch (err) {}
+  };
+
   return (
     <View style={OtpStyles.container}>
       <View style={OtpStyles.headerContainer}>

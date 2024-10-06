@@ -45,7 +45,7 @@ const FormikForm = () => {
   );
 
   return (
-    <View style={RegisterStyle.containerForm}>
+    <View style={LoginStyle.containerForm}>
       <View>
         <Input
           placeholder={t('loginScreen.emailOrPhoneNumber')}
