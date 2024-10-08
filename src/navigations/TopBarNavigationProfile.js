@@ -1,8 +1,8 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useTranslation} from 'react-i18next';
-import InfomationTab from '../screen/profileScreen/InfomationTab';
-import PostedTab from '../screen/profileScreen/PostedTab';
+import InfomationTab from '../screen/profile/InfomationTab';
+import PostedTab from '../screen/profile/PostedTab';
 import {Colors} from '../styles';
 
 const Tab = createMaterialTopTabNavigator();

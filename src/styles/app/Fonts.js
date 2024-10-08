@@ -4,7 +4,7 @@ export const Fonts = {
     extrabold: 'NunitoSansExtraBold',
     regular: 'NunitoSansRegular',
     semibold: 'NunitoSansSemiBold',
-    bolditalic: 'NunitoSansBoldItalic',
+    // bolditalic: 'NunitoSansBoldItalic',
   },
   inter: {
     bold: 'InterBold',
@@ -12,5 +12,11 @@ export const Fonts = {
   },
   roboto: {
     semibold: 'RobotoBold',
+    regular:'Roboto-Regular'
+  },
+  poppins: {
+    regular: 'Poppins-Regular',
+    medium: 'Poppins-Medium',
+    semibold: 'Poppins-SemiBold',
   },
 };

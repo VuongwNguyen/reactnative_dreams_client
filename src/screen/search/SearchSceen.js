@@ -12,10 +12,16 @@ import {Assets, Colors, Sizing} from '../../styles';
 import ItemPost from '../../components/ItemPost';
 import SearchAccountComponent from './SearchAccountComponent';
 const SearchSceen = props => {
-  const [searchValue, setSearchValue] = useState('');
+  const {navigation, route} = props;
+  const searchText = props.route?.params?.searchText;
+  console.log(searchText);
+
+  const [searchValue, setSearchValue] = useState(searchText);
   const optionsArr = ['All', 'Post', 'Accounts'];
   const [isSelected, setIsSelected] = useState(optionsArr[0]);
-  const goBack = () => {};
+  const goBack = () => {
+    navigation.goBack();
+  };
   return (
     <View style={searchStyle.container}>
       {/* header */}

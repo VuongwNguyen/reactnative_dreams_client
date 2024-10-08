@@ -1,17 +1,19 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ToastAndroid} from 'react-native';
 import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import AppInput from '../../components/Input';
 import {useTranslation} from 'react-i18next';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {forgotPasswordSchema} from '../../configs/validateSchema/forgotPasswordSchema';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {apiSendOtpResetPW} from '../../store/api/AccountAPI';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 export const FormikFG = props => {
+  const navigation = useNavigation();
   const {t} = useTranslation();
 
   const useAppDispatch = () => useDispatch();
-  const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
 
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -24,7 +26,18 @@ export const FormikFG = props => {
         const body = {
           email: values.emailAddress,
         };
-        dispatch(apiSendOtpResetPW(body));
+        dispatch(apiSendOtpResetPW(body))
+          .unwrap()
+          .then(res => {
+            resetForm();
+            navigation.navigate(stackName.otp.name, {
+              email: values.emailAddress,
+              isForgot: true,
+            });
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
       } catch (error) {
         console.log('Error', error);
       }

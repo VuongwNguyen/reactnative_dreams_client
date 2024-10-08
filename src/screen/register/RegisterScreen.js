@@ -11,12 +11,14 @@ import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {Assets} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import MyForm from './FormikForm';
+import {stackName} from '../../navigations/screens';
 
-const RegisterScreen = () => {
+const RegisterScreen = props => {
   const {t} = useTranslation();
+  const {navigation} = props;
   return (
-    <KeyboardAvoidingView>
-      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={false}>
+    <KeyboardAvoidingView style={RegisterStyle.viewContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={RegisterStyle.container}>
           <View style={RegisterStyle.containerHeader}>
             <Image style={RegisterStyle.logo} source={Assets.image.logo} />
@@ -25,12 +27,15 @@ const RegisterScreen = () => {
             </Text>
             <Text>{t('register.createAnAccount')}</Text>
           </View>
-          <View style={{flex: 1}}>
+          <View>
             <MyForm />
           </View>
           <View style={RegisterStyle.containerLink}>
             <Text>{t('register.alreadyHaveAnAccount')}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.login.name);
+              }}>
               <Text style={RegisterStyle.link}>{t('register.login')}</Text>
             </TouchableOpacity>
           </View>

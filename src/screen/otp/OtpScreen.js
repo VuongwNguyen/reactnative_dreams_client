@@ -1,13 +1,22 @@
 import React, {useRef, useState} from 'react';
-import {Text, View, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  Alert,
+  ToastAndroid,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {FormmikOtp} from './FormikForm';
-import {handleCheckOutOTP} from './Handle';
 import {useDispatch, useSelector} from 'react-redux';
+import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
+import {stackName} from '../../navigations/screens';
 import AppHeader from '../../components/Header';
 
-const OtpScreen = () => {
+const OtpScreen = props => {
+  const {navigation, route} = props;
+  const email = props.route?.params?.email;
+  const isForgot = props.route?.params?.isForgot;
   const {t} = useTranslation();
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [error, setError] = useState(false);
@@ -15,16 +24,49 @@ const OtpScreen = () => {
   const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
 
+  const handleCheckOutOTP = () => (values, actions) => {
+    try {
+      const Otp = values.otp.join('');
+      const body = {
+        email: email,
+        code: Otp,
+      };
+      // console.log(body);
+
+      if (!!isForgot) {
+        dispatch(apiVerifyCodeResetPW(body))
+          .unwrap()
+          .then(res => {
+            navigation.navigate(stackName.changeNewPassword.name, {
+              email: email,
+            });
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
+      } else {
+        dispatch(APISendOtpCode(body))
+          .unwrap()
+          .then(res => {
+            navigation.navigate(stackName.login.name);
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
+      }
+    } catch (err) {}
+  };
+
   return (
     <View style={OtpStyles.container}>
-      <AppHeader title={t('otpScreen.headerTextOtp')} leftButton={true} />
+      <AppHeader title={t('otpScreen.headerTextOtp')} />
       <View style={OtpStyles.spacingHeight} />
       <View style={OtpStyles.formContainer}>
         <View style={OtpStyles.textContanier}>
           <Text style={OtpStyles.textTitle}>{t('otpScreen.textTitleOtp')}</Text>
           <Text style={OtpStyles.textSub}>
             {t('otpScreen.textSubOtp')} {'\n'}
-            <Text style={OtpStyles.textEmailOrPhone}>example@example.com</Text>
+            <Text style={OtpStyles.textEmailOrPhone}>{email}</Text>
           </Text>
         </View>
         <FormmikOtp
@@ -33,6 +75,7 @@ const OtpScreen = () => {
           error={error}
           setError={setError}
           handleCheckOutOTP={handleCheckOutOTP(
+            email,
             setError,
             inputRefs,
             dispatch,

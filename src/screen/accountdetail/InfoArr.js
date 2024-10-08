@@ -1,4 +1,4 @@
-import {Assets} from './../../styles';
+import {Assets} from '../../styles';
 export const basicInfArr = [
   {
     title: 'Username',

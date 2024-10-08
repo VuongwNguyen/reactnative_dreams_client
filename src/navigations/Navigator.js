@@ -7,18 +7,10 @@ export function Navigator() {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={stackName.bottomTab.name}>
+      initialRouteName={stackName.login.name}>
       <Stack.Screen
         name={stackName.register.name}
         component={stackName.register.component}
-      />
-      <Stack.Screen
-        name={stackName.message.name}
-        component={stackName.message.component}
-      />
-      <Stack.Screen
-        name={stackName.createGroupsChat.name}
-        component={stackName.createGroupsChat.component}  
       />
       <Stack.Screen
         name={stackName.login.name}
@@ -27,6 +19,10 @@ export function Navigator() {
       <Stack.Screen
         name={stackName.profile.name}
         component={stackName.profile.component}
+      />
+      <Stack.Screen
+        name={stackName.personalProfile.name}
+        component={stackName.personalProfile.component}
       />
       <Stack.Screen
         name={stackName.postDetail.name}
@@ -67,6 +63,26 @@ export function Navigator() {
       <Stack.Screen
         name={stackName.privacySetting.name}
         component={stackName.privacySetting.component}
+      />
+      <Stack.Screen
+        name={stackName.notificationSetting.name}
+        component={stackName.notificationSetting.component}
+      />
+      <Stack.Screen
+        name={stackName.languageSetting.name}
+        component={stackName.languageSetting.component}
+      />
+      <Stack.Screen
+        name={stackName.privacyPolicy.name}
+        component={stackName.privacyPolicy.component}
+      />
+      <Stack.Screen
+        name={stackName.following.name}
+        component={stackName.following.component}
+      />
+      <Stack.Screen
+        name={stackName.createGroupChat.name}
+        component={stackName.createGroupChat.component}
       />
     </Stack.Navigator>
   );

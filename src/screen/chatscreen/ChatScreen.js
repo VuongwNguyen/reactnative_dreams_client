@@ -10,8 +10,11 @@ import {
 import React from 'react';
 import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
+import {stackName} from '../../navigations/screens';
 
-const ChatScreen = () => {
+
+const ChatScreen = props => {
+  const {navigation} = props;
   return (
     <View style={styles.containerScreen}>
       <ScrollView style={{flex: 1}}>
@@ -23,11 +26,12 @@ const ChatScreen = () => {
             }}
           />
           <Text style={styles.title}>CHATS</Text>
-          <Pressable style={styles.buttonCreateGroupChat}>
-            <Image
-              source={Assets.icons.follow}
-              style={{height: 20, width: 20}}
-            />
+          <Pressable
+            style={styles.buttonCreateGroupChat}
+            onPress={() => {
+              navigation.navigate(stackName.createGroupChat.name);
+            }}>
+            <Image source={Assets.icons.follow} style={{height: 20, width: 20}} />
           </Pressable>
         </View>
         <View style={{height: 20}} />

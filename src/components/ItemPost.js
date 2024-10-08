@@ -1,18 +1,20 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-
 import {Assets, Colors, Typography} from './../styles';
+import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from './../styles/components/itemPost/itemPostStyle';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {stackName} from '../navigations/screens';
 
 export default ItemPost = props => {
   const {item, isLike = true, handelItem} = props;
   const [like, setLike] = useState(isLike);
+  const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
       style={itemPostStyle.container}
-      onPress={() => {}}>
+      onPress={() => navigation.navigate(stackName.postDetail.name)}>
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
