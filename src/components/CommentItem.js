@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Assets } from '../styles';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
@@ -57,7 +57,8 @@ const CommentItem = memo(props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <AntDesign name="hearto" size={20} color="black" />
+          <Image source={Assets.icons.heart
+          } style={{height: 20, width: 20}} />
           <Text>999</Text>
         </TouchableOpacity>
       </View>

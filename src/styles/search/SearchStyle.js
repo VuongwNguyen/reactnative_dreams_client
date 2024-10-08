@@ -29,6 +29,8 @@ export const searchStyle = {
     position: 'absolute',
     top: 15,
     right: 15,
+    height: 20,
+    width: 20,
   },
   tagContainer: {
     marginVertical: 24,

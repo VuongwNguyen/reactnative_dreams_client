@@ -3,25 +3,28 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {stackName, tabName} from './screens';
-import {OptionIcon} from './../styles/app/OptionIcon';
 import {Assets} from '../styles';
 
 const tab = createBottomTabNavigator();
 
-// const icons = ['home', 'message', 'notification', 'user'];
-
 const icons = [
-  {type: 'Entypo', icon: Assets.icon.home},
-  {type: 'Foundation', icon: Assets.icon.message},
-  {type: 'Entypo', icon: Assets.icon.notification},
-  {type: 'MaterialIcons', icon: Assets.icon.setting},
+  {default: Assets.icons.home, selected: Assets.icons.homeSelected},
+  {default: Assets.icons.message, selected: Assets.icons.messageSelected},
+  {
+    default: Assets.icons.notification,
+    selected: Assets.icons.notificationSelected,
+  },
+  {default: Assets.icons.setting, selected: Assets.icons.settingSelected},
 ];
 
 const TabBar = ({state, descriptors, navigation}) => {
   const renderIcon = (focus, index) => {
     return (
       <View>
-        <OptionIcon icon={icons[index]} />
+        <Image
+          style={{width: 20, height: 20, resizeMode: 'contain'}}
+          source={forcus ? icons[index].selected : icons[index].default}
+        />
       </View>
     );
   };
@@ -107,8 +110,8 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   img: {
-    width: 58,
-    height: 58,
+    width: 50,
+    height: 50,
     resizeMode: 'contain',
     position: 'absolute',
     bottom: '50%',

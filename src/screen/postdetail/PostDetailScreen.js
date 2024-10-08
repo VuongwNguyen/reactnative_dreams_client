@@ -1,18 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {FlatList, Image, TextInput, TouchableOpacity, View} from 'react-native';
 import CommentItem from '../../components/CommentItem';
 import ItemPost from '../../components/ItemPost';
-import {Assets} from '../../styles';
 import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
 import AppHeader from '../../components/Header';
 
@@ -35,15 +25,11 @@ const PostDetailScreen = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
-            {/* <View style={postDetailStyle.headerContainer}>
-              <TouchableOpacity>
-                <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-              <Text style={postDetailStyle.headerText}>
-                {t('postDetailScreen.post')}
-              </Text>
-            </View> */}
-            <AppHeader title={t('postDetailScreen.post')} />
+            <AppHeader
+              title={t('postDetailScreen.post')}
+              leftButton={true}
+              rightButton={false}
+            />
             <ItemPost item={post} />
           </>
         }
@@ -61,7 +47,7 @@ const PostDetailScreen = () => {
           placeholder={t('postDetailScreen.writeComment')}
         />
         <TouchableOpacity style={postDetailStyle.buttonSendComment}>
-          <Ionicons name="send-sharp" size={30} color="black" />
+          <Image source={Assets.icons.send} style={postDetailStyle.iconSend} />
         </TouchableOpacity>
       </View>
     </View>

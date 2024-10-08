@@ -1,6 +1,5 @@
 import {View, Image, TextInput} from 'react-native';
 import React, {useRef} from 'react';
-import Feather from 'react-native-vector-icons/Feather';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
 import {HomeStyles} from '../../styles/homestyle/homestyle';
 import {Assets} from '../../styles';
@@ -81,10 +80,8 @@ const HomeScreen = props => {
             // }}
             onSubmitEditing={handleSearch}
           />
-          <Feather
-            name={Assets.icon.search}
-            size={24}
-            color="#6c757d"
+          <Image
+            source={Assets.icons.search}
             style={HomeStyles.iconSearch}
             onPress={() => {
               inputSearch.current.focus();

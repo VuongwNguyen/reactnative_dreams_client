@@ -7,12 +7,11 @@ import {
   Image,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
-import Feather from 'react-native-vector-icons/Feather';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {Assets} from '../../styles';
 import {ScrollView} from 'react-native-gesture-handler';
 import {createGroupChatStyle} from '../../styles/creategroupchatstyle/CreateGroupChatStyle';
 import {useTranslation} from 'react-i18next';
+import AppHeader from '../../components/Header';
 
 const CreateGroupChatScreen = () => {
   const {t} = useTranslation();
@@ -40,21 +39,7 @@ const CreateGroupChatScreen = () => {
 
   return (
     <View style={createGroupChatStyle.container}>
-      <View style={createGroupChatStyle.headerContainer}>
-        <View style={createGroupChatStyle.headerLeft}>
-          <TouchableOpacity>
-            <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
-          </TouchableOpacity>
-          <Text style={createGroupChatStyle.titleHeader}>
-            {t('createGroupScreen.newgroup')}
-          </Text>
-        </View>
-        <Pressable style={createGroupChatStyle.buttonCreate}>
-          <Text style={createGroupChatStyle.textButtonCreate}>
-            {t('createGroupScreen.create')}
-          </Text>
-        </Pressable>
-      </View>
+      <AppHeader title={t('createGroupScreen.newgroup')} leftButton={true} />
       <View style={createGroupChatStyle.wraperInput}>
         <TextInput
           style={createGroupChatStyle.textInput}
@@ -72,7 +57,10 @@ const CreateGroupChatScreen = () => {
           <Pressable
             style={createGroupChatStyle.iconSearch}
             onPress={() => inputSearchRef.current.focus()}>
-            <Feather name={Assets.icon.search} size={24} color="#6C757D" />
+            <Image
+              source={Assets.icons.search}
+              style={{height: 20, width: 20}}
+            />
           </Pressable>
         </View>
       </View>
@@ -91,7 +79,7 @@ const CreateGroupChatScreen = () => {
                     <Pressable
                       onPress={() => handleDeleteUser(user)}
                       style={createGroupChatStyle.buttonCross}>
-                      <Entypo name="cross" size={10} color="black" />
+                      <Image source={Assets.icons.close} style={{width: 15, height: 15}} />
                     </Pressable>
                   </View>
                   <Text style={createGroupChatStyle.name}>{user.name}</Text>
@@ -134,7 +122,7 @@ const CreateGroupChatScreen = () => {
                     },
                   ]}>
                   {selectedUsers.includes(user.id) && (
-                    <Feather name="check" size={16} color="white" />
+                    <Image source={Assets.icons.check} style={{width: 15, height: 15}} />
                   )}
                 </Pressable>
               </View>

@@ -8,8 +8,6 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Assets} from '../../styles';
 import MessageRight from '../../components/MessageRight';
 import MessageLeft from '../../components/MessageLeft';
@@ -27,7 +25,10 @@ const MessageScreen = () => {
         <View style={MessageStyles.headerChat}>
           <View style={MessageStyles.headerLeft}>
             <TouchableOpacity>
-              <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
+              <Image
+                source={Assets.icons.arrowLeft}
+                style={{height: 20, width: 20}}
+              />
             </TouchableOpacity>
             <Image
               style={MessageStyles.avatar}
@@ -42,13 +43,22 @@ const MessageScreen = () => {
           </View>
           <View style={MessageStyles.headerRight}>
             <TouchableOpacity>
-              <Ionicons name="call-outline" size={24} color="black" />
+              <Image
+                source={Assets.icons.call}
+                style={MessageStyles.iconCall}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Ionicons name="videocam-outline" size={24} color="black" />
+              <Image
+                source={Assets.icons.video}
+                style={MessageStyles.iconVideo}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Feather name="more-vertical" size={24} color="black" />
+              <Image
+                source={Assets.icons.option}
+                style={MessageStyles.iconMore}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -101,10 +111,16 @@ const MessageScreen = () => {
         {message.length > 0 ? null : (
           <>
             <Pressable>
-              <Ionicons name="attach" size={24} color="black" />
+              <Image
+                source={Assets.icons.attach}
+                style={{width: 20, height: 20}}
+              />
             </Pressable>
             <Pressable>
-              <Feather name="camera" size={24} color="black" />
+              <Image
+                source={Assets.icons.camera}
+                style={{width: 20, height: 20}}
+              />
             </Pressable>
           </>
         )}
@@ -127,15 +143,13 @@ const MessageScreen = () => {
           <Pressable
             onPress={() => setMessage('')}
             style={MessageStyles.buttonSendMessage}>
-            <Ionicons name="send-sharp" size={24} color="black" />
+            <Image source={Assets.icons.send} style={{width: 20, height: 20}} />
           </Pressable>
         </View>
         {message.length > 0 ? null : (
           <>
             <Pressable>
-              <Image
-                source={require('../../../assets/icons/keyboardvoice.png')}
-              />
+              <Image source={Assets.icons.voice} />
             </Pressable>
           </>
         )}

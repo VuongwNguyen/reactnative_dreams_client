@@ -1,7 +1,6 @@
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
@@ -20,7 +19,7 @@ const EducationDialog = () => {
     <View>
       <View style={bottomSheetStyle.container}>
         <View>
-          <Ionicons name={Assets.icon.close} size={24} color="black" />
+          <Image source={Assets.icons.close} style={{height: 20, width: 20}} />
         </View>
         <View style={bottomSheetStyle.bodyContainer}>
           <Text style={bottomSheetStyle.titleDialog}>

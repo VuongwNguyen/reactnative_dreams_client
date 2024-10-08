@@ -1,8 +1,7 @@
-import {Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {privacySettingItemStyle} from '../../styles/privacysetting/PrivacySettingItemStyle';
 import {Dropdown} from 'react-native-element-dropdown';
-import Feather from 'react-native-vector-icons/Feather';
 import {Assets, Sizing} from '../../styles';
 const PrivacySettingItem = props => {
   const {title, content, status} = props;
@@ -16,7 +15,7 @@ const PrivacySettingItem = props => {
   return (
     <View style={privacySettingItemStyle.container}>
       <View style={privacySettingItemStyle.infContainer}>
-        <Feather name={Assets.icon.user} size={Sizing.lg} color="black" />
+        <Image source={Assets.icons.user} style={{height: 20, width: 20}} />
         <View style={privacySettingItemStyle.contentContainer}>
           <Text style={privacySettingItemStyle.title}>{title}</Text>
           <Text style={privacySettingItemStyle.content}>{content}</Text>
@@ -34,13 +33,11 @@ const PrivacySettingItem = props => {
           setIcStatus(item.value);
         }}
         renderLeftIcon={() => (
-          <Feather
-            color={'black'}
-            name={
+          <Image
+            source={
               icStatus == 'public' ? Assets.icon.public : Assets.icon.privacy
             }
-            size={20}
-            style={privacySettingItemStyle.icon}
+            style={{height: 20, width: 20}}
           />
         )}
         style={privacySettingItemStyle.dropdown}

@@ -1,7 +1,6 @@
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 
@@ -17,7 +16,7 @@ const GenderDialog = () => {
     <View>
       <View style={bottomSheetStyle.container}>
         <View>
-          <Ionicons name={Assets.icon.close} size={24} color="black" />
+          <Image source={Assets.icons.close} style={{height: 20, width: 20}} />
         </View>
         <View style={bottomSheetStyle.bodyContainer}>
           <Text style={bottomSheetStyle.titleDialog}>
@@ -39,11 +38,7 @@ const GenderDialog = () => {
                   },
                 ]}
                 onPress={() => handleSelectGender('male')}>
-                <Ionicons
-                  name={Assets.icon.male}
-                  size={60}
-                  color={Colors.primary}
-                />
+               <Image source={Assets.icons.male} style={{height: 60, width: 60}} />
               </TouchableOpacity>
               <Text
                 style={[
@@ -69,11 +64,7 @@ const GenderDialog = () => {
                   },
                 ]}
                 onPress={() => handleSelectGender('female')}>
-                <Ionicons
-                  name={Assets.icon.female}
-                  size={60}
-                  color={'#ff4181'}
-                />
+                <Image source={Assets.icons.female} style={{height: 60, width: 60}} />
               </TouchableOpacity>
               <Text
                 style={[

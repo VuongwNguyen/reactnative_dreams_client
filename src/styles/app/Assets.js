@@ -1,49 +1,57 @@
 /* icon assets by fontawesome6 library */
+// 6C757D
+// 0CBBF0
+
+const uriIcons = '../../../assets/icons/';
 export const Assets = {
-  icon: {
-    arrowLeft: 'arrow-left',
-    close: 'close',
-    eyeClose: 'eye-slash',
-    eyeOpen: 'eye',
-    search: 'search', // feather
-    user: 'user',
-    back: 'arrow-left', // feather
-    nationaly: 'earth-asia',
-    notification: 'bell',
-    message: 'comment', // foundation
-    logout: 'log-out', // feather
-    home: 'home', // entypo
-    translate: 'translate', // materialIcons
-    edit: 'edit', // materialIcons
-    location: 'location', // EvilIcons
-    gender: 'transgender', // fontAwesome
-    terms: 'archie', // feather
-    privacy: 'lock',
-    theme: 'theme-light-dark', // MaterialCommunityIcons
-    birthday: 'birthday-cake', // fontAwesome
-    camera: 'camera', // feather
-    video: 'video', // feather
-    gallery: 'image-outline', // Ionicons
-    heart: 'heart-outlined', // Entypo
-    heartFill: 'heart', // Entypo
-    share: 'share',
-    option: 'options-vertical', // SimpleLineIcons
-    close: 'close-circle-sharp', // Ionicons
-    optionHambuger: 'menu', // Ionicons
-    comment: 'comment', // EvilIcons
-    send: 'send', // Ionicons
-    follow: 'plus', // AntDesign
-    setting: 'settings-suggest', // MaterialIcons
-    change: 'sync', // AntDesign
-    trash: 'trash-o', // FontAwsome
-    graduation: 'graduation-cap', // FontAwesome
-    zodiac: 'zodiac-pisces', // MaterialCommunityIcons
-    x: 'x', //Feather
-    checked: 'check', //Feather
-    public: 'globe',
-    male: 'male-outline', //Ionicons
-    female: 'female-outline', //Ionicons
-    calendar: 'calendar', //Ionicons
+  icons: {
+    home: require(uriIcons + 'home.png'),
+    homeSelected: require(uriIcons + 'home-selected.png'),
+    message: require(uriIcons + 'message.png'),
+    messageSelected: require(uriIcons + 'message-selected.png'),
+    notification: require(uriIcons + 'notification.png'),
+    notificationSelected: require(uriIcons + 'notification-selected.png'),
+    setting: require(uriIcons + 'setting.png'),
+    settingSelected: require(uriIcons + 'setting-selected.png'),
+    search: require(uriIcons + 'search.png'),
+    heart: require(uriIcons + 'heart.png'),
+    heartFill: require(uriIcons + 'heart-fill.png'),
+    arrowLeft: require(uriIcons + 'arrow-left.png'),
+    close: require(uriIcons + 'close.png'),
+    eyeClose: require(uriIcons + 'eye-close.png'),
+    eye: require(uriIcons + 'eye.png'),
+    user: require(uriIcons + 'user.png'),
+    earth: require(uriIcons + 'earth.png'),
+    logout: require(uriIcons + 'logout.png'),
+    translate: require(uriIcons + 'translate.png'),
+    edit: require(uriIcons + 'edit.png'),
+    location: require(uriIcons + 'location.png'),
+    gender: require(uriIcons +'gender.png'),
+    term: require(uriIcons + 'term.png'),
+    privacy: require(uriIcons + 'privacy.png'),
+    theme: require(uriIcons + 'theme.png'),
+    birthday: require(uriIcons + 'birthday.png'),
+    camera: require(uriIcons + 'camera.png'),
+    video: require(uriIcons + 'video.png'),
+    gallery: require(uriIcons + 'gallery.png'),
+    share: require(uriIcons + 'share.png'),
+    option: require(uriIcons + 'options.png'),
+    menu: require(uriIcons + 'menu.png'),
+    comment: require(uriIcons + 'chat.png'),
+    send: require(uriIcons + 'send.png'),
+    follow: require(uriIcons + 'plus.png'),
+    change: require(uriIcons + 'shuffle.png'),
+    trash: require(uriIcons + 'trash.png'),
+    graduation: require(uriIcons + 'graduation.png'),
+    zodiac: require(uriIcons + 'zodiac.png'),
+    male: require(uriIcons + 'male.png'),
+    female: require(uriIcons +'female.png'),
+    calendar: require(uriIcons + 'calendar.png'),
+    hobby: require(uriIcons + 'hobby.png'),
+    check: require(uriIcons + 'check.png'),
+    call: require(uriIcons + 'call.png'),
+    attach: require(uriIcons + 'attach.png'),
+    voice: require(uriIcons + 'keyboardvoice.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
