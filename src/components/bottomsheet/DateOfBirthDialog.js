@@ -1,8 +1,7 @@
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Assets, Colors, Typography} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useTranslation} from 'react-i18next';
 
@@ -71,7 +70,12 @@ const DateOfBirthDialog = () => {
     <View>
       <View style={bottomSheetStyle.container}>
         <View>
-          <Ionicons name={Assets.icon.close} size={24} color="black" />
+          <TouchableOpacity style={bottomSheetStyle.closeBtn}>
+            <Image
+              source={Assets.icons.close}
+              style={bottomSheetStyle.closeIcon}
+            />
+          </TouchableOpacity>
         </View>
         <View style={bottomSheetStyle.bodyContainer}>
           <Text style={bottomSheetStyle.titleDialog}>
@@ -97,10 +101,9 @@ const DateOfBirthDialog = () => {
                 <Text style={bottomSheetStyle.selectPlaceholder}>
                   {t('dateOfBirthDialog.placeholder')}
                 </Text>
-                <Ionicons
-                  name={Assets.icon.calendar}
-                  size={24}
-                  color={Colors.secondary}
+                <Image
+                  source={Assets.icons.calendar}
+                  style={{width: 20, height: 20}}
                 />
               </View>
             ) : (

@@ -1,7 +1,6 @@
-import {Text, TouchableOpacity, View} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Assets, Sizing, Typography} from '../styles';
+import {Assets, Typography} from '../styles';
 import {AppHeaderStyle} from '../styles/components/header/HeaderStyle';
 
 const AppHeader = props => {
@@ -15,7 +14,10 @@ const AppHeader = props => {
   return (
     <View style={AppHeaderStyle.container}>
       <TouchableOpacity onPress={goBack}>
-        <Feather name={Assets.icon.back} size={Sizing.lg} color="black" />
+        <Image
+          source={Assets.icons.arrowLeft}
+          style={{height: 20, width: 20}}
+        />
       </TouchableOpacity>
       <Text style={Typography.navTitle}>{title}</Text>
       {rightButton ? (

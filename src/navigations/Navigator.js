@@ -13,6 +13,18 @@ export function Navigator() {
         component={stackName.register.component}
       />
       <Stack.Screen
+        name={stackName.message.name}
+        component={stackName.message.component}
+      />
+      <Stack.Screen
+        name={stackName.createGroupsChat.name}
+        component={stackName.createGroupsChat.component}  
+      />
+      <Stack.Screen
+        name={stackName.login.name}
+        component={stackName.login.component}
+      />
+      <Stack.Screen
         name={stackName.profile.name}
         component={stackName.profile.component}
       />

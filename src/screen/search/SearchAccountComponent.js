@@ -1,8 +1,6 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {searchAccountStyle} from '../../styles/search/SearchAccountStyle';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Feather from 'react-native-vector-icons/Feather';
 import {Assets, Sizing} from '../../styles';
 const SearchAccountComponent = props => {
   const {avt, name, location, status} = props;
@@ -13,10 +11,9 @@ const SearchAccountComponent = props => {
         <View style={searchAccountStyle.infText}>
           <Text style={searchAccountStyle.name}>{name}</Text>
           <View style={searchAccountStyle.locationContainer}>
-            <EvilIcons
-              name={Assets.icon.location}
-              size={Sizing.lg}
-              color="black"
+            <Image
+              source={Assets.icon.location}
+              style={{width: 20, height: 20}}
             />
             <Text style={searchAccountStyle.location}>{location}</Text>
           </View>
@@ -28,7 +25,7 @@ const SearchAccountComponent = props => {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={searchAccountStyle.followedBtn}>
-          <Feather name={Assets.icon.checked} size={Sizing.md} color="white" />
+          <Image source={Assets.icon.check} style={{width: 20, height: 20}} />
           <Text style={searchAccountStyle.followedLabel}>Follow</Text>
         </TouchableOpacity>
       )}

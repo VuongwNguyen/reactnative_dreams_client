@@ -13,7 +13,9 @@ import NotificationScreen from '../screen/notification/NotificationScreen';
 import ChatScreen from '../screen/chatscreen/ChatScreen';
 import SearchSceen from '../screen/search/SearchSceen';
 import PrivacySettingScreen from '../screen/privacysetting/PrivacySettingScreen';
-import RegisterScreen from '../screen/registerScreen/RegisterScreen';
+import RegisterScreen from '../screen/RegisterScreen/RegisterScreen';
+import CreateGroupsChatScreen from '../screen/creategroupchat/CreateGroupChatScreen';
+import MessageScreen from '../screen/chatscreen/MessageScreen';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -32,6 +34,8 @@ export const stackName = {
   bottomTab: {name: 'bottomTab', component: BottomTab},
   search: {name: 'search', component: SearchSceen},
   privacySetting: {name: 'privacySetting', component: PrivacySettingScreen},
+  createGroupsChat: {name: 'createGroupsChat', component: CreateGroupsChatScreen},
+  message: {name: 'message', component: MessageScreen},
 };
 
 export const tabName = {

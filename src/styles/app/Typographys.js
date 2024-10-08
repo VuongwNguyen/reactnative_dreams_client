@@ -25,6 +25,7 @@ export const Typography = StyleSheet.create({
     fontSize: 19,
     fontWeight: '600',
     lineHeight: 22,
+    color: Colors.black,
   },
   edtHint: {
     fontFamily: Fonts.inter.regular,

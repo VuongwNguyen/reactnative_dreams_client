@@ -1,15 +1,14 @@
-import React, { useRef, useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import Feather from 'react-native-vector-icons/Feather';
-import { Assets } from '../../styles';
-import { OtpStyles } from '../../styles/otpstyle/OtpStyle';
-import { FormmikOtp } from './FormikForm';
-import { handleCheckOutOTP } from './Handle';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useRef, useState} from 'react';
+import {Text, View, Alert} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
+import {FormmikOtp} from './FormikForm';
+import {handleCheckOutOTP} from './Handle';
+import {useDispatch, useSelector} from 'react-redux';
+import AppHeader from '../../components/Header';
 
 const OtpScreen = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [error, setError] = useState(false);
   const useAppDispatch = () => useDispatch();
@@ -18,12 +17,16 @@ const OtpScreen = () => {
 
   return (
     <View style={OtpStyles.container}>
-      <View style={OtpStyles.headerContainer}>
+      {/* <View style={OtpStyles.headerContainer}>
         <TouchableOpacity>
-          <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
+          <Image
+            source={Assets.icons.arrowLeft}
+            style={{height: 20, width: 20}}
+          />
         </TouchableOpacity>
         <Text style={OtpStyles.headerText}>{t('otpScreen.headerTextOtp')}</Text>
-      </View>
+      </View> */}
+      <AppHeader title={t('otpScreen.headerTextOtp')} leftButton={true} />
       <View style={OtpStyles.spacingHeight} />
       <View style={OtpStyles.formContainer}>
         <View style={OtpStyles.textContanier}>

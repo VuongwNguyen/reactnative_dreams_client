@@ -8,8 +8,8 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
+import {Assets} from '../../styles';
 
 const ChatScreen = () => {
   return (
@@ -24,18 +24,16 @@ const ChatScreen = () => {
           />
           <Text style={styles.title}>CHATS</Text>
           <Pressable style={styles.buttonCreateGroupChat}>
-            <Ionicons name="add-sharp" size={24} color="white" />
+            <Image
+              source={Assets.icons.follow}
+              style={{height: 20, width: 20}}
+            />
           </Pressable>
         </View>
         <View style={{height: 20}} />
         <View style={styles.wraperTextInputSearch}>
           <TextInput style={styles.textInputSearch} placeholder="Search..." />
-          <Ionicons
-            style={styles.iconSearch}
-            name="search"
-            size={24}
-            color="#6c757d"
-          />
+          <Image source={Assets.icons.search} style={[{height: 20, width: 20},styles.iconSearch]} />
         </View>
         <View style={{height: 15}} />
         <ScrollView

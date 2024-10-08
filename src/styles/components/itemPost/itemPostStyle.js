@@ -33,8 +33,9 @@ export const itemPostStyle = StyleSheet.create({
     justifyContent: 'space-between',
     borderTopWidth: 0.5,
     borderColor: Colors.secondary,
-    padding: 5,
-    paddingHorizontal: 10,
+    padding: 10,
+    paddingHorizontal: 15,
+
   },
   interactLabel: {
     fontFamily: Fonts.roboto.semibold,
@@ -47,6 +48,8 @@ export const itemPostStyle = StyleSheet.create({
   itemInteract: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
   image: {
     width: 20,

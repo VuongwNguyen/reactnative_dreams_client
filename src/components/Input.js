@@ -1,8 +1,7 @@
-import {TextInput, TouchableOpacity, View} from 'react-native';
+import {TextInput, TouchableOpacity, View,Image} from 'react-native';
 import React, {useState} from 'react';
 import {Assets} from '../styles';
 import {AppInputStyle} from '../styles/components/input/InputStyle';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -73,11 +72,7 @@ export default function AppInput(props) {
         <TouchableOpacity
           onPress={() => setIsHide(!isHide)}
           style={AppInputStyle.icon}>
-          <FontAwesome6
-            name={isHide ? Assets.icon.eyeOpen : Assets.icon.eyeClose}
-            size={16}
-            color="black"
-          />
+          <Image source={isHide ? Assets.icons.eyeClose : Assets.icons.eye} />
         </TouchableOpacity>
       )}
     </View>
