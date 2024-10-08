@@ -11,12 +11,8 @@ export const Fonts = {
     regular: 'InterRegular',
   },
   roboto: {
-    semibold: 'RobotoBold',
-    regular:'Roboto-Regular'
-  },
-  poppins: {
-    regular: 'Poppins-Regular',
-    medium: 'Poppins-Medium',
-    semibold: 'Poppins-SemiBold',
+    semibold: 'Roboto-Bold',
+    regular: 'Roboto-Regular',
+    medium: 'Roboto-Medium',
   },
 };

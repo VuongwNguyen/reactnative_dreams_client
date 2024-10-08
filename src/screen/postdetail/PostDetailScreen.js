@@ -61,7 +61,7 @@ const PostDetailScreen = () => {
           placeholder={t('postDetailScreen.writeComment')}
         />
         <TouchableOpacity style={postDetailStyle.buttonSendComment}>
-          <Ionicons name="send-sharp" size={30} color="black" />
+          <Ionicons name="send-sharp" size={24} color="black" />
         </TouchableOpacity>
       </View>
     </View>

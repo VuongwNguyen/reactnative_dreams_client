@@ -21,7 +21,7 @@ const TopBarNavigationProfile = () => {
           fontWeight: 700,
         },
         tabBarStyle: {
-          backgroundColor: Colors.background,
+          backgroundColor: '#fff',
           elevation: 0,
           shadowOpacity: 0,
         },
