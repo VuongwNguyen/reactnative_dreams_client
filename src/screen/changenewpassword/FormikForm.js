@@ -8,9 +8,14 @@ import {useFormikH} from '../../configs/hooks/useFormikH';
 import {ChangeNewPasswordSchema} from '../../configs/validateSchema/ChangeNewPasswordSchema';
 import {useDispatch} from 'react-redux';
 import {APIResetPassword} from '../../store/api/AccountAPI';
+import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 const FormikForm = () => {
   const {t} = useTranslation();
-  const emailReset = 'kimchi220204@gmail.com';
+  const navigation = useNavigation();
+  const route = useRoute();
+  const email = route?.params?.email;
 
   const dispatch = useDispatch();
 
@@ -23,7 +28,7 @@ const FormikForm = () => {
     (values, {resetForm}) => {
       dispatch(
         APIResetPassword({
-          email: emailReset,
+          email: email,
           newPassword: values.newPw,
         }),
       )
@@ -31,13 +36,13 @@ const FormikForm = () => {
         .then(res => {
           ToastAndroid.show('Cập nhật mật khẩu thành công', ToastAndroid.SHORT);
           resetForm();
+          navigation.navigate(stackName.login.name);
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
+        }); 
     },
   );
-
   return (
     <View style={changePasswordStyle.inputGroup}>
       <View style={changePasswordStyle.input}>

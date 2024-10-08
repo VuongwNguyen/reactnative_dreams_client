@@ -10,8 +10,10 @@ import {
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
+import {stackName} from '../../navigations/screens';
 
-const ChatScreen = () => {
+const ChatScreen = props => {
+  const {navigation} = props;
   return (
     <View style={styles.containerScreen}>
       <ScrollView style={{flex: 1}}>
@@ -23,7 +25,11 @@ const ChatScreen = () => {
             }}
           />
           <Text style={styles.title}>CHATS</Text>
-          <Pressable style={styles.buttonCreateGroupChat}>
+          <Pressable
+            style={styles.buttonCreateGroupChat}
+            onPress={() => {
+              navigation.navigate(stackName.createGroupChat.name);
+            }}>
             <Ionicons name="add-sharp" size={24} color="white" />
           </Pressable>
         </View>

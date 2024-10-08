@@ -18,7 +18,7 @@ const icons = [
 ];
 
 const TabBar = ({state, descriptors, navigation}) => {
-  const renderIcon = (forcus, index) => {
+  const renderIcon = (focus, index) => {
     return (
       <View>
         <OptionIcon icon={icons[index]} />

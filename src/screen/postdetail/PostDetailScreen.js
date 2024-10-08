@@ -14,6 +14,7 @@ import CommentItem from '../../components/CommentItem';
 import ItemPost from '../../components/ItemPost';
 import {Assets} from '../../styles';
 import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
+import AppHeader from '../../components/Header';
 
 const PostDetailScreen = () => {
   const {t} = useTranslation();
@@ -34,14 +35,15 @@ const PostDetailScreen = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
-            <View style={postDetailStyle.headerContainer}>
+            {/* <View style={postDetailStyle.headerContainer}>
               <TouchableOpacity>
                 <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
               </TouchableOpacity>
               <Text style={postDetailStyle.headerText}>
                 {t('postDetailScreen.post')}
               </Text>
-            </View>
+            </View> */}
+            <AppHeader title={t('postDetailScreen.post')} />
             <ItemPost item={post} />
           </>
         }

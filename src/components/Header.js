@@ -3,18 +3,21 @@ import Feather from 'react-native-vector-icons/Feather';
 import React from 'react';
 import {Assets, Sizing, Typography} from '../styles';
 import {AppHeaderStyle} from '../styles/components/header/HeaderStyle';
-
+import {useNavigation} from '@react-navigation/native';
 const AppHeader = props => {
   const {
     title = '',
-    goBack,
     rightButton = false,
     rightButtonAction = () => {},
     rightButtonTitle = '',
   } = props;
+  const navigation = useNavigation();
   return (
     <View style={AppHeaderStyle.container}>
-      <TouchableOpacity onPress={goBack}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+        }}>
         <Feather name={Assets.icon.back} size={Sizing.lg} color="black" />
       </TouchableOpacity>
       <Text style={Typography.navTitle}>{title}</Text>

@@ -9,9 +9,12 @@ import {registerSchema} from '../../configs/validateSchema/registerSchema';
 import {Assets, Typography} from '../../styles';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {useDispatch} from 'react-redux';
-import {APIRegister} from '../../store/api/AccountAPI';
+import {APIRegister, APIVerifyAccount} from '../../store/api/AccountAPI';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 const RegisterForm = () => {
+  const navigation = useNavigation();
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -37,6 +40,12 @@ const RegisterForm = () => {
         .unwrap()
         .then(res => {
           resetForm();
+          dispatch(
+            APIVerifyAccount({
+              email: val.email,
+            }),
+          );
+          navigation.navigate(stackName.otp.name, {email: val.email});
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
