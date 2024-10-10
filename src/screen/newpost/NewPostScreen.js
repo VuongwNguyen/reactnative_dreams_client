@@ -20,12 +20,35 @@ import {stackName} from '../../navigations/screens';
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
+  const {
+    images,
+    videos,
+    setVideos,
+    setImages,
+    pickMedia,
+    onOpenCamera,
+    onOpenVideoCamera,
+  } = useImagePicker();
+
+  const data = [
+    {label: 'Public', value: 'public'},
+    {label: 'Private', value: 'private'},
+  ];
+  const itemSelected = [...images, ...videos];
+
   const [isPreviewed, setIsPreviewed] = useState(true);
-  const {images, setImages, openImageLibrary, onOpenCamera} = useImagePicker();
+  const [value, setValue] = useState(data[0].value);
+  const [openLine, setOpenLine] = useState('');
+  const [postContent, setPostContent] = useState('');
+
   const handleRemoveImage = index => {
     const newImages = [...images];
     newImages.splice(index, 1);
     setImages(newImages);
+  };
+  const handleRemoveVideo = item => {
+    const filteredVideo = videos.filter(video => video?.uri !== item);
+    setVideos(filteredVideo);
   };
   const renderImg = () => {
     return (
@@ -33,18 +56,28 @@ const NewPostScreen = props => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={newPostStyle.imgContainer}>
-        {images.map((item, index) => (
-          <View style={newPostStyle.imgBox} key={index}>
+        {itemSelected.map((item, index) => (
+          <TouchableOpacity style={newPostStyle.imgBox} key={index}>
+            {item?.type.includes('video') && (
+              <Image
+                source={Assets.icons.playVideo}
+                style={newPostStyle.icPlay}
+              />
+            )}
             <Image source={{uri: item?.uri}} style={newPostStyle.imgPost} />
             <TouchableOpacity
               style={newPostStyle.removeIcon}
-              onPress={() => handleRemoveImage(index)}>
+              onPress={() =>
+                item?.type.includes('video')
+                  ? handleRemoveVideo(item?.uri)
+                  : handleRemoveImage(index)
+              }>
               <Image
                 source={Assets.icons.close}
-                style={{width: 20, height: 20}}
+                style={newPostStyle.icDelete}
               />
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     );
@@ -57,14 +90,6 @@ const NewPostScreen = props => {
   Keyboard.addListener('keyboardDidHide', () => {
     setIsPreviewed(true);
   });
-
-  const data = [
-    {label: 'Public', value: 'public'},
-    {label: 'Private', value: 'private'},
-  ];
-  const [value, setValue] = useState(data[0].value);
-  const [openLine, setOpenLine] = useState('');
-  const [postContent, setPostContent] = useState('');
   return (
     <View style={newPostStyle.container}>
       <AppHeader
@@ -116,7 +141,7 @@ const NewPostScreen = props => {
             />
           </View>
           <View style={newPostStyle.showAttachContainer}>
-            {images?.[0]?.uri && isPreviewed ? renderImg() : ''}
+            {itemSelected?.[0]?.uri && isPreviewed ? renderImg() : ''}
             <View style={newPostStyle.attachmentContainer}>
               <TouchableOpacity
                 style={newPostStyle.iconBtn}
@@ -126,7 +151,9 @@ const NewPostScreen = props => {
                   style={{width: 20, height: 20}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={newPostStyle.iconBtn}>
+              <TouchableOpacity
+                style={newPostStyle.iconBtn}
+                onPress={() => onOpenVideoCamera()}>
                 <Image
                   source={Assets.icons.video}
                   style={{width: 20, height: 20}}
@@ -134,9 +161,17 @@ const NewPostScreen = props => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={newPostStyle.iconBtn}
-                onPress={() => openImageLibrary()}>
+                onPress={() => pickMedia('image')}>
                 <Image
                   source={Assets.icons.gallery}
+                  style={{width: 20, height: 20}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={newPostStyle.iconBtn}
+                onPress={() => pickMedia('video')}>
+                <Image
+                  source={Assets.icons.videoGallery}
                   style={{width: 20, height: 20}}
                 />
               </TouchableOpacity>

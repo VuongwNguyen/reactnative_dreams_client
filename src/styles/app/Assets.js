@@ -5,6 +5,8 @@
 const uriIcons = '../../../assets/icons/';
 export const Assets = {
   icons: {
+    playVideo:require(uriIcons + 'play-video.png'),
+    videoGallery: require(uriIcons + 'video-gallery.png'),
     home: require(uriIcons + 'home.png'),
     homeSelected: require(uriIcons + 'home-selected.png'),
     message: require(uriIcons + 'message.png'),

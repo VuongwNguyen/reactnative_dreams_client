@@ -58,13 +58,19 @@ export const newPostStyle = {
     justifyContent: 'flex-end',
     gap: 20,
   },
-  iconBtn: {
-    width: 24,
-    height: 24,
+  icDelete: {
+    width: 20,
+    height: 20,
   },
   imgBox: {
     width: imgPostWidth,
     height: imgPostHeight,
+  },
+  icPlay:{
+    position:'absolute',
+    top: imgPostHeight/2 - 12,
+    left:imgPostWidth/2 -12,
+    zIndex:1
   },
   imgPost: {
     width: '100%',
