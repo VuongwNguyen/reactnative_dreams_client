@@ -1,11 +1,18 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 const TabChatScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.containerScreen}>
       {chatList.map((item, index) => (
-        <Pressable key={index}>
+        <Pressable
+          key={index}
+          onPress={() => {
+            navigation.navigate(stackName.conversation.name);
+          }}>
           <View style={styles.itemContainer}>
             <View style={styles.rowLeft}>
               <Image style={styles.avatar} source={{uri: item.avatar}} />

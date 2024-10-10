@@ -9,10 +9,11 @@ import {
   Keyboard,
 } from 'react-native';
 import React, {useState} from 'react';
-import AppHeader from '../../components/Header';
 import {useTranslation} from 'react-i18next';
-import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Dropdown} from 'react-native-element-dropdown';
+
+import AppHeader from '../../components/Header';
+import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
@@ -20,6 +21,7 @@ import {stackName} from '../../navigations/screens';
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
+
   const {
     images,
     videos,
@@ -36,6 +38,7 @@ const NewPostScreen = props => {
   ];
   const itemSelected = [...images, ...videos];
 
+
   const [isPreviewed, setIsPreviewed] = useState(true);
   const [value, setValue] = useState(data[0].value);
   const [openLine, setOpenLine] = useState('');
@@ -46,10 +49,12 @@ const NewPostScreen = props => {
     newImages.splice(index, 1);
     setImages(newImages);
   };
+
   const handleRemoveVideo = item => {
     const filteredVideo = videos.filter(video => video?.uri !== item);
     setVideos(filteredVideo);
   };
+
   const renderImg = () => {
     return (
       <ScrollView
@@ -90,6 +95,7 @@ const NewPostScreen = props => {
   Keyboard.addListener('keyboardDidHide', () => {
     setIsPreviewed(true);
   });
+
   return (
     <View style={newPostStyle.container}>
       <AppHeader

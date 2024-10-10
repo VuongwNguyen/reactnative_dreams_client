@@ -1,6 +1,7 @@
 import {FlatList} from 'react-native';
 import React from 'react';
 import ItemPost from '../../components/ItemPost';
+import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
 
 const data = [
   {
@@ -93,6 +94,7 @@ const data = [
 const PostedTab = () => {
   return (
     <FlatList
+      style={PostedTabStyle.container}
       scrollEnabled={false}
       nestedScrollEnabled={true}
       data={data}

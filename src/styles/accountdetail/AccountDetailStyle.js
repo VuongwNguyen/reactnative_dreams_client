@@ -88,7 +88,7 @@ export const accountDetailStyle = {
   modalTitle: {
     ...Typography.tagInf,
     color: Colors.black,
-    fontFamily: Fonts.inter.bold,
+    fontFamily: Fonts.roboto.bold,
   },
   optionContainer: {
     flexDirection: 'row',

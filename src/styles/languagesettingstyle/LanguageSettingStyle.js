@@ -1,10 +1,10 @@
-import { StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Colors} from '../';
 
 export const LanguageSettingStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#fff',
     paddingTop: 10,
     paddingHorizontal: 10,
   },

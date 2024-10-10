@@ -23,7 +23,7 @@ const TabBar = ({state, descriptors, navigation}) => {
       <View>
         <Image
           style={{width: 20, height: 20, resizeMode: 'contain'}}
-          source={forcus ? icons[index].selected : icons[index].default}
+          source={focus ? icons[index].selected : icons[index].default}
         />
       </View>
     );

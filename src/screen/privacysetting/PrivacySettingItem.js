@@ -35,9 +35,9 @@ const PrivacySettingItem = props => {
         renderLeftIcon={() => (
           <Image
             source={
-              icStatus == 'public' ? Assets.icon.public : Assets.icon.privacy
+              icStatus == 'public' ? Assets.icons.earth : Assets.icons.privacy
             }
-            style={{height: 20, width: 20}}
+            style={{height: 20, width: 20, marginRight: 5}}
           />
         )}
         style={privacySettingItemStyle.dropdown}

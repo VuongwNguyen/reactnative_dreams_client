@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {Assets, Colors, Typography} from './../styles';
+import {Assets, Typography} from './../styles';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
-import {itemPostStyle} from './../styles/components/itemPost/itemPostStyle';
+import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {stackName} from '../navigations/screens';
 
@@ -62,9 +62,7 @@ export default ItemPost = props => {
         </TouchableOpacity>
         {/* share */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
-          <Image
-            source={Assets.image.share}
-            style={itemPostStyle.image}/>
+          <Image source={Assets.image.share} style={itemPostStyle.image} />
           <Text style={itemPostStyle.interactLabel}>{item.share}</Text>
         </TouchableOpacity>
       </View>

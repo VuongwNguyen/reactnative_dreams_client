@@ -12,8 +12,8 @@ const SearchAccountComponent = props => {
           <Text style={searchAccountStyle.name}>{name}</Text>
           <View style={searchAccountStyle.locationContainer}>
             <Image
-              source={Assets.icon.location}
-              style={{width: 20, height: 20}}
+              source={Assets.icons.location}
+              style={{width: 18, height: 18}}
             />
             <Text style={searchAccountStyle.location}>{location}</Text>
           </View>
@@ -25,7 +25,7 @@ const SearchAccountComponent = props => {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={searchAccountStyle.followedBtn}>
-          <Image source={Assets.icon.check} style={{width: 20, height: 20}} />
+          <Image source={Assets.icons.check} style={{width: 16, height: 16}} />
           <Text style={searchAccountStyle.followedLabel}>Follow</Text>
         </TouchableOpacity>
       )}
