@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
-import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import {Assets, Typography} from './../styles';
 import {useNavigation} from '@react-navigation/native';
-import {Assets, Colors, Typography} from './../styles';
 import GridImage from './GirdImage';
 import {itemPostStyle} from './../styles/components/itemPost/itemPostStyle';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -49,27 +47,24 @@ export default ItemPost = props => {
         <TouchableOpacity
           style={itemPostStyle.itemInteract}
           onPress={() => setLike(!like)}>
-          {like ? (
-            <Entypo
-              name={Assets.icon.heartFill}
-              size={24}
-              color={Colors.error}
-            />
-          ) : (
-            <Entypo name={Assets.icon.heart} size={24} color={Colors.black} />
-          )}
+          <Image
+            style={{height: 20, width: 20}}
+            source={like ? Assets.icons.heartFill : Assets.icons.heart}
+          />
           <Text style={itemPostStyle.interactLabel}>{item.like}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
-          <EvilIcon name={Assets.icon.comment} size={24} color={Colors.black} />
+          <Image
+            source={Assets.icons.comment}
+            style={itemPostStyle.image}></Image>
           <Text style={itemPostStyle.interactLabel}>{item.comment}</Text>
         </TouchableOpacity>
         {/* share */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
           <Image
             source={Assets.image.share}
-            style={itemPostStyle.image}></Image>
+            style={itemPostStyle.image}/>
           <Text style={itemPostStyle.interactLabel}>{item.share}</Text>
         </TouchableOpacity>
       </View>

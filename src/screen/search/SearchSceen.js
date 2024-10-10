@@ -1,14 +1,13 @@
 import {
   ScrollView,
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
   TextInput,
+  Image,
 } from 'react-native';
 import React, {useState} from 'react';
 import {searchStyle} from '../../styles/search/SearchStyle';
-import Feather from 'react-native-vector-icons/Feather';
 import {Assets, Colors, Sizing} from '../../styles';
 import ItemPost from '../../components/ItemPost';
 import SearchAccountComponent from './SearchAccountComponent';
@@ -28,7 +27,10 @@ const SearchSceen = props => {
       {/* header */}
       <View style={searchStyle.headerContainer}>
         <TouchableOpacity onPress={goBack}>
-          <Feather name={Assets.icon.back} size={Sizing.lg} color="black" />
+          <Image
+            source={Assets.icons.arrowLeft}
+            style={{height: 20, width: 20}}
+          />
         </TouchableOpacity>
         <View style={searchStyle.searchContainer}>
           <TextInput
@@ -39,17 +41,17 @@ const SearchSceen = props => {
             style={searchStyle.searchInput}
           />
           {!!searchValue ? (
-            <Feather
-              name={Assets.icon.x}
-              size={Sizing.lg}
-              color="black"
+            <TouchableOpacity
               style={searchStyle.rightIconContainer}
-            />
+              onPress={() => setSearchValue('')}>
+              <Image
+                source={Assets.icons.close}
+                style={{height: 20, width: 20}}
+              />
+            </TouchableOpacity>
           ) : (
-            <Feather
-              name={Assets.icon.search}
-              size={Sizing.lg}
-              color="black"
+            <Image
+              source={Assets.icons.search}
               style={searchStyle.rightIconContainer}
             />
           )}

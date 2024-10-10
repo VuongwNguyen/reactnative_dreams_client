@@ -2,10 +2,7 @@ import {Assets} from '../../styles';
 export const basicInfArr = [
   {
     title: 'Username',
-    icon: {
-      icon: Assets.icon.user,
-      type: 'FontAwesome6',
-    },
+    icon: Assets.icons.user,
     content: 'content',
     func: () => {
       console.log('click');
@@ -13,46 +10,31 @@ export const basicInfArr = [
   },
   {
     title: 'Nickname',
-    icon: {
-      icon: Assets.icon.edit,
-      type: 'FontAwesome',
-    },
+    icon: Assets.icons.edit,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Day of birth',
-    icon: {
-      icon: Assets.icon.birthday,
-      type: 'FontAwesome',
-    },
+    icon: Assets.icons.birthday,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Nationality',
-    icon: {
-      icon: Assets.icon.nationaly,
-      type: 'FontAwesome6',
-    },
+    icon: Assets.icons.earth,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Hometown',
-    icon: {
-      icon: Assets.icon.location,
-      type: 'EvilIcons',
-    },
+    icon: Assets.icons.location,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Gender',
-    icon: {
-      icon: Assets.icon.gender,
-      type: 'FontAwesome',
-    },
+    icon: Assets.icons.gender,
     content: 'content',
     func: () => {},
   },
@@ -60,46 +42,31 @@ export const basicInfArr = [
 export const otherInfArr = [
   {
     title: 'Description',
-    icon: {
-      icon: Assets.icon.edit,
-      type: 'MaterialIcons',
-    },
+    icon: Assets.icons.edit,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Hobby',
-    icon: {
-      icon: Assets.icon.heart,
-      type: 'Entypo',
-    },
+    icon: Assets.icons.hobby,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Education',
-    icon: {
-      icon: Assets.icon.graduation,
-      type: 'FontAwesome',
-    },
+    icon: Assets.icons.graduation,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Zodiaque',
-    icon: {
-      icon: Assets.icon.zodiac,
-      type: 'MaterialCommunityIcons',
-    },
+    icon: Assets.icons.zodiac,
     content: 'content',
     func: () => {},
   },
   {
     title: 'Location',
-    icon: {
-      icon: Assets.icon.location,
-      type: 'EvilIcons',
-    },
+    icon: Assets.icons.location,
     content: 'content',
     func: () => {},
   },

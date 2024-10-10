@@ -8,49 +8,49 @@ import {privacySettingStyle} from '../../styles/privacysetting/PrivacySettingSty
 import PrivacySettingItem from './PrivacySettingItem';
 const privacyArr = [
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'private',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'private',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',
   },
   {
-    icon: Assets.icon.user,
+    icon: Assets.icons.user,
     title: 'title',
     content: 'content',
     status: 'public',

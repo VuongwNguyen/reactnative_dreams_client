@@ -4,10 +4,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React, {useState} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 
@@ -18,9 +18,9 @@ const DescriptionDialog = () => {
   return (
     <View>
       <View style={bottomSheetStyle.container}>
-        <View>
-          <Ionicons name={Assets.icon.close} size={24} color="black" />
-        </View>
+        <TouchableOpacity>
+          <Image source={Assets.icons.close} />
+        </TouchableOpacity>
         <View style={bottomSheetStyle.bodyContainer}>
           <Text style={bottomSheetStyle.titleDialog}>
             {t('descDialog.title')}

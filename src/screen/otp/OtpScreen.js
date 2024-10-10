@@ -1,13 +1,21 @@
 import React, {useRef, useState} from 'react';
-import {Text, View, TouchableOpacity, Alert, ToastAndroid} from 'react-native';
+
+import {
+  Text,
+  View,
+  Alert,
+  ToastAndroid,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import Feather from 'react-native-vector-icons/Feather';
-import {Assets} from '../../styles';
+
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {FormmikOtp} from './FormikForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
 import {stackName} from '../../navigations/screens';
+
+import AppHeader from '../../components/Header';
+
 
 const OtpScreen = props => {
   const {navigation, route} = props;
@@ -27,7 +35,6 @@ const OtpScreen = props => {
         email: email,
         code: Otp,
       };
-      // console.log(body);
 
       if (!!isForgot) {
         dispatch(apiVerifyCodeResetPW(body))
@@ -55,12 +62,8 @@ const OtpScreen = props => {
 
   return (
     <View style={OtpStyles.container}>
-      <View style={OtpStyles.headerContainer}>
-        <TouchableOpacity>
-          <Feather name={Assets.icon.arrowLeft} size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={OtpStyles.headerText}>{t('otpScreen.headerTextOtp')}</Text>
-      </View>
+
+      <AppHeader title={t('otpScreen.headerTextOtp')} />
       <View style={OtpStyles.spacingHeight} />
       <View style={OtpStyles.formContainer}>
         <View style={OtpStyles.textContanier}>

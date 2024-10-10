@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
 import React, {useState} from 'react';
 import AppHeader from '../../components/Header';
 import {useTranslation} from 'react-i18next';
@@ -41,7 +39,10 @@ const NewPostScreen = props => {
             <TouchableOpacity
               style={newPostStyle.removeIcon}
               onPress={() => handleRemoveImage(index)}>
-              <Ionicons name={Assets.icon.close} size={20} color="white" />
+              <Image
+                source={Assets.icons.close}
+                style={{width: 20, height: 20}}
+              />
             </TouchableOpacity>
           </View>
         ))}
@@ -120,21 +121,29 @@ const NewPostScreen = props => {
               <TouchableOpacity
                 style={newPostStyle.iconBtn}
                 onPress={() => onOpenCamera()}>
-                <Feather name={Assets.icon.camera} size={24} color="black" />
+                <Image
+                  source={Assets.icons.camera}
+                  style={{width: 20, height: 20}}
+                />
               </TouchableOpacity>
               <TouchableOpacity style={newPostStyle.iconBtn}>
-                <Feather name={Assets.icon.video} size={24} color="black" />
+                <Image
+                  source={Assets.icons.video}
+                  style={{width: 20, height: 20}}
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 style={newPostStyle.iconBtn}
                 onPress={() => openImageLibrary()}>
-                <Ionicons name={Assets.icon.gallery} size={24} color="black" />
+                <Image
+                  source={Assets.icons.gallery}
+                  style={{width: 20, height: 20}}
+                />
               </TouchableOpacity>
               <TouchableOpacity style={newPostStyle.iconBtn}>
-                <Ionicons
-                  name={Assets.icon.optionHambuger}
-                  size={24}
-                  color="black"
+                <Image
+                  source={Assets.icons.menu}
+                  style={{width: 20, height: 20}}
                 />
               </TouchableOpacity>
             </View>

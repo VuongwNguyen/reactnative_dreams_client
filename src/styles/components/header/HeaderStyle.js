@@ -8,6 +8,8 @@ export const AppHeaderStyle = StyleSheet.create({
     flexDirection: 'row',
     maxHeight: 35,
     justifyContent: 'space-between',
+    paddingHorizontal: Spacings.md,
+    paddingTop: Spacings.md,
   },
   rightButton: {
     backgroundColor: Colors.primary,
