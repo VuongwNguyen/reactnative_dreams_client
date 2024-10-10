@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import { Colors } from '../app/Colors';
+import {Colors} from '../app/Colors';
 const PolicyPrivacyStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#fff',
     paddingHorizontal: 10,
   },
 });

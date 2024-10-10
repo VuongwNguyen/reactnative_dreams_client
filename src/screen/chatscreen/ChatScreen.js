@@ -12,7 +12,6 @@ import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {stackName} from '../../navigations/screens';
 
-
 const ChatScreen = props => {
   const {navigation} = props;
   return (
@@ -31,6 +30,7 @@ const ChatScreen = props => {
             onPress={() => {
               navigation.navigate(stackName.createGroupChat.name);
             }}>
+
             <Image source={Assets.icons.follow} style={{height: 20, width: 20}} />
           </Pressable>
         </View>

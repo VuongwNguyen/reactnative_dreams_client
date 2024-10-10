@@ -3,22 +3,23 @@ import {Typography} from '../app/Typographys';
 export const PostedTabStyle = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   row: {
     flexDirection: 'row',
   },
   itemContainer: {
     paddingVertical: 5,
-    marginBottom:5,
-    height:'auto',
+    marginBottom: 5,
+    height: 'auto',
   },
-  interactionContainer:{
-    flexDirection:'row',
+  interactionContainer: {
+    flexDirection: 'row',
     borderTopWidth: 1,
     justifyContent: 'space-between',
     borderTopColor: 'rgba(108, 117, 125, 0.30)',
-    marginVertical:5,
-    paddingTop:5,
+    marginVertical: 5,
+    paddingTop: 5,
   },
   nameGroupCoantainer: {
     flex: 1,
@@ -36,12 +37,12 @@ export const PostedTabStyle = StyleSheet.create({
     height: 24,
     marginRight: 5,
   },
-  iconMore:{
+  iconMore: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
   },
-  interactionIcon:{
+  interactionIcon: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
@@ -56,27 +57,27 @@ export const PostedTabStyle = StyleSheet.create({
     color: 'black',
     height: 'auto',
   },
-  dot:{
-    width:10,
-    height:10,
-    borderRadius:5,
-    backgroundColor:'rgba(108, 117, 125, 0.30)',
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(108, 117, 125, 0.30)',
   },
-  activeDot:{
-    width:10,
-    height:10,
-    borderRadius:5,
-    backgroundColor:'black',
+  activeDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'black',
   },
-  post:{
-    width:'100%',
-    height:200,
-    borderRadius:10
+  post: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
   },
-  swiper:{
-    height:200
+  swiper: {
+    height: 200,
   },
-  content:{
-    marginVertical:5
-  }
+  content: {
+    marginVertical: 5,
+  },
 });

@@ -14,13 +14,14 @@ import MessageLeft from '../../components/MessageLeft';
 import GridImage from '../../components/GirdImage';
 import {MessageStyles} from '../../styles/messagestyle/MessageStyle';
 
-const MessageScreen = () => {
+const MessageScreen = props => {
+  const {navigation} = props;
   const [message, setMessage] = useState('');
   const [yourMessage, setYourMessage] = useState({idUser: 1});
   const [messages, setMessages] = useState(DataMessage);
   const [height, setHeight] = useState(0);
   return (
-    <View style={{flex: 1}}>
+    <View style={MessageStyles.container}>
       <View style={MessageStyles.headerChatContainer}>
         <View style={MessageStyles.headerChat}>
           <View style={MessageStyles.headerLeft}>
