@@ -14,7 +14,7 @@ export const tagInfStyle = {
   tagTitle: {
     ...Typography.tagInf,
     color: Colors.black,
-    fontFamily: Fonts.inter.bold,
+    fontFamily: Fonts.roboto.bold,
   },
   content: {
     ...Typography.tagInf,

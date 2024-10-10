@@ -3,6 +3,7 @@ import {Typography} from '../app/Typographys';
 export const PostedTabStyle = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   row: {
     flexDirection: 'row',

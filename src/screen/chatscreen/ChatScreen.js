@@ -12,8 +12,6 @@ import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {stackName} from '../../navigations/screens';
 
-import {stackName} from '../../navigations/screens';
-
 const ChatScreen = props => {
   const {navigation} = props;
   return (
@@ -27,8 +25,13 @@ const ChatScreen = props => {
             }}
           />
           <Text style={styles.title}>CHATS</Text>
-          <Pressable style={styles.buttonCreateGroupChat}>
-            <Ionicons name="add-sharp" size={24} color="white" />
+          <Pressable
+            style={styles.buttonCreateGroupChat}
+            onPress={() => {
+              navigation.navigate(stackName.createGroupChat.name);
+            }}>
+
+            <Image source={Assets.icons.follow} style={{height: 20, width: 20}} />
           </Pressable>
         </View>
         <View style={{height: 20}} />

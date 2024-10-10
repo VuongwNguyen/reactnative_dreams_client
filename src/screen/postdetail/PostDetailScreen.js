@@ -5,6 +5,7 @@ import CommentItem from '../../components/CommentItem';
 import ItemPost from '../../components/ItemPost';
 import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
 import AppHeader from '../../components/Header';
+import { Assets } from '../../styles';
 
 const PostDetailScreen = () => {
   const {t} = useTranslation();

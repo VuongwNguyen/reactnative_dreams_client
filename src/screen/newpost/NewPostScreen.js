@@ -9,10 +9,11 @@ import {
   Keyboard,
 } from 'react-native';
 import React, {useState} from 'react';
-import AppHeader from '../../components/Header';
 import {useTranslation} from 'react-i18next';
-import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Dropdown} from 'react-native-element-dropdown';
+
+import AppHeader from '../../components/Header';
+import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
@@ -20,13 +21,24 @@ import {stackName} from '../../navigations/screens';
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
-  const [isPreviewed, setIsPreviewed] = useState(true);
   const {images, setImages, openImageLibrary, onOpenCamera} = useImagePicker();
+
+  const [isPreviewed, setIsPreviewed] = useState(true);
+  const [value, setValue] = useState(data[0].value);
+  const [openLine, setOpenLine] = useState('');
+  const [postContent, setPostContent] = useState('');
+
+  const data = [
+    {label: 'Public', value: 'public'},
+    {label: 'Private', value: 'private'},
+  ];
+  
   const handleRemoveImage = index => {
     const newImages = [...images];
     newImages.splice(index, 1);
     setImages(newImages);
   };
+
   const renderImg = () => {
     return (
       <ScrollView
@@ -58,13 +70,6 @@ const NewPostScreen = props => {
     setIsPreviewed(true);
   });
 
-  const data = [
-    {label: 'Public', value: 'public'},
-    {label: 'Private', value: 'private'},
-  ];
-  const [value, setValue] = useState(data[0].value);
-  const [openLine, setOpenLine] = useState('');
-  const [postContent, setPostContent] = useState('');
   return (
     <View style={newPostStyle.container}>
       <AppHeader
