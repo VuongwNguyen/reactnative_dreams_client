@@ -6,7 +6,7 @@ export const ProfileStyle = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 10,
-    backgroundColor: Colors.background,
+    backgroundColor: '#fff',
   },
   contentContainer: {
     flex: 1,

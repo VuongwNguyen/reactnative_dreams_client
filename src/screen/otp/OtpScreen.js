@@ -1,4 +1,5 @@
 import React, {useRef, useState} from 'react';
+
 import {
   Text,
   View,
@@ -6,12 +7,15 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
+
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {FormmikOtp} from './FormikForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
 import {stackName} from '../../navigations/screens';
+
 import AppHeader from '../../components/Header';
+
 
 const OtpScreen = props => {
   const {navigation, route} = props;
@@ -31,7 +35,6 @@ const OtpScreen = props => {
         email: email,
         code: Otp,
       };
-      // console.log(body);
 
       if (!!isForgot) {
         dispatch(apiVerifyCodeResetPW(body))
@@ -59,6 +62,7 @@ const OtpScreen = props => {
 
   return (
     <View style={OtpStyles.container}>
+
       <AppHeader title={t('otpScreen.headerTextOtp')} />
       <View style={OtpStyles.spacingHeight} />
       <View style={OtpStyles.formContainer}>

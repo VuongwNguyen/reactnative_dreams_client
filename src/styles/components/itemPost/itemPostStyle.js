@@ -7,7 +7,10 @@ export const itemPostStyle = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 22,
     fontStyle: 'normal',
-    fontFamily: Fonts.nunitonSans.regular,
+    fontFamily: Fonts.roboto.regular,
+  },
+  tag:{
+    color: Colors.primary
   },
   tag:{
     color: Colors.primary
@@ -37,13 +40,11 @@ export const itemPostStyle = StyleSheet.create({
     borderColor: Colors.secondary,
     padding: 10,
     paddingHorizontal: 15,
-
   },
   interactLabel: {
-    fontFamily: Fonts.roboto.semibold,
+    fontFamily: Fonts.roboto.medium,
     fontSize: 16,
     fontStyle: 'normal',
-    fontWeight: '400',
     lineHeight: 18,
     marginLeft: 5,
   },

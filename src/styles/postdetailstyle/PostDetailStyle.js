@@ -76,7 +76,12 @@ export const postDetailStyle = {
     borderRadius: 999,
     paddingLeft: 5,
     alignItems: 'center',
-    backgroundColor: '#0cbbf0',
     justifyContent: 'center',
+    backgroundColor: '#0cbbf0',
+  },
+  iconSend: {
+    position: 'absolute',
+    top: 10,
+    left: 7,
   },
 };

@@ -84,6 +84,11 @@ export function Navigator() {
         name={stackName.createGroupChat.name}
         component={stackName.createGroupChat.component}
       />
+
+      <Stack.Screen
+        name={stackName.conversation.name}
+        component={stackName.conversation.component}
+      />
     </Stack.Navigator>
   );
 }

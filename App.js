@@ -7,6 +7,7 @@ import {Provider as ReduxProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Navigator} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
+
 import {StatusBar} from 'react-native';
 
 export default function App() {

@@ -27,7 +27,7 @@ export const privacySettingItemStyle = {
     color: Colors.secondary,
   },
   dropdown: {
-    minWidth: width * 0.35,
+    minWidth: width * 0.3,
     paddingHorizontal: Spacings.sm,
     paddingVertical: Spacings.sm,
     borderWidth: 1,

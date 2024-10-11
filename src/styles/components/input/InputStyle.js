@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Spacings, Typography } from '../../';
+import {StyleSheet} from 'react-native';
+import {Spacings, Typography} from '../../';
 
 export const AppInputStyle = StyleSheet.create({
   label: {
