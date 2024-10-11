@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {Colors, Fonts} from './../../../styles';
+import { StyleSheet } from 'react-native';
+import { Colors, Fonts } from './../../../styles';
 
 export const itemPostStyle = StyleSheet.create({
   headerLabel: {
@@ -21,7 +21,6 @@ export const itemPostStyle = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginLeft: 10,
   },
   content: {
     gap: 10,

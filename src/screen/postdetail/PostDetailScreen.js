@@ -1,23 +1,23 @@
-import React, {useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {FlatList, Image, TextInput, TouchableOpacity, View} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FlatList, Image, TextInput, TouchableOpacity, View } from 'react-native';
 import CommentItem from '../../components/CommentItem';
 import ItemPost from '../../components/ItemPost';
-import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
+import { postDetailStyle } from '../../styles/postdetailstyle/PostDetailStyle';
 import AppHeader from '../../components/Header';
 import { Assets } from '../../styles';
 
 const PostDetailScreen = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const [post, setPost] = useState(postDetail);
   return (
     <View style={postDetailStyle.container}>
       <FlatList
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         data={comments}
-        renderItem={({item}) => (
-          <View style={{padding: 10}}>
+        renderItem={({ item }) => (
+          <View style={{ padding: 10 }}>
             <CommentItem comment={item} inputRef={inputRef} />
           </View>
         )}
@@ -59,22 +59,23 @@ const PostDetailScreen = () => {
 export default PostDetailScreen;
 
 const postDetail = {
-  name: 'Velerie Hiddersley',
-  avatar:
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-  hour: '1 hour ago',
+  author: {
+    fullname: 'Velerie Hiddersley',
+    avatar: 'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
+  },
   title:
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   content:
     'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-  image: [
-    'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-    'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg',
+  images: [
+    { url: 'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg' },
+    { url: 'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg' },
+    { url: 'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg' },
   ],
   like: 8,
   comment: 0,
   share: 0,
+  createdAt: '1 hour ago',
 };
 
 const comments = [

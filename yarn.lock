@@ -4291,6 +4291,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.13":
+  version: 1.11.13
+  resolution: "dayjs@npm:1.11.13"
+  checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
+  languageName: node
+  linkType: hard
+
 "dayjs@npm:^1.8.15":
   version: 1.11.11
   resolution: "dayjs@npm:1.11.11"
@@ -9340,6 +9347,7 @@ __metadata:
     "@types/react-test-renderer": ^18.0.0
     axios: ^1.7.4
     babel-jest: ^29.6.3
+    dayjs: ^1.11.13
     eslint: ^8.19.0
     formik: ^2.4.6
     i18next: ^23.12.1

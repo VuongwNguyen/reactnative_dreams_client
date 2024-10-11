@@ -3,12 +3,12 @@ import axios from 'axios';
 const AxiosInstance = (contentType = 'application/json') => {
   const axiosInstance = axios.create({
     // baseURL: 'https://15fe-115-77-154-145.ngrok-free.app/api',
-    baseURL: 'http://192.168.1.61:8012/api',
+    baseURL: 'http://192.168.1.11:8012/api',
   });
   axiosInstance.interceptors.request.use(
     async config => {
       // const token = localStorage.getItem("token");
-      const token = '';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjcwOGM2M2FmMmYwZDhiNzJhNTkxZDU1IiwiaWF0IjoxNzI4NjI4NTc4LCJleHAiOjE3Mjg2MzU3Nzh9.Wpao89hqK9qJFaIuxw3PqXTBMfJ_ynH6cMJFYl39S8U';
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',

@@ -1,46 +1,41 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { View, Text, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
-import {useFormikH} from '../../configs/hooks/useFormikH';
-import {Assets, Typography} from '../../styles';
-import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
-import {loginSchema} from '../../configs/validateSchema/LoginSchema';
-import {useDispatch} from 'react-redux';
-import {APILogin} from '../../store/api/AccountAPI';
-import {useNavigation} from '@react-navigation/native';
-import {stackName} from '../../navigations/screens';
+import { RegisterStyle } from '../../styles/RegisterStyle/ResgisterStyle';
+import { useFormikH } from '../../configs/hooks/useFormikH';
+import { Assets, Typography } from '../../styles';
+import { LoginStyle } from '../../styles/loginStyle/LoginStyle';
+import { loginSchema } from '../../configs/validateSchema/LoginSchema';
+import { useDispatch } from 'react-redux';
+import { APILogin } from '../../store/api/AccountAPI';
+import { useNavigation } from '@react-navigation/native';
+import { stackName } from '../../navigations/screens';
 
 const FormikForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [isRememberMe, setIsRememberMe] = useState(false);
-  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
+  const { handleSubmit, handleChange, values, errors, touched } = useFormikH(
     {
       emailOrPhoneNumber: '',
       password: '',
     },
     loginSchema,
-    (val, {resetForm}) => {
-      dispatch(
+    async (val, { resetForm }) => {
+      const result = await dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
           password: val.password,
         }),
-      )
-        .unwrap()
-        .then(res => {
-          if (isRememberMe) {
-          }
-          resetForm();
-          navigation.navigate(stackName.bottomTab.name);
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
+      ).unwrap();
+      console.log(result);
+      if (isRememberMe) {
+      }
+      resetForm();
+      navigation.navigate(stackName.bottomTab.name);
     },
   );
 
@@ -82,7 +77,7 @@ const FormikForm = () => {
         </TouchableOpacity>
       </View>
       <Button onPress={handleSubmit} title={t('loginScreen.login')} />
-      <View style={{gap: 20}}>
+      <View style={{ gap: 20 }}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
           <TouchableOpacity>
