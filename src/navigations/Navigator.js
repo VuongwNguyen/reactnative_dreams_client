@@ -7,7 +7,7 @@ export function Navigator() {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={stackName.login.name}>
+      initialRouteName={stackName.bottomTab.name}>
       <Stack.Screen
         name={stackName.register.name}
         component={stackName.register.component}

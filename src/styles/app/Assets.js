@@ -54,6 +54,8 @@ export const Assets = {
     call: require(uriIcons + 'call.png'),
     attach: require(uriIcons + 'attach.png'),
     voice: require(uriIcons + 'keyboardvoice.png'),
+    public: require(uriIcons + 'public.png'),
+    private: require(uriIcons + 'private.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
