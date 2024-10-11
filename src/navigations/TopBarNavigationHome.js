@@ -11,10 +11,10 @@ const TopBarNavigationHome = props => {
   const {t} = useTranslation();
   return (
     <Tab.Navigator screenOptions={topTabOptions}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name={t('homeScreen.trending')}
         children={() => <TrendingPostTab scrollHandler={scrollHandler} />}
-      />
+      /> */}
       <Tab.Screen
         name={t('homeScreen.followed')}
         children={() => <FollowedPostTab scrollHandler={scrollHandler} />}
