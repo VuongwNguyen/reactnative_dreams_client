@@ -12,9 +12,6 @@ export const itemPostStyle = StyleSheet.create({
   tag:{
     color: Colors.primary
   },
-  tag:{
-    color: Colors.primary
-  },
   container: {
     gap: 10,
   },
