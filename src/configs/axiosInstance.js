@@ -8,7 +8,8 @@ const AxiosInstance = (contentType = 'application/json') => {
   axiosInstance.interceptors.request.use(
     async config => {
       // const token = localStorage.getItem("token");
-      const token = '';
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjcwMTBlM2RhMmNlOWVkMmQxNzBiYTEzIiwiaWF0IjoxNzI4NjI0NzI5LCJleHAiOjE3Mjg2MzE5Mjl9.1gBe8uA9n3SHIKbc0dBg0F90fBeZHj04tWWrRPyW1Vg';
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',

@@ -34,7 +34,7 @@ const useImagePicker = () => {
 
   const videoLibraryOptions = {
     mediaType: 'video',
-    selectionLimit: 5,
+    selectionLimit: 4,
     ...commonOptions,
   };
 
@@ -58,8 +58,6 @@ const useImagePicker = () => {
   const openImageLibrary = async () => {
     const response = await launchImageLibrary(libraryOptions);
     if (response?.assets) {
-      console.log(response.assets);
-
       setImages([...images, ...response.assets]);
     } else if (response.errorMessage) {
       Alert.alert('Có lỗi xảy ra', response.errorMessage);
@@ -69,7 +67,6 @@ const useImagePicker = () => {
   const openVideoLibrary = async () => {
     const response = await launchImageLibrary(videoLibraryOptions);
     if (response?.assets) {
-      console.log(response);
       setVideos([...videos, ...response.assets]);
     } else if (response.errorMessage) {
       Alert.alert('Có lỗi xảy ra', response.errorMessage);

@@ -2,12 +2,15 @@ import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
+import {useDispatch} from 'react-redux';
+import {APIGetPostDetail} from '../../store/api/PostAPI';
 
 const FollowedPostTab = props => {
   const {scrollHandler} = props;
   const [dataPosts, setDataPosts] = useState(postsData);
   const [isFollowed, , setIsFollowed] = useState(true);
   dataPosts.l;
+
   return (
     <View style={styles.container}>
       <Animated.ScrollView

@@ -17,10 +17,12 @@ import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
-
+import {APICreatePost} from '../../store/api/PostAPI';
+import {useDispatch} from 'react-redux';
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   const {
     images,
@@ -38,11 +40,11 @@ const NewPostScreen = props => {
   ];
   const itemSelected = [...images, ...videos];
 
-
   const [isPreviewed, setIsPreviewed] = useState(true);
   const [value, setValue] = useState(data[0].value);
   const [openLine, setOpenLine] = useState('');
   const [postContent, setPostContent] = useState('');
+  const [privacyStatus, setPrivacyStatus] = useState('public');
 
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -96,12 +98,40 @@ const NewPostScreen = props => {
     setIsPreviewed(true);
   });
 
+  const handleCreatePost = async () => {
+    const formData = new FormData();
+    formData.append('content', postContent);
+    formData.append('title', openLine);
+
+    images.forEach((image, index) => {
+
+      formData.append('images', {
+        uri: image.uri,
+        name: `image_${image.fileName}.${image.type.split('/')[1]}`,
+        type: image.type,
+      });
+    });
+
+    videos.forEach((video, index) => {
+      console.log(video);
+      
+      formData.append('videos', {
+        uri: video.uri,
+        name: `video_${video.fileName}.${video.type.split('/')[1]}`,
+        type: video.type,
+      });
+    });
+
+    dispatch(APICreatePost(formData));
+  };
+
   return (
     <View style={newPostStyle.container}>
       <AppHeader
         title={t('newPostScreen.title')}
         rightButton={true}
         rightButtonTitle={t('newPostScreen.post')}
+        rightButtonAction={handleCreatePost}
       />
       <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
         <View style={newPostStyle.bodyContainer}>
@@ -120,9 +150,22 @@ const NewPostScreen = props => {
                 labelField="label"
                 valueField="value"
                 value={value}
+                selectedTextStyle={newPostStyle.privacyStatus}
+                itemTextStyle={newPostStyle.dropdownLabel}
                 onChange={item => {
                   setValue(item.value);
+                  setIcStatus(item.value);
                 }}
+                renderLeftIcon={() => (
+                  <Image
+                    source={
+                      privacyStatus == 'public'
+                        ? Assets.icons.earth
+                        : Assets.icons.privacy
+                    }
+                    style={{height: 20, width: 20, marginRight: 5}}
+                  />
+                )}
                 style={newPostStyle.dropdown}
               />
             </View>

@@ -1,4 +1,4 @@
-import {Colors, Scaling, Spacings, Typography} from '../../styles';
+import {Colors, Fonts, Scaling, Spacings, Typography} from '../../styles';
 import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
 const avtSize = width * 0.187;
@@ -45,18 +45,19 @@ export const newPostStyle = {
     color: Colors.black,
   },
   dropdown: {
-    width: 100,
+    minWidth: 110,
     paddingHorizontal: Spacings.sm,
     paddingVertical: Spacings.xs,
     borderWidth: 1,
     borderColor: Colors.secondary,
     borderRadius: Scaling.sm,
+    color: '#ccc',
   },
   attachmentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: 20,
+    gap: 30,
   },
   icDelete: {
     width: 20,
@@ -66,11 +67,11 @@ export const newPostStyle = {
     width: imgPostWidth,
     height: imgPostHeight,
   },
-  icPlay:{
-    position:'absolute',
-    top: imgPostHeight/2 - 12,
-    left:imgPostWidth/2 -12,
-    zIndex:1
+  icPlay: {
+    position: 'absolute',
+    top: imgPostHeight / 2 - 12,
+    left: imgPostWidth / 2 - 12,
+    zIndex: 1,
   },
   imgPost: {
     width: '100%',
@@ -92,5 +93,15 @@ export const newPostStyle = {
   },
   scrollContainer: {
     flex: 1,
+  },
+  privacyStatus: {
+    fontFamily: Fonts.roboto.regular,
+    fontSize: 14,
+    color: '#000',
+  },
+  dropdownLabel: {
+    fontFamily: Fonts.roboto.regular,
+    fontSize: 14,
+    color: Colors.secondary,
   },
 };

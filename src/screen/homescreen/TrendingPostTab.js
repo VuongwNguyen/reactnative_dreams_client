@@ -1,11 +1,21 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, ToastAndroid, View} from 'react-native';
 import React, {useState} from 'react';
 import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
 
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
+
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
   const [dataPosts, setDataPosts] = useState(postsData);
+  const navigation = useNavigation();
+
+  const handelItem = () => {
+    navigation.navigate(stackName.postDetail.name, {
+      post_id: "6707950072a20b6761d08dbb",
+    });
+  };
   return (
     <View style={styles.container}>
       <Animated.ScrollView
@@ -13,7 +23,7 @@ const TrendingPostTab = props => {
         onScroll={scrollHandler}
         showsVerticalScrollIndicator={false}>
         {dataPosts.map((item, index) => (
-          <ItemPost key={index} item={item} />
+          <ItemPost key={index} item={item} handelItem={handelItem} />
         ))}
       </Animated.ScrollView>
     </View>
