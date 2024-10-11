@@ -9,15 +9,22 @@ import { persistor, store } from './src/store';
 import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
           <GestureHandlerRootView>
-            <NavigationContainer
-              onReady={() => {
-                SplashScreen.hide();
-              }}>
+            <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+            <NavigationContainer>
               <Navigator />
             </NavigationContainer>
           </GestureHandlerRootView>

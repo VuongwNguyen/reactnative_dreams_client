@@ -1,4 +1,291 @@
 {
   "hello": "Xin Chào",
-  "counter": "Đếm"
+  "counter": "Đếm",
+  "register": {
+    "welcome": "Đăng ký tài khoản",
+    "createAnAccount": "Tạo tài khoản",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "alreadyHaveAnAccount": "Đã đăng ký?",
+    "error": {
+      "firstName": {
+        "required": "Tên là bắt buộc",
+        "maxLength": "Tên không quá 20 ký tự"
+      },
+      "lastName": {
+        "required": "Họ là bắt buộc",
+        "maxLength": "Họ không quá 20 ký tự"
+      },
+      "email": {
+        "required": "Email là bắt buộc",
+        "invalid": "Email không hợp lệ"
+      },
+      "phoneNumber": {
+        "required": "Số điện thoại là bắt buộc",
+        "invalid": "Số điện thoại không hợp lệ"
+      },
+      "password": {
+        "required": "Mật khẩu là bắt buộc",
+        "minLength": "Mật khẩu phải nhiều hơn 8 ký tự"
+      },
+      "confirmPassword": {
+        "required": "Xác nhận mật khẩu là bắt buộc",
+        "oneOf": "Mật không không khớp"
+      }
+    }
+  },
+  "loginScreen": {
+    "welcome": "Chào mừng đến với Dreams!",
+    "title": "Đăng nhập để tiếp tục",
+    "subTitle": "Kết nối với bạn bè, khám phá cộng đồng mới và chia sẻ cuộc sống của bạn với những người khác.",
+    "password": "Mật khẩu",
+    "login": "Đăng nhập",
+    "or": "Hoặc",
+    "rememberMe": "Nhớ tài khoản",
+    "forgotPassword": "Quên mật khẩu?",
+    "notAccount": "Chưa tài khoản ?",
+    "register": "Đăng ký",
+    "emailOrPhoneNumber": "Email hoặc số điện thoại",
+    "error": {
+      "emailOrPhoneNumber": {
+        "required": "Email hoặc số điện thoại không được trống",
+        "invalid": "Email hoặc số điện thoại không hợp lệ"
+      },
+      "password": {
+        "required": "Mật khẩu không được trống"
+      },
+      "verify": "Tài khoản hoặc mật khẩu không đúng"
+    }
+  },
+  "otpScreen": {
+    "headerTextOtp": "Xác Minh OTP",
+    "textTitleOtp": "Nhập OTP",
+    "textSubOtp": "Một mã xác thực đã được gửi tới",
+    "buttonTextOtp": "TIẾP",
+    "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+    "ErrorOtp": "OTP không chính xác"
+  },
+  "forgotPasswordScreen": {
+    "headerText": "Quên Mật Khẩu",
+    "textTitle": "Quên mật khẩu?",
+    "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
+    "placeholder": "Địa chỉ email của bạn",
+    "buttonText": "TIẾP TỤC",
+    "errorText": {
+      "invalidEmail": "Email không hợp lệ",
+      "required": "Bắt buộc"
+    },
+    "otpScreen": {
+      "headerTextOtp": "Xác Minh OTP",
+      "textTitleOtp": "Nhập OTP",
+      "textSubOtp": "Một mã xác thực đã được gửi tới",
+      "buttonTextOtp": "TIẾP",
+      "textCodeSentResendOtp": "Đã gửi mã. Gửi lại mã trong",
+      "ErrorOtp": "OTP không chính xác"
+    },
+    "forgotPasswordScreen": {
+      "headerText": "Quên Mật Khẩu",
+      "textTitle": "Quên mật khẩu?",
+      "textSub": "Nhập địa chỉ email hoặc số điện thoại của bạn. Nếu tài khoản tồn tại, bạn sẽ nhận được mã kích hoạt.",
+      "placeholder": "Địa chỉ email của bạn",
+      "buttonText": "TIẾP TỤC",
+      "errorText": {
+        "invalidEmail": "Email không hợp lệ",
+        "required": "Bắt buộc"
+      }
+    }
+  },
+  "changePwScreen": {
+    "changePwTitle": "Đổi mật khẩu",
+    "changePw": "Đổi mật khẩu của bạn",
+    "changeNewPw": "Thay đổi mật khẩu mới",
+    "pwRule": "Mật khẩu mới phải dài hơn 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+    "currentPw": "Mật khẩu hiện tại",
+    "newPw": "Mật khẩu mới",
+    "confirmNewPw": "Xác nhận mật khẩu mới",
+    "save": "Lưu",
+    "error": {
+      "required": "Bắt buộc",
+      "min": "Mật khẩu phải tối thiếu 6 kí tự",
+      "invalid": "Mật khẩu không hợp lệ",
+      "notMatch": "Xác nhận mật khẩu không khớp"
+    }
+  },
+  "homeScreen": {
+    "search": "Tìm kiếm...",
+    "trending": "Xu hướng",
+    "followed": "Đã theo dõi"
+  },
+  "profileScreen": {
+    "profile": "Hồ sơ",
+    "followers": "Người theo dõi",
+    "following": "Đang theo dõi",
+    "posts": "Bài viết",
+    "inbox": "Nhắn tin",
+    "follow": "Theo dõi",
+    "editProfile": "Chỉnh sửa trang cá nhân",
+    "information": "Thông tin",
+    "posted": "Đã đăng",
+    "infomationTab": {
+      "curlive": "Nơi ở hiện tại",
+      "nationality": "Quốc tịch",
+      "home": "Quê quán",
+      "school": "Trường",
+      "gender": "Giới tínhh",
+      "dob": "Ngày sinh",
+      "bobby": "Sở thích",
+      "relation": "Tình trạng quan hệ",
+      "zodiac": "Cung hoàng đạo"
+    }
+  },
+  "accountDetailScreen": {
+    "infTitle": "Thông tin",
+    "basic": "Thông tin cơ bản",
+    "other": "Thông tin khác",
+    "username": "Tên người dùng",
+    "nickname": "Biệt danh",
+    "birthDay": "Ngày sinh",
+    "nationality": "Quốc tịch",
+    "hometown": "Quê quán",
+    "gender": "Giới tính",
+    "desc": "Mô tả ",
+    "hobby": "Sở thích",
+    "education": "Giáo dục",
+    "zodiaque": "Cung hoàng đạo",
+    "location": "Nơi ở",
+    "save": "Lưu"
+  },
+  "postDetailScreen": {
+    "post": "Bài viết",
+    "reply": "Trả lời",
+    "view": "Xem",
+    "moreReplies": "câu trả lời khác",
+    "hideReplies": "Ẩn câu trả lời",
+    "writeComment": "Viết bình luận"
+  },
+  "newPostScreen": {
+    "title": "Tạo bài viết",
+    "openLine": "Viết dòng mở đầu...",
+    "contentPost": "Viết gì đó...",
+    "post": "Post"
+  },
+  "createGroupScreen": {
+    "newgroup": "Nhóm Mới",
+    "create": "TẠO",
+    "groupname": "Tên Nhóm",
+    "search": "Tìm kiếm...",
+    "suggest": "Đề xuất"
+  },
+  "notificationScreen": {
+    "title": "Thông báo"
+  },
+  "privacySettingScreen": {
+    "title": "Cài đặt quyền riêng tư",
+    "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây.",
+    "public": "Cộng đồng",
+    "private": "Riêng tư"
+  },
+  "educationDialog": {
+    "title": "Trình độ học vấn của bạn là gì",
+    "desc": "Vui lòng chọn trình độ học vấn cao nhất của bạn để chúng tôi có thể cung cấp những đề xuất tốt hơn và kết nối bạn với những người có cấp bậc tương tự.",
+    "level1": "Cấp độ cơ bản",
+    "level2": "Cấp độ đại học ",
+    "level3": "Cấp độ sau đại học",
+    "placeholder": "Chọn cấp độ học vấn ",
+    "school": "Trường học của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "usernameDialog": {
+    "title": "Tên của bạn là gì",
+    "desc": "Nhập tên người dùng của bạn. Tên này sẽ hiển thị cho những người dùng khác.",
+    "firstname": "Họ",
+    "lastname": "Tên",
+    "confirm": "XÁC NHẬN"
+  },
+  "nicknameDialog": {
+    "title": "Biệt danh của bạn là gì?",
+    "desc": "Nhập biệt danh của bạn. Biệt danh này sẽ xuất hiện trên hồ sơ của bạn.",
+    "nickname": "Biệt danh",
+    "confirm": "XÁC NHẬN"
+  },
+  "nationalityDialog": {
+    "title": "Quốc tịch của bạn là gì?",
+    "desc": "Vui lòng chọn quốc tịch của bạn từ danh sách bên dưới. Thông tin này sẽ giúp chúng tôi điều chỉnh nội dung và đề xuất cụ thể cho bạn.",
+    "placeholder": "Chọn quốc gia của bạn",
+    "search": "Tìm kiếm...",
+    "confirm": "XÁC NHẬN"
+  },
+  "locationDialog": {
+    "title": "Bạn sống ở đâu?",
+    "desc": "Nhập vị trí của bạn để dễ dàng kết nối với bạn bè xung quanh khu vực đó.",
+    "placeholder": "Vị trí của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "hometownDialog": {
+    "title": "Quê hương của bạn là gì",
+    "desc": "Hãy cho chúng tôi biết nơi bạn sinh ra hoặc lớn lên để chúng tôi có thể giúp bạn kết nối với đồng hương.",
+    "placeholder": "Quê hương của bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "hobbyDialog": {
+    "title": "Sở thích của bạn là gì?",
+    "desc": "Hãy cho tôi biết sở thích của bạn liên quan đến điều gì để có được đề xuất phù hợp.",
+    "placeholder": "Sở thích khác",
+    "confirm": "XÁC NHẬN",
+    "music": "Âm  nhạc",
+    "game": "Games",
+    "sport": "Thể thao",
+    "movie": "Xem phim",
+    "book": "Đọc sách",
+    "pet": "Thú cưng",
+    "tech": "Công nghệ",
+    "cooking": "Nấu ăn",
+    "travel": "Du lịch",
+    "photo": "Chụp ảnh",
+    "other": "Khác"
+  },
+  "genderDialog": {
+    "title": "Giới tính của bạn là gì?",
+    "desc": "Hãy chọn giới tính của bạn.",
+    "male": "Nam",
+    "female": "Nữ",
+    "confirm": "XÁC NHẬN"
+  },
+  "dateOfBirthDialog": {
+    "title": "Ngày sinh của bạn là gì?",
+    "desc": "Chọn ngày sinh của bạn để chúng tôi có thể cung cấp trải nghiệm phù hợp với độ tuổi của bạn. Và bạn có thể xác định tuổi và cung hoàng đạo của mình",
+    "placeholder": "Chọn ngày sinh",
+    "age": "Tuổi",
+    "zodiac": "Cung hoàng đạo",
+    "confirm": "XÁC NHẬN",
+    "aquarius": "Bảo Bình",
+    "pisces": "Song Ngư",
+    "aries": "Bạch Dương",
+    "taurus": "Kim Ngưu",
+    "gemini": "Song Tử",
+    "cancer": "Cự Giải",
+    "leo": "Sư Tử",
+    "virgo": "Xử Nữ",
+    "libra": "Thiên Bình",
+    "scorpio": "Bọ Cạp",
+    "sagittarius": "Nhân Mã",
+    "capricorn": "Ma Kết"
+  },
+  "descDialog": {
+    "title": "Nhập mô tả về bạn",
+    "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
+    "placeholder": "Điều gì đó về bạn",
+    "confirm": "XÁC NHẬN"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "chat": "Tin nhắn",
+    "notification": "Thông báo",
+    "setting": "Cài đặt"
+  }
 }
