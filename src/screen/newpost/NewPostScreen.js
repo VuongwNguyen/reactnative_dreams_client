@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   Keyboard,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {Dropdown} from 'react-native-element-dropdown';
+import {MultiSelect} from 'react-native-element-dropdown';
+import {useTranslation} from 'react-i18next';
 
 import AppHeader from '../../components/Header';
 import {newPostStyle} from '../../styles/newpost/NewPostStyle';
@@ -20,7 +22,7 @@ import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {useDispatch} from 'react-redux';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {APIGetFollowing} from '../../store/api/FollowAPI';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -44,7 +46,7 @@ const NewPostScreen = props => {
   const itemSelected = [...images, ...videos];
 
   const [isPreviewed, setIsPreviewed] = useState(true);
-  const [value, setValue] = useState(data[0].value);
+  const [value, setValue] = useState(pricvacyData[0].value);
   const [openLine, setOpenLine] = useState('');
   const [postContent, setPostContent] = useState('');
   const [privacyStatus, setPrivacyStatus] = useState('public');
@@ -52,6 +54,9 @@ const NewPostScreen = props => {
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState([]);
   const [fetchAPIStatus, setFetchAPIStatus] = useState('loading');
+  const [hashTagList, setHashTagList] = useState([]);
+  const [modalHashTagVisible, setModalHashtagVisible] = useState(false);
+  const [hashTagField, setHashTagField] = useState('');
 
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -109,6 +114,8 @@ const NewPostScreen = props => {
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
+    formData.append('tagUsers', selected);
+    formData.append('hashtags', hashTagList);
 
     images.forEach((image, index) => {
       formData.append('images', {
@@ -131,6 +138,36 @@ const NewPostScreen = props => {
     dispatch(APICreatePost(formData));
   };
 
+  const handleTagUser = () => {
+    setModalTagUserVisible(true);
+    dispatch(APIGetFollowing('67010e3da2ce9ed2d170ba13'))
+      .then(res => {
+        setFetchAPIStatus(res?.meta?.requestStatus);
+        setData(res?.payload?.data?.list);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  };
+
+  const handelHashtag = () => {
+    setModalHashtagVisible(true);
+  };
+  const userData = data?.map(item => {
+    return {
+      id: item?.following?._id,
+      fullname: `${item?.following?.first_name} ${item?.following?.last_name}`,
+    };
+  });
+
+  const renderItem = item => {
+    return (
+      <View style={newPostStyle.item} key={item.id}>
+        <Image source={Assets.icons.user} />
+        <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
+      </View>
+    );
+  };
   return (
     <View style={newPostStyle.container}>
       <AppHeader
@@ -172,7 +209,7 @@ const NewPostScreen = props => {
                     style={{height: 20, width: 20, marginRight: 5}}
                   />
                 )}
-                style={newPostStyle.dropdown}
+                style={newPostStyle.privacyDropdown}
               />
             </View>
           </View>
@@ -210,10 +247,10 @@ const NewPostScreen = props => {
               <TouchableOpacity onPress={() => pickMedia('video')}>
                 <Image source={Assets.icons.videoGallery} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTagUser()}>
                 <Image source={Assets.icons.tagUser} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handelHashtag()}>
                 <Image source={Assets.icons.hashTag} />
               </TouchableOpacity>
             </View>
@@ -224,53 +261,120 @@ const NewPostScreen = props => {
             transparent={true}
             visible={modalTagUserVisible}
             onRequestClose={() => {
-              setModalVisible(!modalVisible);
+              setModalTagUserVisible(!modalTagUserVisible);
             }}>
-            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-              <View style={newPostStyle.modalView}>
-                <View style={newPostStyle.centeredView}>
-                  <Text style={newPostStyle.modalTitle}>Tag User</Text>
-                  <MultiSelect
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={userData}
-                    labelField="fullname"
-                    valueField="id"
-                    placeholder="Tag user"
-                    value={selected}
-                    search
-                    searchPlaceholder="Search..."
-                    onChange={item => {
-                      setSelected(item);
-                    }}
-                    renderLeftIcon={() => (
-                      <Image
-                        source={Assets.icons.tagUser}
-                        style={{marginRight: 10}}
-                      />
-                    )}
-                    renderItem={renderItem}
-                    renderSelectedItem={(item, unSelect) => (
-                      <TouchableOpacity
-                        onPress={() => unSelect && unSelect(item)}
-                        key={item.id}>
-                        <View style={styles.selectedStyle}>
-                          <Text style={styles.textSelectedStyle}>
-                            {item.fullname}
-                          </Text>
-                          <Image source={Assets.icons.close} />
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
+            <View style={newPostStyle.modalView}>
+              <View style={newPostStyle.centeredView}>
+                <Text style={newPostStyle.modalTitle}>Tag User</Text>
+                <MultiSelect
+                  style={newPostStyle.dropdown}
+                  placeholderStyle={newPostStyle.placeholderStyle}
+                  selectedTextStyle={newPostStyle.selectedTextStyle}
+                  inputSearchStyle={newPostStyle.inputSearchStyle}
+                  iconStyle={newPostStyle.iconStyle}
+                  data={userData}
+                  labelField="fullname"
+                  valueField="id"
+                  placeholder="Select users"
+                  value={selected}
+                  search
+                  searchPlaceholder="Search..."
+                  onChange={item => {
+                    setSelected(item);
+                  }}
+                  renderLeftIcon={() => (
+                    <Image
+                      source={Assets.icons.tagUser}
+                      style={{marginRight: 10}}
+                    />
+                  )}
+                  renderItem={renderItem}
+                  renderSelectedItem={(item, unSelect) => (
+                    <TouchableOpacity
+                      onPress={() => unSelect && unSelect(item)}
+                      key={item.id}>
+                      <View style={newPostStyle.selectedStyle}>
+                        <Text style={newPostStyle.textSelectedStyle}>
+                          {item.fullname}
+                        </Text>
+                        <Image
+                          source={Assets.icons.delete}
+                          style={{width: 16, height: 16}}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+
+                <TouchableOpacity
+                  style={newPostStyle.cancelBtn}
+                  onPress={() => setModalTagUserVisible(false)}>
+                  <Text style={newPostStyle.cancel}>Cancel</Text>
+                </TouchableOpacity>
               </View>
-            </TouchableWithoutFeedback>
+            </View>
           </Modal>
           {/*  */}
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalHashTagVisible}
+            onRequestClose={() => {
+              setModalHashtagVisible(!modalHashTagVisible);
+            }}>
+            <View style={newPostStyle.modalView}>
+              <View style={newPostStyle.centeredView}>
+                <Text style={newPostStyle.modalTitle}>Hash Tag</Text>
+                <View style={newPostStyle.inputRow}>
+                  <TextInput
+                    placeholder="Enter your hashtag"
+                    placeholderTextColor={Colors.secondary}
+                    value={hashTagField}
+                    onChangeText={text => setHashTagField(text)}
+                    style={newPostStyle.hashTagInput}
+                  />
+                  <TouchableOpacity
+                    style={newPostStyle.addBtn}
+                    onPress={() => {
+                      hashTagList.push(hashTagField);
+                      console.log(hashTagList);
+
+                      setHashTagField('');
+                    }}>
+                    <Text style={newPostStyle.addLabel}>Add</Text>
+                  </TouchableOpacity>
+                </View>
+                {hashTagList.length > 0 && (
+                  <View style={newPostStyle.hashTagRow}>
+                    {hashTagList?.map((item, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          style={newPostStyle.selectedStyle}
+                          onPress={() => {
+                            hashTagList.splice(index, 1);
+                          }}>
+                          <Text style={newPostStyle.textSelectedStyle}>
+                            {item}
+                          </Text>
+                          <Image
+                            source={Assets.icons.delete}
+                            style={{width: 16, height: 16}}
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                )}
+
+                <TouchableOpacity
+                  style={newPostStyle.cancelBtn}
+                  onPress={() => setModalTagUserVisible(false)}>
+                  <Text style={newPostStyle.cancel}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
       </ScrollView>
     </View>
@@ -279,6 +383,4 @@ const NewPostScreen = props => {
 
 export default NewPostScreen;
 
-const styles = StyleSheet.create({
-  container: {},
-});
+const styles = StyleSheet.create({});

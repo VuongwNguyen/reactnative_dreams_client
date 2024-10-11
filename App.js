@@ -27,10 +27,10 @@ export default function App() {
         <SafeAreaProvider>
           <GestureHandlerRootView>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-            {/* <NavigationContainer> */}
-            {/* <Navigator /> */}
-            <MultiSelectComponent />
-            {/* </NavigationContainer> */}
+            <NavigationContainer>
+              <Navigator />
+            </NavigationContainer>
+            {/* <MultiSelectComponent /> */}
           </GestureHandlerRootView>
         </SafeAreaProvider>
       </PersistGate>

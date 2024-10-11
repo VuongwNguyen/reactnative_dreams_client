@@ -9,7 +9,7 @@ const AxiosInstance = (contentType = 'application/json') => {
     async config => {
       // const token = localStorage.getItem("token");
       const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjcwMTBlM2RhMmNlOWVkMmQxNzBiYTEzIiwiaWF0IjoxNzI4NjQzNzI4LCJleHAiOjE3Mjg2NTA5Mjh9.F_c9sS5JjtWx6hIMFOsfJ-iGVxT_4KhtHEPHXkjPjG0';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjcwMTBlM2RhMmNlOWVkMmQxNzBiYTEzIiwiaWF0IjoxNzI4NjYwNjg0LCJleHAiOjE3Mjg2Njc4ODR9.7P_AX1iQWzEk4yRpSuprEKTvLETZjtFqFdPV95O0shs';
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',

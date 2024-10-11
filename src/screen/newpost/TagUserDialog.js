@@ -15,8 +15,8 @@ import {APIGetFollowing} from '../../store/api/FollowAPI';
 const MultiSelectComponent = () => {
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState([]);
-  const [user_id, setUser_id] = useState('67010e3da2ce9ed2d170ba13');
   const [fetchAPIStatus, setFetchAPIStatus] = useState('loading');
+  let usernameTagList = [];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const MultiSelectComponent = () => {
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
-  }, [user_id]);
+  }, []);
 
   const userData = data?.map(item => {
     return {
@@ -64,6 +64,9 @@ const MultiSelectComponent = () => {
         searchPlaceholder="Search..."
         onChange={item => {
           setSelected(item);
+          const labelItem = userData.find(ele => ele.id === item)?.fullname;
+          usernameTagList.push(labelItem);
+          console.log(usernameTagList);
         }}
         renderLeftIcon={() => (
           <Image source={Assets.icons.tagUser} style={{marginRight: 10}} />
