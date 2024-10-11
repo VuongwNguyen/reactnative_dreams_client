@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  Modal,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -19,6 +20,8 @@ import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {useDispatch} from 'react-redux';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
@@ -34,7 +37,7 @@ const NewPostScreen = props => {
     onOpenVideoCamera,
   } = useImagePicker();
 
-  const data = [
+  const pricvacyData = [
     {label: 'Public', value: 'public'},
     {label: 'Private', value: 'private'},
   ];
@@ -45,6 +48,10 @@ const NewPostScreen = props => {
   const [openLine, setOpenLine] = useState('');
   const [postContent, setPostContent] = useState('');
   const [privacyStatus, setPrivacyStatus] = useState('public');
+  const [modalTagUserVisible, setModalTagUserVisible] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [data, setData] = useState([]);
+  const [fetchAPIStatus, setFetchAPIStatus] = useState('loading');
 
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -104,7 +111,6 @@ const NewPostScreen = props => {
     formData.append('title', openLine);
 
     images.forEach((image, index) => {
-
       formData.append('images', {
         uri: image.uri,
         name: `image_${image.fileName}.${image.type.split('/')[1]}`,
@@ -114,7 +120,7 @@ const NewPostScreen = props => {
 
     videos.forEach((video, index) => {
       console.log(video);
-      
+
       formData.append('videos', {
         uri: video.uri,
         name: `video_${video.fileName}.${video.type.split('/')[1]}`,
@@ -146,7 +152,7 @@ const NewPostScreen = props => {
             <View style={newPostStyle.inf}>
               <Text style={newPostStyle.userName}>Username</Text>
               <Dropdown
-                data={data}
+                data={pricvacyData}
                 labelField="label"
                 valueField="value"
                 value={value}
@@ -192,46 +198,79 @@ const NewPostScreen = props => {
           <View style={newPostStyle.showAttachContainer}>
             {itemSelected?.[0]?.uri && isPreviewed ? renderImg() : ''}
             <View style={newPostStyle.attachmentContainer}>
-              <TouchableOpacity
-                style={newPostStyle.iconBtn}
-                onPress={() => onOpenCamera()}>
-                <Image
-                  source={Assets.icons.camera}
-                  style={{width: 20, height: 20}}
-                />
+              <TouchableOpacity onPress={() => onOpenCamera()}>
+                <Image source={Assets.icons.camera} />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={newPostStyle.iconBtn}
-                onPress={() => onOpenVideoCamera()}>
-                <Image
-                  source={Assets.icons.video}
-                  style={{width: 20, height: 20}}
-                />
+              <TouchableOpacity onPress={() => onOpenVideoCamera()}>
+                <Image source={Assets.icons.video} />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={newPostStyle.iconBtn}
-                onPress={() => pickMedia('image')}>
-                <Image
-                  source={Assets.icons.gallery}
-                  style={{width: 20, height: 20}}
-                />
+              <TouchableOpacity onPress={() => pickMedia('image')}>
+                <Image source={Assets.icons.gallery} />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={newPostStyle.iconBtn}
-                onPress={() => pickMedia('video')}>
-                <Image
-                  source={Assets.icons.videoGallery}
-                  style={{width: 20, height: 20}}
-                />
+              <TouchableOpacity onPress={() => pickMedia('video')}>
+                <Image source={Assets.icons.videoGallery} />
               </TouchableOpacity>
-              <TouchableOpacity style={newPostStyle.iconBtn}>
-                <Image
-                  source={Assets.icons.menu}
-                  style={{width: 20, height: 20}}
-                />
+              <TouchableOpacity>
+                <Image source={Assets.icons.tagUser} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={Assets.icons.hashTag} />
               </TouchableOpacity>
             </View>
           </View>
+          {/* modal tag user */}
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalTagUserVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+              <View style={newPostStyle.modalView}>
+                <View style={newPostStyle.centeredView}>
+                  <Text style={newPostStyle.modalTitle}>Tag User</Text>
+                  <MultiSelect
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={userData}
+                    labelField="fullname"
+                    valueField="id"
+                    placeholder="Tag user"
+                    value={selected}
+                    search
+                    searchPlaceholder="Search..."
+                    onChange={item => {
+                      setSelected(item);
+                    }}
+                    renderLeftIcon={() => (
+                      <Image
+                        source={Assets.icons.tagUser}
+                        style={{marginRight: 10}}
+                      />
+                    )}
+                    renderItem={renderItem}
+                    renderSelectedItem={(item, unSelect) => (
+                      <TouchableOpacity
+                        onPress={() => unSelect && unSelect(item)}
+                        key={item.id}>
+                        <View style={styles.selectedStyle}>
+                          <Text style={styles.textSelectedStyle}>
+                            {item.fullname}
+                          </Text>
+                          <Image source={Assets.icons.close} />
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+          {/*  */}
         </View>
       </ScrollView>
     </View>

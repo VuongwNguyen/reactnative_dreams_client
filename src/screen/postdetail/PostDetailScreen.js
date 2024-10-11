@@ -27,7 +27,7 @@ const PostDetailScreen = props => {
   const [post, setPost] = useState('');
 
   useEffect(() => {
-    dispatch(APIGetPostDetail('6707950072a20b6761d08dbb'))
+    dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
         setPost(res.data);

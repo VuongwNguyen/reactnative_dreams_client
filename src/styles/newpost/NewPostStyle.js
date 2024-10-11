@@ -104,4 +104,35 @@ export const newPostStyle = {
     fontSize: 14,
     color: Colors.secondary,
   },
+  // modal view
+  modalView: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  centeredView: {
+    position: 'absolute',
+    left: '12%',
+    top: 0.25 * height,
+    width: '75%',
+    marginHorizontal: 'auto',
+    backgroundColor: Colors.white,
+    alignItems: 'center',
+    padding: 20,
+    gap: 15,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: Colors.background,
+    // Hiệu ứng đổ bóng cho iOS
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    // Hiệu ứng đổ bóng cho Android
+    elevation: 8,
+  },
+  modalTitle: {
+    ...Typography.tagInf,
+    color: Colors.black,
+    fontFamily: Fonts.roboto.bold,
+  },
 };

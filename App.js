@@ -9,6 +9,7 @@ import {Navigator} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
 
 import {StatusBar} from 'react-native';
+import MultiSelectComponent from './src/screen/newpost/TagUserDialog';
 
 export default function App() {
   React.useEffect(() => {
@@ -26,9 +27,10 @@ export default function App() {
         <SafeAreaProvider>
           <GestureHandlerRootView>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-            <NavigationContainer>
-              <Navigator />
-            </NavigationContainer>
+            {/* <NavigationContainer> */}
+            {/* <Navigator /> */}
+            <MultiSelectComponent />
+            {/* </NavigationContainer> */}
           </GestureHandlerRootView>
         </SafeAreaProvider>
       </PersistGate>
