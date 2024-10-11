@@ -1,12 +1,10 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {GridImageStyle} from '../styles/components/GridImage/GridImageStyle';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { GridImageStyle } from '../styles/components/GridImage/GridImageStyle';
 
 const GridImage = props => {
-  const {arrImages = []} = props;  
-
-  const openImage = () => {};
-
+  const { arrImages } = props;
+  const openImage = () => { };
   const renderTwoImages = () => {
     return (
       <View style={GridImageStyle.rowContainer}>
@@ -14,8 +12,8 @@ const GridImage = props => {
           <TouchableOpacity
             key={index}
             onPress={openImage}
-            style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>
-            <Image source={{uri: item.url}} style={GridImageStyle.gridImage} />
+            style={[GridImageStyle.gridImageContainer, { width: '48%' }]}>
+            <Image source={{ uri: item.url }} style={GridImageStyle.gridImage} />
           </TouchableOpacity>
         ))}
       </View>
@@ -24,22 +22,22 @@ const GridImage = props => {
 
   const renderThreeImages = () => {
     return (
-      <View style={{gap: 10}}>
+      <View style={{ gap: 10 }}>
         <View style={GridImageStyle.rowContainer}>
           {arrImages.slice(0, 2).map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={openImage}
-              style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>
-              <Image source={{uri: item.url}} style={GridImageStyle.gridImage} />
+              style={[GridImageStyle.gridImageContainer, { width: '48%' }]}>
+              <Image source={{ uri: item.url }} style={GridImageStyle.gridImage} />
             </TouchableOpacity>
           ))}
         </View>
         <TouchableOpacity
           onPress={openImage}
-          style={[GridImageStyle.gridImageContainer, {width: '100%'}]}>
+          style={[GridImageStyle.gridImageContainer, { width: '100%' }]}>
           <Image
-            source={{uri: arrImages[2].url}}
+            source={{ uri: arrImages[2].url }}
             style={GridImageStyle.gridImage}
           />
         </TouchableOpacity>
@@ -53,11 +51,11 @@ const GridImage = props => {
         key={index}
         onPress={openImage}
         style={GridImageStyle.gridImageContainer}>
-        <Image source={{uri: item.url}} style={GridImageStyle.gridImage} />
-        {index === 3 && arrImages.length > 4 && (
+        <Image source={{ uri: item.url }} style={GridImageStyle.gridImage} />
+        {index === 3 && arrImages?.length > 4 && (
           <View style={GridImageStyle.moreOverlay}>
             <Text style={GridImageStyle.moreText}>
-              +{arrImages?.length - 4}
+              +{arrImages.length - 4}
             </Text>
           </View>
         )}
@@ -68,7 +66,7 @@ const GridImage = props => {
   return (
     <View style={GridImageStyle.container}>
       {arrImages.length === 1 ? (
-        <Image source={{uri: arrImages[0].url}} style={GridImageStyle.mainImage} />
+        <Image source={{ uri: arrImages[0].url }} style={GridImageStyle.mainImage} />
       ) : arrImages.length === 2 ? (
         renderTwoImages()
       ) : arrImages.length === 3 ? (
