@@ -5,11 +5,13 @@ import { dec, inc } from '../store/slices/example';
 import { useTranslation } from 'react-i18next';
 import i18n from '../lang';
 
-
 export default function Counter() {
   const count = useSelector(state => state.count);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [password, setPassword] = useState("");
+  const [showBottomSheet, setShowBottomSheet] = useState(false)
+
 
   const changeLanguage = () => {
     if (i18n.language === 'vi') {
@@ -21,41 +23,92 @@ export default function Counter() {
 
   return (
     <View style={style.container}>
-      <Text style={style.counter}>
-        {t('counter')}: {count}
-      </Text>
-      <TouchableOpacity style={style.button} onPress={() => dispatch(inc())}>
-        <Text>Increment</Text>
-      </TouchableOpacity>
+      <AppEditText
+        styleContainer={{ width: "100%" }}
+        style={{ fontSize: 16 }}
+        floatingPlaceholderStyle={{ fontSize: 16 }}
+        placeholder={"Password"}
+        value={password}
+        onChangeText={(text) => { setPassword(text) }}
+        isPassword
+      />
+      <View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { console.log("Hello word") }}
+        labelStyle={{ fontSize: 15, fontWeight: "700" }}
+        label={"Save"}
+        borderRadius={8}
+        size={Button.sizes.small}
+      />
+      <View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { console.log("Hello word") }}
+        buttonStyle={{
+          width: 342, height: 70
+        }}
+        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        label={"Hello Word"}
+        borderRadius={15}
+      /><View style={{ height: 40 }} />
+      <AppButton
+        onPress={() => { setShowBottomSheet(true) }}
+        buttonStyle={{
+          width: 342, height: 70,
 
-      <TouchableOpacity style={style.button} onPress={() => dispatch(dec())}>
-        <Text>Decrement</Text>
-      </TouchableOpacity>
+        }}
+        labelStyle={{ fontSize: 19, fontWeight: "700" }}
+        label={"Show BottomSheet"}
+        borderRadius={30}
+      />
+      {
+        showBottomSheet && (
+          <BottomSheetDialog
+            onPressClose={() => { setShowBottomSheet(false) }}
+            textTitle={"Name"}
+            textContent={"Personal information must not include third-party contact information, advertising, content, pornography, and other illegal noioij dunng to avoid account closure"}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <AppEditText
+                styleContainer={{ flex: 1 }}
+                style={{ fontSize: 16 }}
+                floatingPlaceholderStyle={{ fontSize: 16 }}
+                placeholder={"Password"}
+                value={password}
+                onChangeText={(text) => { setPassword(text) }}
+                isPassword
+              />
+              <View style={{ width: 15 }} />
+              <AppEditText
+                styleContainer={{ flex: 1 }}
+                style={{ fontSize: 16 }}
+                floatingPlaceholderStyle={{ fontSize: 16 }}
+                placeholder={"Password"}
+                value={password}
+                onChangeText={(text) => { setPassword(text) }}
+                isPassword
+              />
+            </View>
+            <View style={{ height: 30 }} />
+            <AppButton
+              onPress={() => { console.log("Hello word") }}
+              buttonStyle={{
+                width: 342, height: 60
+              }}
+              labelStyle={{ fontSize: 19, fontWeight: "700" }}
+              label={"Hello Word"}
+              borderRadius={15}
+            />
 
-      <TouchableOpacity style={style.button} onPress={changeLanguage}>
-        <Text>Change Language</Text>
-      </TouchableOpacity>
+          </BottomSheetDialog>
+        )
+      }
     </View>
   );
 }
 
 const style = StyleSheet.create({
-  counter: {
-    fontWeight: 'bold',
-    color: 'black',
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  button: {
-    backgroundColor: 'orange',
-    width: '50%',
-    padding: 16,
-    marginBottom: 8,
-    borderRadius: 16,
-  },
   container: {
     flex: 1,
-    padding: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
