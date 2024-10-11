@@ -9,6 +9,9 @@ export const itemPostStyle = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: Fonts.roboto.regular,
   },
+  tag:{
+    color: Colors.primary
+  },
   container: {
     gap: 10,
   },

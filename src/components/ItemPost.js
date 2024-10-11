@@ -6,6 +6,7 @@ import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {stackName} from '../navigations/screens';
+import convertTimePost from '../utils/convertTimePost';
 
 export default ItemPost = props => {
   const {item, isLike = true, handelItem} = props;
@@ -21,8 +22,13 @@ export default ItemPost = props => {
         <Image source={{uri: item.avatar}} style={itemPostStyle.avatar} />
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item.name}</Text>
-          <Text style={itemPostStyle.headerLabel}>{item.hour}</Text>
+          <Text style={Typography.postName}>{item.author.fullname}</Text>
+          <View style = {{flexDirection: 'row', alignItems: 'center', gap: 5}}>
+            <Image source={item.privacy_status === 'public' ? Assets.icons.public : Assets.icons.private} style={{height: 12, width: 12}}/>
+            <Text style={itemPostStyle.headerLabel}>
+              {convertTimePost(item.createdAt)}
+            </Text>
+          </View>
         </View>
       </View>
       {/* content */}
@@ -40,7 +46,38 @@ export default ItemPost = props => {
         </TouchableOpacity>
       </View>
       {/* image */}
-      {item.image.length > 0 && <GridImage arrImages={item.image} />}
+      {item.images.length > 0 && <GridImage arrImages={item.images} />}
+      {/* tag */}
+      {item.tagUsers.length > 0 && (
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 5,
+            marginTop: 10,
+            flexWrap: 'wrap',
+          }}>
+          {item.tagUsers.map((item, index) => (
+            <Text key={index} style={itemPostStyle.tag}>
+              #{item.title}
+            </Text>
+          ))}
+        </View>
+      )}
+      {item.hashtags.length > 0 && (
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 5,
+            marginTop: 10,
+            flexWrap: 'wrap',
+          }}>
+          {item.hashtags.map((item, index) => (
+            <Text key={index} style={itemPostStyle.tag}>
+              #{item.title}
+            </Text>
+          ))}
+        </View>
+      )}
       {/* interact */}
       <View style={itemPostStyle.interactContainer}>
         {/* like */}
@@ -51,14 +88,14 @@ export default ItemPost = props => {
             style={{height: 20, width: 20}}
             source={like ? Assets.icons.heartFill : Assets.icons.heart}
           />
-          <Text style={itemPostStyle.interactLabel}>{item.like}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item.likeCount}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
           <Image
             source={Assets.icons.comment}
             style={itemPostStyle.image}></Image>
-          <Text style={itemPostStyle.interactLabel}>{item.comment}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item.commentCount}</Text>
         </TouchableOpacity>
         {/* share */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
