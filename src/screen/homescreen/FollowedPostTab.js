@@ -1,21 +1,29 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import ItemPost from '../../components/ItemPost';
-import AxiosInstance from '../../configs/axiosInstance';
+import { useDispatch } from 'react-redux';
+import { APICountViewPost, APIFollowingPost, APISetPostViewd } from '../../store/api/FollowedPostAPI';
 
 const FollowedPostTab = () => {
   // const {scrollHandler} = props;
+  const [currentPage, setCurrentPage] = useState(1);
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await AxiosInstance().get('/post/following-posts/1/10');
-      setDataPosts(response.data.list);
-    };
-    fetchData();
-  }, []);
+    dispatch(APIFollowingPost(currentPage))
+      .unwrap()
+      .then(res => {
+        const {list} = res;
+        const newData = [...dataPosts, ...list];
+        setDataPosts(newData); 
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [currentPage]);
 
   // Tạo ref cho callback
   const viewabilityConfigCallbackPairs = useRef([
@@ -24,22 +32,19 @@ const FollowedPostTab = () => {
         itemVisiblePercentThreshold: 100,
       },
       onViewableItemsChanged: ({viewableItems}) => {
-        console.log('timeoutId', timeOutId.current);
         clearTimeout(timeOutId.current);
 
-        timeOutId.current = setTimeout(() => {
-          AxiosInstance().post('/post/count-view-post', {
-            post_id: viewableItems[0].item._id,
-          })          
+        timeOutId.current = setTimeout(() => {   
+          if (viewableItems.length > 0) {
+            dispatch(APICountViewPost(viewableItems[0].item._id))
+          }
         }, 5000);
 
-        viewableItems.forEach(item => {
-          if ( viewedItemIds.length > 0 && !viewedItemIds.includes(item.item._id)) {
+        viewableItems.forEach(item => {          
+          if ( viewableItems.length > 0 && !viewableItems.includes(item.item._id)) {            
             setViewedItemIds(prevViewedItemIds => {
               if (!prevViewedItemIds.includes(item.item._id)) {
-                AxiosInstance().post('/post/set-post-viewed', {
-                  post_id: item.item._id,
-                });
+                dispatch(APISetPostViewd(item.item._id))
                 return [...prevViewedItemIds, item.item._id];
               }
               return prevViewedItemIds;
@@ -57,6 +62,8 @@ const FollowedPostTab = () => {
       renderItem={({item}) => <ItemPost item={item} />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+      onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
