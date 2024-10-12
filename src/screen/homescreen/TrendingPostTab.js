@@ -4,6 +4,9 @@ import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
 import AxiosInstance from '../../configs/axiosInstance';
 
+import { useNavigation } from '@react-navigation/native';
+import { stackName } from '../../navigations/screens';
+
 const TrendingPostTab = props => {
   const { scrollHandler } = props;
   // const [dataPosts, setDataPosts] = useState(postsData);

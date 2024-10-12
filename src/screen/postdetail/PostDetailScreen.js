@@ -1,47 +1,61 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  TextInput,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CommentItem from '../../components/CommentItem';
-import ItemPost from '../../components/ItemPost';
 import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
 import AppHeader from '../../components/Header';
-import { Assets } from '../../styles';
+import {Assets} from '../../styles';
+import {useDispatch} from 'react-redux';
+import {APIGetPostDetail} from '../../store/api/PostAPI';
+import ItemPostInDetail from '../../components/ItemPostInDetail';
 
-const PostDetailScreen = () => {
+const PostDetailScreen = props => {
+  const post_id = props.route?.params?.post_id;
+  // console.log(post_id);
+
   const {t} = useTranslation();
   const inputRef = useRef(null);
-  const [post, setPost] = useState(postDetail);
+  const dispatch = useDispatch();
+
+  const [post, setPost] = useState('');
+
+  useEffect(() => {
+    dispatch(APIGetPostDetail(post_id))
+      .unwrap()
+      .then(res => {
+        setPost(res.data);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, [post_id]);
   return (
     <View style={postDetailStyle.container}>
+      <AppHeader title={t('postDetailScreen.post')} />
       <FlatList
         style={{flex: 1}}
-        data={comments}
+        data={post?.comments?.list}
         renderItem={({item}) => (
           <View style={{padding: 10}}>
             <CommentItem comment={item} inputRef={inputRef} />
           </View>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <>
-            <AppHeader
-              title={t('postDetailScreen.post')}
-              leftButton={true}
-              rightButton={false}
-            />
-
-            <ItemPost item={post} />
-          </>
-        }
+        ListHeaderComponent={<ItemPostInDetail item={post} />}
       />
       <View style={postDetailStyle.footer}>
         <Image
           style={postDetailStyle.avatarFooter}
-          source={{
-            uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-          }}
+          source={{uri: post?.post?.author?.avatar?.url}}
         />
         <TextInput
           ref={inputRef}
