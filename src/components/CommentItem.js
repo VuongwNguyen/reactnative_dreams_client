@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Assets } from '../styles';
+import {Assets} from '../styles';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
@@ -35,13 +35,13 @@ const CommentItem = memo(props => {
         <Image
           style={styles.avatar}
           source={{
-            uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+            uri: comment?.author?.avatar?.url,
           }}
         />
         <View style={styles.commentRowContent}>
           <View style={styles.commentColumn}>
             <View style={[styles.commentRow, {alignItems: 'center'}]}>
-              <Text style={styles.textUser}>{comment.user}</Text>
+              <Text style={styles.textUser}>{comment?.author?.fullname}</Text>
               <Text style={styles.createAt}>{comment.createdAt}</Text>
             </View>
             <Text style={styles.content}>{comment.content}</Text>
@@ -57,13 +57,12 @@ const CommentItem = memo(props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Image source={Assets.icons.heart
-          } style={{height: 20, width: 20}} />
-          <Text>999</Text>
+          <Image source={Assets.icons.heart} style={{height: 20, width: 20}} />
+          <Text>{comment.likes}</Text>
         </TouchableOpacity>
       </View>
 
-      {comment.replies.length > 0 && (
+      {/* {comment.childCommentCount > 0 && (
         <>
           <FlatList
             data={comment.replies.slice(0, visibleReplies)}
@@ -113,7 +112,7 @@ const CommentItem = memo(props => {
             </TouchableOpacity>
           )}
         </>
-      )}
+      )} */}
     </View>
   );
 });

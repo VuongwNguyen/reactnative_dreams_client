@@ -1,15 +1,41 @@
-import React, {useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {Assets, Typography} from './../styles';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Assets, Typography } from './../styles';
+import { useNavigation } from '@react-navigation/native';
 import GridImage from './GirdImage';
-import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {stackName} from '../navigations/screens';
-import convertTimePost from '../utils/convertTimePost';
+import { itemPostStyle } from '../styles/components/itemPost/itemPostStyle';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { stackName } from '../navigations/screens';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi';
+dayjs.extend(relativeTime);
+
+const customLocale = {
+  ...dayjs.Ls.vi,
+  relativeTime: {
+    ...dayjs.Ls.vi.relativeTime,
+    future: 'in %s',
+    past: '%s trước',
+    s: 'vài giây',
+    m: '1 phút',
+    mm: '%d phút',
+    h: '1 giờ',
+    hh: '%d giờ',
+    d: '1 ngày',
+    dd: '%d ngày',
+    M: '1 tháng',
+    MM: '%d tháng',
+    y: '1 năm',
+    yy: '%d năm',
+  },
+};
+
+// Sử dụng locale tùy chỉnh
+dayjs.locale(customLocale);
 
 export default ItemPost = props => {
-  const {item, isLike = true, handelItem} = props;
+  const { item, isLike = true, handelItem } = props;
   const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
   return (
@@ -19,15 +45,23 @@ export default ItemPost = props => {
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
-        <Image source={{uri: item.avatar}} style={itemPostStyle.avatar} />
+        {
+          item.author?.avatar && <Image source={{ uri: item.author?.avatar }} style={itemPostStyle.avatar} />
+        }
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item.author.fullname}</Text>
-          <View style = {{flexDirection: 'row', alignItems: 'center', gap: 5}}>
-            <Image source={item.privacy_status === 'public' ? Assets.icons.public : Assets.icons.private} style={{height: 12, width: 12}}/>
+          <Text style={Typography.postName}>{item.author?.fullname}</Text>
+          <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
             <Text style={itemPostStyle.headerLabel}>
-              {convertTimePost(item.createdAt)}
+              {dayjs(item.createdAt).locale('vi').fromNow()}
             </Text>
+            {
+              item.privacy_status == 'public' &&
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <View style={{ height: 5, width: 5, borderRadius: 999, backgroundColor: 'black' }} />
+                <Image source={require('../../assets/icons/earth.png')} style={{ height: 15, width: 15 }} />
+              </View>
+            }
           </View>
         </View>
       </View>
@@ -38,46 +72,54 @@ export default ItemPost = props => {
           {item.title}
         </Text>
         {/* content */}
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => { }}>
           <Text numberOfLines={3} style={Typography.postContent}>
-            {'\t'}
             {item.content}
           </Text>
         </TouchableOpacity>
+        {/* tag user */}
+        <View style={{ flexDirection: 'row', gap: 5 }}>
+          {
+            item.tagUsers && item.tagUsers.length > 0 &&
+            item.tagUsers.map((user, index) => (
+              <TouchableOpacity key={index} onPress={() => { }}>
+                <Text numberOfLines={3} style={{
+                  fontSize: 13,
+                  textDecoration: "underline",
+                  lineHeight: 22,
+                  fontWeight: "600",
+                  color: "#0cbbf0",
+                  textAlign: "left"
+                }}>
+                  @{user.fullname}
+                </Text>
+              </TouchableOpacity>
+            ))
+          }
+        </View>
+        {/* hashTags */}
+        <View style={{ flexDirection: 'row', gap: 5 }}>
+          {
+            item.hashtags && item.hashtags.length > 0 &&
+            item.hashtags.map((item, index) => (
+              <TouchableOpacity key={index} onPress={() => { }}>
+                <Text numberOfLines={3} style={{
+                  fontSize: 13,
+                  textDecoration: "underline",
+                  lineHeight: 22,
+                  fontWeight: "600",
+                  color: "#0cbbf0",
+                  textAlign: "left"
+                }}>
+                  #{item.title}
+                </Text>
+              </TouchableOpacity>
+            ))
+          }
+        </View>
       </View>
       {/* image */}
-      {item.images.length > 0 && <GridImage arrImages={item.images} />}
-      {/* tag */}
-      {item.tagUsers.length > 0 && (
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 5,
-            marginTop: 10,
-            flexWrap: 'wrap',
-          }}>
-          {item.tagUsers.map((item, index) => (
-            <Text key={index} style={itemPostStyle.tag}>
-              #{item.title}
-            </Text>
-          ))}
-        </View>
-      )}
-      {item.hashtags.length > 0 && (
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 5,
-            marginTop: 10,
-            flexWrap: 'wrap',
-          }}>
-          {item.hashtags.map((item, index) => (
-            <Text key={index} style={itemPostStyle.tag}>
-              #{item.title}
-            </Text>
-          ))}
-        </View>
-      )}
+      {item.images && item.images.length > 0 && <GridImage arrImages={item.images} />}
       {/* interact */}
       <View style={itemPostStyle.interactContainer}>
         {/* like */}
@@ -85,7 +127,7 @@ export default ItemPost = props => {
           style={itemPostStyle.itemInteract}
           onPress={() => setLike(!like)}>
           <Image
-            style={{height: 20, width: 20}}
+            style={{ height: 20, width: 20 }}
             source={like ? Assets.icons.heartFill : Assets.icons.heart}
           />
           <Text style={itemPostStyle.interactLabel}>{item.likeCount}</Text>
