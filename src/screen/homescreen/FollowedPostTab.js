@@ -30,11 +30,14 @@ const FollowedPostTab = () => {
         timeOutId.current = setTimeout(() => {
           AxiosInstance().post('/post/count-view-post', {
             post_id: viewableItems[0].item._id,
-          })          
+          });
         }, 5000);
 
         viewableItems.forEach(item => {
-          if ( viewedItemIds.length > 0 && !viewedItemIds.includes(item.item._id)) {
+          if (
+            viewedItemIds.length > 0 &&
+            !viewedItemIds.includes(item.item._id)
+          ) {
             setViewedItemIds(prevViewedItemIds => {
               if (!prevViewedItemIds.includes(item.item._id)) {
                 AxiosInstance().post('/post/set-post-viewed', {
