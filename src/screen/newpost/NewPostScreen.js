@@ -116,12 +116,15 @@ const NewPostScreen = props => {
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
-    selected.forEach(id => {
-      formData.append('tagUsers', id);
-    });
-    hashTagList.forEach(id => {
-      formData.append('hashtags', id);
-    });
+
+    selected.length > 0 &&
+      selected.forEach(id => {
+        formData.append('tagUsers', id);
+      });
+    hashTagList.length > 0 &&
+      hashTagList.forEach(item => {
+        formData.append('hashtags', item);
+      });
 
     images.forEach((image, index) => {
       formData.append('images', {
