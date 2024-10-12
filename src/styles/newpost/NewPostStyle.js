@@ -243,8 +243,18 @@ export const newPostStyle = {
     fontSize: 16,
     color: 'black',
   },
-  hashTagRow: {
+  dataDialogRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 10,
+  },
+  primaryText: {
+    fontFamily: Fonts.roboto.medium,
+    fontSize: 16,
+    color: Colors.primary,
+  },
+  showDataFromDialog: {
+    gap: 15,
+    marginVertical: 20,
   },
 };

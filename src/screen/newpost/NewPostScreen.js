@@ -10,7 +10,7 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
@@ -52,6 +52,8 @@ const NewPostScreen = props => {
   const [privacyStatus, setPrivacyStatus] = useState('public');
   const [modalTagUserVisible, setModalTagUserVisible] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [selectedFullNames, setSelectedFullNames] = useState([]);
+
   const [data, setData] = useState([]);
   const [fetchAPIStatus, setFetchAPIStatus] = useState('loading');
   const [hashTagList, setHashTagList] = useState([]);
@@ -114,8 +116,12 @@ const NewPostScreen = props => {
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
-    formData.append('tagUsers', selected);
-    formData.append('hashtags', hashTagList);
+    selected.forEach(id => {
+      formData.append('tagUsers', id);
+    });
+    hashTagList.forEach(id => {
+      formData.append('hashtags', id);
+    });
 
     images.forEach((image, index) => {
       formData.append('images', {
@@ -135,7 +141,16 @@ const NewPostScreen = props => {
       });
     });
 
-    dispatch(APICreatePost(formData));
+    dispatch(APICreatePost(formData))
+      .unwrap()
+      .then(res => {
+        ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+      })
+      .catch(err => {
+        console.log(err);
+
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
   };
 
   const handleTagUser = () => {
@@ -168,6 +183,22 @@ const NewPostScreen = props => {
       </View>
     );
   };
+
+  const renderedFullNames = useMemo(() => {
+    return selectedFullNames.map((item, index) => (
+      <Text style={newPostStyle.primaryText} key={index}>
+        @{item}
+      </Text>
+    ));
+  }, [selectedFullNames]);
+
+  const renderedHashTags = useMemo(() => {
+    return hashTagList.map((item, index) => (
+      <Text style={newPostStyle.primaryText} key={index}>
+        #{item}
+      </Text>
+    ));
+  }, [hashTagList]);
   return (
     <View style={newPostStyle.container}>
       <AppHeader
@@ -176,6 +207,7 @@ const NewPostScreen = props => {
         rightButtonTitle={t('newPostScreen.post')}
         rightButtonAction={handleCreatePost}
       />
+
       <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
         <View style={newPostStyle.bodyContainer}>
           <View style={newPostStyle.accountContainer}>
@@ -197,7 +229,7 @@ const NewPostScreen = props => {
                 itemTextStyle={newPostStyle.dropdownLabel}
                 onChange={item => {
                   setValue(item.value);
-                  setIcStatus(item.value);
+                  setPrivacyStatus(item.value);
                 }}
                 renderLeftIcon={() => (
                   <Image
@@ -232,6 +264,23 @@ const NewPostScreen = props => {
               style={newPostStyle.contentPost}
             />
           </View>
+
+          <View style={newPostStyle.showDataFromDialog}>
+            <View>
+              {selectedFullNames.length > 0 && (
+                <View style={newPostStyle.dataDialogRow}>
+                  {renderedFullNames}
+                </View>
+              )}
+            </View>
+            <View>
+              {hashTagList.length > 0 && (
+                <View style={newPostStyle.dataDialogRow}>
+                  {renderedHashTags}
+                </View>
+              )}
+            </View>
+          </View>
           <View style={newPostStyle.showAttachContainer}>
             {itemSelected?.[0]?.uri && isPreviewed ? renderImg() : ''}
             <View style={newPostStyle.attachmentContainer}>
@@ -255,128 +304,135 @@ const NewPostScreen = props => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* modal tag user */}
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalTagUserVisible}
-            onRequestClose={() => {
-              setModalTagUserVisible(!modalTagUserVisible);
-            }}>
-            <View style={newPostStyle.modalView}>
-              <View style={newPostStyle.centeredView}>
-                <Text style={newPostStyle.modalTitle}>Tag User</Text>
-                <MultiSelect
-                  style={newPostStyle.dropdown}
-                  placeholderStyle={newPostStyle.placeholderStyle}
-                  selectedTextStyle={newPostStyle.selectedTextStyle}
-                  inputSearchStyle={newPostStyle.inputSearchStyle}
-                  iconStyle={newPostStyle.iconStyle}
-                  data={userData}
-                  labelField="fullname"
-                  valueField="id"
-                  placeholder="Select users"
-                  value={selected}
-                  search
-                  searchPlaceholder="Search..."
-                  onChange={item => {
-                    setSelected(item);
-                  }}
-                  renderLeftIcon={() => (
-                    <Image
-                      source={Assets.icons.tagUser}
-                      style={{marginRight: 10}}
-                    />
-                  )}
-                  renderItem={renderItem}
-                  renderSelectedItem={(item, unSelect) => (
-                    <TouchableOpacity
-                      onPress={() => unSelect && unSelect(item)}
-                      key={item.id}>
-                      <View style={newPostStyle.selectedStyle}>
-                        <Text style={newPostStyle.textSelectedStyle}>
-                          {item.fullname}
-                        </Text>
-                        <Image
-                          source={Assets.icons.delete}
-                          style={{width: 16, height: 16}}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                />
-
-                <TouchableOpacity
-                  style={newPostStyle.cancelBtn}
-                  onPress={() => setModalTagUserVisible(false)}>
-                  <Text style={newPostStyle.cancel}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-          {/*  */}
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalHashTagVisible}
-            onRequestClose={() => {
-              setModalHashtagVisible(!modalHashTagVisible);
-            }}>
-            <View style={newPostStyle.modalView}>
-              <View style={newPostStyle.centeredView}>
-                <Text style={newPostStyle.modalTitle}>Hash Tag</Text>
-                <View style={newPostStyle.inputRow}>
-                  <TextInput
-                    placeholder="Enter your hashtag"
-                    placeholderTextColor={Colors.secondary}
-                    value={hashTagField}
-                    onChangeText={text => setHashTagField(text)}
-                    style={newPostStyle.hashTagInput}
-                  />
-                  <TouchableOpacity
-                    style={newPostStyle.addBtn}
-                    onPress={() => {
-                      hashTagList.push(hashTagField);
-                      console.log(hashTagList);
-
-                      setHashTagField('');
-                    }}>
-                    <Text style={newPostStyle.addLabel}>Add</Text>
-                  </TouchableOpacity>
-                </View>
-                {hashTagList.length > 0 && (
-                  <View style={newPostStyle.hashTagRow}>
-                    {hashTagList?.map((item, index) => {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          style={newPostStyle.selectedStyle}
-                          onPress={() => {
-                            hashTagList.splice(index, 1);
-                          }}>
-                          <Text style={newPostStyle.textSelectedStyle}>
-                            {item}
-                          </Text>
-                          <Image
-                            source={Assets.icons.delete}
-                            style={{width: 16, height: 16}}
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
-
-                <TouchableOpacity
-                  style={newPostStyle.cancelBtn}
-                  onPress={() => setModalTagUserVisible(false)}>
-                  <Text style={newPostStyle.cancel}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </View>
       </ScrollView>
+      {/* modal tag user */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalTagUserVisible}
+        onRequestClose={() => {
+          setModalTagUserVisible(!modalTagUserVisible);
+        }}>
+        <View style={newPostStyle.modalView}>
+          <View style={newPostStyle.centeredView}>
+            <Text style={newPostStyle.modalTitle}>Tag User</Text>
+            <MultiSelect
+              style={newPostStyle.dropdown}
+              placeholderStyle={newPostStyle.placeholderStyle}
+              selectedTextStyle={newPostStyle.selectedTextStyle}
+              inputSearchStyle={newPostStyle.inputSearchStyle}
+              iconStyle={newPostStyle.iconStyle}
+              data={userData}
+              labelField="fullname"
+              valueField="id"
+              placeholder="Select users"
+              value={selected}
+              search
+              searchPlaceholder="Search..."
+              onChange={item => {
+                setSelected(item);
+                const updatedFullNames = item.map(id => {
+                  const user = userData.find(ele => ele.id === id);
+                  return user?.fullname;
+                });
+                setSelectedFullNames(updatedFullNames);
+              }}
+              renderLeftIcon={() => (
+                <Image
+                  source={Assets.icons.tagUser}
+                  style={{marginRight: 10}}
+                />
+              )}
+              renderItem={renderItem}
+              renderSelectedItem={(item, unSelect) => (
+                <TouchableOpacity
+                  onPress={() => unSelect && unSelect(item)}
+                  key={item.id}>
+                  <View style={newPostStyle.selectedStyle}>
+                    <Text style={newPostStyle.textSelectedStyle}>
+                      {item.fullname}
+                    </Text>
+                    <Image
+                      source={Assets.icons.delete}
+                      style={{width: 16, height: 16}}
+                    />
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+
+            <TouchableOpacity
+              style={newPostStyle.cancelBtn}
+              onPress={() => setModalTagUserVisible(false)}>
+              <Text style={newPostStyle.cancel}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      {/*  */}
+      {/* Modal hashtag */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalHashTagVisible}
+        onRequestClose={() => {
+          setModalHashtagVisible(!modalHashTagVisible);
+        }}>
+        <View style={newPostStyle.modalView}>
+          <View style={newPostStyle.centeredView}>
+            <Text style={newPostStyle.modalTitle}>Hash Tag</Text>
+            <View style={newPostStyle.inputRow}>
+              <TextInput
+                placeholder="Enter your hashtag"
+                placeholderTextColor={Colors.secondary}
+                value={hashTagField}
+                onChangeText={text => setHashTagField(text)}
+                style={newPostStyle.hashTagInput}
+              />
+              <TouchableOpacity
+                style={newPostStyle.addBtn}
+                onPress={() => {
+                  !!hashTagField &&
+                    setHashTagList(prevList => [...prevList, hashTagField]);
+                  setHashTagField('');
+                }}>
+                <Text style={newPostStyle.addLabel}>Add</Text>
+              </TouchableOpacity>
+            </View>
+            {hashTagList.length > 0 && (
+              <View style={newPostStyle.dataDialogRow}>
+                {hashTagList?.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={newPostStyle.selectedStyle}
+                      onPress={() => {
+                        setHashTagList(prevList => {
+                          const newList = [...prevList];
+                          newList.splice(index, 1);
+                          return newList;
+                        });
+                      }}>
+                      <Text style={newPostStyle.textSelectedStyle}>{item}</Text>
+                      <Image
+                        source={Assets.icons.delete}
+                        style={{width: 16, height: 16}}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            )}
+
+            <TouchableOpacity
+              style={newPostStyle.cancelBtn}
+              onPress={() => setModalHashtagVisible(false)}>
+              <Text style={newPostStyle.cancel}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
