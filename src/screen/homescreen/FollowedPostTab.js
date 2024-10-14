@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import ItemPost from '../../components/ItemPost';
 import { useDispatch } from 'react-redux';
-import { APICountViewPost, APIFollowingPost, APISetPostViewd } from '../../store/api/FollowedPostAPI';
+import { APICountViewPost, APIFollowingPost, APISetPostViewd } from '../../store/api/PostAPI';
 
 const FollowedPostTab = () => {
   // const {scrollHandler} = props;
