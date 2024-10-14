@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   TextInput,
@@ -14,34 +15,34 @@ import AppHeader from '../../components/Header';
 import {Assets} from '../../styles';
 import {useDispatch} from 'react-redux';
 import {APIGetPostDetail} from '../../store/api/PostAPI';
-import ItemPostInDetail from '../../components/ItemPostInDetail';
+import ItemPost from '../../components/ItemPost';
 
 const PostDetailScreen = props => {
   const post_id = props.route?.params?.post_id;
-  // console.log(post_id);
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
 
-  const [post, setPost] = useState('');
+  const [data, setData] = useState('');
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
-        setPost(res.data);
+        setData(res?.data);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   }, [post_id]);
+
   return (
     <View style={postDetailStyle.container}>
       <AppHeader title={t('postDetailScreen.post')} />
       <FlatList
         style={{flex: 1}}
-        data={post?.comments?.list}
+        data={data?.comments?.list}
         renderItem={({item}) => (
           <View style={{padding: 10}}>
             <CommentItem comment={item} inputRef={inputRef} />
@@ -50,12 +51,12 @@ const PostDetailScreen = props => {
         keyExtractor={item => item._id}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<ItemPostInDetail item={post} />}
+        ListHeaderComponent={<ItemPost item={data?.post} />}
       />
       <View style={postDetailStyle.footer}>
         <Image
           style={postDetailStyle.avatarFooter}
-          source={{uri: post?.post?.author?.avatar?.url}}
+          source={{uri: data?.post?.author?.avatar?.url}}
         />
         <TextInput
           ref={inputRef}
