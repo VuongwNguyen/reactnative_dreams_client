@@ -35,14 +35,14 @@ const customLocale = {
 dayjs.locale(customLocale);
 
 export default ItemPost = props => {
-  const {item, isLike = true, handelItem} = props;
+  const {item, isLike = true} = props;
   const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
       style={itemPostStyle.container}
       // onPress={() => navigation.navigate(stackName.postDetail.name)}
-      >
+    >
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
@@ -57,7 +57,7 @@ export default ItemPost = props => {
           <Text style={Typography.postName}>{item.author?.fullname}</Text>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {convertTimePost(item.createdAt)}
+              {dayjs(item.createdAt).locale('vi').fromNow()}
             </Text>
             {item.privacy_status == 'public' && (
               <View
@@ -88,7 +88,6 @@ export default ItemPost = props => {
         {/* content */}
         <TouchableOpacity onPress={() => {}}>
           <Text numberOfLines={3} style={Typography.postContent}>
-            {'\t'}
             {item.content}
           </Text>
         </TouchableOpacity>
