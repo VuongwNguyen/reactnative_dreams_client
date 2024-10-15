@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../app/Colors';
 import {Typography} from '../app/Typographys';
+
 export const ProfileStyle = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 10,
+    padding: 10,
     backgroundColor: '#fff',
   },
   contentContainer: {
@@ -40,7 +40,7 @@ export const ProfileStyle = StyleSheet.create({
   },
   editBtnContainer: {
     width: '100%',
-    marginVertical: 15,
+    marginVertical: 10,
   },
   btnEditProfile: {
     width: '90%',

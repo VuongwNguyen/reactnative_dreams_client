@@ -39,19 +39,26 @@ export default ItemPost = props => {
   const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
   return (
-    <TouchableWithoutFeedback
+    <View
       style={itemPostStyle.container}
-      onPress={() =>
-        navigation.navigate(stackName.postDetail.name, {post_id: item._id})
-      }>
+      // onPress={() =>
+      //   navigation.navigate(stackName.postDetail.name, {post_id: item._id})}
+    >
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
         {item?.author?.avatar && (
-          <Image
-            source={{uri: item.author?.avatar?.url}}
-            style={itemPostStyle.avatar}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(stackName.profile.name, {
+                userViewId: item?.author?._id,
+              });
+            }}>
+            <Image
+              source={{uri: item.author?.avatar?.url}}
+              style={itemPostStyle.avatar}
+            />
+          </TouchableOpacity>
         )}
         {/* name, hour */}
         <View>
@@ -81,7 +88,11 @@ export default ItemPost = props => {
         </View>
       </View>
       {/* content */}
-      <View style={itemPostStyle.content}>
+      <TouchableWithoutFeedback
+        style={itemPostStyle.content}
+        onPress={() =>
+          navigation.navigate(stackName.postDetail.name, {post_id: item._id})
+        }>
         {/* title */}
         {!!item?.title && (
           <Text numberOfLines={2} style={Typography.postTitle}>
@@ -95,10 +106,9 @@ export default ItemPost = props => {
           </Text>
         </TouchableOpacity>
         {/* tag user */}
-        <View style={{flexDirection: 'row', gap: 5}}>
-          {item?.tagUsers &&
-            item.tagUsers.length > 0 &&
-            item.tagUsers.map((user, index) => (
+        {item?.tagUsers && item.tagUsers.length > 0 && (
+          <View style={{flexDirection: 'row', gap: 5}}>
+            {item.tagUsers.map((user, index) => (
               <TouchableOpacity key={index} onPress={() => {}}>
                 <Text
                   numberOfLines={3}
@@ -114,7 +124,8 @@ export default ItemPost = props => {
                 </Text>
               </TouchableOpacity>
             ))}
-        </View>
+          </View>
+        )}
         {/* hashTags */}
         <View style={{flexDirection: 'row', gap: 5}}>
           {item?.hashtags &&
@@ -136,7 +147,7 @@ export default ItemPost = props => {
               </TouchableOpacity>
             ))}
         </View>
-      </View>
+      </TouchableWithoutFeedback>
       {/* image */}
       {item?.images && item?.images.length > 0 && (
         <GridImage arrImages={item.images} />
@@ -166,6 +177,6 @@ export default ItemPost = props => {
           <Text style={itemPostStyle.interactLabel}>{item?.share}</Text>
         </TouchableOpacity>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };

@@ -28,7 +28,7 @@ export const itemPostStyle = StyleSheet.create({
   },
   content: {
     marginTop: 10,
-    gap: 10,
+    gap: 5,
   },
   interactContainer: {
     alignContent: 'center',
