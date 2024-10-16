@@ -18,7 +18,7 @@ const getInterpolation = (
   startOut,
   endOut,
   startIn = 0,
-  endIn = 320,
+  endIn = 500,
 ) => {
   'worklet';
   return interpolate(value, [startIn, endIn], [startOut, endOut], {
