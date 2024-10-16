@@ -33,7 +33,6 @@ const FollowedPostTab = () => {
       },
       onViewableItemsChanged: ({viewableItems}) => {
         clearTimeout(timeOutId.current);
-
         timeOutId.current = setTimeout(() => {   
           if (viewableItems.length > 0) {
             dispatch(APICountViewPost(viewableItems[0].item._id))
@@ -42,7 +41,6 @@ const FollowedPostTab = () => {
 
         viewableItems.forEach(item => {          
           if ( viewableItems.length > 0 && !viewableItems.includes(item.item._id)) {            
-
             setViewedItemIds(prevViewedItemIds => {
               if (!prevViewedItemIds.includes(item.item._id)) {
                 dispatch(APISetPostViewd(item.item._id))

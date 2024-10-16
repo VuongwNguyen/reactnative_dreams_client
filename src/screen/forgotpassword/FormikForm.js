@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {forgotPasswordSchema} from '../../configs/validateSchema/forgotPasswordSchema';
 import {useDispatch} from 'react-redux';
-import {apiSendOtpResetPW} from '../../store/api/AccountAPI';
+import {apiSendOtpResetPW, APIVerifyAccount} from '../../store/api/AccountAPI';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 
@@ -26,7 +26,7 @@ export const FormikFG = props => {
         const body = {
           email: values.emailAddress,
         };
-        dispatch(apiSendOtpResetPW(body))
+        dispatch(APIVerifyAccount(body))
           .unwrap()
           .then(res => {
             resetForm();

@@ -150,8 +150,6 @@ const NewPostScreen = props => {
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
       })
       .catch(err => {
-        console.log(err);
-
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   };

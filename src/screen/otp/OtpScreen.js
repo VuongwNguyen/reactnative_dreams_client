@@ -19,7 +19,7 @@ import AppHeader from '../../components/Header';
 
 const OtpScreen = props => {
   const {navigation, route} = props;
-  const email = props.route?.params?.email;
+  const email = route?.params?.email;
   const isForgot = props.route?.params?.isForgot;
   const {t} = useTranslation();
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];

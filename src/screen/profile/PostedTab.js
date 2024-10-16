@@ -1,41 +1,45 @@
-
-import { FlatList } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import {ActivityIndicator, FlatList, ToastAndroid, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import ItemPost from '../../components/ItemPost';
-import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
-import AxiosInstance from '../../configs/axiosInstance';
+import {useDispatch} from 'react-redux';
 
+import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
+import {APIGetPostByUser} from '../../store/api/PostAPI';
+import Animated from 'react-native-reanimated';
 
-const PostedTab = () => {
-
+const PostedTab = props => {
+  const {scrollHandler} = props;
+  const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState('67010e3da2ce9ed2d170ba13');
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await AxiosInstance().get('/post/get-post-by-user/6708c63af2f0d8b72a591d55/1/10');
-        setDataPosts(response.data.list);
+    dispatch(APIGetPostByUser(userId))
+      .unwrap()
+      .then(res => {
+        setDataPosts(res.data.list);
         setLoading(false);
-      } catch (error) {
-
-      }
-    };
-    fetchData();
-  }, []);
-  // console.log(dataPosts)
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, [userId]);
   return (
-    <FlatList
-      style={PostedTabStyle.container}
-      scrollEnabled={false}
-      nestedScrollEnabled={true}
-      data={dataPosts}
-      renderItem={({ item }) => <ItemPost item={item} />}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <View style={PostedTabStyle.container}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#00ff00" />
+      ) : (
+        <Animated.FlatList
+          onScroll={scrollHandler}
+          data={dataPosts}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => <ItemPost item={item} />}
+          keyExtractor={item => item._id}
+        />
+      )}
+    </View>
   );
 };
 
