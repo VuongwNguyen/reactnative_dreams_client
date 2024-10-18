@@ -6,6 +6,7 @@ import {
   TextInput,
   ToastAndroid,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import CommentItem from '../../components/CommentItem';
@@ -15,9 +16,11 @@ import {Assets} from '../../styles';
 import {useDispatch} from 'react-redux';
 import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPostInDetail from '../../components/ItemPostInDetail';
+import AxiosInstance from '../../configs/axiosInstance';
 
 const PostDetailScreen = props => {
-  const post_id = props.route?.params?.post_id;
+  // const post_id = props.route?.params?.post_id;
+  const post_id = '6704e153922d674bb75329db';
   // console.log(post_id);
 
   const {t} = useTranslation();
@@ -25,27 +28,60 @@ const PostDetailScreen = props => {
   const dispatch = useDispatch();
 
   const [post, setPost] = useState('');
+  const [list, setList] = useState([]);
+  const [content, setContent] = useState('');
+  const [commentFocus, setCommentFocus] = useState(null);
+  const [replyId, setReplyId] = useState(null);
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
-        setPost(res.data);
+        setPost(res.data);        
+        setList(res.data?.comments?.list);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   }, [post_id]);
+
+  const handleSendComment = () => {
+    try {
+      const data = {
+        content,
+        post_id,
+      }
+      if (replyId) {
+        data.reply_comment_id = replyId
+      }
+      AxiosInstance().post('/comment', data).then(res => {
+        setContent('');
+        inputRef.current.clear();
+        dispatch(APIGetPostDetail(post_id))
+          .unwrap()
+          .then(res => {
+            setPost(res.data);
+            setList(res.data?.comments?.list);
+          })
+          .catch(err => {
+            ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          });
+      })
+    } catch (error) {
+      console.log('Error', error);
+    }
+  };
   return (
-    <View style={postDetailStyle.container}>
+    <TouchableWithoutFeedback onPress={() => setCommentFocus(null)}>
+      <View style={postDetailStyle.container}>
       <AppHeader title={t('postDetailScreen.post')} />
       <FlatList
         style={{flex: 1}}
-        data={post?.comments?.list}
+        data={list}
         renderItem={({item}) => (
-          <View style={{padding: 10}}>
-            <CommentItem comment={item} inputRef={inputRef} />
-          </View>
+          <TouchableOpacity style={{padding: 10}} onLongPress={() => console.log(item)}>
+            <CommentItem comment={item} inputRef={inputRef} commentFocus={commentFocus} setCommentFocus={setCommentFocus} setList={setList} replyId={replyId} setReplyId={setReplyId}/>
+          </TouchableOpacity>
         )}
         keyExtractor={item => item._id}
         showsHorizontalScrollIndicator={false}
@@ -59,14 +95,17 @@ const PostDetailScreen = props => {
         />
         <TextInput
           ref={inputRef}
+          value={content}
+          onChangeText={setContent}
           style={postDetailStyle.inputComment}
           placeholder={t('postDetailScreen.writeComment')}
         />
-        <TouchableOpacity style={postDetailStyle.buttonSendComment}>
+        <TouchableOpacity onPress={handleSendComment} style={postDetailStyle.buttonSendComment}>
           <Image source={Assets.icons.send} style={postDetailStyle.iconSend} />
         </TouchableOpacity>
       </View>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -8,15 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Assets} from '../styles';
+import {Assets, Colors} from '../styles';
+import AxiosInstance from '../configs/axiosInstance';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
 const CommentItem = memo(props => {
-  const {comment, level = 0, inputRef} = props;
+  const {comment, level = 0, inputRef, commentFocus, setCommentFocus, setReplyId} = props;
   const {t} = useTranslation();
   const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
+  const [currentItem, setCurrentItem] = useState(comment);
+
 
   const handleViewMoreReplies = () => {
     setVisibleReplies(prev => prev + INCREMENT_REPLIES);
@@ -27,10 +30,26 @@ const CommentItem = memo(props => {
   };
   const handleRefInput = () => {
     inputRef.current.focus();
+    setReplyId(comment._id);
+  };
+
+  const onHandleTym = () => {
+    if(comment.likes == currentItem.likes){
+      setCurrentItem({...currentItem, likes: currentItem.likes + 1});
+    }else{
+      setCurrentItem({...currentItem, likes: currentItem.likes - 1});
+    }
+    AxiosInstance().post('/comment/like', {
+      comment_id: comment._id,
+    });
+  };
+  const onDeleteComment = () => {
+    AxiosInstance().delete(`/comment/${comment._id}`);
+    setCommentFocus(null);
   };
 
   return (
-    <View style={[styles.container, {marginLeft: level * 10}]}>
+    <TouchableOpacity onLongPress={() => setCommentFocus(comment._id)} style={[styles.container, {marginLeft: level * 10}]}>
       <View style={styles.commentRow}>
         <Image
           style={styles.avatar}
@@ -51,6 +70,7 @@ const CommentItem = memo(props => {
           </View>
         </View>
         <TouchableOpacity
+          onPress={onHandleTym}
           style={{
             flexDirection: 'column',
             height: 80,
@@ -58,7 +78,7 @@ const CommentItem = memo(props => {
             justifyContent: 'center',
           }}>
           <Image source={Assets.icons.heart} style={{height: 20, width: 20}} />
-          <Text>{comment.likes}</Text>
+          <Text>{currentItem.likes}</Text>
         </TouchableOpacity>
       </View>
 
@@ -113,7 +133,25 @@ const CommentItem = memo(props => {
           )}
         </>
       )} */}
-    </View>
+
+      { commentFocus === comment._id &&
+        <View
+          style={{
+            gap: 10,
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            backgroundColor: Colors.primary,
+            borderBottomEndRadius: 5,
+            borderBottomStartRadius: 5,
+            borderTopStartRadius: 5,
+            padding: 5,
+          }}>
+          <Text onPress={() => onDeleteComment()} style={{color: 'white'}}>Xóa</Text>
+          <Text style={{color: 'white'}}>Cập nhật</Text>
+        </View>
+      }
+    </TouchableOpacity>
   );
 });
 
