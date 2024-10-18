@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const TabCallScreen = () => {
+const Camera = () => {
   return (
     <View>
-      <Text>TabCallScreen</Text>
+      <Text>Camera</Text>
     </View>
   );
 };
 
-export default TabCallScreen;
+export default Camera;
 
 const styles = StyleSheet.create({});
