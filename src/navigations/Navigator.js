@@ -1,15 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { stackName } from './screens';
-
-
-
+import {createStackNavigator} from '@react-navigation/stack';
+import {stackName} from './screens';
 
 const Stack = createStackNavigator();
 
 export function Navigator() {
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{headerShown: false}}
       initialRouteName={stackName.bottomTab.name}>
       <Stack.Screen
         name={stackName.register.name}
@@ -22,10 +19,6 @@ export function Navigator() {
       <Stack.Screen
         name={stackName.profile.name}
         component={stackName.profile.component}
-      />
-      <Stack.Screen
-        name={stackName.personalProfile.name}
-        component={stackName.personalProfile.component}
       />
       <Stack.Screen
         name={stackName.postDetail.name}

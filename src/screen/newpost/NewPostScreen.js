@@ -150,8 +150,6 @@ const NewPostScreen = props => {
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
       })
       .catch(err => {
-        console.log(err);
-
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   };
@@ -175,13 +173,15 @@ const NewPostScreen = props => {
     return {
       id: item?.following?._id,
       fullname: `${item?.following?.first_name} ${item?.following?.last_name}`,
+      avt: item?.following?.avatar.url,
     };
   });
 
   const renderItem = item => {
     return (
       <View style={newPostStyle.item} key={item.id}>
-        <Image source={Assets.icons.user} />
+        {/* <Image source={Assets.icons.user} /> */}
+        <Image source={{uri: item.avt}} style={{ width:24,height:24,borderRadius:12}} />
         <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
       </View>
     );
@@ -353,6 +353,7 @@ const NewPostScreen = props => {
                   onPress={() => unSelect && unSelect(item)}
                   key={item.id}>
                   <View style={newPostStyle.selectedStyle}>
+                    <Image source={{uri: item?.avt}} style={{ width:24,height:24,borderRadius:12}}/>
                     <Text style={newPostStyle.textSelectedStyle}>
                       {item.fullname}
                     </Text>

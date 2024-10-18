@@ -177,7 +177,7 @@ export const newPostStyle = {
   },
   selectedStyle: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 5,
     alignItems: 'center',
     borderRadius: 14,
     backgroundColor: 'white',
