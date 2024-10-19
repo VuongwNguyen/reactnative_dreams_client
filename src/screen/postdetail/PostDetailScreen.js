@@ -33,12 +33,12 @@ const PostDetailScreen = props => {
   const [commentFocus, setCommentFocus] = useState(null);
   const [replyId, setReplyId] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => {    
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
         setPost(res.data);        
-        setList(res.data?.comments?.list);
+        setList(res.data?.comments?.list);        
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);

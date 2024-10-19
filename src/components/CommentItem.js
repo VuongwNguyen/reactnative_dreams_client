@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   FlatList,
@@ -15,12 +15,18 @@ const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
 const CommentItem = memo(props => {
-  const {comment, level = 0, inputRef, commentFocus, setCommentFocus, setReplyId} = props;
+  const {
+    comment,
+    level = 0,
+    inputRef,
+    commentFocus,
+    setCommentFocus,
+    setReplyId,
+  } = props;
   const {t} = useTranslation();
   const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
   const [currentItem, setCurrentItem] = useState(comment);
-
-
+  const [childComments, setChildComments] = useState([]);
   const handleViewMoreReplies = () => {
     setVisibleReplies(prev => prev + INCREMENT_REPLIES);
   };
@@ -34,22 +40,37 @@ const CommentItem = memo(props => {
   };
 
   const onHandleTym = () => {
-    if(comment.likes == currentItem.likes){
-      setCurrentItem({...currentItem, likes: currentItem.likes + 1});
-    }else{
-      setCurrentItem({...currentItem, likes: currentItem.likes - 1});
+    if (!comment.isLike) {
+      if (comment.likes == currentItem.likes) {
+        setCurrentItem({...currentItem, likes: currentItem.likes + 1});
+      } else {
+        setCurrentItem({...currentItem, likes: currentItem.likes - 1});
+      }
+      AxiosInstance().post('/comment/like', {
+        comment_id: comment._id,
+      });
     }
-    AxiosInstance().post('/comment/like', {
-      comment_id: comment._id,
-    });
   };
   const onDeleteComment = () => {
     AxiosInstance().delete(`/comment/${comment._id}`);
     setCommentFocus(null);
   };
+  useEffect(() => {
+    const getChildComment = async () => {
+      if (comment.childCommentCount > 0) {
+        const res = await AxiosInstance().get(
+          `/comment/child-comments?comment_id=${comment._id}`,
+        );
+        setChildComments(res.data.list);
+      }
+    };
+    getChildComment();
+  }, [comment]);
 
   return (
-    <TouchableOpacity onLongPress={() => setCommentFocus(comment._id)} style={[styles.container, {marginLeft: level * 10}]}>
+    <TouchableOpacity
+      onLongPress={() => setCommentFocus(comment._id)}
+      style={[styles.container, {marginLeft: level * 10}]}>
       <View style={styles.commentRow}>
         <Image
           style={styles.avatar}
@@ -82,10 +103,10 @@ const CommentItem = memo(props => {
         </TouchableOpacity>
       </View>
 
-      {/* {comment.childCommentCount > 0 && (
+      {comment.childCommentCount > 0 && (
         <>
           <FlatList
-            data={comment.replies.slice(0, visibleReplies)}
+            data={childComments}
             renderItem={({item}) => (
               <View>
                 <CommentItem comment={item} level={level + 1} />
@@ -96,7 +117,7 @@ const CommentItem = memo(props => {
             showsVerticalScrollIndicator={false}
             style={styles.replyList}
           />
-          {visibleReplies < comment.replies.length && (
+          {visibleReplies < comment.childCommentCount && (
             <TouchableOpacity
               style={styles.button}
               onPress={handleViewMoreReplies}>
@@ -113,7 +134,7 @@ const CommentItem = memo(props => {
                 <Text style={styles.showMoreText}>
                   {t('postDetailScreen.view')}{' '}
                   {Math.min(
-                    comment.replies.length - visibleReplies,
+                    comment.childCommentCount - visibleReplies,
                     INCREMENT_REPLIES,
                   )}{' '}
                   {t('postDetailScreen.moreReplies')}
@@ -121,7 +142,7 @@ const CommentItem = memo(props => {
               </View>
             </TouchableOpacity>
           )}
-          {visibleReplies >= comment.replies.length && (
+          {visibleReplies >= comment.childCommentCount && (
             <TouchableOpacity style={styles.button} onPress={handleHideReplies}>
               <View style={[styles.commentRow, {alignItems: 'center'}]}>
                 <View style={styles.lineShow} />
@@ -132,9 +153,9 @@ const CommentItem = memo(props => {
             </TouchableOpacity>
           )}
         </>
-      )} */}
+      )}
 
-      { commentFocus === comment._id &&
+      {commentFocus === comment._id && (
         <View
           style={{
             gap: 10,
@@ -147,10 +168,12 @@ const CommentItem = memo(props => {
             borderTopStartRadius: 5,
             padding: 5,
           }}>
-          <Text onPress={() => onDeleteComment()} style={{color: 'white'}}>Xóa</Text>
+          <Text onPress={() => onDeleteComment()} style={{color: 'white'}}>
+            Xóa
+          </Text>
           <Text style={{color: 'white'}}>Cập nhật</Text>
         </View>
-      }
+      )}
     </TouchableOpacity>
   );
 });
