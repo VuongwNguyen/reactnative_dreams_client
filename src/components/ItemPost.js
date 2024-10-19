@@ -41,7 +41,7 @@ export default ItemPost = props => {
   return (
     <TouchableWithoutFeedback
       style={itemPostStyle.container}
-      // onPress={() => navigation.navigate(stackName.postDetail.name)}
+      onPress={() => navigation.navigate(stackName.postDetail.name)}
     >
       {/* header */}
       <View style={itemPostStyle.header}>
