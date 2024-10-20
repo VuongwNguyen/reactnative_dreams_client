@@ -116,3 +116,15 @@ export const APIChangePassword = createAsyncThunk(
     }
   },
 );
+
+export const APILogout = createAsyncThunk(
+  'account/logout',
+  async (_, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post('/account/logout');
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

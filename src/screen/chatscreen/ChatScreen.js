@@ -14,6 +14,7 @@ import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {UserOnline} from './components';
 import {tr} from 'rn-emoji-keyboard';
+import {logoutRef} from '../../components/LogoutDialog';
 
 const {width, height} = Dimensions.get('window');
 
@@ -48,7 +49,11 @@ const ChatScreen = () => {
             </TouchableOpacity>
           </View>
           {/* Search */}
-          <TouchableOpacity style={styles.search}>
+          <TouchableOpacity
+            style={styles.search}
+            onPress={() => {
+              logoutRef.current.showDialog();
+            }}>
             <Image source={Assets.icons.search} style={styles.searchIcon} />
             <Text>Search ...</Text>
           </TouchableOpacity>

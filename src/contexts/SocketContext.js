@@ -1,4 +1,5 @@
 import {createContext, useContext, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {io} from 'socket.io-client';
 
 const SocketContext = createContext({});
@@ -9,6 +10,7 @@ export const SocketProvider = ({children}) => {
   const [socket, setSocket] = useState(null);
   const [usersOnline, setUsersOnline] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const {token} = useSelector(state => state.account);
 
   useEffect(() => {
     if (socket) return;
@@ -18,15 +20,15 @@ export const SocketProvider = ({children}) => {
       reconnection: true,
       retries: 10,
       auth: {
-        token: '',
+        token: token.accessToken,
       },
     });
 
     setSocket(newConnection);
 
     return () => {
+      console.log('disconnect');
       socket?.disconnect();
-      setSocket(null);
     };
   }, [socket]);
 

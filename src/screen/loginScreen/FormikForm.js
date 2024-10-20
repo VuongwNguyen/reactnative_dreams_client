@@ -88,7 +88,10 @@ const FormikForm = () => {
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={ButtonStyle.container} onPress={handleSubmit}>
+      <TouchableOpacity
+        style={ButtonStyle.container}
+        disabled={loading}
+        onPress={handleSubmit}>
         {loading ? (
           <ActivityIndicator color={'white'} size={20} />
         ) : (
