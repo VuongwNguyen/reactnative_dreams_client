@@ -61,7 +61,7 @@ const HomeScreen = props => {
       <Animated.View style={[HomeStyles.header, headerStyle]}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(stackName.personalProfile.name);
+            navigation.navigate(stackName.profile.name);
           }}>
           <Image
             style={HomeStyles.avatar}

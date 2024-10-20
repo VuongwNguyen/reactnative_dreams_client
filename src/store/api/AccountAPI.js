@@ -5,7 +5,7 @@ export const APILogin = createAsyncThunk(
   'account/login',
   async (data, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('account/login', data);
+      const response = await AxiosInstance().post('/account/login', data);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -13,11 +13,11 @@ export const APILogin = createAsyncThunk(
   },
 );
 export const APIVerifyAccount = createAsyncThunk(
-  'account/send-verify-email',
+  'account/send-verify-code',
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        'account/send-verify-email',
+        '/account/send-verify-code',
         data,
       );
       return response;
@@ -30,23 +30,10 @@ export const APISendOtpCode = createAsyncThunk(
   'account/verify-email',
   async (data, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('account/verify-email', data);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
-
-export const apiSendOtpResetPW = createAsyncThunk(
-  'account/send-code-reset-password',
-  async (data, {rejectWithValue}) => {
-    try {
       const response = await AxiosInstance().post(
-        '/account/send-code-reset-password',
+        '/account/verify-email',
         data,
       );
-      console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -74,7 +61,7 @@ export const APIRegister = createAsyncThunk(
   'account/register',
   async (data, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('account/register', data);
+      const response = await AxiosInstance().post('/account/register', data);
       console.log(response, 'register response');
       return response;
     } catch (error) {
@@ -90,7 +77,7 @@ export const APIResetPassword = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        'account/reset-password',
+        '/account/reset-password',
         data,
       );
       return response;
@@ -105,7 +92,7 @@ export const APIChangePassword = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().post(
-        'account/change-password',
+        '/account/change-password',
         data,
       );
       return response;

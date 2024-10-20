@@ -39,27 +39,35 @@ export default ItemPost = props => {
   const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
   return (
-    <TouchableWithoutFeedback
+    <View
       style={itemPostStyle.container}
-      // onPress={() => navigation.navigate(stackName.postDetail.name)}
+      // onPress={() =>
+      //   navigation.navigate(stackName.postDetail.name, {post_id: item._id})}
     >
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
-        {item.author?.avatar && (
-          <Image
-            source={{uri: item.author?.avatar?.url}}
-            style={itemPostStyle.avatar}
-          />
+        {item?.author?.avatar && (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(stackName.profile.name, {
+                userViewId: item?.author?._id,
+              });
+            }}>
+            <Image
+              source={{uri: item.author?.avatar?.url}}
+              style={itemPostStyle.avatar}
+            />
+          </TouchableOpacity>
         )}
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item.author?.fullname}</Text>
+          <Text style={Typography.postName}>{item?.author?.fullname}</Text>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item.createdAt).locale('vi').fromNow()}
+              {dayjs(item?.createdAt).locale('vi').fromNow()}
             </Text>
-            {item.privacy_status == 'public' && (
+            {item?.privacy_status == 'public' && (
               <View
                 style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
                 <View
@@ -80,22 +88,27 @@ export default ItemPost = props => {
         </View>
       </View>
       {/* content */}
-      <View style={itemPostStyle.content}>
+      <TouchableWithoutFeedback
+        style={itemPostStyle.content}
+        onPress={() =>
+          navigation.navigate(stackName.postDetail.name, {post_id: item._id})
+        }>
         {/* title */}
-        <Text numberOfLines={2} style={Typography.postTitle}>
-          {item.title}
-        </Text>
+        {!!item?.title && (
+          <Text numberOfLines={2} style={Typography.postTitle}>
+            {item.title}
+          </Text>
+        )}
         {/* content */}
         <TouchableOpacity onPress={() => {}}>
           <Text numberOfLines={3} style={Typography.postContent}>
-            {item.content}
+            {item?.content}
           </Text>
         </TouchableOpacity>
         {/* tag user */}
-        <View style={{flexDirection: 'row', gap: 5}}>
-          {item.tagUsers &&
-            item.tagUsers.length > 0 &&
-            item.tagUsers.map((user, index) => (
+        {item?.tagUsers && item.tagUsers.length > 0 && (
+          <View style={{flexDirection: 'row', gap: 5}}>
+            {item.tagUsers.map((user, index) => (
               <TouchableOpacity key={index} onPress={() => {}}>
                 <Text
                   numberOfLines={3}
@@ -111,10 +124,11 @@ export default ItemPost = props => {
                 </Text>
               </TouchableOpacity>
             ))}
-        </View>
+          </View>
+        )}
         {/* hashTags */}
         <View style={{flexDirection: 'row', gap: 5}}>
-          {item.hashtags &&
+          {item?.hashtags &&
             item.hashtags.length > 0 &&
             item.hashtags.map((item, index) => (
               <TouchableOpacity key={index} onPress={() => {}}>
@@ -133,9 +147,9 @@ export default ItemPost = props => {
               </TouchableOpacity>
             ))}
         </View>
-      </View>
+      </TouchableWithoutFeedback>
       {/* image */}
-      {item.images && item.images.length > 0 && (
+      {item?.images && item?.images.length > 0 && (
         <GridImage arrImages={item.images} />
       )}
       {/* interact */}
@@ -148,21 +162,21 @@ export default ItemPost = props => {
             style={{height: 20, width: 20}}
             source={like ? Assets.icons.heartFill : Assets.icons.heart}
           />
-          <Text style={itemPostStyle.interactLabel}>{item.likeCount}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
           <Image
             source={Assets.icons.comment}
             style={itemPostStyle.image}></Image>
-          <Text style={itemPostStyle.interactLabel}>{item.commentCount}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item?.commentCount}</Text>
         </TouchableOpacity>
         {/* share */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
           <Image source={Assets.image.share} style={itemPostStyle.image} />
-          <Text style={itemPostStyle.interactLabel}>{item.share}</Text>
+          <Text style={itemPostStyle.interactLabel}>{item?.share}</Text>
         </TouchableOpacity>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
