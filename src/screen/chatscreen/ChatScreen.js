@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
+  RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,41 +13,61 @@ import {
 import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {UserOnline} from './components';
+import {tr} from 'rn-emoji-keyboard';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const ChatScreen = () => {
+  const [refresh, setRefresh] = useState(false);
+
   const renderUsersOnline = ({item, index}) => {
     return <UserOnline name={`User - ${index}`} />;
   };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Image source={{uri: mock_image}} style={styles.avatar} />
-        <Text style={styles.label}>CHATS</Text>
-        <TouchableOpacity>
-          <Image source={Assets.icons.add} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
-      {/* Search */}
-      <TouchableOpacity style={styles.search}>
-        <Image source={Assets.icons.search} style={styles.searchIcon} />
-        <Text>Search ...</Text>
-      </TouchableOpacity>
-
+      {/* container */}
       <View>
-        <FlatList
-          contentContainerStyle={styles.user}
-          data={Array(10)}
-          renderItem={renderUsersOnline}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{width: 20}} />}
-        />
+        <ScrollView
+          scrollEnabled={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={() => {
+                setRefresh(true);
+                setTimeout(() => setRefresh(false), 1000);
+              }}
+            />
+          }>
+          {/* Header */}
+          <View style={styles.header}>
+            <Image source={{uri: mock_image}} style={styles.avatar} />
+            <Text style={styles.label}>CHATS</Text>
+            <TouchableOpacity>
+              <Image source={Assets.icons.add} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+          {/* Search */}
+          <TouchableOpacity style={styles.search}>
+            <Image source={Assets.icons.search} style={styles.searchIcon} />
+            <Text>Search ...</Text>
+          </TouchableOpacity>
+
+          {/* users online */}
+          <View>
+            <FlatList
+              contentContainerStyle={styles.user}
+              data={Array(10)}
+              renderItem={renderUsersOnline}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{width: 20}} />}
+            />
+          </View>
+        </ScrollView>
       </View>
 
+      {/* tab bar */}
       <TopBarNavigationChat />
     </View>
   );
@@ -98,7 +120,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   container: {
-    flex: 1,
+    width: width,
+    height: height,
     backgroundColor: 'white',
   },
   avatar: {

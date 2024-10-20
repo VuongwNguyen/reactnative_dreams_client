@@ -1,18 +1,81 @@
 import {
   FlatList,
   Image,
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Assets} from '../../styles';
 import {Message} from './components';
 import {useNavigation} from '@react-navigation/native';
+import EmojiPicker, {tr} from 'rn-emoji-keyboard';
+import {stackName} from '../../navigations/screens';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import {PermissionsAndroid, Platform} from 'react-native';
+
+async function hasAndroidPermission() {
+  const getCheckPermissionPromise = () => {
+    if (Platform.Version >= 33) {
+      return Promise.all([
+        PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+        ),
+        PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+        ),
+      ]).then(
+        ([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
+          hasReadMediaImagesPermission && hasReadMediaVideoPermission,
+      );
+    } else {
+      return PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      );
+    }
+  };
+
+  const hasPermission = await getCheckPermissionPromise();
+  if (hasPermission) {
+    return true;
+  }
+  const getRequestPermissionPromise = () => {
+    if (Platform.Version >= 33) {
+      return PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+      ]).then(
+        statuses =>
+          statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
+            PermissionsAndroid.RESULTS.GRANTED &&
+          statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
+            PermissionsAndroid.RESULTS.GRANTED,
+      );
+    } else {
+      return PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
+    }
+  };
+
+  return await getRequestPermissionPromise();
+}
+
+async function savePicture() {
+  if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+    return;
+  }
+
+  CameraRoll.save(tag, {type, album});
+}
 
 const MessageScreen = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [list, setList] = useState([]);
+
   const renderMesssage = ({item, index}) => {
     let images = (index === 2 && [1, 2]) || [];
 
@@ -26,6 +89,17 @@ const MessageScreen = () => {
         isNext={item.isNext}
       />
     );
+  };
+
+  const handlePick = emojiObject => {
+    console.log(emojiObject);
+    /* example emojiObject = {
+        "emoji": "❤️",
+        "name": "red heart",
+        "slug": "red_heart",
+        "unicode_version": "0.6",
+      }
+    */
   };
 
   const navigation = useNavigation();
@@ -80,20 +154,60 @@ const MessageScreen = () => {
       {/* input */}
       <View style={styles.inputArea}>
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => hasAndroidPermission()}>
             <Image source={Assets.icons.attach} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(stackName.camera.name)}>
             <Image source={Assets.icons.camera} style={styles.icon} />
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperInput}>
+          {/* <TouchableOpacity
+            onPress={() =>
+              CameraRoll.getPhotos({
+                first: 20,
+                assetType: 'Photos',
+              })
+                .then(res => setList(res.edges))
+                .catch(console.log)
+            }>
+            <Text>show</Text>
+          </TouchableOpacity> */}
           <TextInput placeholder="send message ..." style={styles.input} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsOpen(true)}>
             <Image source={Assets.icons.send} />
           </TouchableOpacity>
         </View>
       </View>
+
+      {/*emoji keyboard  */}
+      <EmojiPicker
+        onEmojiSelected={handlePick}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+
+      {/* Gallery picker */}
+      {/* <View style={{flex: 1}}>
+        <FlatList
+          data={list}
+          renderItem={({item, index}) => {
+            return (
+              <Image
+                source={{uri: item.node.image.uri}}
+                style={{
+                  flex: 1 / 3,
+                  height: 'auto',
+                  aspectRatio: 1,
+                  resizeMode: 'cover',
+                }}
+              />
+            );
+          }}
+          numColumns={3}
+        />
+      </View> */}
     </View>
   );
 };

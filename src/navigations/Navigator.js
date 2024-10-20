@@ -1,15 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { stackName } from './screens';
-
-
-
+import {createStackNavigator} from '@react-navigation/stack';
+import {stackName} from './screens';
 
 const Stack = createStackNavigator();
 
 export function Navigator() {
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{headerShown: false}}
       initialRouteName={stackName.bottomTab.name}>
       <Stack.Screen
         name={stackName.register.name}
@@ -91,6 +88,11 @@ export function Navigator() {
       <Stack.Screen
         name={stackName.conversation.name}
         component={stackName.conversation.component}
+      />
+
+      <Stack.Screen
+        name={stackName.camera.name}
+        component={stackName.camera.component}
       />
     </Stack.Navigator>
   );
