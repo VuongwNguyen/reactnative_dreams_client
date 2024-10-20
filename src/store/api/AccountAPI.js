@@ -5,9 +5,10 @@ export const APILogin = createAsyncThunk(
   'account/login',
   async (data, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('account/login', data);
+      const response = await AxiosInstance().post('/account/login', data);
       return response;
     } catch (error) {
+      console.log(error.message);
       return rejectWithValue(error.response.data);
     }
   },

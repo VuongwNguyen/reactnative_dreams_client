@@ -1,1 +1,1 @@
-export * from './AccountSlice';
+export * from './AuthSlice';

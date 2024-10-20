@@ -1,21 +1,21 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {stackName} from './screens';
+import AuthNavigator from './AuthNavigator';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 export function Navigator() {
+  const {authenticated} = useSelector(state => state.account);
+
+  if (!authenticated) {
+    return <AuthNavigator />;
+  }
+
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
       initialRouteName={stackName.bottomTab.name}>
-      <Stack.Screen
-        name={stackName.register.name}
-        component={stackName.register.component}
-      />
-      <Stack.Screen
-        name={stackName.login.name}
-        component={stackName.login.component}
-      />
       <Stack.Screen
         name={stackName.profile.name}
         component={stackName.profile.component}
@@ -39,10 +39,6 @@ export function Navigator() {
       <Stack.Screen
         name={stackName.changeNewPassword.name}
         component={stackName.changeNewPassword.component}
-      />
-      <Stack.Screen
-        name={stackName.forgotPassword.name}
-        component={stackName.forgotPassword.component}
       />
       <Stack.Screen
         name={stackName.otp.name}
