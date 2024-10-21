@@ -8,13 +8,16 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useState} from 'react';
-import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import AppHeader from '../../components/Header';
 import TagInf from '../../components/TagInf';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
 import {basicInfArr, otherInfArr} from './InfoArr';
+
 const showBasicInf = () => {
   return (
     <View style={accountDetailStyle.infBox}>
@@ -50,6 +53,8 @@ const showOtherInf = () => {
 const AccountDetailScreen = () => {
   const {t} = useTranslation();
   const {image, setImage, openImageLibrary, onOpenCamera} = useImagePicker();
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const goBackScreen = () => {};
@@ -65,9 +70,7 @@ const AccountDetailScreen = () => {
           <View style={accountDetailStyle.avtContainer}>
             <Image
               source={{
-                uri:
-                  image?.[0]?.uri ||
-                  'https://i.pinimg.com/564x/0f/78/5d/0f785d55cea2a407ac8c1d0c6ef19292.jpg',
+                uri: image?.[0]?.uri || userBasicInfData.avatar,
               }}
               style={accountDetailStyle.avt}
             />

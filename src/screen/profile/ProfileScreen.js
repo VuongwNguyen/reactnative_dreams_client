@@ -39,7 +39,7 @@ const ProfileScreen = props => {
   });
 
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, 320, 0);
+    const height = getInterpolation(translationY.value, 250, 0);
     const opacity = getInterpolation(translationY.value, 1, 0);
     const padding = getInterpolation(translationY.value, 10, 0);
     return {
@@ -59,8 +59,8 @@ const ProfileScreen = props => {
   };
   return (
     <View style={ProfileStyle.container}>
+      <AppHeader title={t('profile')} />
       <Animated.View style={headerStyle}>
-        <AppHeader title={t('profile')} />
         <View style={ProfileStyle.infoContainer}>
           <Image
             style={ProfileStyle.avatar}

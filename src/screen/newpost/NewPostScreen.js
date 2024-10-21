@@ -10,10 +10,11 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
 
 import AppHeader from '../../components/Header';
 import {newPostStyle} from '../../styles/newpost/NewPostStyle';
@@ -21,14 +22,13 @@ import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
-import {useDispatch} from 'react-redux';
 import {APIGetFollowing} from '../../store/api/FollowAPI';
 
 const NewPostScreen = props => {
   const {navigation} = props;
   const {t} = useTranslation();
   const dispatch = useDispatch();
-
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
   const {
     images,
     videos,
@@ -116,7 +116,7 @@ const NewPostScreen = props => {
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
-
+    formData.append('privacy_status', privacyStatus);
     selected.length > 0 &&
       selected.forEach(id => {
         formData.append('tagUsers', id);
@@ -135,8 +135,6 @@ const NewPostScreen = props => {
     });
 
     videos.forEach((video, index) => {
-      console.log(video);
-
       formData.append('videos', {
         uri: video.uri,
         name: `video_${video.fileName}.${video.type.split('/')[1]}`,
@@ -148,6 +146,7 @@ const NewPostScreen = props => {
       .unwrap()
       .then(res => {
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+        navigation.navigate(stackName.bottomTab.name);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -173,15 +172,17 @@ const NewPostScreen = props => {
     return {
       id: item?.following?._id,
       fullname: `${item?.following?.first_name} ${item?.following?.last_name}`,
-      avt: item?.following?.avatar.url,
+      avt: item?.following?.avatar,
     };
   });
 
   const renderItem = item => {
     return (
       <View style={newPostStyle.item} key={item.id}>
-        {/* <Image source={Assets.icons.user} /> */}
-        <Image source={{uri: item.avt}} style={{ width:24,height:24,borderRadius:12}} />
+        <Image
+          source={{uri: item?.avt}}
+          style={{width: 24, height: 24, borderRadius: 12}}
+        />
         <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
       </View>
     );
@@ -202,6 +203,7 @@ const NewPostScreen = props => {
       </Text>
     ));
   }, [hashTagList]);
+
   return (
     <View style={newPostStyle.container}>
       <AppHeader
@@ -209,6 +211,7 @@ const NewPostScreen = props => {
         rightButton={true}
         rightButtonTitle={t('newPostScreen.post')}
         rightButtonAction={handleCreatePost}
+        isDisabled={!postContent || !openLine}
       />
 
       <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
@@ -218,11 +221,16 @@ const NewPostScreen = props => {
               onPress={() => {
                 navigation.navigate(stackName.profile.name);
               }}>
-              <Image style={newPostStyle.avt} source={Assets.image.avt} />
+              <Image
+                style={newPostStyle.avt}
+                source={{uri: userBasicInfData?.avatar}}
+              />
             </TouchableOpacity>
 
             <View style={newPostStyle.inf}>
-              <Text style={newPostStyle.userName}>Username</Text>
+              <Text style={newPostStyle.userName}>
+                {userBasicInfData?.full_name}
+              </Text>
               <Dropdown
                 data={pricvacyData}
                 labelField="label"
@@ -353,7 +361,10 @@ const NewPostScreen = props => {
                   onPress={() => unSelect && unSelect(item)}
                   key={item.id}>
                   <View style={newPostStyle.selectedStyle}>
-                    <Image source={{uri: item?.avt}} style={{ width:24,height:24,borderRadius:12}}/>
+                    <Image
+                      source={{uri: item?.avt}}
+                      style={{width: 24, height: 24, borderRadius: 12}}
+                    />
                     <Text style={newPostStyle.textSelectedStyle}>
                       {item.fullname}
                     </Text>

@@ -14,7 +14,11 @@ export const registerSchema = () => {
       .required(t('register.error.phoneNumber.required')),
     password: Yup.string()
       .min(8, t('register.error.password.minLength'))
-      .required(t('register.error.password.required')),
+      .required(t('register.error.password.required'))
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+        t('register.error.password.invalid'),
+      ),
     confirmPassword: Yup.string()
       .oneOf(
         [Yup.ref('password'), null],
