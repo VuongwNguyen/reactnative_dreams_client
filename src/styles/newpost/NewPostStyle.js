@@ -1,7 +1,7 @@
 import {Colors, Fonts, Scaling, Spacings, Typography} from '../../styles';
 import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
-const avtSize = width * 0.187;
+const avtSize = width * 0.18;
 const imgPostWidth = width * 0.25;
 const imgPostHeight = height * 0.16;
 export const newPostStyle = {

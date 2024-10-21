@@ -61,7 +61,7 @@ const PostDetailScreen = props => {
           <View style={postDetailStyle.footer}>
             <Image
               style={postDetailStyle.avatarFooter}
-              source={{uri: data?.post?.author?.avatar?.url}}
+              source={{uri: data?.post?.author?.avatar}}
             />
             <TextInput
               ref={inputRef}

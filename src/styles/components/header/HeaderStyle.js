@@ -9,13 +9,19 @@ export const AppHeaderStyle = StyleSheet.create({
     maxHeight: 50,
     justifyContent: 'space-between',
     paddingHorizontal: Spacings.md,
-    paddingTop: Spacings.md,
   },
   rightButton: {
     backgroundColor: Colors.primary,
     borderRadius: Scaling.xs,
     paddingHorizontal: 15,
     paddingVertical: 6,
+  },
+  disabledButton: {
+    backgroundColor: Colors.secondary,
+    borderRadius: Scaling.xs,
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    opacity: 0.4,
   },
   titleRightButton: {
     fontFamily: Fonts.roboto.bold,

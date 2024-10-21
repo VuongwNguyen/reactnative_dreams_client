@@ -8,10 +8,6 @@ export const ProfileStyle = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
   },
-  contentContainer: {
-    flex: 1,
-    paddingTop: 10,
-  },
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -24,7 +20,6 @@ export const ProfileStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 15,
   },
   grouptButtonContainer: {
     flexDirection: 'row',

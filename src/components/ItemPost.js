@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {Assets, Typography} from './../styles';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {stackName} from '../navigations/screens';
+import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
@@ -39,11 +39,7 @@ export default ItemPost = props => {
   const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
   return (
-    <View
-      style={itemPostStyle.container}
-      // onPress={() =>
-      //   navigation.navigate(stackName.postDetail.name, {post_id: item._id})}
-    >
+    <View style={itemPostStyle.container}>
       {/* header */}
       <View style={itemPostStyle.header}>
         {/* avatar */}
@@ -55,7 +51,7 @@ export default ItemPost = props => {
               });
             }}>
             <Image
-              source={{uri: item.author?.avatar?.url}}
+              source={{uri: item.author?.avatar}}
               style={itemPostStyle.avatar}
             />
           </TouchableOpacity>
