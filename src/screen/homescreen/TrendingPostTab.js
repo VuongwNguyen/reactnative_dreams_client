@@ -1,19 +1,19 @@
-import { StyleSheet, View } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
 import AxiosInstance from '../../configs/axiosInstance';
 
-import { useNavigation } from '@react-navigation/native';
-import { stackName } from '../../navigations/screens';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 const TrendingPostTab = props => {
-  const { scrollHandler } = props;
+  const {scrollHandler} = props;
   // const [dataPosts, setDataPosts] = useState(postsData);
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,9 +22,7 @@ const TrendingPostTab = props => {
         const response = await AxiosInstance().get('/post/trending-posts/1/10');
         setDataPosts(response.data.list);
         setLoading(false);
-      } catch (error) {
-
-      }
+      } catch (error) {}
     };
     fetchData();
   }, []);
@@ -34,7 +32,7 @@ const TrendingPostTab = props => {
       viewabilityConfig: {
         itemVisiblePercentThreshold: 90,
       },
-      onViewableItemsChanged: ({ viewableItems }) => {
+      onViewableItemsChanged: ({viewableItems}) => {
         viewableItems.forEach(item => {
           // console.log('Item being viewed1111:', item.item._id);
           if (timeOutId !== null) {
@@ -42,11 +40,13 @@ const TrendingPostTab = props => {
           }
           const timeout = setTimeout(() => {
             // console.log('ok');
-            AxiosInstance().post('/post/count-view-post', {
-              post_id: item.item._id,
-            }).catch(err => {
-              console.log(err);
-            });
+            AxiosInstance()
+              .post('/post/count-view-post', {
+                post_id: item.item._id,
+              })
+              .catch(err => {
+                console.log(err);
+              });
           }, 5000);
           setTimeOutId(timeout);
 
@@ -67,22 +67,21 @@ const TrendingPostTab = props => {
     },
   ]);
 
-
-
   return (
     <View style={styles.container}>
-      {
-        !loading &&
+      {!loading && (
         <Animated.FlatList
           onScroll={scrollHandler}
           data={dataPosts}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <ItemPost item={item} />}
+          renderItem={({item}) => <ItemPost item={item} />}
           keyExtractor={(item, index) => index.toString()}
           // Truyền vào callback để log item đang xem
-          viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
         />
-      }
+      )}
     </View>
   );
 };

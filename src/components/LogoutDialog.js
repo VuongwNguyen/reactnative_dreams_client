@@ -37,7 +37,7 @@ const LogoutDialog = (
         setMessage: message => setMess(message),
       };
     },
-    [setShow],
+    [setShow, setMess],
   );
 
   const logout = () => {

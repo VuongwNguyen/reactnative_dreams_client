@@ -9,7 +9,7 @@ export const APILogin = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error.message);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -23,7 +23,7 @@ export const APIVerifyAccount = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -34,7 +34,7 @@ export const APISendOtpCode = createAsyncThunk(
       const response = await AxiosInstance().post('account/verify-email', data);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -50,7 +50,7 @@ export const apiSendOtpResetPW = createAsyncThunk(
       console.log(response);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -66,7 +66,7 @@ export const apiVerifyCodeResetPW = createAsyncThunk(
       console.log(response);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -81,7 +81,7 @@ export const APIRegister = createAsyncThunk(
     } catch (error) {
       console.log('register error');
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -96,7 +96,7 @@ export const APIResetPassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -111,8 +111,7 @@ export const APIChangePassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      // console.log(rejectWithValue(error.response.data));
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );
@@ -124,7 +123,7 @@ export const APILogout = createAsyncThunk(
       const response = await AxiosInstance().post('/account/logout');
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   },
 );

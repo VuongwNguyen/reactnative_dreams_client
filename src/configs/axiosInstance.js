@@ -5,10 +5,38 @@ import {logoutRef} from '../components/LogoutDialog';
 
 const BASEURL = 'http://192.168.1.24:8012/api/';
 
+let isRefreshing = false;
+let queue = [];
+
 const AxiosInstance = (contentType = 'application/json') => {
   const axiosInstance = axios.create({
     baseURL: BASEURL,
   });
+
+  const processQueue = (err, accessToken) => {
+    queue.forEach(request => {
+      if (err) {
+        request.reject(err);
+      } else {
+        request.resolve(accessToken);
+      }
+    });
+
+    queue = [];
+  };
+
+  const addRequest = originRequest => {
+    return new Promise((resolve, reject) => {
+      queue.push({resolve, reject});
+    })
+      .then(token => {
+        console.log('new token provide: ', token);
+        originRequest.headers.authorization = `Bearer ${token}`;
+        return axiosInstance(originRequest);
+      })
+      .catch(err => console.log('error: ', err));
+  };
+
   axiosInstance.interceptors.request.use(
     config => {
       let token;
@@ -28,16 +56,15 @@ const AxiosInstance = (contentType = 'application/json') => {
   axiosInstance.interceptors.response.use(
     res => res.data,
     async err => {
-      console.log(err);
-      if (!err.response || !err.response.data) return await Promise.reject(err);
+      if (!err?.response || !err?.response?.data)
+        return await Promise.reject(err);
 
       const refreshToken = store.getState().account.token.refreshToken;
       const originRequest = err.config;
 
       if (
-        !refreshToken ||
-        (err.response.status === 401 &&
-          err.response.data.message !== 'jwt expired')
+        err.response?.status === 401 &&
+        err.response?.data?.message !== 'jwt expired'
       ) {
         // logout
         logoutRef.current?.showDialog();
@@ -47,6 +74,12 @@ const AxiosInstance = (contentType = 'application/json') => {
         err.response.status === 401 &&
         err.response.data.message === 'jwt expired'
       ) {
+        if (isRefreshing) {
+          return addRequest(originRequest);
+        }
+
+        isRefreshing = true;
+
         try {
           const res = await axiosInstance.post('/account/renew-tokens', {
             refreshToken,
@@ -58,18 +91,19 @@ const AxiosInstance = (contentType = 'application/json') => {
               refreshToken: res.data.token.refreshToken,
             };
 
-            console.log('renew token');
-
             store.dispatch(updateTokens(payload));
+            processQueue(null, res.data.token.accessToken);
             originRequest.headers.authorization = `Bearer ${res.data.token.accessToken}`;
             return await axiosInstance(originRequest);
           }
-
-          throw new Error('cannot renew tokens');
-        } catch (error) {
-          // logout
-          console.log('error when renew tokens', error.response.data);
-          logoutRef.current?.showDialog();
+        } catch (e) {
+          processQueue(e, null);
+          if (e.response.data.status === 401) {
+            logoutRef.current?.showDialog();
+            return;
+          }
+        } finally {
+          isRefreshing = false;
         }
       }
 
@@ -79,4 +113,5 @@ const AxiosInstance = (contentType = 'application/json') => {
 
   return axiosInstance;
 };
+
 export default AxiosInstance;

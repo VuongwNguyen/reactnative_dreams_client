@@ -3,6 +3,8 @@ import {stackName} from './screens';
 import AuthNavigator from './AuthNavigator';
 import {useSelector} from 'react-redux';
 import {SocketProvider} from '../contexts/SocketContext';
+import LogoutDialog, {logoutRef} from '../components/LogoutDialog';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -93,6 +95,7 @@ export function Navigator() {
           component={stackName.camera.component}
         />
       </Stack.Navigator>
+      <LogoutDialog ref={logoutRef} />
     </SocketProvider>
   );
 }

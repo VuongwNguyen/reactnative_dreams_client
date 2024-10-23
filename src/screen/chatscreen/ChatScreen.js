@@ -13,13 +13,14 @@ import {
 import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {UserOnline} from './components';
-import {tr} from 'rn-emoji-keyboard';
-import {logoutRef} from '../../components/LogoutDialog';
+import {useSocket} from '../../contexts/SocketContext';
+import AxiosInstance from '../../configs/axiosInstance';
 
 const {width, height} = Dimensions.get('window');
 
 const ChatScreen = () => {
   const [refresh, setRefresh] = useState(false);
+  const {socket} = useSocket();
 
   const renderUsersOnline = ({item, index}) => {
     return <UserOnline name={`User - ${index}`} />;
@@ -52,7 +53,11 @@ const ChatScreen = () => {
           <TouchableOpacity
             style={styles.search}
             onPress={() => {
-              logoutRef.current.showDialog();
+              Promise.all([
+                AxiosInstance().get(''),
+                AxiosInstance().get(''),
+                AxiosInstance().get(''),
+              ]).then(values => console.log('values: ', values));
             }}>
             <Image source={Assets.icons.search} style={styles.searchIcon} />
             <Text>Search ...</Text>
@@ -68,6 +73,11 @@ const ChatScreen = () => {
               showsHorizontalScrollIndicator={false}
               ItemSeparatorComponent={() => <View style={{width: 20}} />}
             />
+            <View style={styles.center}>
+              <Text style={styles.empty}>
+                Currently there are no online followers
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -81,6 +91,11 @@ const ChatScreen = () => {
 export default ChatScreen;
 
 const styles = StyleSheet.create({
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
   user: {
     marginTop: 14,
     paddingHorizontal: 10,
