@@ -9,15 +9,18 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
+
 import React, {useState, useRef, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
+
 
 import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import AppHeader from '../../components/Header';
 import TagInf from '../../components/TagInf';
 import {Assets} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
+
 import {APIPersonalDetailInf} from '../../store/api/InfAPI';
 import DateOfBirthDialog from '../../components/bottomsheet/DateOfBirthDialog';
 import NicknameDialog from '../../components/bottomsheet/NicknameDialog';
@@ -32,10 +35,46 @@ import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
+import {basicInfArr, otherInfArr} from './InfoArr';
+
+const showBasicInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {basicInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+          func={item.func}
+        />
+      ))}
+    </View>
+  );
+};
+
+const showOtherInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {otherInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+          func={item.func}
+        />
+      ))}
+    </View>
+  );
+};
+
 const AccountDetailScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {image, setImage, openImageLibrary, onOpenCamera} = useImagePicker();
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [personalInf, setPersonalInf] = useState('');
   const [basicInfData, setBasicInfData] = useState([]);
