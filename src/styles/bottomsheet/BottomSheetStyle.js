@@ -1,6 +1,11 @@
 import {Colors, Typography} from '../../styles';
 export const bottomSheetStyle = {
   // common
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   container: {
     backgroundColor: 'white',
     borderTopRightRadius: 25,
@@ -17,11 +22,11 @@ export const bottomSheetStyle = {
   },
   desc: {
     marginTop: 15,
-    marginBottom: 40,
+    marginBottom: 30,
     ...Typography.descDialog,
   },
   btnContainer: {
-    marginTop: 40,
+    marginTop: 30,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -35,9 +40,11 @@ export const bottomSheetStyle = {
   input: {
     width: '100%',
     borderRadius: 12,
+    borderWidth: 0.5,
+    borderColor: Colors.secondary,
     backgroundColor: Colors.background,
-    paddingHorizontal: 18,
-    paddingVertical: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     ...Typography.normalTextDialog,
   },
   selectText: {
@@ -46,6 +53,9 @@ export const bottomSheetStyle = {
   selectPlaceholder: {
     ...Typography.normalTextDialog,
     color: Colors.secondary,
+  },
+  inputGroup: {
+    gap: 20,
   },
   //   usernameDialog
   usernameInputGroup: {

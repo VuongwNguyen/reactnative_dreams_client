@@ -9,9 +9,10 @@ import {
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
+import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 
-const LocationDialog = forwardRef((props, ref) => {
+const RlstStatusDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -23,8 +24,13 @@ const LocationDialog = forwardRef((props, ref) => {
     },
   }));
   const {t} = useTranslation();
-  const [location, setLocation] = useState('');
-  const isDisable = !location;
+  const [value, setValue] = useState(null);
+  const isDisable = !value;
+  const data = [
+    {label: t('rlstStatusDialog.single'), value: 'Single'},
+    {label: t('rlstStatusDialog.dating'), value: 'Dating'},
+    {label: t('rlstStatusDialog.married'), value: 'Married'},
+  ];
   return (
     <Modal
       visible={visible}
@@ -41,19 +47,24 @@ const LocationDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('locationDialog.title')}
+              {t('rlstStatusDialog.title')}
             </Text>
             <Text style={bottomSheetStyle.desc}>
-              {t('locationDialog.desc')}
+              {t('rlstStatusDialog.desc')}
             </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('locationDialog.placeholder')}
-              placeholderTextColor={Colors.secondary}
-              value={location}
-              onChangeText={text => setLocation(text)}
+            <Dropdown
+              placeholder={t('rlstStatusDialog.placeholder')}
+              placeholderStyle={bottomSheetStyle.selectPlaceholder}
+              selectedTextStyle={bottomSheetStyle.selectText}
+              data={data}
+              labelField="label"
+              valueField="value"
+              value={value}
+              onChange={item => {
+                setValue(item.value);
+              }}
+              style={bottomSheetStyle.educationLevel}
             />
-
             <TouchableOpacity
               disabled={isDisable}
               style={[
@@ -61,7 +72,7 @@ const LocationDialog = forwardRef((props, ref) => {
                 isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('locationDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -71,4 +82,4 @@ const LocationDialog = forwardRef((props, ref) => {
   );
 });
 
-export default LocationDialog;
+export default RlstStatusDialog;

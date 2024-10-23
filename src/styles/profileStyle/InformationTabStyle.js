@@ -11,10 +11,10 @@ export const InfomationTabStyle = StyleSheet.create({
     justifyContent: 'space-between',
   },
   itemContainer: {
+    marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
-    paddingVertical: 7,
+    gap: 8,
   },
   icon: {
     width: 24,

@@ -1,10 +1,26 @@
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {
+  FlatList,
+  Image,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+
 import {InfomationTabStyle} from '../../styles/profileStyle/InformationTabStyle';
 import Animated from 'react-native-reanimated';
+import {APIGetInfList} from '../../store/api/InfAPI';
+import {Assets} from '../../styles';
 
 const InfomationTab = props => {
-  const {scrollHandler} = props;
+  const {scrollHandler,user_id_view} = props;
+  const dispatch = useDispatch();
+
+  const [infAPI, setInfAPI] = useState('');
+  const [infData, setInfData] = useState('');
+
   const data = [
     {
       id: 1,
@@ -55,33 +71,67 @@ const InfomationTab = props => {
       icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
     },
   ];
-  const Item = props => {
-    const {title = '', content = '', icon = '', onPress} = props;
+  const infUI = [
+    {key: 'gender', title: 'Gender'},
+    {key: 'dob', title: 'Day of birth'},
+    {key: 'natl', title: 'Nationality'},
+    {key: 'htown', title: 'Hometown'},
+    {key: 'zone', title: 'Location'},
+    {key: 'job', title: 'Job'},
+    {key: 'edu', title: 'Education'},
+    {key: 'zodiac', title: 'Zodiac'},
+    {key: 'hobby', title: 'Hobby'},
+    {key: 'rlts', title: 'Relationship status'},
+  ];
+  useEffect(() => {
+    dispatch(APIGetInfList())
+      .unwrap()
+      .then(res => {
+        setInfAPI(res?.data?.infomation);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!!infAPI) {
+      const mergedArr = infUI.map(uiItem => {
+        const apiItem = infAPI.find(apiItem => apiItem.key === uiItem.key);
+        return {
+          ...uiItem,
+          ...apiItem,
+        };
+      });
+      setInfData(mergedArr);
+    }
+  }, [infAPI]);
+
+  // console.log(infData);
+
+  const renderItem = ({item}) => {
+    if (!item.value) return null;
+    if (item.privacy_status == 'private') return null;
     return (
-      <TouchableOpacity
-        style={InfomationTabStyle.itemContainer}
-        onPress={onPress}>
-        <Image style={InfomationTabStyle.icon} source={{uri: icon}} />
-        <Text style={InfomationTabStyle.title}>{title}</Text>
-        <Text style={InfomationTabStyle.value}>{content}</Text>
-      </TouchableOpacity>
+      <View style={InfomationTabStyle.itemContainer}>
+        <Image
+          style={InfomationTabStyle.icon}
+          source={Assets.icons[item.key]}
+        />
+        <Text style={InfomationTabStyle.title}>{item.title}</Text>
+        <Text style={InfomationTabStyle.value}>{item.value}</Text>
+      </View>
     );
   };
+
   return (
     <View style={InfomationTabStyle.container}>
       <Animated.FlatList
         onScroll={scrollHandler}
-        data={data}
+        data={infData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <Item
-            key={item.id}
-            title={item.title}
-            content={item.content}
-            icon={item.icon}
-          />
-        )}
-        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        keyExtractor={item => item.key}
       />
     </View>
   );

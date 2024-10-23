@@ -1,11 +1,22 @@
-import {Text, View, TouchableOpacity, Image} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, TouchableOpacity, Image, Modal} from 'react-native';
+import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
+import {Assets} from '../../styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useTranslation} from 'react-i18next';
 
-const DateOfBirthDialog = () => {
+const DateOfBirthDialog = forwardRef((props, ref) => {
+  const [visible, setVisible] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true);
+    },
+    close() {
+      setVisible(false);
+    },
+  }));
+
   const {t} = useTranslation();
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -67,74 +78,84 @@ const DateOfBirthDialog = () => {
 
   const zodiacSign = getZodiacSign(date);
   return (
-    <View>
-      <View style={bottomSheetStyle.container}>
-        <View>
-          <TouchableOpacity style={bottomSheetStyle.closeBtn}>
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="slide"
+      onRequestClose={() => setVisible(false)}>
+      <View style={bottomSheetStyle.modalBackground}>
+        <View style={bottomSheetStyle.container}>
+          <TouchableOpacity
+            style={bottomSheetStyle.closeBtn}
+            onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
               style={bottomSheetStyle.closeIcon}
             />
           </TouchableOpacity>
-        </View>
-        <View style={bottomSheetStyle.bodyContainer}>
-          <Text style={bottomSheetStyle.titleDialog}>
-            {t('dateOfBirthDialog.title')}
-          </Text>
-          <Text style={bottomSheetStyle.desc}>
-            {t('dateOfBirthDialog.desc')}
-          </Text>
-          <View style={bottomSheetStyle.derivedFieldContainer}>
-            <Text style={bottomSheetStyle.derivedField}>
-              {t('dateOfBirthDialog.age')}: {age}
+          <View style={bottomSheetStyle.bodyContainer}>
+            <Text style={bottomSheetStyle.titleDialog}>
+              {t('dateOfBirthDialog.title')}
             </Text>
-            <Text style={bottomSheetStyle.derivedField}>
-              {t('dateOfBirthDialog.zodiac')}: {zodiacSign}
+            <Text style={bottomSheetStyle.desc}>
+              {t('dateOfBirthDialog.desc')}
             </Text>
-          </View>
-
-          <TouchableOpacity
-            onPress={showDatepicker}
-            style={bottomSheetStyle.datePickerButton}>
-            {!isSelected ? (
-              <View style={bottomSheetStyle.datePickerBtnContent}>
-                <Text style={bottomSheetStyle.selectPlaceholder}>
-                  {t('dateOfBirthDialog.placeholder')}
-                </Text>
-                <Image
-                  source={Assets.icons.calendar}
-                  style={{width: 20, height: 20}}
-                />
-              </View>
-            ) : (
-              <Text style={bottomSheetStyle.selectText}>
-                {date.getDate()} - {date.getMonth() + 1} - {date.getFullYear()}
+            <View style={bottomSheetStyle.derivedFieldContainer}>
+              <Text style={bottomSheetStyle.derivedField}>
+                {t('dateOfBirthDialog.age')}: {age}
               </Text>
+              <Text style={bottomSheetStyle.derivedField}>
+                {t('dateOfBirthDialog.zodiac')}: {zodiacSign}
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              onPress={showDatepicker}
+              style={bottomSheetStyle.datePickerButton}>
+              {!isSelected ? (
+                <View style={bottomSheetStyle.datePickerBtnContent}>
+                  <Text style={bottomSheetStyle.selectPlaceholder}>
+                    {t('dateOfBirthDialog.placeholder')}
+                  </Text>
+                  <Image
+                    source={Assets.icons.calendar}
+                    style={{width: 20, height: 20}}
+                  />
+                </View>
+              ) : (
+                <Text style={bottomSheetStyle.selectText}>
+                  {date.getDate()} - {date.getMonth() + 1} -{' '}
+                  {date.getFullYear()}
+                </Text>
+              )}
+            </TouchableOpacity>
+
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={'date'}
+                is24Hour={true}
+                display="spinner"
+                onChange={onChange}
+              />
             )}
-          </TouchableOpacity>
 
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={'date'}
-              is24Hour={true}
-              display="spinner"
-              onChange={onChange}
-            />
-          )}
-
-          <TouchableOpacity
-            disabled={age <= 0 ? true : false}
-            style={[bottomSheetStyle.btnContainer, age <= 0 && {opacity: 0.5}]}>
-            <Text style={bottomSheetStyle.btnLabel}>
-              {t('dateOfBirthDialog.confirm')}
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              disabled={age <= 0 ? true : false}
+              style={[
+                bottomSheetStyle.btnContainer,
+                age <= 0 && {opacity: 0.5},
+              ]}>
+              <Text style={bottomSheetStyle.btnLabel}>
+                {t('dateOfBirthDialog.confirm')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </Modal>
   );
-};
+});
 
 export default DateOfBirthDialog;

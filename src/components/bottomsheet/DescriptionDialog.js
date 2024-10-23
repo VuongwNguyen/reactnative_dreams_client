@@ -5,20 +5,36 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Modal
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 
-const DescriptionDialog = () => {
+const DescriptionDialog = forwardRef((props, ref) => {
+  const [visible, setVisible] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true);
+    },
+    close() {
+      setVisible(false);
+    },
+  }));
   const {t} = useTranslation();
   const [desc, setDesc] = useState('');
   const isDiable = !desc;
   return (
-    <View>
+    <Modal
+    visible={visible}
+    transparent={true}
+    animationType="slide"
+    onRequestClose={() => setVisible(false)}>
+    <View style={bottomSheetStyle.modalBackground}>
       <View style={bottomSheetStyle.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setVisible(false)}>
           <Image source={Assets.icons.close} />
         </TouchableOpacity>
         <View style={bottomSheetStyle.bodyContainer}>
@@ -45,8 +61,9 @@ const DescriptionDialog = () => {
         </View>
       </View>
     </View>
+    </Modal>
   );
-};
+});
 
 export default DescriptionDialog;
 

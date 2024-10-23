@@ -200,6 +200,12 @@
     "school": "Trường học của bạn",
     "confirm": "XÁC NHẬN"
   },
+  "jobDialog": {
+    "title": "Công việc hiện tại của bạn là gì?",
+    "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
+    "job": "Công việc của bạn",
+    "workplace": "Nơi làm việc"
+  },
   "usernameDialog": {
     "title": "Tên của bạn là gì",
     "desc": "Nhập tên người dùng của bạn. Tên này sẽ hiển thị cho những người dùng khác.",
@@ -281,6 +287,14 @@
     "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
     "placeholder": "Điều gì đó về bạn",
     "confirm": "XÁC NHẬN"
+  },
+  "rlstStatusDialog": {
+    "title": "Relationship status",
+    "desc": "Vui lòng chọn tình trạng hôn nhân của bạn để hiển thị trên hồ sơ cá nhân.",
+    "single": "Độc thân",
+    "dating": "Hẹn hò",
+    "married": "Đã kết hôn",
+    "placeholder": "Choose your status"
   },
   "navigation": {
     "home": "Trang chủ",

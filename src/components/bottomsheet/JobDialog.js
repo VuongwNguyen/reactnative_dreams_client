@@ -11,7 +11,7 @@ import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 
-const LocationDialog = forwardRef((props, ref) => {
+const JobDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -23,8 +23,10 @@ const LocationDialog = forwardRef((props, ref) => {
     },
   }));
   const {t} = useTranslation();
-  const [location, setLocation] = useState('');
-  const isDisable = !location;
+  const [job, setJob] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const isDisable = !job;
+
   return (
     <Modal
       visible={visible}
@@ -41,18 +43,25 @@ const LocationDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('locationDialog.title')}
+              {t('jobDialog.title')}
             </Text>
-            <Text style={bottomSheetStyle.desc}>
-              {t('locationDialog.desc')}
-            </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('locationDialog.placeholder')}
-              placeholderTextColor={Colors.secondary}
-              value={location}
-              onChangeText={text => setLocation(text)}
-            />
+            <Text style={bottomSheetStyle.desc}>{t('jobDialog.desc')}</Text>
+            <View style={bottomSheetStyle.inputGroup}>
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.job')}
+                placeholderTextColor={Colors.secondary}
+                value={job}
+                onChangeText={text => setJob(text)}
+              />
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.workplace')}
+                placeholderTextColor={Colors.secondary}
+                value={workplace}
+                onChangeText={text => setWorkplace(text)}
+              />
+            </View>
 
             <TouchableOpacity
               disabled={isDisable}
@@ -61,7 +70,7 @@ const LocationDialog = forwardRef((props, ref) => {
                 isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('locationDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -71,4 +80,4 @@ const LocationDialog = forwardRef((props, ref) => {
   );
 });
 
-export default LocationDialog;
+export default JobDialog;
