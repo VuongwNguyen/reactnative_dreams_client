@@ -1,16 +1,55 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Assets} from '../../styles';
 import Header from '../../components/Header';
 import {SettingStyle} from '../../styles/settingstyle/SettingStyle';
 import {stackName} from '../../navigations/screens';
 import {AppHeaderStyle} from '../../styles/components/header/HeaderStyle';
+import {useDispatch, useSelector} from 'react-redux';
+import {APILogout} from '../../store/api/AccountAPI';
+import {useSocket} from '../../contexts/SocketContext';
 
 const LIGHT = 'light';
 const DARK = 'dark';
 const SettingScreen = props => {
   const {navigation} = props;
   const [currentThemeMode, setCurrentThemeMode] = useState(LIGHT);
+  const dispatch = useDispatch();
+  const {loading} = useSelector(state => state.account);
+  const {socket} = useSocket();
+
+  const logout = () => {
+    Alert.alert('Logout', 'Are you sure you want to log out?', [
+      {
+        text: 'cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'logout',
+        onPress: () =>
+          dispatch(APILogout())
+            .unwrap()
+            .then(res => {
+              socket?.disconnect();
+              ToastAndroid.show('Logout success', 1000);
+            })
+            .catch(err =>
+              ToastAndroid.show(
+                'Something when wrong. please try again!',
+                1000,
+              ),
+            ),
+      },
+    ]);
+  };
+
   return (
     <View style={SettingStyle.container}>
       <Header title="Settings" />
@@ -61,13 +100,16 @@ const SettingScreen = props => {
         onPress={() => {
           navigation.navigate(stackName.changePassword.name);
         }}>
-            <Image
+        <Image
           source={Assets.icons.notification}
           style={{width: 20, height: 20}}
         />
         <Text style={SettingStyle.title}>Change password</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={SettingStyle.itemSettingContainer}>
+      <TouchableOpacity
+        disabled={loading}
+        style={SettingStyle.itemSettingContainer}
+        onPress={logout}>
         <Image source={Assets.icons.logout} style={{width: 20, height: 20}} />
         <Text style={SettingStyle.titleRed}>Log out</Text>
       </TouchableOpacity>

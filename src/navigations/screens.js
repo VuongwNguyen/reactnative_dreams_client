@@ -21,6 +21,7 @@ import PolicyPrivacyScreen from '../screen/privacypolicy/PolicyPrivacyScreen';
 import FlingScreen from '../screen/flingscreen/FlingScreen';
 import CreateGroupChatScreen from '../screen/creategroupchat/CreateGroupChatScreen';
 import MessageScreen from '../screen/chatscreen/MessageScreen';
+import CameraScreen from '../screen/chatscreen/CameraScreen';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -62,6 +63,10 @@ export const stackName = {
   conversation: {
     name: 'conversation',
     component: MessageScreen,
+  },
+  camera: {
+    name: 'camera',
+    component: CameraScreen,
   },
 };
 
