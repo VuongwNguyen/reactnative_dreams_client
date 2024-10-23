@@ -41,7 +41,6 @@ const ProfileScreen = props => {
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
-
   const headerStyle = useAnimatedStyle(() => {
     const height = getInterpolation(translationY.value, 250, 0);
     const opacity = getInterpolation(translationY.value, 1, 0);
@@ -79,13 +78,15 @@ const ProfileScreen = props => {
       <AppHeader title={t('profile')} />
       <Animated.View style={headerStyle}>
         <View style={ProfileStyle.infoContainer}>
-          {!!coreInf.avatar && (<Image
-            style={ProfileStyle.avatar}
-            source={{
-              uri: coreInf?.avatar,
-            }}
-          />)}
-          
+          {!!coreInf.avatar && (
+            <Image
+              style={ProfileStyle.avatar}
+              source={{
+                uri: coreInf?.avatar,
+              }}
+            />
+          )}
+
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(stackName.following.name);
@@ -111,9 +112,16 @@ const ProfileScreen = props => {
         </View>
         <View style={ProfileStyle.rowAlign}>
           <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
-          <Text style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
+
+          {!!coreInf.nickname && (
+            <Text
+              style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
+          )}
         </View>
-        <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
+        {!!coreInf.description && (
+          <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
+        )}
+
         {!!userViewId ? (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
@@ -143,7 +151,10 @@ const ProfileScreen = props => {
           </View>
         )}
       </Animated.View>
-      <TopBarNavigationProfile scrollHandler={scrollHandler} user_id_view={userViewId}/>
+      <TopBarNavigationProfile
+        scrollHandler={scrollHandler}
+        user_id_view={userViewId}
+      />
     </View>
   );
 };

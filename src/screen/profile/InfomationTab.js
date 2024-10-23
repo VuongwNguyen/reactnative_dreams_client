@@ -15,7 +15,7 @@ import {APIGetInfList} from '../../store/api/InfAPI';
 import {Assets} from '../../styles';
 
 const InfomationTab = props => {
-  const {scrollHandler,user_id_view} = props;
+  const {scrollHandler, user_id_view} = props;
   const dispatch = useDispatch();
 
   const [infAPI, setInfAPI] = useState('');
@@ -84,7 +84,7 @@ const InfomationTab = props => {
     {key: 'rlts', title: 'Relationship status'},
   ];
   useEffect(() => {
-    dispatch(APIGetInfList())
+    dispatch(APIGetInfList(user_id_view))
       .unwrap()
       .then(res => {
         setInfAPI(res?.data?.infomation);
@@ -95,7 +95,7 @@ const InfomationTab = props => {
   }, []);
 
   useEffect(() => {
-    if (!!infAPI) {
+    if (infAPI.length !== 0) {
       const mergedArr = infUI.map(uiItem => {
         const apiItem = infAPI.find(apiItem => apiItem.key === uiItem.key);
         return {
@@ -106,8 +106,6 @@ const InfomationTab = props => {
       setInfData(mergedArr);
     }
   }, [infAPI]);
-
-  // console.log(infData);
 
   const renderItem = ({item}) => {
     if (!item.value) return null;
@@ -126,13 +124,19 @@ const InfomationTab = props => {
 
   return (
     <View style={InfomationTabStyle.container}>
-      <Animated.FlatList
-        onScroll={scrollHandler}
-        data={infData}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        keyExtractor={item => item.key}
-      />
+      {!!infData ? (
+        <Animated.FlatList
+          onScroll={scrollHandler}
+          data={infData}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={item => item.key}
+        />
+      ) : (
+        <Text style={InfomationTabStyle.placeholder}>
+          Thông tin đang ở chế độ riêng tư
+        </Text>
+      )}
     </View>
   );
 };

@@ -8,7 +8,7 @@ import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 
 const PostedTab = props => {
-  const {scrollHandler} = props;
+  const {scrollHandler, user_id_view} = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -16,7 +16,7 @@ const PostedTab = props => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(APIGetPostByUser({}))
+    dispatch(APIGetPostByUser({user_id_view}))
       .unwrap()
       .then(res => {
         setDataPosts(res?.data.list);
@@ -31,7 +31,11 @@ const PostedTab = props => {
   return (
     <View style={PostedTabStyle.container}>
       {loading ? (
-        <ActivityIndicator size="large" color="#ededed" style={{justifyContent:'center'}} />
+        <ActivityIndicator
+          size="large"
+          color="#ededed"
+          style={{justifyContent: 'center'}}
+        />
       ) : (
         <Animated.FlatList
           onScroll={scrollHandler}
