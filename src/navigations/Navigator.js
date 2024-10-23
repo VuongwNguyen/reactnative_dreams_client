@@ -33,10 +33,6 @@ export function Navigator() {
           component={stackName.profile.component}
         />
         <Stack.Screen
-          name={stackName.personalProfile.name}
-          component={stackName.personalProfile.component}
-        />
-        <Stack.Screen
           name={stackName.postDetail.name}
           component={stackName.postDetail.component}
         />
