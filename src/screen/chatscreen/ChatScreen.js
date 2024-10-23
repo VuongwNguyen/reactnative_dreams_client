@@ -15,6 +15,7 @@ import {Assets} from '../../styles';
 import {UserOnline} from './components';
 import {useSocket} from '../../contexts/SocketContext';
 import AxiosInstance from '../../configs/axiosInstance';
+import TabChatScreen from './TabChatScreen';
 
 const {width, height} = Dimensions.get('window');
 
@@ -83,7 +84,7 @@ const ChatScreen = () => {
       </View>
 
       {/* tab bar */}
-      <TopBarNavigationChat />
+      <TabChatScreen />
     </View>
   );
 };
