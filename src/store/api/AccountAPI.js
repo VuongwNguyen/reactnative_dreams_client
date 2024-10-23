@@ -126,3 +126,15 @@ export const APILogout = createAsyncThunk(
     }
   },
 );
+
+export const APIGetUserBasicInf = createAsyncThunk(
+  'account/get-name-avatar-user',
+  async (_,{rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post('/account/get-name-avatar-user');
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

@@ -9,8 +9,10 @@ const AppHeader = props => {
     rightButton = false,
     rightButtonAction = () => {},
     rightButtonTitle = '',
+    isDisabled = false,
   } = props;
   const navigation = useNavigation();
+
   return (
     <View style={AppHeaderStyle.container}>
       <TouchableOpacity
@@ -22,9 +24,18 @@ const AppHeader = props => {
       <Text style={Typography.navTitle}>{title}</Text>
       {rightButton ? (
         <TouchableOpacity
-          style={AppHeaderStyle.rightButton}
+          disabled={isDisabled}
+          style={
+            isDisabled
+              ? AppHeaderStyle.disabledButton
+              : AppHeaderStyle.rightButton
+          }
           onPress={rightButtonAction}>
-          <Text style={AppHeaderStyle.titleRightButton}>
+          <Text
+            style={[
+              AppHeaderStyle.titleRightButton,
+              isDisabled && {color: 'black'},
+            ]}>
             {rightButtonTitle}
           </Text>
         </TouchableOpacity>

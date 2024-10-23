@@ -40,7 +40,7 @@ const FormikForm = () => {
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        }); 
+        });
     },
   );
   return (
