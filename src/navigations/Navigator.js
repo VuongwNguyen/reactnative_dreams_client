@@ -21,6 +21,14 @@ export function Navigator() {
         screenOptions={{headerShown: false}}
         initialRouteName={stackName.bottomTab.name}>
         <Stack.Screen
+          name={stackName.register.name}
+          component={stackName.register.component}
+        />
+        <Stack.Screen
+          name={stackName.login.name}
+          component={stackName.login.component}
+        />
+        <Stack.Screen
           name={stackName.profile.name}
           component={stackName.profile.component}
         />
@@ -43,6 +51,10 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.changeNewPassword.name}
           component={stackName.changeNewPassword.component}
+        />
+        <Stack.Screen
+          name={stackName.forgotPassword.name}
+          component={stackName.forgotPassword.component}
         />
         <Stack.Screen
           name={stackName.otp.name}

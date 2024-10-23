@@ -6,7 +6,7 @@ export const APIGetFollowing = createAsyncThunk(
   async (user_id, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `follow/get-followings?user_id=${user_id}`,
+        `/follow/get-followings?user_id=${user_id}`,
       );
       return response;
     } catch (error) {

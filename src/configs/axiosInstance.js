@@ -38,7 +38,7 @@ const AxiosInstance = (contentType = 'application/json') => {
   };
 
   axiosInstance.interceptors.request.use(
-    config => {
+    async config => {
       let token;
       if (store.getState().account.token.accessToken) {
         token = store.getState().account.token.accessToken;

@@ -1,15 +1,12 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import ItemPost from '../../components/ItemPost';
 import Animated from 'react-native-reanimated';
 import AxiosInstance from '../../configs/axiosInstance';
 
-import {useNavigation} from '@react-navigation/native';
-import {stackName} from '../../navigations/screens';
+import ItemPost from '../../components/ItemPost';
 
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
-  // const [dataPosts, setDataPosts] = useState(postsData);
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
