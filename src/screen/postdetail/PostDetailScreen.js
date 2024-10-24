@@ -63,7 +63,6 @@ const PostDetailScreen = props => {
       if (replyId) {
         data.reply_comment_id = replyId;
       }
-      console.log(data,'dddaaa');
       
       AxiosInstance()
         .post('/comment', data)
