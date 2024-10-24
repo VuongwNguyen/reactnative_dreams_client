@@ -16,8 +16,8 @@ import React, {
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
 
 const HobbyDialog = forwardRef((props, ref) => {
   const [arrHobby, setArrHobby] = useState([]);
@@ -27,8 +27,8 @@ const HobbyDialog = forwardRef((props, ref) => {
   const [otherHobby, setOtherHobby] = useState('');
   const [isTouchable, setIsTouchable] = useState(false);
   const [visible, setVisible] = useState(false);
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -39,8 +39,6 @@ const HobbyDialog = forwardRef((props, ref) => {
   }));
 
   const {t} = useTranslation();
-
- 
 
   const hobbyData = [
     {
@@ -140,8 +138,10 @@ const HobbyDialog = forwardRef((props, ref) => {
     if (isShowInput && otherHobby && !arrHobby.includes(otherHobby)) {
       setArrHobby(prev => [...prev, otherHobby]);
     }
-    const body = {key: 'gender', value: arrHobby};
-    // console.log(body);
+    const hobbyString = arrHobby.join(', ');
+    console.log(hobbyString);
+
+    const body = {key: 'hobby', value: hobbyString};
 
     dispatch(APIUpdateInf(body))
       .unwrap()
@@ -151,7 +151,7 @@ const HobbyDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(arrHobby);
+    props.onSubmit(hobbyString);
   };
   return (
     <Modal

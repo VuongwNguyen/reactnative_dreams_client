@@ -6,7 +6,7 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -18,10 +18,16 @@ const NationalityDialog = forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false);
   const {t} = useTranslation();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props?.data);
   const [isFocus, setIsFocus] = useState(false);
   const [icon, setIcon] = useState(Assets.image.nationality);
   const isDisable = !value;
+
+  useEffect(() => {
+    if (props?.data) {
+      setValue(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {

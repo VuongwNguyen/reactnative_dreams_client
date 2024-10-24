@@ -7,7 +7,12 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
@@ -18,10 +23,17 @@ import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 const UsernameDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState(props.firstName || '');
+  const [lastName, setLastName] = useState(props.lastName || '');
   const isDisabled = !firstName || !lastName;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.firstName || props?.lastName) {
+      setFirstName(props.firstName || '');
+      setLastName(props.lastName || '');
+    }
+  }, [props?.firstName, props?.lastName]);
 
   useImperativeHandle(ref, () => ({
     open() {

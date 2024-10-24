@@ -7,20 +7,26 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {APIUpdateInf} from '../../store/api/InfAPI';
 
 const RlstStatusDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props?.data);
   const isDisable = !value;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setValue(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {

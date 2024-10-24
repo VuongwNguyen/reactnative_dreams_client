@@ -269,12 +269,30 @@ const AccountDetailScreen = ({navigation}) => {
       ),
     );
   };
+  const getValueByKey = (dataArray, key) => {
+    return dataArray.find(item => item.key === key)?.value || null;
+  };
+  const nicknameValue = getValueByKey(basicInfData, 'nick');
+  const usernameValue = getValueByKey(basicInfData, 'fullname');
+  const [firstName, lastName] = usernameValue
+    ? usernameValue.split(' ')
+    : ['', ''];
+  const descValue = getValueByKey(otherInfData, 'des');
+  const naltValue = getValueByKey(basicInfData, 'natl');
+  const locationValue = getValueByKey(otherInfData, 'zone');
+  const htownValue = getValueByKey(basicInfData, 'htown');
+  const genderValue = getValueByKey(basicInfData, 'gender');
+  const rlstValue = getValueByKey(otherInfData, 'rlst');
+  // const hobbiesValue = getValueByKey(otherInfData, 'hobby');
+  // const hobbiesArr = hobbiesValue ? hobbiesValue.split(', ') : [];
+  const jobValue = getValueByKey(otherInfData, 'job');
+  const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
+  const eduValue = getValueByKey(otherInfData, 'edu');
+  const [level, , school] = eduValue ? eduValue.split(' ') : ['', , ''];
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={accountDetailStyle.container}>
-        <AppHeader
-          title={t('accountDetailScreen.infTitle')}
-        />
+        <AppHeader title={t('accountDetailScreen.infTitle')} />
         {!!basicInfData && !!otherInfData && !!personalInf ? (
           <View style={accountDetailStyle.bodyContainer}>
             <View style={accountDetailStyle.avtContainer}>
@@ -388,17 +406,60 @@ const AccountDetailScreen = ({navigation}) => {
 
         {/* Dialogs */}
         <DateOfBirthDialog ref={dialogRefs.dob} onSubmit={updateBirthday} />
-        <NicknameDialog ref={dialogRefs.nick} onSubmit={updateNickname} />
-        <EducationDialog ref={dialogRefs.edu} onSubmit={updateEdu} />
-        <UsernameDialog ref={dialogRefs.fullname} onSubmit={updateFullname} />
+        <NicknameDialog
+          ref={dialogRefs.nick}
+          onSubmit={updateNickname}
+          data={nicknameValue}
+        />
+        <EducationDialog
+          ref={dialogRefs.edu}
+          onSubmit={updateEdu}
+          level={level}
+          school={school}
+        />
+        <UsernameDialog
+          ref={dialogRefs.fullname}
+          onSubmit={updateFullname}
+          firstName={firstName}
+          lastName={lastName}
+        />
         <HobbyDialog ref={dialogRefs.hobby} onSubmit={updateHobby} />
-        <HometownDialog ref={dialogRefs.htown} onSubmit={updateHtown} />
-        <GenderDialog ref={dialogRefs.gender} onSubmit={updateGender} />
-        <NationalityDialog ref={dialogRefs.natl} onSubmit={updateCountry} />
-        <LocationDialog ref={dialogRefs.zone} onSubmit={updateLocation} />
-        <DescriptionDialog ref={dialogRefs.des} onSubmit={updateDesc} />
-        <JobDialog ref={dialogRefs.job} onSubmit={updateJob} />
-        <RlstStatusDialog ref={dialogRefs.rlts} onSubmit={updateRlst} />
+        <HometownDialog
+          ref={dialogRefs.htown}
+          onSubmit={updateHtown}
+          data={htownValue}
+        />
+        <GenderDialog
+          ref={dialogRefs.gender}
+          onSubmit={updateGender}
+          data={genderValue}
+        />
+        <NationalityDialog
+          ref={dialogRefs.natl}
+          onSubmit={updateCountry}
+          data={naltValue}
+        />
+        <LocationDialog
+          ref={dialogRefs.zone}
+          onSubmit={updateLocation}
+          data={locationValue}
+        />
+        <DescriptionDialog
+          ref={dialogRefs.des}
+          onSubmit={updateDesc}
+          data={descValue}
+        />
+        <JobDialog
+          ref={dialogRefs.job}
+          onSubmit={updateJob}
+          job={job}
+          workplace={workplace}
+        />
+        <RlstStatusDialog
+          ref={dialogRefs.rlts}
+          onSubmit={updateRlst}
+          data={rlstValue}
+        />
       </View>
     </ScrollView>
   );

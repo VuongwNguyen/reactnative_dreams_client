@@ -7,18 +7,24 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {useState,useEffect, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
 const NicknameDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
-  const dispatch = useDispatch()
-  const [nickName, setNickName] = useState('');
+  const dispatch = useDispatch();
+  const [nickName, setNickName] = useState(props?.data);
   const isDisabled = !nickName;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setNickName(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -71,7 +77,7 @@ const NicknameDialog = forwardRef((props, ref) => {
             />
 
             <TouchableOpacity
-            onPress={()=>handleSubmit()}
+              onPress={() => handleSubmit()}
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,

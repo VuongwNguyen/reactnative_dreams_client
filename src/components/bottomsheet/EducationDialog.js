@@ -7,7 +7,12 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -22,6 +27,14 @@ const EducationDialog = forwardRef((props, ref) => {
   const [school, setSchool] = useState('');
   const [value, setValue] = useState(null);
   const isDisable = !value;
+
+  useEffect(() => {
+    if (props?.level || props?.school) {
+      setValue(props.level || '');
+      setSchool(props.school || '');
+    }
+  }, [props?.level, props?.school]);
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -38,7 +51,9 @@ const EducationDialog = forwardRef((props, ref) => {
   ];
 
   const handleSubmit = () => {
-    const body = {key: 'edu', value: value};
+    const eduString = `${value} at ${school}`;
+
+    const body = {key: 'edu', value: eduString};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -47,7 +62,7 @@ const EducationDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(value);
+    props.onSubmit(eduString);
   };
   return (
     <Modal

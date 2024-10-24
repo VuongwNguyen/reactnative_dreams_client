@@ -182,7 +182,7 @@ export const bottomSheetStyle = {
   },
   // desc
   descInput: {
-    minHeight: 150,
+    minHeight: 100,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },

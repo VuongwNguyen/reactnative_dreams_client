@@ -7,20 +7,31 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
 
 const LocationDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
-  const dispatch = useDispatch()
-  const [location, setLocation] = useState('');
+  const dispatch = useDispatch();
+  const [location, setLocation] = useState(props?.data);
   const isDisable = !location;
   const [visible, setVisible] = useState(false);
 
+  useEffect(() => {
+    if (props?.data) {
+      setLocation(props.data);
+    }
+  }, [props?.data]);
+  
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);

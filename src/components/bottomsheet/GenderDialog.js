@@ -6,7 +6,7 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
@@ -16,10 +16,16 @@ import { APIUpdateInf } from '../../store/api/InfAPI';
 const GenderDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch()
-  const [selectedGender, setSelectedGender] = useState(null);
+  const [selectedGender, setSelectedGender] = useState(props?.data);
   const isDisabled = !selectedGender;
   const [visible, setVisible] = useState(false);
 
+  useEffect(() => {
+    if (props?.data) {
+      setSelectedGender(props.data);
+    }
+  }, [props?.data]);
+  
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
