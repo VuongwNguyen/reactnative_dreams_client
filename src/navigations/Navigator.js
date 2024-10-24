@@ -9,7 +9,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 const Stack = createStackNavigator();
 
 export function Navigator() {
-  const authenticated = useSelector(state => state.account.authenticated);
+  const {authenticated} = useSelector(state => state.account);
 
   if (!authenticated) {
     return <AuthNavigator />;
@@ -21,8 +21,12 @@ export function Navigator() {
         screenOptions={{headerShown: false}}
         initialRouteName={stackName.bottomTab.name}>
         <Stack.Screen
-          name={stackName.bottomTab.name}
-          component={stackName.bottomTab.component}
+          name={stackName.register.name}
+          component={stackName.register.component}
+        />
+        <Stack.Screen
+          name={stackName.login.name}
+          component={stackName.login.component}
         />
         <Stack.Screen
           name={stackName.profile.name}
@@ -55,6 +59,10 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.newPost.name}
           component={stackName.newPost.component}
+        />
+        <Stack.Screen
+          name={stackName.bottomTab.name}
+          component={stackName.bottomTab.component}
         />
         <Stack.Screen
           name={stackName.search.name}
