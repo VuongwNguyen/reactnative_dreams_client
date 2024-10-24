@@ -5,16 +5,23 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
 
 const EducationDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
-
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const [school, setSchool] = useState('');
+  const [value, setValue] = useState(null);
+  const isDisable = !value;
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -23,15 +30,25 @@ const EducationDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [school, setSchool] = useState('');
-  const [value, setValue] = useState(null);
-  const isDisable = !value;
+
   const data = [
     {label: t('educationDialog.level1'), value: 'Basic'},
     {label: t('educationDialog.level2'), value: 'Undergraduate'},
     {label: t('educationDialog.level3'), value: 'Postgraduate'},
   ];
+
+  const handleSubmit = () => {
+    const body = {key: 'edu', value: value};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(value);
+  };
   return (
     <Modal
       visible={visible}
@@ -79,7 +96,8 @@ const EducationDialog = forwardRef((props, ref) => {
               style={[
                 bottomSheetStyle.btnContainer,
                 isDisable && {opacity: 0.5},
-              ]}>
+              ]}
+              onPress={() => handleSubmit()}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('educationDialog.confirm')}
               </Text>

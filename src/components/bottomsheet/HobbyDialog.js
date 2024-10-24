@@ -5,6 +5,7 @@ import {
   Image,
   TextInput,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {
   useState,
@@ -15,10 +16,19 @@ import React, {
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const HobbyDialog = forwardRef((props, ref) => {
+  const [arrHobby, setArrHobby] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({});
+  const [count, setCount] = useState(0);
+  const [isShowInput, setIsShowInput] = useState(false);
+  const [otherHobby, setOtherHobby] = useState('');
+  const [isTouchable, setIsTouchable] = useState(false);
   const [visible, setVisible] = useState(false);
-
+  const dispatch = useDispatch()
+  
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -27,15 +37,10 @@ const HobbyDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  
+
   const {t} = useTranslation();
 
-  const [arrHobby, setArrHobby] = useState([]);
-  const [checkedItems, setCheckedItems] = useState({});
-  const [count, setCount] = useState(0);
-  const [isShowInput, setIsShowInput] = useState(false);
-  const [otherHobby, setOtherHobby] = useState('');
-  const [isTouchable, setIsTouchable] = useState(false);
+ 
 
   const hobbyData = [
     {
@@ -135,8 +140,19 @@ const HobbyDialog = forwardRef((props, ref) => {
     if (isShowInput && otherHobby && !arrHobby.includes(otherHobby)) {
       setArrHobby(prev => [...prev, otherHobby]);
     }
-  };
+    const body = {key: 'gender', value: arrHobby};
+    // console.log(body);
 
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(arrHobby);
+  };
   return (
     <Modal
       visible={visible}

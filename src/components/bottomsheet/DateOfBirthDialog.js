@@ -1,12 +1,30 @@
-import {Text, View, TouchableOpacity, Image, Modal} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Modal,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets} from '../../styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
+import {
+  APIGetInf,
+  APIPersonalDetailInf,
+  APIUpdateInf,
+} from '../../store/api/InfAPI';
 
 const DateOfBirthDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -17,66 +35,82 @@ const DateOfBirthDialog = forwardRef((props, ref) => {
     },
   }));
 
-  const {t} = useTranslation();
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
-
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
   };
+
   const showDatepicker = () => {
     setShow(true);
     setIsSelected(true);
   };
 
-  const age = new Date().getFullYear() - date.getFullYear();
-  const monthDiff = new Date().getMonth() - date.getMonth();
+  const calculateAge = () => {
+    const yearDiff = new Date().getFullYear() - date.getFullYear();
+    const monthDiff = new Date().getMonth() - date.getMonth();
+    const age =
+      monthDiff < 0 ||
+      (monthDiff === 0 && new Date().getDate() < date.getDate())
+        ? yearDiff - 1
+        : yearDiff;
+    return age;
+  };
 
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && new Date().getDate() < date.getDate())
-  ) {
-    age--;
-  }
+  const age = calculateAge();
 
   const getZodiacSign = birthdate => {
-    const date = new Date(birthdate);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
+    const day = birthdate.getDate();
+    const month = birthdate.getMonth() + 1;
 
-    if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
+    if ((month === 1 && day >= 20) || (month === 2 && day <= 18))
       return t('dateOfBirthDialog.aquarius');
-    } else if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) {
+    if ((month === 2 && day >= 19) || (month === 3 && day <= 20))
       return t('dateOfBirthDialog.pisces');
-    } else if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) {
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19))
       return t('dateOfBirthDialog.aries');
-    } else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) {
+    if ((month === 4 && day >= 20) || (month === 5 && day <= 20))
       return t('dateOfBirthDialog.taurus');
-    } else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) {
+    if ((month === 5 && day >= 21) || (month === 6 && day <= 20))
       return t('dateOfBirthDialog.gemini');
-    } else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) {
+    if ((month === 6 && day >= 21) || (month === 7 && day <= 22))
       return t('dateOfBirthDialog.cancer');
-    } else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) {
+    if ((month === 7 && day >= 23) || (month === 8 && day <= 22))
       return t('dateOfBirthDialog.leo');
-    } else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) {
+    if ((month === 8 && day >= 23) || (month === 9 && day <= 22))
       return t('dateOfBirthDialog.virgo');
-    } else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) {
+    if ((month === 9 && day >= 23) || (month === 10 && day <= 22))
       return t('dateOfBirthDialog.libra');
-    } else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) {
+    if ((month === 10 && day >= 23) || (month === 11 && day <= 21))
       return t('dateOfBirthDialog.scorpio');
-    } else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) {
+    if ((month === 11 && day >= 22) || (month === 12 && day <= 21))
       return t('dateOfBirthDialog.sagittarius');
-    } else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) {
+    if ((month === 12 && day >= 22) || (month === 1 && day <= 19))
       return t('dateOfBirthDialog.capricorn');
-    }
-
     return '';
   };
 
-  const zodiacSign = getZodiacSign(date);
+  const zodiacSign = age > 0 ? getZodiacSign(date) : 'Undefined';
+
+  const handleSubmit = () => {
+    const dateString = `${date.getDate()} - ${
+      date.getMonth() + 1
+    } - ${date.getFullYear()}`;
+    const bodyDob = {key: 'dob', value: dateString};
+    const bodyZodiac = {key: 'zodiac', value: zodiacSign};
+
+    dispatch(APIUpdateInf(bodyDob))
+      .unwrap()
+      .then(() => {
+        dispatch(APIUpdateInf(bodyZodiac));
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(dateString, zodiacSign);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -102,13 +136,14 @@ const DateOfBirthDialog = forwardRef((props, ref) => {
             </Text>
             <View style={bottomSheetStyle.derivedFieldContainer}>
               <Text style={bottomSheetStyle.derivedField}>
-                {t('dateOfBirthDialog.age')}: {age}
+                {t('dateOfBirthDialog.age')}:{' '}
+                <Text style={bottomSheetStyle.normalText}>{age}</Text>
               </Text>
               <Text style={bottomSheetStyle.derivedField}>
-                {t('dateOfBirthDialog.zodiac')}: {zodiacSign}
+                {t('dateOfBirthDialog.zodiac')}:{' '}
+                <Text style={bottomSheetStyle.normalText}>{zodiacSign}</Text>
               </Text>
             </View>
-
             <TouchableOpacity
               onPress={showDatepicker}
               style={bottomSheetStyle.datePickerButton}>
@@ -129,24 +164,22 @@ const DateOfBirthDialog = forwardRef((props, ref) => {
                 </Text>
               )}
             </TouchableOpacity>
-
             {show && (
               <DateTimePicker
-                testID="dateTimePicker"
                 value={date}
-                mode={'date'}
+                mode="date"
                 is24Hour={true}
                 display="spinner"
                 onChange={onChange}
               />
             )}
-
             <TouchableOpacity
-              disabled={age <= 0 ? true : false}
+              disabled={age <= 0}
               style={[
                 bottomSheetStyle.btnContainer,
                 age <= 0 && {opacity: 0.5},
-              ]}>
+              ]}
+              onPress={handleSubmit}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('dateOfBirthDialog.confirm')}
               </Text>

@@ -1,10 +1,23 @@
-import {Text, View, TouchableOpacity, Image, Modal} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Modal,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const GenderDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch()
+  const [selectedGender, setSelectedGender] = useState(null);
+  const isDisabled = !selectedGender;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -15,13 +28,23 @@ const GenderDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [selectedGender, setSelectedGender] = useState(null);
 
   const handleSelectGender = gender => {
     setSelectedGender(gender);
   };
-  const isDisabled = !selectedGender;
+
+  const handleSubmit = () => {
+    const body = {key: 'gender', value: selectedGender};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(selectedGender);
+  };
   return (
     <Modal
       visible={visible}
@@ -106,7 +129,8 @@ const GenderDialog = forwardRef((props, ref) => {
               style={[
                 bottomSheetStyle.btnContainer,
                 isDisabled && {opacity: 0.5},
-              ]}>
+              ]}
+              onPress={() => handleSubmit()}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('genderDialog.confirm')}
               </Text>

@@ -50,3 +50,17 @@ export const APIGetInfList = createAsyncThunk(
     }
   },
 );
+export const APIUpdateInf = createAsyncThunk(
+  'infomation/up-sert-infomation',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post(
+        '/infomation/up-sert-infomation',
+        body,
+      );
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

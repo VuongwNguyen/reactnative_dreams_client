@@ -1,6 +1,11 @@
-import {Colors, Typography} from '../../styles';
+import {Colors, Fonts, Typography} from '../../styles';
 export const bottomSheetStyle = {
   // common
+  normalText: {
+    fontFamily: Fonts.roboto.regular,
+    fontSize: 20,
+    color: Colors.black,
+  },
   modalBackground: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -56,6 +61,10 @@ export const bottomSheetStyle = {
   },
   inputGroup: {
     gap: 20,
+  },
+  closeIcon: {
+    width: 24,
+    height: 24,
   },
   //   usernameDialog
   usernameInputGroup: {

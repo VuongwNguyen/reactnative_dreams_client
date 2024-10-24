@@ -5,14 +5,21 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
+import {Assets} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const RlstStatusDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(null);
+  const isDisable = !value;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -23,14 +30,25 @@ const RlstStatusDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [value, setValue] = useState(null);
-  const isDisable = !value;
+
   const data = [
     {label: t('rlstStatusDialog.single'), value: 'Single'},
     {label: t('rlstStatusDialog.dating'), value: 'Dating'},
     {label: t('rlstStatusDialog.married'), value: 'Married'},
   ];
+
+  const handleSubmit = () => {
+    const body = {key: 'rlst', value: value};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(value);
+  };
   return (
     <Modal
       visible={visible}
@@ -66,6 +84,7 @@ const RlstStatusDialog = forwardRef((props, ref) => {
               style={bottomSheetStyle.educationLevel}
             />
             <TouchableOpacity
+              onPress={() => handleSubmit()}
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,

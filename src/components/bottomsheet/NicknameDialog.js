@@ -5,12 +5,19 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 const NicknameDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch()
+  const [nickName, setNickName] = useState('');
+  const isDisabled = !nickName;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -21,9 +28,19 @@ const NicknameDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [nickName, setNickName] = useState('');
-  const isDisabled = !nickName;
+
+  const handleSubmit = () => {
+    const body = {key: 'nick', value: nickName};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(nickName);
+  };
   return (
     <Modal
       visible={visible}
@@ -54,6 +71,7 @@ const NicknameDialog = forwardRef((props, ref) => {
             />
 
             <TouchableOpacity
+            onPress={()=>handleSubmit()}
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,

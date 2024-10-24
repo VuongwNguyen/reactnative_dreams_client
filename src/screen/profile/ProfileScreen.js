@@ -42,7 +42,7 @@ const ProfileScreen = props => {
     translationY.value = e.contentOffset.y;
   });
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, 250, 0);
+    const height = getInterpolation(translationY.value, 230, 0);
     const opacity = getInterpolation(translationY.value, 1, 0);
     const padding = getInterpolation(translationY.value, 10, 0);
     return {

@@ -5,12 +5,22 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+
 const UsernameDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const isDisabled = !firstName || !lastName;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -21,10 +31,21 @@ const UsernameDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const isDisabled = !firstName || !lastName;
+
+  const handleSubmit = () => {
+    const fullName = `${firstName} ${lastName}`;
+    const body = {key: 'fullname', value: fullName};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        dispatch(APIGetUserBasicInf());
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(fullName);
+  };
   return (
     <Modal
       visible={visible}
@@ -63,6 +84,7 @@ const UsernameDialog = forwardRef((props, ref) => {
               />
             </View>
             <TouchableOpacity
+              onPress={() => handleSubmit()}
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,

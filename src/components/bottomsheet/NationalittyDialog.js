@@ -1,11 +1,27 @@
-import {Text, View, TouchableOpacity, Image, Modal} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Modal,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
+
 const NationalityDialog = forwardRef((props, ref) => {
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false);
+  const {t} = useTranslation();
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const [icon, setIcon] = useState(Assets.image.nationality);
+  const isDisable = !value;
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -15,10 +31,6 @@ const NationalityDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [icon, setIcon] = useState(Assets.image.nationality);
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -37,7 +49,19 @@ const NationalityDialog = forwardRef((props, ref) => {
     setIcon(item.icon);
     setIsFocus(false);
   };
-  const isDisable = !value;
+
+  const handleSubmit = () => {
+    const body = {key: 'natl', value: value};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(value);
+  };
   return (
     <Modal
       visible={visible}
@@ -89,6 +113,7 @@ const NationalityDialog = forwardRef((props, ref) => {
               />
             </View>
             <TouchableOpacity
+              onPress={() => handleSubmit()}
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,

@@ -5,13 +5,21 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const JobDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch()
+  const [job, setJob] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const isDisable = !job;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -22,11 +30,19 @@ const JobDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [job, setJob] = useState('');
-  const [workplace, setWorkplace] = useState('');
-  const isDisable = !job;
 
+  const handleSubmit = () => {
+    const body = {key: 'job', value: job};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(job);
+  };
   return (
     <Modal
       visible={visible}
@@ -64,6 +80,7 @@ const JobDialog = forwardRef((props, ref) => {
             </View>
 
             <TouchableOpacity
+             onPress={()=>handleSubmit()}
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,

@@ -5,13 +5,20 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const HometownDialog = forwardRef((props, ref) => {
+  const {t} = useTranslation();
+  const dispatch = useDispatch()
+  const [hometown, setHometown] = useState('');
+  const isDisabled = !hometown;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -22,9 +29,19 @@ const HometownDialog = forwardRef((props, ref) => {
       setVisible(false);
     },
   }));
-  const {t} = useTranslation();
-  const [hometown, setHometown] = useState('');
-  const isDisabled = !hometown;
+
+  const handleSubmit = () => {
+    const body = {key: 'htown', value: hometown};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(hometown);
+  };
   return (
     <Modal
       visible={visible}
@@ -55,6 +72,7 @@ const HometownDialog = forwardRef((props, ref) => {
             />
 
             <TouchableOpacity
+            onPress={()=>handleSubmit()}
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,
