@@ -5,6 +5,11 @@
 const uriIcons = '../../../assets/icons/';
 export const Assets = {
   icons: {
+    delete: require(uriIcons + 'delete.png'),
+    hashTag: require(uriIcons + 'hashtags.png'),
+    tagUser: require(uriIcons + 'tag-user.png'),
+    playVideo: require(uriIcons + 'play-video.png'),
+    videoGallery: require(uriIcons + 'video-gallery.png'),
     home: require(uriIcons + 'home.png'),
     homeSelected: require(uriIcons + 'home-selected.png'),
     message: require(uriIcons + 'message.png'),
@@ -54,6 +59,7 @@ export const Assets = {
     voice: require(uriIcons + 'keyboardvoice.png'),
     public: require(uriIcons + 'public.png'),
     private: require(uriIcons + 'private.png'),
+    add: require(uriIcons + 'add.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),

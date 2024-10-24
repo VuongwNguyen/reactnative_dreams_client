@@ -1,8 +1,5 @@
-import {View, Image, TextInput} from 'react-native';
-import React, {useRef} from 'react';
-import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
-import {HomeStyles} from '../../styles/homestyle/homestyle';
-import {Assets} from '../../styles';
+import {View, Image, TextInput, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -11,8 +8,13 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {stackName} from '../../navigations/screens';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
+import {HomeStyles} from '../../styles/homestyle/homestyle';
+import {Assets} from '../../styles';
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const getInterpolation = (
   value,
@@ -32,8 +34,9 @@ const HomeScreen = props => {
   const {navigation} = props;
   const inputSearch = useRef(null);
   const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
   const translationY = useSharedValue(0);
-
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
@@ -56,17 +59,22 @@ const HomeScreen = props => {
       searchText: searchText,
     });
   };
+
+  useEffect(() => {
+    dispatch(APIGetUserBasicInf());
+  }, []);
+
   return (
     <View style={HomeStyles.container}>
       <Animated.View style={[HomeStyles.header, headerStyle]}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(stackName.personalProfile.name);
+            navigation.navigate(stackName.profile.name);
           }}>
           <Image
             style={HomeStyles.avatar}
             source={{
-              uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+              uri: userBasicInfData?.avatar,
             }}
           />
         </TouchableOpacity>
@@ -75,9 +83,6 @@ const HomeScreen = props => {
             ref={inputSearch}
             style={HomeStyles.inputSearch}
             placeholder={t('homeScreen.search')}
-            // onPressIn={() => {
-            //   navigation.navigate(stackName.search.name);
-            // }}
             onSubmitEditing={handleSearch}
           />
           <Image

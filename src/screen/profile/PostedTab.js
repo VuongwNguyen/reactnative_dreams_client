@@ -1,106 +1,45 @@
-import {FlatList} from 'react-native';
-import React from 'react';
+import {ActivityIndicator, FlatList, ToastAndroid, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import ItemPost from '../../components/ItemPost';
+import {useDispatch} from 'react-redux';
+
 import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
+import {APIGetPostByUser} from '../../store/api/PostAPI';
+import Animated from 'react-native-reanimated';
 
-const data = [
-  {
-    name: 'Velerie Hiddersley',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-      'https://i.pinimg.com/236x/c4/72/c5/c472c5aa885fee264dba6bc30d9db057.jpg',
-      'https://i.pinimg.com/236x/db/12/ca/db12caeb3afa6e2df4e93e2fc01d6518.jpg',
-      'https://i.pinimg.com/474x/aa/e3/a0/aae3a00dcb0c1ab098bf43f2f83a6332.jpg',
-    ],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-      'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg',
-    ],
-    like: 8,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    ],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-    ],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-];
-
-const PostedTab = () => {
+const PostedTab = props => {
+  const {scrollHandler} = props;
+  const dispatch = useDispatch();
+  const [dataPosts, setDataPosts] = useState([]);
+  const [viewedItemIds, setViewedItemIds] = useState([]);
+  const [timeOutId, setTimeOutId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState('67010e3da2ce9ed2d170ba13');
+  useEffect(() => {
+    dispatch(APIGetPostByUser(userId))
+      .unwrap()
+      .then(res => {
+        setDataPosts(res.data.list);
+        setLoading(false);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, [userId]);
   return (
-    <FlatList
-      style={PostedTabStyle.container}
-      scrollEnabled={false}
-      nestedScrollEnabled={true}
-      data={data}
-      renderItem={({item}) => <ItemPost item={item} />}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <View style={PostedTabStyle.container}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#00ff00" />
+      ) : (
+        <Animated.FlatList
+          onScroll={scrollHandler}
+          data={dataPosts}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => <ItemPost item={item} />}
+          keyExtractor={item => item._id}
+        />
+      )}
+    </View>
   );
 };
 

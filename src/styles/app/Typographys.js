@@ -123,7 +123,7 @@ export const Typography = StyleSheet.create({
     lineHeight: 24,
   },
   tagOptionSelected: {
-    fontFamily: Fonts.roboto.semibold,
+    fontFamily: Fonts.roboto.bold,
     fontSize: 14,
     color: Colors.white,
   },

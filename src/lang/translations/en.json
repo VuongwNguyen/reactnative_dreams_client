@@ -31,11 +31,12 @@
       },
       "password": {
         "required": "Password cannot be empty",
-        "minLength": "Password must be at least 8 characters long"
+        "minLength": "Password must be at least 8 characters long",
+        "invalid": "Password is invalid"
       },
       "confirmPassword": {
         "required": "Confirm password cannot be empty",
-        "oneOf": "Passwords must match"
+        "oneOf": "Confirm password doesn't match"
       }
     }
   },
@@ -92,9 +93,9 @@
     "save": "Save",
     "error": {
       "required": "Required",
-      "min": "Password must be at least 6 characters long",
+      "min": "Password must be at least 8 characters long",
       "invalid": "Password is invalid",
-      "notMatch": "Confirm password is doesn't match"
+      "notMatch": "Confirm password doesn't match"
     }
   },
   "accountDetailScreen": {
@@ -151,7 +152,7 @@
   },
   "newPostScreen": {
     "title": "Create post",
-    "openLine": "write an opening line...",
+    "openLine": "Write an opening line...",
     "contentPost": "Write something...",
     "post": "Post"
   },

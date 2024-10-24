@@ -1,21 +1,84 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import ItemPost from '../../components/ItemPost';
+import React, {useEffect, useRef, useState} from 'react';
 import Animated from 'react-native-reanimated';
+import AxiosInstance from '../../configs/axiosInstance';
+
+import ItemPost from '../../components/ItemPost';
 
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
-  const [dataPosts, setDataPosts] = useState(postsData);
+  const [dataPosts, setDataPosts] = useState([]);
+  const [viewedItemIds, setViewedItemIds] = useState([]);
+  const [timeOutId, setTimeOutId] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await AxiosInstance().get('/post/trending-posts/1/10');
+        setDataPosts(response.data.list);
+        setLoading(false);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
+  // console.log(dataPosts)
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: {
+        itemVisiblePercentThreshold: 90,
+      },
+      onViewableItemsChanged: ({viewableItems}) => {
+        viewableItems.forEach(item => {
+          // console.log('Item being viewed1111:', item.item._id);
+          if (timeOutId !== null) {
+            clearTimeout(timeOutId);
+          }
+          const timeout = setTimeout(() => {
+            // console.log('ok');
+            AxiosInstance()
+              .post('/post/count-view-post', {
+                post_id: item.item._id,
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }, 5000);
+          setTimeOutId(timeout);
+
+          if (!viewedItemIds.includes(item.item._id)) {
+            setViewedItemIds(prevViewedItemIds => {
+              if (!prevViewedItemIds.includes(item.item._id)) {
+                AxiosInstance().post('/post/set-post-viewed', {
+                  post_id: item.item._id,
+                });
+
+                return [...prevViewedItemIds, item.item._id];
+              }
+              return prevViewedItemIds;
+            });
+          }
+        });
+      },
+    },
+  ]);
+
   return (
     <View style={styles.container}>
-      <Animated.ScrollView
-        style={{marginTop: 10}}
-        onScroll={scrollHandler}
-        showsVerticalScrollIndicator={false}>
-        {dataPosts.map((item, index) => (
-          <ItemPost key={index} item={item} />
-        ))}
-      </Animated.ScrollView>
+      {!loading && (
+        <Animated.FlatList
+          onScroll={scrollHandler}
+          data={dataPosts}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => <ItemPost item={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          // Truyền vào callback để log item đang xem
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
+        />
+      )}
     </View>
   );
 };
@@ -29,74 +92,3 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
-
-const postsData = [
-  {
-    name: 'Velerie Hiddersley 1',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    ],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley 2',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley 3',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-      'https://i.pinimg.com/236x/16/90/2d/16902d6ebaefea0fb48fdbc70bac939d.jpg',
-    ],
-    like: 8,
-    comment: 0,
-    share: 0,
-  },
-  {
-    name: 'Velerie Hiddersley 4',
-    avatar:
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-    hour: '1 hour ago',
-    title:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    content:
-      'It is a long established fact that a reader will be distracted by te readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has it a more-or-less',
-    image: [
-      'https://i.pinimg.com/236x/9a/c0/8d/9ac08d3f4936eaabe47145b57a93b3fe.jpg',
-      'https://i.pinimg.com/236x/db/7b/f4/db7bf49e8745f88a21fb74d73851d572.jpg',
-      'https://i.pinimg.com/236x/c4/72/c5/c472c5aa885fee264dba6bc30d9db057.jpg',
-      'https://i.pinimg.com/236x/db/12/ca/db12caeb3afa6e2df4e93e2fc01d6518.jpg',
-      'https://i.pinimg.com/474x/aa/e3/a0/aae3a00dcb0c1ab098bf43f2f83a6332.jpg',
-    ],
-    like: 0,
-    comment: 0,
-    share: 0,
-  },
-];

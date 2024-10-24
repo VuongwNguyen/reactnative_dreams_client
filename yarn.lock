@@ -2807,6 +2807,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-camera-roll/camera-roll@npm:^7.8.3":
+  version: 7.8.3
+  resolution: "@react-native-camera-roll/camera-roll@npm:7.8.3"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: 1465566ed52b6e1478debcebc1bcaecbd6752611064d7fd5a0c4ed06deb702626ebd945c7ca664d5d070f822a4d3338e5dbb447a9acb27adb35dd77f8bfba2f9
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:13.6.9":
   version: 13.6.9
   resolution: "@react-native-community/cli-clean@npm:13.6.9"
@@ -3004,6 +3013,26 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: 3adc9346f8948abed246da3bfa3a223e44c2c5903070178a82e583ce6f8273607fe5a542af834b3a27aff81980c555e5f72bf0e87c85e3f00856a0de21525374
+  languageName: node
+  linkType: hard
+
+"@react-native-community/viewpager@npm:^2.0.1":
+  version: 2.0.2
+  resolution: "@react-native-community/viewpager@npm:2.0.2"
+  peerDependencies:
+    react: ^16.0
+    react-native: ">=0.57"
+  checksum: 855acfdddb68a3a3ed40a7cb838c382ace1a4ccb6c50210a18b5598bb975231178c98c7c60ac1598bbc77babd7cc20dae178498bb170e024e7752f44677014d7
+  languageName: node
+  linkType: hard
+
+"@react-native-community/viewpager@npm:^5.0.11":
+  version: 5.0.11
+  resolution: "@react-native-community/viewpager@npm:5.0.11"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 35f02add82b740f017c1a9a35ead3b4baef06c22389afe7766a0986c6bc033c7b3139957c608e5d3f299b1667506dd300dc1f0c065467db0454a3d0cad5728ea
   languageName: node
   linkType: hard
 
@@ -4951,6 +4980,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"create-react-class@npm:^15.6.2":
+  version: 15.7.0
+  resolution: "create-react-class@npm:15.7.0"
+  dependencies:
+    loose-envify: ^1.3.1
+    object-assign: ^4.1.1
+  checksum: 0c5f43da705fa9f67ec289051dd5780792652d440dfa17cd2c7d8423c1f604609596f895dabf46fda1960ddd93ee96fe1b61ef4d55a94fc4271b07d515486714
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -5002,12 +5041,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.29.3":
-  version: 2.30.0
-  resolution: "date-fns@npm:2.30.0"
-  dependencies:
-    "@babel/runtime": ^7.21.0
-  checksum: f7be01523282e9bb06c0cd2693d34f245247a29098527d4420628966a2d9aad154bd0e90a6b1cf66d37adcb769cd108cf8a7bd49d76db0fb119af5cdd13644f4
+"dayjs@npm:^1.11.13":
+  version: 1.11.13
+  resolution: "dayjs@npm:1.11.13"
+  checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
   languageName: node
   linkType: hard
 
@@ -5222,6 +5259,13 @@ __metadata:
   version: 0.13.1
   resolution: "emittery@npm:0.13.1"
   checksum: 2b089ab6306f38feaabf4f6f02792f9ec85fc054fda79f44f6790e61bbf6bc4e1616afb9b232e0c5ec5289a8a452f79bfa6d905a6fd64e94b49981f0934001c6
+  languageName: node
+  linkType: hard
+
+"emoji-datasource@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "emoji-datasource@npm:5.0.1"
+  checksum: 4c60bc7a3ff4286e9bf52fd926bd475bb8a98504e594fc33404df871daeaa5a6c29b00cf7487dc7f4e85c99d0f6ba0bf23e25c3c7c927547afcf84d55d3cb24a
   languageName: node
   linkType: hard
 
@@ -7946,6 +7990,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.camelcase@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.camelcase@npm:4.3.0"
+  checksum: cb9227612f71b83e42de93eccf1232feeb25e705bdb19ba26c04f91e885bfd3dd5c517c4a97137658190581d3493ea3973072ca010aab7e301046d90740393d1
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -7974,7 +8025,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.21":
+"lodash@npm:^4.17.15, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -8011,7 +8062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -9216,7 +9267,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.5.10, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9231,6 +9282,26 @@ __metadata:
   version: 2.0.6
   resolution: "property-expr@npm:2.0.6"
   checksum: 89977f4bb230736c1876f460dd7ca9328034502fd92e738deb40516d16564b850c0bbc4e052c3df88b5b8cd58e51c93b46a94bea049a3f23f4a022c038864cab
+  languageName: node
+  linkType: hard
+
+"protobufjs@npm:^7.2.5":
+  version: 7.4.0
+  resolution: "protobufjs@npm:7.4.0"
+  dependencies:
+    "@protobufjs/aspromise": ^1.1.2
+    "@protobufjs/base64": ^1.1.2
+    "@protobufjs/codegen": ^2.0.4
+    "@protobufjs/eventemitter": ^1.1.0
+    "@protobufjs/fetch": ^1.1.0
+    "@protobufjs/float": ^1.0.2
+    "@protobufjs/inquire": ^1.1.0
+    "@protobufjs/path": ^1.1.2
+    "@protobufjs/pool": ^1.1.0
+    "@protobufjs/utf8": ^1.1.0
+    "@types/node": ">=13.7.0"
+    long: ^5.0.0
+  checksum: ba0e6b60541bbf818bb148e90f5eb68bd99004e29a6034ad9895a381cbd352be8dce5376e47ae21b2e05559f2505b4a5f4a3c8fa62402822c6ab4dcdfb89ffb3
   languageName: node
   linkType: hard
 
@@ -9398,6 +9469,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-emoji-board@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-native-emoji-board@npm:1.2.1"
+  dependencies:
+    emoji-datasource: ^5.0.1
+    lodash: ^4.17.15
+    prop-types: ^15.7.2
+    react-native-scrollable-tab-view: ^1.0.0
+    string.fromcodepoint: ^0.2.1
+  checksum: 52747f1d83776e1ed86921c7428e6a42c78644c9223c8b6f271799c43bcf308a46acd762d8e0f151b7bcb888e6e1ce63db349047d992d2c6148736b0596f427b
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:^2.17.1":
   version: 2.17.1
   resolution: "react-native-gesture-handler@npm:2.17.1"
@@ -9423,13 +9507,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pager-view@npm:^6.3.4":
-  version: 6.3.4
-  resolution: "react-native-pager-view@npm:6.3.4"
+"react-native-image-viewing@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "react-native-image-viewing@npm:0.2.2"
+  peerDependencies:
+    react: ">=16.11.0"
+    react-native: ">=0.61.3"
+  checksum: 17f16958ebc00787453d68ca0a695ee5fd9c59865fc525e192de6f200f4b91caa3af3da5a9908e28c94370ea28382074328f917c5398a27b112dd986985f77a0
+  languageName: node
+  linkType: hard
+
+"react-native-iphone-x-helper@npm:^1.0.3":
+  version: 1.3.1
+  resolution: "react-native-iphone-x-helper@npm:1.3.1"
+  peerDependencies:
+    react-native: ">=0.42.0"
+  checksum: 024376646009a966e33e12fc2358751830818b0fb73b1c601a64eb5e490d2dc43eec23668991b985a8c412a84d087f20eb45bb9b593567c08b66e741b7bddda5
+  languageName: node
+  linkType: hard
+
+"react-native-keyboard-aware-scroll-view@npm:^0.9.5":
+  version: 0.9.5
+  resolution: "react-native-keyboard-aware-scroll-view@npm:0.9.5"
+  dependencies:
+    prop-types: ^15.6.2
+    react-native-iphone-x-helper: ^1.0.3
+  peerDependencies:
+    react-native: ">=0.48.4"
+  checksum: 5eec2aedb886213dfed4c8428a443b565dce80ba9fcf5897171e4c8829d4dd64c5011ac004d93f29adfc83ad6f88c2838d1a5b45255dc4a49bd1c0a169245800
+  languageName: node
+  linkType: hard
+
+"react-native-pager-view@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "react-native-pager-view@npm:6.4.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 828975c5da231223bdf157e7a37b26b6d6edb6ba4e2db26c13fbcaccfac3bca53198cc2943e815bdc40516d717c66d0de21572a4bfc432803bdd0d987afd234a
+  checksum: 558f08efccf748eed91a2a88be4f90e49e2b63a28c1b9db5de9711eb324a75e9565a3dbf92c523a623a2c7d5a7e0d8a0db88599bc85d33158544a7d0e724319e
   languageName: node
   linkType: hard
 
@@ -9493,6 +9608,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-scrollable-tab-view@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "react-native-scrollable-tab-view@npm:1.0.0"
+  dependencies:
+    "@react-native-community/viewpager": ^2.0.1
+    create-react-class: ^15.6.2
+    prop-types: ^15.6.0
+    react-timer-mixin: ^0.13.3
+  peerDependencies:
+    react-native: ">=0.20.0"
+  checksum: dd270efa3457f6f8382cf95896cc6772f95b7673b4e5c7d5143601ea42e2818610df40759bbc978ff8b3ca396fe609d7e11a7e4419bd146145f19b1e962c8949
+  languageName: node
+  linkType: hard
+
 "react-native-splash-screen@npm:^3.3.0":
   version: 3.3.0
   resolution: "react-native-splash-screen@npm:3.3.0"
@@ -9512,6 +9641,26 @@ __metadata:
     react-native: "*"
     react-native-pager-view: "*"
   checksum: bd287e5543881aa662ee55418a3bd5dacb25033425a9fcb0fff21c3a3b96f956af1a77cd9bab4e7a8e94590080a5d8e3cb99cfa8613b19bf6da24bfc9b4942d4
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^4.5.3":
+  version: 4.5.3
+  resolution: "react-native-vision-camera@npm:4.5.3"
+  peerDependencies:
+    "@shopify/react-native-skia": "*"
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    "@shopify/react-native-skia":
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-worklets-core:
+      optional: true
+  checksum: 99d57a70f93134903ae25ef798947f79804ea00e3b58cbb21131115552e6f2950d2a3be9a6a237232ca6bab7b5031aa12d9ca2df659be39dc607d75997317abc
   languageName: node
   linkType: hard
 
@@ -9616,6 +9765,13 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 6b6980ced93fa2b72662d5e4ab3b4896833586940047ce52ca9aca801e5432adf05fcbe28289b0af3ce6a2a7c590974e25dcc8aa43d0de658bfe8bbcd686f958
+  languageName: node
+  linkType: hard
+
+"react-timer-mixin@npm:^0.13.3":
+  version: 0.13.4
+  resolution: "react-timer-mixin@npm:0.13.4"
+  checksum: ff82e1f90fab1ab4569017572b29fd0fdf0ebdfbf7a9580927a7f6737913046af39005bc82a0d8c6628cd999aecb66f411d331fd4dee70c4dba5a995b9d2032b
   languageName: node
   linkType: hard
 
@@ -9952,6 +10108,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rn-emoji-keyboard@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "rn-emoji-keyboard@npm:1.7.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a949b72b40358561c8c95a878aa873fb4186540c39980ca2087b43022303f807b4481563049e2d414b6de4fefeb19d91cf470d49332d4e075824641e7c3702da
+  languageName: node
+  linkType: hard
+
 "run-parallel@npm:^1.1.9":
   version: 1.2.0
   resolution: "run-parallel@npm:1.2.0"
@@ -10258,7 +10424,9 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@react-native-async-storage/async-storage": ^1.24.0
+    "@react-native-camera-roll/camera-roll": ^7.8.3
     "@react-native-community/datetimepicker": ^8.2.0
+    "@react-native-community/viewpager": ^5.0.11
     "@react-native-firebase/app": ^20.1.0
     "@react-native-firebase/messaging": ^20.1.0
     "@react-native/babel-preset": 0.74.85
@@ -10274,6 +10442,7 @@ __metadata:
     "@types/react-test-renderer": ^18.0.0
     axios: ^1.7.4
     babel-jest: ^29.6.3
+    dayjs: ^1.11.13
     eslint: ^8.19.0
     formik: ^2.4.6
     i18next: ^23.12.1
@@ -10283,17 +10452,22 @@ __metadata:
     react-i18next: ^14.1.2
     react-native: 0.74.3
     react-native-element-dropdown: ^2.12.1
+    react-native-emoji-board: ^1.2.1
     react-native-gesture-handler: ^2.17.1
     react-native-image-picker: ^7.1.2
-    react-native-pager-view: ^6.3.4
+    react-native-image-viewing: ^0.2.2
+    react-native-keyboard-aware-scroll-view: ^0.9.5
+    react-native-pager-view: ^6.4.1
     react-native-reanimated: ^3.14.0
     react-native-safe-area-context: ^4.10.8
     react-native-screens: ^3.32.0
     react-native-splash-screen: ^3.3.0
     react-native-tab-view: ^3.5.2
+    react-native-vision-camera: ^4.5.3
     react-redux: ^9.1.2
     react-test-renderer: 18.2.0
     redux-persist: ^6.0.0
+    rn-emoji-keyboard: ^1.7.0
     socket.io-client: ^4.7.5
     typescript: 5.0.4
     yup: ^1.4.0
@@ -10496,6 +10670,13 @@ __metadata:
     emoji-regex: ^9.2.2
     strip-ansi: ^7.0.1
   checksum: 7369deaa29f21dda9a438686154b62c2c5f661f8dda60449088f9f980196f7908fc39fdd1803e3e01541970287cf5deae336798337e9319a7055af89dafa7193
+  languageName: node
+  linkType: hard
+
+"string.fromcodepoint@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "string.fromcodepoint@npm:0.2.1"
+  checksum: 6ba80f70c3e2a36dab87f5d68168936403295a73838564e701f5c861d397d77d9e97b0e2aa0f3c163a25a96c785dcc2145452b220753fb7b3e6c6fe431c9c411
   languageName: node
   linkType: hard
 
@@ -10864,6 +11045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.1.0":
+  version: 2.7.0
+  resolution: "tslib@npm:2.7.0"
+  checksum: 1606d5c89f88d466889def78653f3aab0f88692e80bb2066d090ca6112ae250ec1cfa9dbfaab0d17b60da15a4186e8ec4d893801c67896b277c17374e36e1d28
+  languageName: node
+  linkType: hard
+
 "tsutils@npm:^3.21.0":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
@@ -11112,19 +11300,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-parse@npm:^1.2.0":
-  version: 1.5.10
-  resolution: "url-parse@npm:1.5.10"
-  dependencies:
-    querystringify: ^2.1.1
-    requires-port: ^1.0.0
-  checksum: fbdba6b1d83336aca2216bbdc38ba658d9cfb8fc7f665eb8b17852de638ff7d1a162c198a8e4ed66001ddbf6c9888d41e4798912c62b4fd777a31657989f7bdf
-  languageName: node
-  linkType: hard
-
-"use-latest-callback@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "use-latest-callback@npm:0.2.1"
+"use-latest-callback@npm:^0.1.5":
+  version: 0.1.11
+  resolution: "use-latest-callback@npm:0.1.11"
   peerDependencies:
     react: ">=16.8"
   checksum: da5718eda625738cc7dac8fb502d0f8f2039435eb71203565a72c32e0f5769e7b8ddac074e650066636e7f4b29b45524f751cb18a2b430856d98879bbb10d274
@@ -11137,6 +11315,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 8f08eba26d69406b61bb4b8dacdd5a92bd6aef5b53d346dfe87954f7330ee10ecabc937cc7854635155d46053828e85c10b5a5aff7a04720e6a97b9f42999bac
+  languageName: node
+  linkType: hard
+
+"use-latest-callback@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "use-latest-callback@npm:0.2.1"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: da5718eda625738cc7dac8fb502d0f8f2039435eb71203565a72c32e0f5769e7b8ddac074e650066636e7f4b29b45524f751cb18a2b430856d98879bbb10d274
   languageName: node
   linkType: hard
 
@@ -11567,7 +11754,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.6.2":
+"yargs@npm:^17.3.1, yargs@npm:^17.6.2, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:

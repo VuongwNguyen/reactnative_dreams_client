@@ -1,24 +1,32 @@
 import {StyleSheet} from 'react-native';
-import {Colors, Scaling, Spacings, Typography} from '../../';
+import {Colors, Fonts, Scaling, Spacings, Typography} from '../../';
 
 export const AppHeaderStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    maxHeight: 35,
+    maxHeight: 50,
     justifyContent: 'space-between',
     paddingHorizontal: Spacings.md,
-    paddingTop: Spacings.md,
   },
   rightButton: {
     backgroundColor: Colors.primary,
     borderRadius: Scaling.xs,
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+  },
+  disabledButton: {
+    backgroundColor: Colors.secondary,
+    borderRadius: Scaling.xs,
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    opacity: 0.4,
   },
   titleRightButton: {
-    color: Colors.white,
-    paddingVertical: Spacings.sm,
-    paddingHorizontal: Spacings.md,
+    fontFamily: Fonts.roboto.bold,
+    fontSize: 14,
+    color: 'white',
   },
   title: {
     ...Typography.navTitle,

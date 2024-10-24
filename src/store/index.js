@@ -19,6 +19,7 @@ const persisConfig = {
 
 const rootReducer = combineReducers({
   account: slices.accountSlice.reducer, // Add your reducers here
+  userBasicInf: slices.userBasicInfSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persisConfig, rootReducer);

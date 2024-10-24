@@ -19,14 +19,13 @@ import NotificationSettingScreen from '../screen/notificationsetting/Notificatio
 import LanguageSettingScreen from '../screen/languagesettingscreen/LanguageSettingScreen';
 import PolicyPrivacyScreen from '../screen/privacypolicy/PolicyPrivacyScreen';
 import FlingScreen from '../screen/flingscreen/FlingScreen';
-import PersonalProfileScreen from '../screen/profile/PersonalProfileScreen';
 import CreateGroupChatScreen from '../screen/creategroupchat/CreateGroupChatScreen';
 import MessageScreen from '../screen/chatscreen/MessageScreen';
+import CameraScreen from '../screen/chatscreen/CameraScreen';
 
 export const stackName = {
   login: { name: 'login', component: LoginScreen },
   register: { name: 'register', component: RegisterScreen },
-  personalProfile: { name: 'personalProfile', component: PersonalProfileScreen },
   profile: { name: 'profile', component: ProfileScreen },
   postDetail: { name: 'postDetail', component: PostDetailScreen },
   accountDetail: { name: 'accountDetail', component: AccountDetailScreen },
@@ -64,6 +63,10 @@ export const stackName = {
   conversation: {
     name: 'conversation',
     component: MessageScreen,
+  },
+  camera: {
+    name: 'camera',
+    component: CameraScreen,
   },
 };
 
