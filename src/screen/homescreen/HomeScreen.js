@@ -71,12 +71,14 @@ const HomeScreen = props => {
           onPress={() => {
             navigation.navigate(stackName.profile.name);
           }}>
-          <Image
-            style={HomeStyles.avatar}
-            source={{
-              uri: userBasicInfData?.avatar,
-            }}
-          />
+          {!!userBasicInfData.avatar && (
+            <Image
+              style={HomeStyles.avatar}
+              source={{
+                uri: userBasicInfData?.avatar,
+              }}
+            />
+          )}
         </TouchableOpacity>
         <View style={HomeStyles.wraperInputSearch}>
           <TextInput

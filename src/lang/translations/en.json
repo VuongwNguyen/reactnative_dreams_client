@@ -126,15 +126,19 @@
     "information": "Information",
     "posted": "Posted",
     "infomationTab": {
-      "curlive": "Currently living in",
-      "nationality": "Nationality",
-      "home": "Hometown",
-      "school": "School",
+      "zone": "Location",
+      "natl": "Nationality",
+      "htown": "Hometown",
+      "edu": "Education",
       "gender": "Gender",
       "dob": "Birthday",
-      "bobby": "Hobby",
-      "relation": "Relationship",
-      "zodiac": "Zodiac sign"
+      "hobby": "Hobby",
+      "rlts": "Relationship status",
+      "zodiac": "Zodiac sign",
+      "job": "Job",
+      "nick": "Nickname",
+      "fullname": "Username",
+      "des":"Description"
     }
   },
   "homeScreen": {
@@ -181,6 +185,12 @@
     "placeholder": "Choose your educaton level",
     "school": "Your school",
     "confirm": "CONFIRM"
+  },
+  "jobDialog": {
+    "title": "What is your current job?",
+    "desc": "Share your work to reach out to like-minded professionals.",
+    "job": "Your job",
+    "workplace": "Workplace"
   },
   "usernameDialog": {
     "title": "What is your name?",
@@ -263,6 +273,14 @@
     "desc": "Provide more descriptive information about you.",
     "placeholder": "Something about you",
     "confirm": "CONFIRM"
+  },
+  "rlstStatusDialog": {
+    "title": "Tình trạng hôn nhân",
+    "desc": "Please select your marital status to display on your profile..",
+    "single": "Single",
+    "dating": "Dating",
+    "married": "Married",
+    "placeholder": "Chọn trạng thái"
   },
   "navigation": {
     "home": "Home",

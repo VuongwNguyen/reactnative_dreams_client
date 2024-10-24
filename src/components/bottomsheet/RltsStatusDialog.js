@@ -7,22 +7,24 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState,useEffect, forwardRef, useImperativeHandle} from 'react';
+import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
+import {Assets} from '../../styles';
+import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
-const NicknameDialog = forwardRef((props, ref) => {
+
+const RlstStatusDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const [nickName, setNickName] = useState(props?.data);
-  const isDisabled = !nickName;
+  const [value, setValue] = useState(props?.data);
+  const isDisable = !value;
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (props?.data) {
-      setNickName(props.data);
+      setValue(props.data);
     }
   }, [props?.data]);
 
@@ -35,8 +37,14 @@ const NicknameDialog = forwardRef((props, ref) => {
     },
   }));
 
+  const data = [
+    {label: t('rlstStatusDialog.single'), value: 'Single'},
+    {label: t('rlstStatusDialog.dating'), value: 'Dating'},
+    {label: t('rlstStatusDialog.married'), value: 'Married'},
+  ];
+
   const handleSubmit = () => {
-    const body = {key: 'nick', value: nickName};
+    const body = {key: 'rlst', value: value};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -45,7 +53,7 @@ const NicknameDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(nickName);
+    props.onSubmit(value);
   };
   return (
     <Modal
@@ -63,28 +71,33 @@ const NicknameDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('nicknameDialog.title')}
+              {t('rlstStatusDialog.title')}
             </Text>
             <Text style={bottomSheetStyle.desc}>
-              {t('nicknameDialog.desc')}
+              {t('rlstStatusDialog.desc')}
             </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('nicknameDialog.nickname')}
-              placeholderTextColor={Colors.secondary}
-              value={nickName}
-              onChangeText={text => setNickName(text)}
+            <Dropdown
+              placeholder={t('rlstStatusDialog.placeholder')}
+              placeholderStyle={bottomSheetStyle.selectPlaceholder}
+              selectedTextStyle={bottomSheetStyle.selectText}
+              data={data}
+              labelField="label"
+              valueField="value"
+              value={value}
+              onChange={item => {
+                setValue(item.value);
+              }}
+              style={bottomSheetStyle.educationLevel}
             />
-
             <TouchableOpacity
               onPress={() => handleSubmit()}
-              disabled={isDisabled}
+              disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('nicknameDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -94,4 +107,4 @@ const NicknameDialog = forwardRef((props, ref) => {
   );
 });
 
-export default NicknameDialog;
+export default RlstStatusDialog;

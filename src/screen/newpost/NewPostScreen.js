@@ -246,7 +246,7 @@ const NewPostScreen = props => {
                   <Image
                     source={
                       privacyStatus == 'public'
-                        ? Assets.icons.earth
+                        ? Assets.icons.public
                         : Assets.icons.privacy
                     }
                     style={{height: 20, width: 20, marginRight: 5}}

@@ -7,24 +7,32 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState,useEffect, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
-const NicknameDialog = forwardRef((props, ref) => {
+
+const JobDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const [nickName, setNickName] = useState(props?.data);
-  const isDisabled = !nickName;
+  const [job, setJob] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const isDisable = !job;
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (props?.data) {
-      setNickName(props.data);
+    if (props?.job || props?.workplace) {
+      setJob(props.job || '');
+      setWorkplace(props.workplace || '');
     }
-  }, [props?.data]);
+  }, [props?.job, props?.workplace]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -36,7 +44,10 @@ const NicknameDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const body = {key: 'nick', value: nickName};
+    const jobString = `${job} at ${workplace}`;
+    console.log();
+
+    const body = {key: 'job', value: jobString};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -45,7 +56,7 @@ const NicknameDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(nickName);
+    props.onSubmit(jobString);
   };
   return (
     <Modal
@@ -63,28 +74,35 @@ const NicknameDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('nicknameDialog.title')}
+              {t('jobDialog.title')}
             </Text>
-            <Text style={bottomSheetStyle.desc}>
-              {t('nicknameDialog.desc')}
-            </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('nicknameDialog.nickname')}
-              placeholderTextColor={Colors.secondary}
-              value={nickName}
-              onChangeText={text => setNickName(text)}
-            />
+            <Text style={bottomSheetStyle.desc}>{t('jobDialog.desc')}</Text>
+            <View style={bottomSheetStyle.inputGroup}>
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.job')}
+                placeholderTextColor={Colors.secondary}
+                value={job}
+                onChangeText={text => setJob(text)}
+              />
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.workplace')}
+                placeholderTextColor={Colors.secondary}
+                value={workplace}
+                onChangeText={text => setWorkplace(text)}
+              />
+            </View>
 
             <TouchableOpacity
               onPress={() => handleSubmit()}
-              disabled={isDisabled}
+              disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('nicknameDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -94,4 +112,4 @@ const NicknameDialog = forwardRef((props, ref) => {
   );
 });
 
-export default NicknameDialog;
+export default JobDialog;

@@ -16,7 +16,9 @@ const TrendingPostTab = props => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await AxiosInstance().get('/post/trending-posts/1/10');
+        const response = await AxiosInstance().get(
+          '/post/trending-posts',
+        );
         setDataPosts(response.data.list);
         setLoading(false);
       } catch (error) {}
