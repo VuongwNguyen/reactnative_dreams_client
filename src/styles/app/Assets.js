@@ -52,6 +52,7 @@ export const Assets = {
     voice: require(uriIcons + 'keyboardvoice.png'),
     public: require(uriIcons + 'public.png'),
     private: require(uriIcons + 'private.png'),
+    add: require(uriIcons + 'add.png'),
     //profile icon
     hobby: require(uriIcons + 'hobby.png'),
     zodiac: require(uriIcons + 'zodiac.png'),
