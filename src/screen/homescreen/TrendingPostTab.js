@@ -36,7 +36,6 @@ const TrendingPostTab = props => {
             clearTimeout(timeOutId);
           }
           const timeout = setTimeout(() => {
-            // console.log('ok');
             AxiosInstance()
               .post('/post/count-view-post', {
                 post_id: item.item._id,

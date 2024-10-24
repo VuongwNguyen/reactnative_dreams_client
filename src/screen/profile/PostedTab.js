@@ -16,7 +16,7 @@ const PostedTab = props => {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState('67010e3da2ce9ed2d170ba13');
   useEffect(() => {
-    dispatch(APIGetPostByUser(userId))
+    dispatch(APIGetPostByUser())
       .unwrap()
       .then(res => {
         setDataPosts(res.data.list);

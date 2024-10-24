@@ -23,7 +23,7 @@ export const APIGetPostDetail = createAsyncThunk(
     try {
       const response = await AxiosInstance().get(
         `/post/get-post-detail?post_id=${post_id}`,
-      );
+      );      
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -36,7 +36,7 @@ export const APIGetPostByUser = createAsyncThunk(
   async (user_id, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `/post/get-post-by-user/${user_id}/1/10`,
+        `/post/get-post-by-user?_page=1&_limit=10`,
       );
       return response;
     } catch (error) {
@@ -49,8 +49,9 @@ export const APIFollowingPost = createAsyncThunk(
   async (page, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `/post/following-posts/${page}/3`,
+        `/post/trending-posts/1/10`,
       );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

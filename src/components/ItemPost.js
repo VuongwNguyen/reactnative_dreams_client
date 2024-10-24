@@ -9,6 +9,7 @@ import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
+import AxiosInstance from '../configs/axiosInstance';
 dayjs.extend(relativeTime);
 
 const customLocale = {
@@ -35,8 +36,24 @@ const customLocale = {
 dayjs.locale(customLocale);
 
 export default ItemPost = props => {
-  const {item, isLike = true} = props;
-  const [like, setLike] = useState(isLike);
+  const {item, } = props;
+  console.log('item',item);
+  
+  const [like, setLike] = useState(item.isLiked);
+  const [countLike, setCountLike] = useState(item.likeCount);
+
+  const toggleLike = async () => {
+    await AxiosInstance().post('/post/like-post', {
+      post_id: item._id,
+    })
+    setLike(!like);
+    if (like) {
+      setCountLike(countLike - 1);
+    } else {
+      setCountLike(countLike + 1);
+    }
+  };
+
   const navigation = useNavigation();
   return (
     <View style={itemPostStyle.container}>
@@ -153,12 +170,12 @@ export default ItemPost = props => {
         {/* like */}
         <TouchableOpacity
           style={itemPostStyle.itemInteract}
-          onPress={() => setLike(!like)}>
+          onPress={() => toggleLike(!like)}>
           <Image
             style={{height: 20, width: 20}}
             source={like ? Assets.icons.heartFill : Assets.icons.heart}
           />
-          <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
+          <Text style={itemPostStyle.interactLabel}>{countLike}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>

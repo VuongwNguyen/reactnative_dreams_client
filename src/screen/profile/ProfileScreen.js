@@ -12,6 +12,7 @@ import {stackName} from '../../navigations/screens';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
+import { useSelector } from 'react-redux';
 
 const getInterpolation = (
   value,
@@ -29,7 +30,9 @@ const getInterpolation = (
 
 const ProfileScreen = props => {
   const {navigation, route} = props;
-  const userViewId = route?.params?.userViewId;
+  const userViewId = route?.params?.userViewId;  
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+
 
   const {t} = useTranslation();
   const translationY = useSharedValue(0);
@@ -65,7 +68,7 @@ const ProfileScreen = props => {
           <Image
             style={ProfileStyle.avatar}
             source={{
-              uri: 'https://th.bing.com/th/id/R.57dd0a120b370c4a7c4e0c5dbb883756?rik=ybFTeUMssGMRtA&riu=http%3a%2f%2fsammedia.vn%2fpublic%2fuploads%2fposts%2ffiles%2fchau_tinh_tri4.jpeg&ehk=SV9zLheXpUVnzmagFQv1A7mnS06N7%2fl3kuZD9gV3Ekw%3d&risl=&pid=ImgRaw&r=0',
+              uri: userBasicInfData?.avatar,
             }}
           />
           <TouchableOpacity
@@ -83,8 +86,8 @@ const ProfileScreen = props => {
           <InforItem title="999K" subtitle={t('profileScreen.posts')} />
         </View>
         <View style={ProfileStyle.rowAlign}>
-          <Text style={ProfileStyle.name}>Chí Tôn Bảo</Text>
-          <Text style={ProfileStyle.nickname}>{'(Ngộ Không)'}</Text>
+          <Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
+          {/* <Text style={ProfileStyle.nickname}>{'(Ngộ Không)'}</Text> */}
         </View>
         <Text style={ProfileStyle.subtitle}>
           Chí Tôn Bảo, hậu thân của Tôn Ngộ Không và là bang chủ bang Lưỡi búa
