@@ -1,21 +1,28 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
-import Button from '../../components/Button';
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import Input from '../../components/Input';
-import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {useFormikH} from '../../configs/hooks/useFormikH';
-import {Assets, Typography} from '../../styles';
-import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
-import {useDispatch} from 'react-redux';
-import {APILogin} from '../../store/api/AccountAPI';
-import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
+import {APILogin} from '../../store/api/AccountAPI';
+import {Assets, Typography} from '../../styles';
+import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
+import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 
 const FormikForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const {loading} = useSelector(state => state.account);
   const {t} = useTranslation();
   const [isRememberMe, setIsRememberMe] = useState(false);
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -36,7 +43,7 @@ const FormikForm = () => {
           if (isRememberMe) {
           }
           resetForm();
-          navigation.navigate(stackName.bottomTab.name);
+          ToastAndroid.show('Login success', 1000);
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -81,7 +88,16 @@ const FormikForm = () => {
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
-      <Button onPress={handleSubmit} title={t('loginScreen.login')} />
+      <TouchableOpacity
+        style={ButtonStyle.container}
+        disabled={loading}
+        onPress={handleSubmit}>
+        {loading ? (
+          <ActivityIndicator color={'white'} size={20} />
+        ) : (
+          <Text style={ButtonStyle.title}>{t('loginScreen.login')}</Text>
+        )}
+      </TouchableOpacity>
       <View style={{gap: 20}}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
