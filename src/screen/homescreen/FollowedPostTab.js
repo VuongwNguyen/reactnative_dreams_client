@@ -1,11 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import ItemPost from '../../components/ItemPost';
 import { useDispatch } from 'react-redux';
 import { APICountViewPost, APIFollowingPost, APISetPostViewd } from '../../store/api/PostAPI';
+import Animated from 'react-native-reanimated';
 
-const FollowedPostTab = () => {
-  // const {scrollHandler} = props;
+const FollowedPostTab = (props) => {
+  const { scrollHandler } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -16,9 +17,9 @@ const FollowedPostTab = () => {
     dispatch(APIFollowingPost(currentPage))
       .unwrap()
       .then(res => {
-        const {list} = res;
+        const { list } = res;
         const newData = [...dataPosts, ...list];
-        setDataPosts(newData); 
+        setDataPosts(newData);
       })
       .catch(err => {
         console.log(err);
@@ -31,16 +32,16 @@ const FollowedPostTab = () => {
       viewabilityConfig: {
         itemVisiblePercentThreshold: 100,
       },
-      onViewableItemsChanged: ({viewableItems}) => {
+      onViewableItemsChanged: ({ viewableItems }) => {
         clearTimeout(timeOutId.current);
-        timeOutId.current = setTimeout(() => {   
+        timeOutId.current = setTimeout(() => {
           if (viewableItems.length > 0) {
             dispatch(APICountViewPost(viewableItems[0].item._id))
           }
         }, 5000);
 
-        viewableItems.forEach(item => {          
-          if ( viewableItems.length > 0 && !viewableItems.includes(item.item._id)) {            
+        viewableItems.forEach(item => {
+          if (viewableItems.length > 0 && !viewableItems.includes(item.item._id)) {
             setViewedItemIds(prevViewedItemIds => {
               if (!prevViewedItemIds.includes(item.item._id)) {
                 dispatch(APISetPostViewd(item.item._id))
@@ -55,10 +56,11 @@ const FollowedPostTab = () => {
   ]);
 
   return (
-    <FlatList
+    <Animated.FlatList
       style={styles.container}
+      onScroll={scrollHandler}
       data={dataPosts}
-      renderItem={({item}) => <ItemPost item={item} />}
+      renderItem={({ item }) => <ItemPost item={item} />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}

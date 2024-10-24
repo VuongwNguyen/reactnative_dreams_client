@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '../app/Colors';
-import {Typography} from '../app/Typographys';
-import {Fonts} from '../app/Fonts';
+import { StyleSheet } from 'react-native';
+import { Colors } from '../app/Colors';
+import { Typography } from '../app/Typographys';
+import { Fonts } from '../app/Fonts';
 
 export const ProfileStyle = StyleSheet.create({
   countItem: {
@@ -37,6 +37,7 @@ export const ProfileStyle = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   editBtnContainer: {
     width: '100%',

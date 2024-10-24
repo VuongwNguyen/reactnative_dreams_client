@@ -1,20 +1,21 @@
-import {View, Image, TextInput, TouchableOpacity} from 'react-native';
-import React, {useEffect, useRef} from 'react';
-import {useTranslation} from 'react-i18next';
+import { View, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Animated, {
   Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
+  useAnimatedReaction,
 } from 'react-native-reanimated';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {stackName} from '../../navigations/screens';
+import { stackName } from '../../navigations/screens';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
-import {HomeStyles} from '../../styles/homestyle/homestyle';
-import {Assets} from '../../styles';
-import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+import { HomeStyles } from '../../styles/homestyle/homestyle';
+import { Assets } from '../../styles';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
 
 const getInterpolation = (
   value,
@@ -31,26 +32,47 @@ const getInterpolation = (
 };
 
 const HomeScreen = props => {
-  const {navigation} = props;
+  const { navigation } = props;
   const inputSearch = useRef(null);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+  const { userBasicInfData } = useSelector(state => state.userBasicInf);
+
+  // Shared value to track scroll position
   const translationY = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler(e => {
-    translationY.value = e.contentOffset.y;
+  const previousScrollY = useSharedValue(0);
+  const isScrollingDown = useSharedValue(false);
+
+  // Scroll handler to track scroll position
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      const currentY = e.contentOffset.y;
+      // Update scroll direction
+      if (currentY > previousScrollY.value) {
+        isScrollingDown.value = true;
+      } else {
+        isScrollingDown.value = false;
+      }
+      previousScrollY.value = currentY;
+      translationY.value = currentY;
+    },
   });
 
+
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, 60, 0);
-    const opacity = getInterpolation(translationY.value, 1, 0);
-    const padding = getInterpolation(translationY.value, 10, 0);
+    const height = isScrollingDown.value
+      ? getInterpolation(translationY.value, 60, 0)
+      : getInterpolation(translationY.value, 0, 60);
+    const translateY = isScrollingDown.value
+      ? getInterpolation(translationY.value, 0, -60)
+      : getInterpolation(translationY.value, -60, 0);
     return {
       height: height,
-      opacity: opacity,
-      padding: padding,
+      transform: [{ translateY }],
+      display: height == 60 ? 'flex' : 'none'
     };
   });
+
 
   const handleSearch = () => {
     const searchText = inputSearch.current.value;
@@ -65,7 +87,7 @@ const HomeScreen = props => {
   }, []);
 
   return (
-    <View style={HomeStyles.container}>
+    <View style={[HomeStyles.container]}>
       <Animated.View style={[HomeStyles.header, headerStyle]}>
         <TouchableOpacity
           onPress={() => {
@@ -75,7 +97,7 @@ const HomeScreen = props => {
             <Image
               style={HomeStyles.avatar}
               source={{
-                uri: userBasicInfData?.avatar,
+                uri: userBasicInfData?.avatar.url,
               }}
             />
           )}
