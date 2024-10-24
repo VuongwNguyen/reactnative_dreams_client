@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {InfomationTabStyle} from '../../styles/profileStyle/InformationTabStyle';
 import Animated from 'react-native-reanimated';
@@ -83,16 +84,19 @@ const InfomationTab = props => {
     {key: 'hobby', title: 'Hobby'},
     {key: 'rlts', title: 'Relationship status'},
   ];
-  useEffect(() => {
-    dispatch(APIGetInfList(user_id_view))
-      .unwrap()
-      .then(res => {
-        setInfAPI(res?.data?.infomation);
-      })
-      .catch(err => {
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
-  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(APIGetInfList(user_id_view))
+        .unwrap()
+        .then(res => {
+          setInfAPI(res?.data?.infomation);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }, [user_id_view]),
+  );
 
   useEffect(() => {
     if (infAPI.length !== 0) {

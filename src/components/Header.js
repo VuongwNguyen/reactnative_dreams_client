@@ -10,15 +10,13 @@ const AppHeader = props => {
     rightButtonAction = () => {},
     rightButtonTitle = '',
     isDisabled = false,
+    handleBack = null,
   } = props;
   const navigation = useNavigation();
 
   return (
     <View style={AppHeaderStyle.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image source={Assets.icons.arrowLeft} style={AppHeaderStyle.icon} />
       </TouchableOpacity>
       <Text style={Typography.navTitle}>{title}</Text>

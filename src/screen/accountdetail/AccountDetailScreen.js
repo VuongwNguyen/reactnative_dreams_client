@@ -35,6 +35,7 @@ import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
 import {basicInfArr, otherInfArr} from './InfoArr';
+import {stackName} from '../../navigations/screens';
 
 const showBasicInf = () => {
   return (
@@ -68,7 +69,7 @@ const showOtherInf = () => {
   );
 };
 
-const AccountDetailScreen = () => {
+const AccountDetailScreen = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {image, setImage, openImageLibrary, onOpenCamera} = useImagePicker();
@@ -271,7 +272,9 @@ const AccountDetailScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={accountDetailStyle.container}>
-        <AppHeader title={t('accountDetailScreen.infTitle')} />
+        <AppHeader
+          title={t('accountDetailScreen.infTitle')}
+        />
         {!!basicInfData && !!otherInfData && !!personalInf ? (
           <View style={accountDetailStyle.bodyContainer}>
             <View style={accountDetailStyle.avtContainer}>

@@ -15,6 +15,7 @@ import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 import {APIGetInf} from '../../store/api/InfAPI';
+import {useFocusEffect} from '@react-navigation/native';
 
 const getInterpolation = (
   value,
@@ -33,6 +34,7 @@ const getInterpolation = (
 const ProfileScreen = props => {
   const {navigation, route} = props;
   const userViewId = route?.params?.userViewId;
+
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
@@ -52,18 +54,18 @@ const ProfileScreen = props => {
     };
   });
 
-  useEffect(() => {
-    dispatch(APIGetInf(userViewId))
-      .unwrap()
-      .then(res => {
-        setCoreInf(res?.data);
-      })
-      .catch(err => {
-        console.log(err);
-
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(APIGetInf(userViewId))
+        .unwrap()
+        .then(res => {
+          setCoreInf(res?.data);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }, [userViewId]),
+  );
 
   const InforItem = ({title = '', subtitle = ''}) => {
     return (
