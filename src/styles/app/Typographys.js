@@ -79,8 +79,6 @@ export const Typography = StyleSheet.create({
     fontFamily: Fonts.roboto.bold,
     fontSize: 16,
     fontStyle: 'normal',
-    fontWeight: '700',
-    lineHeight: 22,
     color: Colors.black,
   },
   cmtContent: {

@@ -1,8 +1,13 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '../app/Colors';
-import {Typography} from '../app/Typographys';
+import { StyleSheet } from 'react-native';
+import { Colors } from '../app/Colors';
+import { Typography } from '../app/Typographys';
+import { Fonts } from '../app/Fonts';
 
 export const ProfileStyle = StyleSheet.create({
+  countItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     padding: 10,
@@ -32,6 +37,7 @@ export const ProfileStyle = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   editBtnContainer: {
     width: '100%',
@@ -97,7 +103,8 @@ export const ProfileStyle = StyleSheet.create({
     marginRight: 5,
   },
   nickname: {
-    ...Typography.postName,
+    fontFamily: Fonts.roboto.regular,
+    color: 'black',
     fontSize: 15,
   },
   title: {

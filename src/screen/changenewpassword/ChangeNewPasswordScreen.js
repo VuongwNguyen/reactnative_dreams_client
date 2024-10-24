@@ -7,15 +7,11 @@ import AppHeader from '../../components/Header';
 
 const ChangeNewPasswordScreen = () => {
   const {t} = useTranslation();
-  const goBackScreen = () => {};
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={changePasswordStyle.container}>
         <View style={changePasswordStyle.headerContainer}>
-          <AppHeader
-            title={t('changePwScreen.changePwTitle')}
-            goBack={goBackScreen}
-          />
+          <AppHeader title={t('changePwScreen.changePwTitle')} />
         </View>
 
         <View style={changePasswordStyle.spacingHeight} />

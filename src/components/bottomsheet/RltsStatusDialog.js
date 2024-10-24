@@ -1,24 +1,25 @@
 import {
   Text,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
+  Image,
   Modal,
   ToastAndroid,
 } from 'react-native';
 import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
+import {Assets} from '../../styles';
+import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
-const HometownDialog = forwardRef((props, ref) => {
+const RlstStatusDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
-  const dispatch = useDispatch()
-  const [hometown, setHometown] = useState('');
-  const isDisabled = !hometown;
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(null);
+  const isDisable = !value;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -30,8 +31,14 @@ const HometownDialog = forwardRef((props, ref) => {
     },
   }));
 
+  const data = [
+    {label: t('rlstStatusDialog.single'), value: 'Single'},
+    {label: t('rlstStatusDialog.dating'), value: 'Dating'},
+    {label: t('rlstStatusDialog.married'), value: 'Married'},
+  ];
+
   const handleSubmit = () => {
-    const body = {key: 'htown', value: hometown};
+    const body = {key: 'rlst', value: value};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -40,7 +47,7 @@ const HometownDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(hometown);
+    props.onSubmit(value);
   };
   return (
     <Modal
@@ -58,28 +65,33 @@ const HometownDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('hometownDialog.title')}
+              {t('rlstStatusDialog.title')}
             </Text>
             <Text style={bottomSheetStyle.desc}>
-              {t('hometownDialog.desc')}
+              {t('rlstStatusDialog.desc')}
             </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('hometownDialog.placeholder')}
-              placeholderTextColor={Colors.secondary}
-              value={hometown}
-              onChangeText={text => setHometown(text)}
+            <Dropdown
+              placeholder={t('rlstStatusDialog.placeholder')}
+              placeholderStyle={bottomSheetStyle.selectPlaceholder}
+              selectedTextStyle={bottomSheetStyle.selectText}
+              data={data}
+              labelField="label"
+              valueField="value"
+              value={value}
+              onChange={item => {
+                setValue(item.value);
+              }}
+              style={bottomSheetStyle.educationLevel}
             />
-
             <TouchableOpacity
-            onPress={()=>handleSubmit()}
-              disabled={isDisabled}
+              onPress={() => handleSubmit()}
+              disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('hometownDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -89,4 +101,4 @@ const HometownDialog = forwardRef((props, ref) => {
   );
 });
 
-export default HometownDialog;
+export default RlstStatusDialog;

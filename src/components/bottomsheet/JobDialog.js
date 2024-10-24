@@ -1,9 +1,9 @@
 import {
   Text,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
+  Image,
   Modal,
   ToastAndroid,
 } from 'react-native';
@@ -14,11 +14,12 @@ import {useTranslation} from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
-const HometownDialog = forwardRef((props, ref) => {
+const JobDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch()
-  const [hometown, setHometown] = useState('');
-  const isDisabled = !hometown;
+  const [job, setJob] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const isDisable = !job;
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -31,7 +32,7 @@ const HometownDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const body = {key: 'htown', value: hometown};
+    const body = {key: 'job', value: job};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -40,7 +41,7 @@ const HometownDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(hometown);
+    props.onSubmit(job);
   };
   return (
     <Modal
@@ -58,28 +59,35 @@ const HometownDialog = forwardRef((props, ref) => {
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
             <Text style={bottomSheetStyle.titleDialog}>
-              {t('hometownDialog.title')}
+              {t('jobDialog.title')}
             </Text>
-            <Text style={bottomSheetStyle.desc}>
-              {t('hometownDialog.desc')}
-            </Text>
-            <TextInput
-              style={bottomSheetStyle.input}
-              placeholder={t('hometownDialog.placeholder')}
-              placeholderTextColor={Colors.secondary}
-              value={hometown}
-              onChangeText={text => setHometown(text)}
-            />
+            <Text style={bottomSheetStyle.desc}>{t('jobDialog.desc')}</Text>
+            <View style={bottomSheetStyle.inputGroup}>
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.job')}
+                placeholderTextColor={Colors.secondary}
+                value={job}
+                onChangeText={text => setJob(text)}
+              />
+              <TextInput
+                style={bottomSheetStyle.input}
+                placeholder={t('jobDialog.workplace')}
+                placeholderTextColor={Colors.secondary}
+                value={workplace}
+                onChangeText={text => setWorkplace(text)}
+              />
+            </View>
 
             <TouchableOpacity
-            onPress={()=>handleSubmit()}
-              disabled={isDisabled}
+             onPress={()=>handleSubmit()}
+              disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisable && {opacity: 0.5},
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
-                {t('hometownDialog.confirm')}
+                {t('educationDialog.confirm')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -89,4 +97,4 @@ const HometownDialog = forwardRef((props, ref) => {
   );
 });
 
-export default HometownDialog;
+export default JobDialog;

@@ -182,6 +182,12 @@
     "school": "Your school",
     "confirm": "CONFIRM"
   },
+  "jobDialog": {
+    "title": "What is your current job?",
+    "desc": "Share your work to reach out to like-minded professionals.",
+    "job": "Your job",
+    "workplace": "Workplace"
+  },
   "usernameDialog": {
     "title": "What is your name?",
     "desc": "Enter your username. This will be visible to other users.",
@@ -263,6 +269,14 @@
     "desc": "Provide more descriptive information about you.",
     "placeholder": "Something about you",
     "confirm": "CONFIRM"
+  },
+  "rlstStatusDialog": {
+    "title": "Tình trạng hôn nhân",
+    "desc": "Please select your marital status to display on your profile..",
+    "single": "Single",
+    "dating": "Dating",
+    "married": "Married",
+    "placeholder": "Chọn trạng thái"
   },
   "navigation": {
     "home": "Home",
