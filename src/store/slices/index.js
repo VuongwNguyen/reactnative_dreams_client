@@ -1,2 +1,2 @@
-export * from './AccountSlice';
+export * from './AuthSlice';
 export * from './UserBasicInfSlice';
