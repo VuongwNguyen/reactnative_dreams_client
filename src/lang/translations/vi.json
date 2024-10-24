@@ -132,15 +132,19 @@
     "information": "Thông tin",
     "posted": "Đã đăng",
     "infomationTab": {
-      "curlive": "Nơi ở hiện tại",
-      "nationality": "Quốc tịch",
-      "home": "Quê quán",
-      "school": "Trường",
-      "gender": "Giới tínhh",
+      "zone": "Vị trí",
+      "natl": "Quốc tịch",
+      "htown": "Quê quán",
+      "edu": "Giáo dục",
+      "gender": "Giới tính",
       "dob": "Ngày sinh",
-      "bobby": "Sở thích",
-      "relation": "Tình trạng quan hệ",
-      "zodiac": "Cung hoàng đạo"
+      "hobby": "Sở thích",
+      "rlts": "Tình trạng hôn nhân",
+      "zodiac": "Cung hoàng đạo",
+      "job": "Công việc",
+      "nick": "Biệt danh",
+      "fullname": "Tên người dùng",
+      "des": "Mô tả"
     }
   },
   "accountDetailScreen": {

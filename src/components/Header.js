@@ -10,7 +10,6 @@ const AppHeader = props => {
     rightButtonAction = () => {},
     rightButtonTitle = '',
     isDisabled = false,
-    handleBack = null,
   } = props;
   const navigation = useNavigation();
 

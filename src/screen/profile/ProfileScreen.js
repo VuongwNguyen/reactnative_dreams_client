@@ -16,6 +16,7 @@ import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 import {APIGetInf} from '../../store/api/InfAPI';
 import {useFocusEffect} from '@react-navigation/native';
+import {Assets} from '../../styles';
 
 const getInterpolation = (
   value,
@@ -77,7 +78,14 @@ const ProfileScreen = props => {
   };
   return (
     <View style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} />
+      <View style={ProfileStyle.headerContainer}>
+        <AppHeader title={t('profileScreen.profile')} />
+        <TouchableOpacity
+          style={ProfileStyle.editBtn}
+          onPress={() => navigation.navigate(stackName.accountDetail.name)}>
+          <Image source={Assets.icons.editProfile} />
+        </TouchableOpacity>
+      </View>
       <Animated.View style={headerStyle}>
         <View style={ProfileStyle.infoContainer}>
           {!!coreInf.avatar && (
@@ -124,7 +132,7 @@ const ProfileScreen = props => {
           <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
         )}
 
-        {!!userViewId ? (
+        {userViewId && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -136,18 +144,6 @@ const ProfileScreen = props => {
               style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
               <Text style={ProfileStyle.activeTabText}>
                 {t('profileScreen.follow')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={ProfileStyle.editBtnContainer}>
-            <TouchableOpacity
-              style={ProfileStyle.btnEditProfile}
-              onPress={() => {
-                navigation.navigate(stackName.accountDetail.name);
-              }}>
-              <Text style={ProfileStyle.editBtnLabel}>
-                {t('profileScreen.editProfile')}
               </Text>
             </TouchableOpacity>
           </View>
