@@ -9,7 +9,7 @@ export const APICreatePost = createAsyncThunk(
         '/post/create-post',
         formData,
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

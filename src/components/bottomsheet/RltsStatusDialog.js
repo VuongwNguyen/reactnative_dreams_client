@@ -7,7 +7,12 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -44,7 +49,7 @@ const RlstStatusDialog = forwardRef((props, ref) => {
   ];
 
   const handleSubmit = () => {
-    const body = {key: 'rlst', value: value};
+    const body = {key: 'rlts', value: value};
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {

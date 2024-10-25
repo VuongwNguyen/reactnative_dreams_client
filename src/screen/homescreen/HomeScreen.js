@@ -51,6 +51,7 @@ const HomeScreen = props => {
       padding: padding,
     };
   });
+  // console.log(userBasicInfData);
 
   const handleSearch = () => {
     const searchText = inputSearch.current.value;
@@ -75,7 +76,7 @@ const HomeScreen = props => {
             <Image
               style={HomeStyles.avatar}
               source={{
-                uri: userBasicInfData?.avatar,
+                uri: userBasicInfData?.avatar.url,
               }}
             />
           )}

@@ -223,7 +223,7 @@ const NewPostScreen = props => {
               }}>
               <Image
                 style={newPostStyle.avt}
-                source={{uri: userBasicInfData?.avatar}}
+                source={{uri: userBasicInfData?.avatar?.url}}
               />
             </TouchableOpacity>
 
