@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {store} from '../store';
-import {updateTokens} from '../store/slices';
-import {logoutRef} from '../components/LogoutDialog';
+import { store } from '../store';
+import { updateTokens } from '../store/slices';
+import { logoutRef } from '../components/LogoutDialog';
 
-const BASEURL = 'http://192.168.100.234:8012/api/';
+const BASEURL = 'http://192.168.1.4:8012/api/';
 
 let isRefreshing = false;
 let queue = [];
@@ -27,7 +27,7 @@ const AxiosInstance = (contentType = 'application/json') => {
 
   const addRequest = originRequest => {
     return new Promise((resolve, reject) => {
-      queue.push({resolve, reject});
+      queue.push({ resolve, reject });
     })
       .then(token => {
         console.log('new token provide: ', token);

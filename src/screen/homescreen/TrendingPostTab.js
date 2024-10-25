@@ -1,64 +1,60 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import Animated from 'react-native-reanimated';
-import AxiosInstance from '../../configs/axiosInstance';
-
+import { useDispatch } from 'react-redux';
 import ItemPost from '../../components/ItemPost';
+import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../store/api/PostAPI';
 
-const TrendingPostTab = props => {
-  const {scrollHandler} = props;
+const TrendingPostTab = (props) => {
+  const { scrollHandler } = props;
+  const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
-  const [timeOutId, setTimeOutId] = useState(null);
+  const timeOutId = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchTrendingPosts = async () => {
+    if (!loading && hasMore) {
       try {
         setLoading(true);
-        const response = await AxiosInstance().get(
-          '/post/trending-posts',
-        );
-        setDataPosts(response.data.list);
+        const res = await dispatch(APIGetTrendingPost(currentPage)).unwrap();
+        if (res.list.length === 0) {
+          setHasMore(false);
+        } else {
+          setDataPosts((prevData) => [...prevData, ...res.list]);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
         setLoading(false);
-      } catch (error) {}
-    };
-    fetchData();
-  }, []);
-  // console.log(dataPosts)
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchTrendingPosts();
+  }, [currentPage]);
+
   const viewabilityConfigCallbackPairs = useRef([
     {
       viewabilityConfig: {
-        itemVisiblePercentThreshold: 90,
+        itemVisiblePercentThreshold: 100,
       },
-      onViewableItemsChanged: ({viewableItems}) => {
-        viewableItems.forEach(item => {
-          // console.log('Item being viewed1111:', item.item._id);
-          if (timeOutId !== null) {
-            clearTimeout(timeOutId);
-          }
-          const timeout = setTimeout(() => {
-            // console.log('ok');
-            AxiosInstance()
-              .post('/post/count-view-post', {
-                post_id: item.item._id,
-              })
-              .catch(err => {
-                console.log(err);
-              });
+      onViewableItemsChanged: ({ viewableItems }) => {
+        if (viewableItems.length > 0) {
+          clearTimeout(timeOutId.current);
+          timeOutId.current = setTimeout(() => {
+            dispatch(APICountViewPost(viewableItems[0].item._id));
           }, 5000);
-          setTimeOutId(timeout);
+        }
 
+        viewableItems.forEach((item) => {
           if (!viewedItemIds.includes(item.item._id)) {
-            setViewedItemIds(prevViewedItemIds => {
-              if (!prevViewedItemIds.includes(item.item._id)) {
-                AxiosInstance().post('/post/set-post-viewed', {
-                  post_id: item.item._id,
-                });
-
-                return [...prevViewedItemIds, item.item._id];
-              }
-              return prevViewedItemIds;
+            setViewedItemIds((prevViewedItemIds) => {
+              dispatch(APISetPostViewd(item.item._id)); // Gọi API để đánh dấu bài viết đã xem
+              return [...prevViewedItemIds, item.item._id];
             });
           }
         });
@@ -66,21 +62,28 @@ const TrendingPostTab = props => {
     },
   ]);
 
+  const renderFooter = () => {
+    return loading ? <ActivityIndicator size="large" color="#0000ff" style={styles.footerIndicator} /> : null;
+  };
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) { // Thêm điều kiện để kiểm soát khi nào tải thêm
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {!loading && (
-        <Animated.FlatList
-          onScroll={scrollHandler}
-          data={dataPosts}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <ItemPost item={item} />}
-          keyExtractor={(item, index) => index.toString()}
-          // Truyền vào callback để log item đang xem
-          viewabilityConfigCallbackPairs={
-            viewabilityConfigCallbackPairs.current
-          }
-        />
-      )}
+      <Animated.FlatList
+        onScroll={scrollHandler}
+        data={dataPosts}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <ItemPost item={item} />}
+        keyExtractor={(item) => item._id.toString()}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        onEndReached={handleLoadMore}
+        ListFooterComponent={renderFooter}
+      />
     </View>
   );
 };
@@ -92,5 +95,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 10,
+  },
+  footerIndicator: {
+    padding: 10, // Thêm padding để tạo khoảng cách
   },
 });

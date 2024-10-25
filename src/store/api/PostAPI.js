@@ -1,9 +1,9 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import AxiosInstance from '../../configs/axiosInstance';
 
 export const APICreatePost = createAsyncThunk(
   'post/create-post',
-  async (formData, {rejectWithValue}) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance('multipart/form-data').post(
         '/post/create-post',
@@ -19,7 +19,7 @@ export const APICreatePost = createAsyncThunk(
 
 export const APIGetPostDetail = createAsyncThunk(
   'post/get-post-detail',
-  async (post_id, {rejectWithValue}) => {
+  async (post_id, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().get(
         `/post/get-post-detail?post_id=${post_id}`,
@@ -33,12 +33,12 @@ export const APIGetPostDetail = createAsyncThunk(
 
 export const APIGetPostByUser = createAsyncThunk(
   'post/get-post-by-user',
-  async ({user_id_view = '', _page = 1, _limit = 10}, {rejectWithValue}) => {
+  async ({ user_id_view = '', _page = 1, _limit = 10 }, { rejectWithValue }) => {
     try {
       const query = new URLSearchParams({
-        ...(user_id_view && {user_id_view}),
-        ...(!!_page && {_page}),
-        ...(!!_limit && {_limit}),
+        ...(user_id_view && { user_id_view }),
+        ...(!!_page && { _page }),
+        ...(!!_limit && { _limit }),
       }).toString();
 
       const response = await AxiosInstance().get(
@@ -53,7 +53,7 @@ export const APIGetPostByUser = createAsyncThunk(
 );
 export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
-  async (page, {rejectWithValue}) => {
+  async (page, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().get(
         `/post/following-posts/${page}/3`,
@@ -67,7 +67,7 @@ export const APIFollowingPost = createAsyncThunk(
 
 export const APISetPostViewd = createAsyncThunk(
   'post/set-post-viewed',
-  async (post_id, {rejectWithValue}) => {
+  async (post_id, { rejectWithValue }) => {
     console.log(post_id);
 
     try {
@@ -85,7 +85,7 @@ export const APISetPostViewd = createAsyncThunk(
 
 export const APICountViewPost = createAsyncThunk(
   'post/count-view-post',
-  async (post_id, {rejectWithValue}) => {
+  async (post_id, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().post(`/post/count-view-post`, {
         post_id,
@@ -96,3 +96,16 @@ export const APICountViewPost = createAsyncThunk(
     }
   },
 );
+
+
+export const APIGetTrendingPost = createAsyncThunk(
+  'post/trending-posts',
+  async (page, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().get(`/post/trending-posts/${page}/10`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+)

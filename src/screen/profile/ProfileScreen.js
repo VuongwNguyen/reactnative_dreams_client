@@ -1,6 +1,6 @@
-import {View, Image, TouchableOpacity, Text, ToastAndroid} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { View, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -8,15 +8,13 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import {stackName} from '../../navigations/screens';
-import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
+import { stackName } from '../../navigations/screens';
+import { ProfileStyle } from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
-import {APIGetInf} from '../../store/api/InfAPI';
-import {useFocusEffect} from '@react-navigation/native';
-import {Assets} from '../../styles';
+import { APIGetInf } from '../../store/api/InfAPI';
 
 const getInterpolation = (
   value,
@@ -33,42 +31,40 @@ const getInterpolation = (
 };
 
 const ProfileScreen = props => {
-  const {navigation, route} = props;
+  const { navigation, route } = props;
   const userViewId = route?.params?.userViewId;
-
   const dispatch = useDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [coreInf, setCoreInf] = useState('');
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null);
   const translationY = useSharedValue(0);
-
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, 230, 0);
+    const height = getInterpolation(translationY.value, headerHeight == 0 ? 183 : headerHeight, 0);
     const opacity = getInterpolation(translationY.value, 1, 0);
-    const padding = getInterpolation(translationY.value, 10, 0);
     return {
       height: height,
       opacity: opacity,
-      padding: padding,
     };
   });
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(APIGetInf(userViewId))
-        .unwrap()
-        .then(res => {
-          setCoreInf(res?.data);
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
-    }, [userViewId]),
-  );
+  useEffect(() => {
+    dispatch(APIGetInf(userViewId))
+      .unwrap()
+      .then(res => {
+        setCoreInf(res?.data);
+      })
+      .catch(err => {
+        console.log(err);
 
-  const InforItem = ({title = '', subtitle = ''}) => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, []);
+
+  const InforItem = ({ title = '', subtitle = '' }) => {
     return (
       <View style={ProfileStyle.countItem}>
         <Text style={ProfileStyle.title}>{title}</Text>
@@ -76,17 +72,18 @@ const ProfileScreen = props => {
       </View>
     );
   };
+  useEffect(() => {
+    if (headerRef.current) {
+      headerRef.current.measure((x, y, width, height) => {
+        setHeaderHeight(height); // Set the measured height
+      });
+    }
+  }, [coreInf]);
+
   return (
     <View style={ProfileStyle.container}>
-      <View style={ProfileStyle.headerContainer}>
-        <AppHeader title={t('profileScreen.profile')} />
-        <TouchableOpacity
-          style={ProfileStyle.editBtn}
-          onPress={() => navigation.navigate(stackName.accountDetail.name)}>
-          <Image source={Assets.icons.editProfile} />
-        </TouchableOpacity>
-      </View>
-      <Animated.View style={headerStyle}>
+      <AppHeader title={t('profile')} />
+      <Animated.View ref={headerRef} style={headerStyle}>
         <View style={ProfileStyle.infoContainer}>
           {!!coreInf.avatar && (
             <Image
@@ -96,7 +93,6 @@ const ProfileScreen = props => {
               }}
             />
           )}
-
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(stackName.following.name);
@@ -132,7 +128,7 @@ const ProfileScreen = props => {
           <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
         )}
 
-        {userViewId && (
+        {!!userViewId ? (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -144,6 +140,18 @@ const ProfileScreen = props => {
               style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
               <Text style={ProfileStyle.activeTabText}>
                 {t('profileScreen.follow')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={ProfileStyle.editBtnContainer}>
+            <TouchableOpacity
+              style={ProfileStyle.btnEditProfile}
+              onPress={() => {
+                navigation.navigate(stackName.accountDetail.name);
+              }}>
+              <Text style={ProfileStyle.editBtnLabel}>
+                {t('profileScreen.editProfile')}
               </Text>
             </TouchableOpacity>
           </View>

@@ -6,48 +6,93 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import {InfomationTabStyle} from '../../styles/profileStyle/InformationTabStyle';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { InfomationTabStyle } from '../../styles/profileStyle/InformationTabStyle';
 import Animated from 'react-native-reanimated';
-import {APIGetInfList} from '../../store/api/InfAPI';
-import {Assets} from '../../styles';
+import { APIGetInfList } from '../../store/api/InfAPI';
+import { Assets } from '../../styles';
 
 const InfomationTab = props => {
-  const {scrollHandler, user_id_view} = props;
+  const { scrollHandler, user_id_view } = props;
   const dispatch = useDispatch();
-  const {t} = useTranslation();
 
   const [infAPI, setInfAPI] = useState('');
   const [infData, setInfData] = useState('');
 
-  const infUI = [
-    {key: 'gender', title: t('profileScreen.infomationTab.gender')},
-    {key: 'dob', title: t('profileScreen.infomationTab.dob')},
-    {key: 'natl', title: t('profileScreen.infomationTab.natl')},
-    {key: 'htown', title: t('profileScreen.infomationTab.htown')},
-    {key: 'zone', title: t('profileScreen.infomationTab.zone')},
-    {key: 'job', title: t('profileScreen.infomationTab.job')},
-    {key: 'edu', title: t('profileScreen.infomationTab.edu')},
-    {key: 'zodiac', title: t('profileScreen.infomationTab.zodiac')},
-    {key: 'hobby', title: t('profileScreen.infomationTab.hobby')},
-    {key: 'rlts', title: t('profileScreen.infomationTab.rlts')},
+  const data = [
+    {
+      id: 1,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 2,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 3,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 4,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 5,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 6,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 7,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
+    {
+      id: 8,
+      title: 'Title',
+      content: 'Content',
+      icon: 'https://th.bing.com/th/id/OIP.LExjPtkL7REQHCyY-tQauAHaHa?w=180&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7',
+    },
   ];
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(APIGetInfList(user_id_view))
-        .unwrap()
-        .then(res => {
-          setInfAPI(res?.data?.infomation);
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
-    }, [user_id_view]),
-  );
+  const infUI = [
+    { key: 'gender', title: 'Gender' },
+    { key: 'dob', title: 'Day of birth' },
+    { key: 'natl', title: 'Nationality' },
+    { key: 'htown', title: 'Hometown' },
+    { key: 'zone', title: 'Location' },
+    { key: 'job', title: 'Job' },
+    { key: 'edu', title: 'Education' },
+    { key: 'zodiac', title: 'Zodiac' },
+    { key: 'hobby', title: 'Hobby' },
+    { key: 'rlts', title: 'Relationship status' },
+  ];
+  useEffect(() => {
+    dispatch(APIGetInfList(user_id_view))
+      .unwrap()
+      .then(res => {
+        setInfAPI(res?.data?.infomation);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  }, []);
 
   useEffect(() => {
     if (infAPI.length !== 0) {
@@ -62,7 +107,7 @@ const InfomationTab = props => {
     }
   }, [infAPI]);
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     if (!item.value) return null;
     if (item.privacy_status == 'private') return null;
     return (
