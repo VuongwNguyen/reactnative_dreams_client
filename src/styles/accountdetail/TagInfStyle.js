@@ -8,7 +8,7 @@ export const tagInfStyle = {
   },
   infContainer: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 16,
     alignItems: 'center',
   },
   tagTitle: {

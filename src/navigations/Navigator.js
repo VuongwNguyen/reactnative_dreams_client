@@ -21,12 +21,8 @@ export function Navigator() {
         screenOptions={{ headerShown: false }}
         initialRouteName={stackName.bottomTab.name}>
         <Stack.Screen
-          name={stackName.register.name}
-          component={stackName.register.component}
-        />
-        <Stack.Screen
-          name={stackName.login.name}
-          component={stackName.login.component}
+          name={stackName.bottomTab.name}
+          component={stackName.bottomTab.component}
         />
         <Stack.Screen
           name={stackName.profile.name}
@@ -59,10 +55,6 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.newPost.name}
           component={stackName.newPost.component}
-        />
-        <Stack.Screen
-          name={stackName.bottomTab.name}
-          component={stackName.bottomTab.component}
         />
         <Stack.Screen
           name={stackName.search.name}

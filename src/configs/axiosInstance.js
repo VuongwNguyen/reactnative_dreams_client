@@ -3,7 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'http://192.168.1.24:8012/api/';
+const BASEURL = 'http://192.168.100.234:8012/api/';
 
 let isRefreshing = false;
 let queue = [];
@@ -43,6 +43,7 @@ const AxiosInstance = (contentType = 'application/json') => {
       if (store.getState().account.token.accessToken) {
         token = store.getState().account.token.accessToken;
       }
+
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
