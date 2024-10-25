@@ -7,21 +7,33 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
-import {APIUpdateInf} from '../../store/api/InfAPI';
-import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
 
 const UsernameDialog = forwardRef((props, ref) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState(props.firstName || '');
+  const [lastName, setLastName] = useState(props.lastName || '');
   const isDisabled = !firstName || !lastName;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.firstName || props?.lastName) {
+      setFirstName(props.firstName || '');
+      setLastName(props.lastName || '');
+    }
+  }, [props?.firstName, props?.lastName]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -34,7 +46,7 @@ const UsernameDialog = forwardRef((props, ref) => {
 
   const handleSubmit = () => {
     const fullName = `${firstName} ${lastName}`;
-    const body = {key: 'fullname', value: fullName};
+    const body = { key: 'fullname', value: fullName };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -57,7 +69,7 @@ const UsernameDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 24, width: 24}}
+              style={{ height: 24, width: 24 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -69,14 +81,14 @@ const UsernameDialog = forwardRef((props, ref) => {
             </Text>
             <View style={bottomSheetStyle.usernameInputGroup}>
               <TextInput
-                style={[bottomSheetStyle.input, {width: '50%'}]}
+                style={[bottomSheetStyle.input, { width: '50%' }]}
                 placeholder={t('usernameDialog.firstname')}
                 placeholderTextColor={Colors.secondary}
                 value={firstName}
                 onChangeText={text => setFirstName(text)}
               />
               <TextInput
-                style={[bottomSheetStyle.input, {width: '50%'}]}
+                style={[bottomSheetStyle.input, { width: '50%' }]}
                 placeholder={t('usernameDialog.lastname')}
                 placeholderTextColor={Colors.secondary}
                 value={lastName}
@@ -88,7 +100,7 @@ const UsernameDialog = forwardRef((props, ref) => {
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisabled && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('usernameDialog.confirm')}

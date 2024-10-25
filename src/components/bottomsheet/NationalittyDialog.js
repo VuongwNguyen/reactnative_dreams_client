@@ -6,22 +6,28 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {Dropdown} from 'react-native-element-dropdown';
-import {useTranslation} from 'react-i18next';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const NationalityDialog = forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false);
-  const {t} = useTranslation();
-  const [value, setValue] = useState(null);
+  const { t } = useTranslation();
+  const [value, setValue] = useState(props?.data);
   const [isFocus, setIsFocus] = useState(false);
   const [icon, setIcon] = useState(Assets.image.nationality);
   const isDisable = !value;
+
+  useEffect(() => {
+    if (props?.data) {
+      setValue(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -36,7 +42,7 @@ const NationalityDialog = forwardRef((props, ref) => {
     if (value || isFocus) {
       return (
         <Text
-          style={[bottomSheetStyle.label, isFocus && {color: Colors.primary}]}>
+          style={[bottomSheetStyle.label, isFocus && { color: Colors.primary }]}>
           Nationality
         </Text>
       );
@@ -51,7 +57,7 @@ const NationalityDialog = forwardRef((props, ref) => {
   };
 
   const handleSubmit = () => {
-    const body = {key: 'natl', value: value};
+    const body = { key: 'natl', value: value };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -73,7 +79,7 @@ const NationalityDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -88,7 +94,7 @@ const NationalityDialog = forwardRef((props, ref) => {
               <Dropdown
                 style={[
                   bottomSheetStyle.dropdown,
-                  isFocus && {borderColor: Colors.primary},
+                  isFocus && { borderColor: Colors.primary },
                 ]}
                 placeholderStyle={bottomSheetStyle.selectPlaceholder}
                 selectedTextStyle={bottomSheetStyle.selectText}
@@ -117,7 +123,7 @@ const NationalityDialog = forwardRef((props, ref) => {
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
+                isDisable && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('nationalityDialog.confirm')}
@@ -133,14 +139,14 @@ const NationalityDialog = forwardRef((props, ref) => {
 export default NationalityDialog;
 
 const data = [
-  {label: 'Việt Nam', value: 'VietNam', icon: Assets.image.vietnam},
-  {label: 'Malaysia', value: 'Malaysia', icon: Assets.image.malaysia},
-  {label: 'ThaiLand', value: 'ThaiLand', icon: Assets.image.thailand},
-  {label: 'Laos', value: 'Laos', icon: Assets.image.laos},
-  {label: 'Korea', value: 'Korea', icon: Assets.image.korea},
-  {label: 'Japan', value: 'Japan', icon: Assets.image.japan},
-  {label: 'The US', value: 'The US', icon: Assets.image.us},
-  {label: 'The UK', value: 'The UK', icon: Assets.image.uk},
-  {label: 'Cambodia', value: 'Cambodia', icon: Assets.image.cambodia},
-  {label: 'France', value: 'France', icon: Assets.image.france},
+  { label: 'Việt Nam', value: 'VietNam', icon: Assets.image.vietnam },
+  { label: 'Malaysia', value: 'Malaysia', icon: Assets.image.malaysia },
+  { label: 'ThaiLand', value: 'ThaiLand', icon: Assets.image.thailand },
+  { label: 'Laos', value: 'Laos', icon: Assets.image.laos },
+  { label: 'Korea', value: 'Korea', icon: Assets.image.korea },
+  { label: 'Japan', value: 'Japan', icon: Assets.image.japan },
+  { label: 'The US', value: 'The US', icon: Assets.image.us },
+  { label: 'The UK', value: 'The UK', icon: Assets.image.uk },
+  { label: 'Cambodia', value: 'Cambodia', icon: Assets.image.cambodia },
+  { label: 'France', value: 'France', icon: Assets.image.france },
 ];

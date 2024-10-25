@@ -1,5 +1,5 @@
 import { View, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -15,6 +15,8 @@ import { ProfileStyle } from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 import { APIGetInf } from '../../store/api/InfAPI';
+import { useFocusEffect } from '@react-navigation/native';
+import { Assets } from '../../styles';
 
 const getInterpolation = (
   value,
@@ -33,17 +35,16 @@ const getInterpolation = (
 const ProfileScreen = props => {
   const { navigation, route } = props;
   const userViewId = route?.params?.userViewId;
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [coreInf, setCoreInf] = useState('');
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = useRef(null);
   const translationY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, headerHeight == 0 ? 183 : headerHeight, 0);
+    const height = getInterpolation(translationY.value, 230, 0);
     const opacity = getInterpolation(translationY.value, 1, 0);
     return {
       height: height,
@@ -51,18 +52,18 @@ const ProfileScreen = props => {
     };
   });
 
-  useEffect(() => {
-    dispatch(APIGetInf(userViewId))
-      .unwrap()
-      .then(res => {
-        setCoreInf(res?.data);
-      })
-      .catch(err => {
-        console.log(err);
-
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(APIGetInf(userViewId))
+        .unwrap()
+        .then(res => {
+          setCoreInf(res?.data);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }, [userViewId]),
+  );
 
   const InforItem = ({ title = '', subtitle = '' }) => {
     return (
@@ -82,8 +83,15 @@ const ProfileScreen = props => {
 
   return (
     <View style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} />
-      <Animated.View ref={headerRef} style={headerStyle}>
+      <View style={ProfileStyle.headerContainer}>
+        <AppHeader title={t('profileScreen.profile')} />
+        <TouchableOpacity
+          style={ProfileStyle.editBtn}
+          onPress={() => navigation.navigate(stackName.accountDetail.name)}>
+          <Image source={Assets.icons.editProfile} />
+        </TouchableOpacity>
+      </View>
+      <Animated.View style={headerStyle}>
         <View style={ProfileStyle.infoContainer}>
           {!!coreInf.avatar && (
             <Image
@@ -128,7 +136,7 @@ const ProfileScreen = props => {
           <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
         )}
 
-        {!!userViewId ? (
+        {userViewId && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -140,18 +148,6 @@ const ProfileScreen = props => {
               style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
               <Text style={ProfileStyle.activeTabText}>
                 {t('profileScreen.follow')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={ProfileStyle.editBtnContainer}>
-            <TouchableOpacity
-              style={ProfileStyle.btnEditProfile}
-              onPress={() => {
-                navigation.navigate(stackName.accountDetail.name);
-              }}>
-              <Text style={ProfileStyle.editBtnLabel}>
-                {t('profileScreen.editProfile')}
               </Text>
             </TouchableOpacity>
           </View>

@@ -13,9 +13,9 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
@@ -27,8 +27,8 @@ const HobbyDialog = forwardRef((props, ref) => {
   const [otherHobby, setOtherHobby] = useState('');
   const [isTouchable, setIsTouchable] = useState(false);
   const [visible, setVisible] = useState(false);
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -38,9 +38,7 @@ const HobbyDialog = forwardRef((props, ref) => {
     },
   }));
 
-  const {t} = useTranslation();
-
- 
+  const { t } = useTranslation();
 
   const hobbyData = [
     {
@@ -102,7 +100,7 @@ const HobbyDialog = forwardRef((props, ref) => {
   const handlePress = item => {
     if (checkedItems[item.id]) {
       setCheckedItems(prev => {
-        const updated = {...prev};
+        const updated = { ...prev };
         delete updated[item.id];
         return updated;
       });
@@ -119,7 +117,7 @@ const HobbyDialog = forwardRef((props, ref) => {
 
       setCount(prev => prev - 1);
     } else if (count < 3) {
-      setCheckedItems(prev => ({...prev, [item.id]: true}));
+      setCheckedItems(prev => ({ ...prev, [item.id]: true }));
       setCount(prev => prev + 1);
 
       if (item.label === 'Other') {
@@ -140,8 +138,10 @@ const HobbyDialog = forwardRef((props, ref) => {
     if (isShowInput && otherHobby && !arrHobby.includes(otherHobby)) {
       setArrHobby(prev => [...prev, otherHobby]);
     }
-    const body = {key: 'gender', value: arrHobby};
-    // console.log(body);
+    const hobbyString = arrHobby.join(', ');
+    console.log(hobbyString);
+
+    const body = { key: 'hobby', value: hobbyString };
 
     dispatch(APIUpdateInf(body))
       .unwrap()
@@ -151,7 +151,7 @@ const HobbyDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(arrHobby);
+    props.onSubmit(hobbyString);
   };
   return (
     <Modal
@@ -164,7 +164,7 @@ const HobbyDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -181,7 +181,7 @@ const HobbyDialog = forwardRef((props, ref) => {
                     onPress={() => handlePress(item)}
                     style={[
                       bottomSheetStyle.hobbyItem,
-                      isChecked && {backgroundColor: '#7ee1ff'},
+                      isChecked && { backgroundColor: '#7ee1ff' },
                     ]}>
                     {item.icon && (
                       <Image
@@ -212,7 +212,7 @@ const HobbyDialog = forwardRef((props, ref) => {
               disabled={!isTouchable}
               style={[
                 bottomSheetStyle.btnContainer,
-                !isTouchable && {opacity: 0.5},
+                !isTouchable && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('hobbyDialog.confirm')}

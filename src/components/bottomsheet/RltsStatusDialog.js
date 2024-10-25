@@ -7,20 +7,26 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets} from '../../styles';
-import {Dropdown} from 'react-native-element-dropdown';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets } from '../../styles';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const RlstStatusDialog = forwardRef((props, ref) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props?.data);
   const isDisable = !value;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setValue(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -32,13 +38,13 @@ const RlstStatusDialog = forwardRef((props, ref) => {
   }));
 
   const data = [
-    {label: t('rlstStatusDialog.single'), value: 'Single'},
-    {label: t('rlstStatusDialog.dating'), value: 'Dating'},
-    {label: t('rlstStatusDialog.married'), value: 'Married'},
+    { label: t('rlstStatusDialog.single'), value: 'Single' },
+    { label: t('rlstStatusDialog.dating'), value: 'Dating' },
+    { label: t('rlstStatusDialog.married'), value: 'Married' },
   ];
 
   const handleSubmit = () => {
-    const body = {key: 'rlst', value: value};
+    const body = { key: 'rlst', value: value };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -60,7 +66,7 @@ const RlstStatusDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -88,7 +94,7 @@ const RlstStatusDialog = forwardRef((props, ref) => {
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
+                isDisable && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('educationDialog.confirm')}

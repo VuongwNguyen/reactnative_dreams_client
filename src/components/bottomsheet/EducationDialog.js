@@ -7,21 +7,34 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {Dropdown} from 'react-native-element-dropdown';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
-import {APIUpdateInf} from '../../store/api/InfAPI';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const EducationDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [school, setSchool] = useState('');
   const [value, setValue] = useState(null);
   const isDisable = !value;
+
+  useEffect(() => {
+    if (props?.level || props?.school) {
+      setValue(props.level || '');
+      setSchool(props.school || '');
+    }
+  }, [props?.level, props?.school]);
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -32,13 +45,15 @@ const EducationDialog = forwardRef((props, ref) => {
   }));
 
   const data = [
-    {label: t('educationDialog.level1'), value: 'Basic'},
-    {label: t('educationDialog.level2'), value: 'Undergraduate'},
-    {label: t('educationDialog.level3'), value: 'Postgraduate'},
+    { label: t('educationDialog.level1'), value: 'Basic' },
+    { label: t('educationDialog.level2'), value: 'Undergraduate' },
+    { label: t('educationDialog.level3'), value: 'Postgraduate' },
   ];
 
   const handleSubmit = () => {
-    const body = {key: 'edu', value: value};
+    const eduString = `${value} at ${school}`;
+
+    const body = { key: 'edu', value: eduString };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -47,7 +62,7 @@ const EducationDialog = forwardRef((props, ref) => {
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(value);
+    props.onSubmit(eduString);
   };
   return (
     <Modal
@@ -60,7 +75,7 @@ const EducationDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -95,7 +110,7 @@ const EducationDialog = forwardRef((props, ref) => {
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
+                isDisable && { opacity: 0.5 },
               ]}
               onPress={() => handleSubmit()}>
               <Text style={bottomSheetStyle.btnLabel}>

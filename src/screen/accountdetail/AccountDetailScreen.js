@@ -10,17 +10,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import React, {useState, useRef, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
+import { accountDetailStyle } from '../../styles/accountdetail/AccountDetailStyle';
 import AppHeader from '../../components/Header';
 import TagInf from '../../components/TagInf';
-import {Assets} from '../../styles';
+import { Assets } from '../../styles';
 import useImagePicker from './ImagePickerAvt';
 
-import {APIPersonalDetailInf} from '../../store/api/InfAPI';
+import { APIPersonalDetailInf } from '../../store/api/InfAPI';
 import DateOfBirthDialog from '../../components/bottomsheet/DateOfBirthDialog';
 import NicknameDialog from '../../components/bottomsheet/NicknameDialog';
 import DescriptionDialog from '../../components/bottomsheet/DescriptionDialog';
@@ -34,7 +34,8 @@ import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
-import {basicInfArr, otherInfArr} from './InfoArr';
+import { basicInfArr, otherInfArr } from './InfoArr';
+import { stackName } from '../../navigations/screens';
 
 const showBasicInf = () => {
   return (
@@ -68,10 +69,10 @@ const showOtherInf = () => {
   );
 };
 
-const AccountDetailScreen = () => {
-  const {t} = useTranslation();
+const AccountDetailScreen = ({ navigation }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {image, setImage, openImageLibrary, onOpenCamera} = useImagePicker();
+  const { image, setImage, openImageLibrary, onOpenCamera } = useImagePicker();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [personalInf, setPersonalInf] = useState('');
@@ -90,21 +91,21 @@ const AccountDetailScreen = () => {
   }, []);
 
   const basicInfUI = [
-    {key: 'fullname', title: 'Username'},
-    {key: 'nick', title: 'Nickname'},
-    {key: 'dob', title: 'Day of birth'},
-    {key: 'gender', title: 'Gender'},
-    {key: 'natl', title: 'Nationality'},
-    {key: 'htown', title: 'Hometown'},
+    { key: 'fullname', title: t('profileScreen.infomationTab.fullname') },
+    { key: 'nick', title: t('profileScreen.infomationTab.nick') },
+    { key: 'dob', title: t('profileScreen.infomationTab.dob') },
+    { key: 'gender', title: t('profileScreen.infomationTab.gender') },
+    { key: 'natl', title: t('profileScreen.infomationTab.natl') },
+    { key: 'htown', title: t('profileScreen.infomationTab.htown') },
   ];
   const otherInfUI = [
-    {key: 'des', title: 'Description'},
-    {key: 'zone', title: 'Location'},
-    {key: 'job', title: 'Job'},
-    {key: 'edu', title: 'Education'},
-    {key: 'zodiac', title: 'Zodiac'},
-    {key: 'hobby', title: 'Hobby'},
-    {key: 'rlts', title: 'Relationship status'},
+    { key: 'des', title: t('profileScreen.infomationTab.des') },
+    { key: 'zone', title: t('profileScreen.infomationTab.zone') },
+    { key: 'job', title: t('profileScreen.infomationTab.job') },
+    { key: 'edu', title: t('profileScreen.infomationTab.edu') },
+    { key: 'zodiac', title: t('profileScreen.infomationTab.zodiac') },
+    { key: 'hobby', title: t('profileScreen.infomationTab.hobby') },
+    { key: 'rlts', title: t('profileScreen.infomationTab.rlts') },
   ];
   useEffect(() => {
     if (!!personalInf) {
@@ -186,12 +187,12 @@ const AccountDetailScreen = () => {
   const updateBirthday = (dateString, zodiacSign) => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'dob' ? {...item, value: dateString} : item,
+        item.key === 'dob' ? { ...item, value: dateString } : item,
       ),
     );
     setOtherInfData(prev =>
       prev.map(item =>
-        item.key === 'zodiac' ? {...item, value: zodiacSign} : item,
+        item.key === 'zodiac' ? { ...item, value: zodiacSign } : item,
       ),
     );
     // console.log(dateString);
@@ -200,74 +201,94 @@ const AccountDetailScreen = () => {
   const updateNickname = newNickname => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'nick' ? {...item, value: newNickname} : item,
+        item.key === 'nick' ? { ...item, value: newNickname } : item,
       ),
     );
   };
   const updateEdu = newEdu => {
     setOtherInfData(prev =>
-      prev.map(item => (item.key === 'edu' ? {...item, value: newEdu} : item)),
+      prev.map(item => (item.key === 'edu' ? { ...item, value: newEdu } : item)),
     );
   };
   const updateHobby = newHobby => {
     setOtherInfData(prev =>
       prev.map(item =>
-        item.key === 'hobby' ? {...item, value: newHobby} : item,
+        item.key === 'hobby' ? { ...item, value: newHobby } : item,
       ),
     );
   };
   const updateRlst = newStatus => {
     setOtherInfData(prev =>
       prev.map(item =>
-        item.key === 'rlst' ? {...item, value: newStatus} : item,
+        item.key === 'rlst' ? { ...item, value: newStatus } : item,
       ),
     );
   };
   const updateJob = newJob => {
     setOtherInfData(prev =>
-      prev.map(item => (item.key === 'job' ? {...item, value: newJob} : item)),
+      prev.map(item => (item.key === 'job' ? { ...item, value: newJob } : item)),
     );
   };
   const updateCountry = newCountry => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'natl' ? {...item, value: newCountry} : item,
+        item.key === 'natl' ? { ...item, value: newCountry } : item,
       ),
     );
   };
   const updateLocation = newAddress => {
     setOtherInfData(prev =>
       prev.map(item =>
-        item.key === 'zone' ? {...item, value: newAddress} : item,
+        item.key === 'zone' ? { ...item, value: newAddress } : item,
       ),
     );
   };
   const updateDesc = newDesc => {
     setOtherInfData(prev =>
-      prev.map(item => (item.key === 'des' ? {...item, value: newDesc} : item)),
+      prev.map(item => (item.key === 'des' ? { ...item, value: newDesc } : item)),
     );
   };
   const updateHtown = newHtown => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'htown' ? {...item, value: newHtown} : item,
+        item.key === 'htown' ? { ...item, value: newHtown } : item,
       ),
     );
   };
   const updateFullname = newName => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'fullname' ? {...item, value: newName} : item,
+        item.key === 'fullname' ? { ...item, value: newName } : item,
       ),
     );
   };
   const updateGender = newGender => {
     setBasicInfData(prev =>
       prev.map(item =>
-        item.key === 'gender' ? {...item, value: newGender} : item,
+        item.key === 'gender' ? { ...item, value: newGender } : item,
       ),
     );
   };
+  const getValueByKey = (dataArray, key) => {
+    return dataArray.find(item => item.key === key)?.value || null;
+  };
+  const nicknameValue = getValueByKey(basicInfData, 'nick');
+  const usernameValue = getValueByKey(basicInfData, 'fullname');
+  const [firstName, lastName] = usernameValue
+    ? usernameValue.split(' ')
+    : ['', ''];
+  const descValue = getValueByKey(otherInfData, 'des');
+  const naltValue = getValueByKey(basicInfData, 'natl');
+  const locationValue = getValueByKey(otherInfData, 'zone');
+  const htownValue = getValueByKey(basicInfData, 'htown');
+  const genderValue = getValueByKey(basicInfData, 'gender');
+  const rlstValue = getValueByKey(otherInfData, 'rlst');
+  // const hobbiesValue = getValueByKey(otherInfData, 'hobby');
+  // const hobbiesArr = hobbiesValue ? hobbiesValue.split(', ') : [];
+  const jobValue = getValueByKey(otherInfData, 'job');
+  const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
+  const eduValue = getValueByKey(otherInfData, 'edu');
+  const [level, , school] = eduValue ? eduValue.split(' ') : ['', , ''];
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={accountDetailStyle.container}>
@@ -288,7 +309,7 @@ const AccountDetailScreen = () => {
                 }}>
                 <Image
                   source={Assets.icons.change}
-                  style={{width: 20, height: 20}}
+                  style={{ width: 20, height: 20 }}
                 />
               </TouchableOpacity>
             </View>
@@ -315,7 +336,7 @@ const AccountDetailScreen = () => {
                         }}>
                         <Image
                           source={Assets.icons.camera}
-                          style={{width: 20, height: 20}}
+                          style={{ width: 20, height: 20 }}
                         />
                         <Text style={accountDetailStyle.optionText}>
                           Camera
@@ -329,7 +350,7 @@ const AccountDetailScreen = () => {
                         }}>
                         <Image
                           source={Assets.icons.gallery}
-                          style={{width: 20, height: 20}}
+                          style={{ width: 20, height: 20 }}
                         />
 
                         <Text style={accountDetailStyle.optionText}>
@@ -348,7 +369,7 @@ const AccountDetailScreen = () => {
                         }}>
                         <Image
                           source={Assets.icons.trash}
-                          style={{width: 20, height: 20}}
+                          style={{ width: 20, height: 20 }}
                         />
                         <Text style={accountDetailStyle.optionText}>
                           Remove
@@ -378,24 +399,67 @@ const AccountDetailScreen = () => {
             <ActivityIndicator
               size="large"
               color="#ededed"
-              style={{justifyContent: 'center'}}
+              style={{ justifyContent: 'center' }}
             />
           </View>
         )}
 
         {/* Dialogs */}
         <DateOfBirthDialog ref={dialogRefs.dob} onSubmit={updateBirthday} />
-        <NicknameDialog ref={dialogRefs.nick} onSubmit={updateNickname} />
-        <EducationDialog ref={dialogRefs.edu} onSubmit={updateEdu} />
-        <UsernameDialog ref={dialogRefs.fullname} onSubmit={updateFullname} />
+        <NicknameDialog
+          ref={dialogRefs.nick}
+          onSubmit={updateNickname}
+          data={nicknameValue}
+        />
+        <EducationDialog
+          ref={dialogRefs.edu}
+          onSubmit={updateEdu}
+          level={level}
+          school={school}
+        />
+        <UsernameDialog
+          ref={dialogRefs.fullname}
+          onSubmit={updateFullname}
+          firstName={firstName}
+          lastName={lastName}
+        />
         <HobbyDialog ref={dialogRefs.hobby} onSubmit={updateHobby} />
-        <HometownDialog ref={dialogRefs.htown} onSubmit={updateHtown} />
-        <GenderDialog ref={dialogRefs.gender} onSubmit={updateGender} />
-        <NationalityDialog ref={dialogRefs.natl} onSubmit={updateCountry} />
-        <LocationDialog ref={dialogRefs.zone} onSubmit={updateLocation} />
-        <DescriptionDialog ref={dialogRefs.des} onSubmit={updateDesc} />
-        <JobDialog ref={dialogRefs.job} onSubmit={updateJob} />
-        <RlstStatusDialog ref={dialogRefs.rlts} onSubmit={updateRlst} />
+        <HometownDialog
+          ref={dialogRefs.htown}
+          onSubmit={updateHtown}
+          data={htownValue}
+        />
+        <GenderDialog
+          ref={dialogRefs.gender}
+          onSubmit={updateGender}
+          data={genderValue}
+        />
+        <NationalityDialog
+          ref={dialogRefs.natl}
+          onSubmit={updateCountry}
+          data={naltValue}
+        />
+        <LocationDialog
+          ref={dialogRefs.zone}
+          onSubmit={updateLocation}
+          data={locationValue}
+        />
+        <DescriptionDialog
+          ref={dialogRefs.des}
+          onSubmit={updateDesc}
+          data={descValue}
+        />
+        <JobDialog
+          ref={dialogRefs.job}
+          onSubmit={updateJob}
+          job={job}
+          workplace={workplace}
+        />
+        <RlstStatusDialog
+          ref={dialogRefs.rlts}
+          onSubmit={updateRlst}
+          data={rlstValue}
+        />
       </View>
     </ScrollView>
   );

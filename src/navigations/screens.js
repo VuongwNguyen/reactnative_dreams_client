@@ -25,22 +25,22 @@ import CameraScreen from '../screen/chatscreen/CameraScreen';
 
 
 export const stackName = {
-  login: {name: 'login', component: LoginScreen},
-  register: {name: 'register', component: RegisterScreen},
-  profile: {name: 'profile', component: ProfileScreen},
-  postDetail: {name: 'postDetail', component: PostDetailScreen},
-  accountDetail: {name: 'accountDetail', component: AccountDetailScreen},
-  changePassword: {name: 'changePassword', component: ChangePasswordScreen},
+  login: { name: 'login', component: LoginScreen },
+  register: { name: 'register', component: RegisterScreen },
+  profile: { name: 'profile', component: ProfileScreen },
+  postDetail: { name: 'postDetail', component: PostDetailScreen },
+  accountDetail: { name: 'accountDetail', component: AccountDetailScreen },
+  changePassword: { name: 'changePassword', component: ChangePasswordScreen },
   changeNewPassword: {
     name: 'changeNewPassword',
     component: ChangeNewPasswordScreen,
   },
-  forgotPassword: {name: 'forgotPassword', component: ForgotPasswordScreen},
-  otp: {name: 'otp', component: OtpScreen},
-  newPost: {name: 'newPost', component: NewPostScreen},
-  bottomTab: {name: 'bottomTab', component: BottomTab},
-  search: {name: 'search', component: SearchSceen},
-  privacySetting: {name: 'privacySetting', component: PrivacySettingScreen},
+  forgotPassword: { name: 'forgotPassword', component: ForgotPasswordScreen },
+  otp: { name: 'otp', component: OtpScreen },
+  newPost: { name: 'newPost', component: NewPostScreen },
+  bottomTab: { name: 'bottomTab', component: BottomTab },
+  search: { name: 'search', component: SearchSceen },
+  privacySetting: { name: 'privacySetting', component: PrivacySettingScreen },
   notificationSetting: {
     name: 'notificationSetting',
     component: NotificationSettingScreen,
@@ -72,11 +72,11 @@ export const stackName = {
 };
 
 export const tabName = {
-  home: {name: 'navigation.home', component: HomeScreen},
-  chat: {name: 'navigation.chat', component: ChatScreen},
+  home: { name: 'navigation.home', component: HomeScreen },
+  chat: { name: 'navigation.chat', component: ChatScreen },
   notification: {
     name: 'navigation.notification',
     component: NotificationScreen,
   },
-  setting: {name: 'navigation.setting', component: SettingScreen},
+  setting: { name: 'navigation.setting', component: SettingScreen },
 };

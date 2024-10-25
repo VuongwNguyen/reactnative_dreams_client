@@ -4,6 +4,14 @@ import { Typography } from '../app/Typographys';
 import { Fonts } from '../app/Fonts';
 
 export const ProfileStyle = StyleSheet.create({
+  editBtn: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  headerContainer: {
+    minHeight: 40,
+  },
   countItem: {
     justifyContent: 'center',
     alignItems: 'center',

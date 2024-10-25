@@ -1,15 +1,15 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import {stackName} from './screens';
+import { createStackNavigator } from '@react-navigation/stack';
+import { stackName } from './screens';
 import AuthNavigator from './AuthNavigator';
-import {useSelector} from 'react-redux';
-import {SocketProvider} from '../contexts/SocketContext';
-import LogoutDialog, {logoutRef} from '../components/LogoutDialog';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { SocketProvider } from '../contexts/SocketContext';
+import LogoutDialog, { logoutRef } from '../components/LogoutDialog';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
 export function Navigator() {
-  const {authenticated} = useSelector(state => state.account);
+  const { authenticated } = useSelector(state => state.account);
 
   if (!authenticated) {
     return <AuthNavigator />;
@@ -18,15 +18,11 @@ export function Navigator() {
   return (
     <SocketProvider>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}
+        screenOptions={{ headerShown: false }}
         initialRouteName={stackName.bottomTab.name}>
         <Stack.Screen
-          name={stackName.register.name}
-          component={stackName.register.component}
-        />
-        <Stack.Screen
-          name={stackName.login.name}
-          component={stackName.login.component}
+          name={stackName.bottomTab.name}
+          component={stackName.bottomTab.component}
         />
         <Stack.Screen
           name={stackName.profile.name}
@@ -59,10 +55,6 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.newPost.name}
           component={stackName.newPost.component}
-        />
-        <Stack.Screen
-          name={stackName.bottomTab.name}
-          component={stackName.bottomTab.component}
         />
         <Stack.Screen
           name={stackName.search.name}

@@ -126,15 +126,19 @@
     "information": "Information",
     "posted": "Posted",
     "infomationTab": {
-      "curlive": "Currently living in",
-      "nationality": "Nationality",
-      "home": "Hometown",
-      "school": "School",
+      "zone": "Location",
+      "natl": "Nationality",
+      "htown": "Hometown",
+      "edu": "Education",
       "gender": "Gender",
       "dob": "Birthday",
-      "bobby": "Hobby",
-      "relation": "Relationship",
-      "zodiac": "Zodiac sign"
+      "hobby": "Hobby",
+      "rlts": "Relationship status",
+      "zodiac": "Zodiac sign",
+      "job": "Job",
+      "nick": "Nickname",
+      "fullname": "Username",
+      "des":"Description"
     }
   },
   "homeScreen": {

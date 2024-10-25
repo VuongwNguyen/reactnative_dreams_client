@@ -7,19 +7,30 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const LocationDialog = forwardRef((props, ref) => {
-  const {t} = useTranslation();
-  const dispatch = useDispatch()
-  const [location, setLocation] = useState('');
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [location, setLocation] = useState(props?.data);
   const isDisable = !location;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setLocation(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -31,7 +42,7 @@ const LocationDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const body = {key: 'zone', value: location};
+    const body = { key: 'zone', value: location };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -53,7 +64,7 @@ const LocationDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -76,7 +87,7 @@ const LocationDialog = forwardRef((props, ref) => {
               disabled={isDisable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
+                isDisable && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('locationDialog.confirm')}

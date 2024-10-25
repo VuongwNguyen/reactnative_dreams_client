@@ -7,19 +7,25 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const HometownDialog = forwardRef((props, ref) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch()
-  const [hometown, setHometown] = useState('');
+  const [hometown, setHometown] = useState(props?.data);
   const isDisabled = !hometown;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setHometown(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -31,7 +37,7 @@ const HometownDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const body = {key: 'htown', value: hometown};
+    const body = { key: 'htown', value: hometown };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -53,7 +59,7 @@ const HometownDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -72,11 +78,11 @@ const HometownDialog = forwardRef((props, ref) => {
             />
 
             <TouchableOpacity
-            onPress={()=>handleSubmit()}
+              onPress={() => handleSubmit()}
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisabled && { opacity: 0.5 },
               ]}>
               <Text style={bottomSheetStyle.btnLabel}>
                 {t('hometownDialog.confirm')}

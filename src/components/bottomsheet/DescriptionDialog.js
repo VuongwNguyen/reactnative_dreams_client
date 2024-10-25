@@ -8,19 +8,30 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const DescriptionDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [desc, setDesc] = useState('');
+  const [desc, setDesc] = useState(props?.data);
   const isDiable = !desc;
+
+  useEffect(() => {
+    if (props?.data) {
+      setDesc(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -32,7 +43,7 @@ const DescriptionDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const body = {key: 'nick', value: desc};
+    const body = { key: 'des', value: desc };
 
     dispatch(APIUpdateInf(body))
       .unwrap()
@@ -59,7 +70,9 @@ const DescriptionDialog = forwardRef((props, ref) => {
             <Text style={bottomSheetStyle.titleDialog}>
               {t('descDialog.title')}
             </Text>
-            <Text style={bottomSheetStyle.desc}>{t('descDialog.desc')}</Text>
+            <Text style={bottomSheetStyle.desc} numberOfLines={1}>
+              {t('descDialog.desc')}
+            </Text>
             <TextInput
               style={[bottomSheetStyle.input, bottomSheetStyle.descInput]}
               placeholder={t('descDialog.placeholder')}
@@ -73,7 +86,7 @@ const DescriptionDialog = forwardRef((props, ref) => {
               disabled={isDiable}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDiable && {opacity: 0.5},
+                isDiable && { opacity: 0.5 },
               ]}
               onPress={() => handleSubmit()}>
               <Text style={bottomSheetStyle.btnLabel}>

@@ -6,19 +6,25 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
-import {Assets, Colors} from '../../styles';
-import {useTranslation} from 'react-i18next';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { bottomSheetStyle } from '../../styles/bottomsheet/BottomSheetStyle';
+import { Assets, Colors } from '../../styles';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
 
 const GenderDialog = forwardRef((props, ref) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch()
-  const [selectedGender, setSelectedGender] = useState(null);
+  const [selectedGender, setSelectedGender] = useState(props?.data);
   const isDisabled = !selectedGender;
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (props?.data) {
+      setSelectedGender(props.data);
+    }
+  }, [props?.data]);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -34,7 +40,7 @@ const GenderDialog = forwardRef((props, ref) => {
   };
 
   const handleSubmit = () => {
-    const body = {key: 'gender', value: selectedGender};
+    const body = { key: 'gender', value: selectedGender };
     dispatch(APIUpdateInf(body))
       .unwrap()
       .then(() => {
@@ -56,7 +62,7 @@ const GenderDialog = forwardRef((props, ref) => {
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Image
               source={Assets.icons.close}
-              style={{height: 20, width: 20}}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <View style={bottomSheetStyle.bodyContainer}>
@@ -81,7 +87,7 @@ const GenderDialog = forwardRef((props, ref) => {
                   onPress={() => handleSelectGender('male')}>
                   <Image
                     source={Assets.icons.male}
-                    style={{height: 60, width: 60}}
+                    style={{ height: 60, width: 60 }}
                   />
                 </TouchableOpacity>
                 <Text
@@ -110,7 +116,7 @@ const GenderDialog = forwardRef((props, ref) => {
                   onPress={() => handleSelectGender('female')}>
                   <Image
                     source={Assets.icons.female}
-                    style={{height: 60, width: 60}}
+                    style={{ height: 60, width: 60 }}
                   />
                 </TouchableOpacity>
                 <Text
@@ -128,7 +134,7 @@ const GenderDialog = forwardRef((props, ref) => {
               disabled={isDisabled}
               style={[
                 bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
+                isDisabled && { opacity: 0.5 },
               ]}
               onPress={() => handleSubmit()}>
               <Text style={bottomSheetStyle.btnLabel}>
