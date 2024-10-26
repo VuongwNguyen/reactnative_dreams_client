@@ -97,26 +97,26 @@ const AccountDetailScreen = ({navigation}) => {
       console.log(image);
 
       const formData = new FormData();
-      formData.append('avatar', {
-        uri: image?.[0]?.uri,
-        name: `image_${image?.[0]?.fileName}.${image?.[0]?.type.split('/')[1]}`,
-        type: image?.[0]?.type,
-      });
-
-      // console.log(image?.[0]?.uri);
-      // console.log(image?.[0]?.fileName);
-      // console.log(image?.[0]?.type?.split('/')[1]);
-
+      if (image?.[0]?.fileName) {
+        formData.append('avatar', {
+          uri: image?.[0]?.uri,
+          name: image?.[0]?.fileName,
+          // name: `image_${image?.[0]?.fileName}.${image?.[0]?.type.split('/')[1]}`,
+          type: image?.[0]?.type,
+        });
+      } else {
+        formData.append('avatar', {
+          uri: image?.[0]?.uri,
+          name: 'defaultAvt.jpg',
+          type: 'image/jpeg',
+        });
+      }
       dispatch(APIUpdateAvtUsername(formData))
         .unwrap()
         .then(res => {
-          console.log(res);
-
           ToastAndroid.show('Cập nhật avatar thành công', ToastAndroid.SHORT);
         })
         .catch(err => {
-          console.log(err);
-
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     }
