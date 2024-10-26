@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
@@ -36,18 +36,16 @@ const customLocale = {
 dayjs.locale(customLocale);
 
 export default ItemPost = props => {
-  const {item, } = props;
-  console.log('item',item);
-  
-  const [like, setLike] = useState(item.isLiked);
+  const {item, setItemClickId} = props;  
+  const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
 
   const toggleLike = async () => {
     await AxiosInstance().post('/post/like-post', {
       post_id: item._id,
     })
-    setLike(!like);
-    if (like) {
+    setLiked(!liked);
+    if (liked) {
       setCountLike(countLike - 1);
     } else {
       setCountLike(countLike + 1);
@@ -103,8 +101,9 @@ export default ItemPost = props => {
       {/* content */}
       <TouchableWithoutFeedback
         style={itemPostStyle.content}
-        onPress={() =>
-          navigation.navigate(stackName.postDetail.name, {post_id: item._id})
+        onPress={() =>{          
+          navigation.navigate(stackName.postDetail.name, {post_id: item._id, setItemClickId});
+        }
         }>
         {/* title */}
         {!!item?.title && (
@@ -170,10 +169,10 @@ export default ItemPost = props => {
         {/* like */}
         <TouchableOpacity
           style={itemPostStyle.itemInteract}
-          onPress={() => toggleLike(!like)}>
+          onPress={() => toggleLike(!liked)}>
           <Image
             style={{height: 20, width: 20}}
-            source={like ? Assets.icons.heartFill : Assets.icons.heart}
+            source={liked ? Assets.icons.heartFill : Assets.icons.heart}
           />
           <Text style={itemPostStyle.interactLabel}>{countLike}</Text>
         </TouchableOpacity>

@@ -21,6 +21,7 @@ const rootReducer = combineReducers({
   account: slices.accountSlice.reducer, // Add your reducers here
   userBasicInf: slices.userBasicInfSlice.reducer,
   postDetail: slices.postDetailSlice.reducer,
+  postTrending: slices.postTrendingSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persisConfig, rootReducer);

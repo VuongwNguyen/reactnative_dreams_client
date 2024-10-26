@@ -13,6 +13,7 @@ import AxiosInstance from '../configs/axiosInstance';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
+import {Axios} from 'axios';
 dayjs.extend(relativeTime);
 
 const customLocale = {
@@ -65,16 +66,24 @@ const CommentItem = memo(props => {
   };
 
   const onHandleTym = () => {
-    if (!comment.isLike) {
-      if (comment.likes == currentItem.likes) {
-        setCurrentItem({...currentItem, likes: currentItem.likes + 1});
-      } else {
-        setCurrentItem({...currentItem, likes: currentItem.likes - 1});
-      }
-      AxiosInstance().post('/comment/like', {
-        comment_id: comment._id,
+    // if (!comment.isLike) {
+    if (!currentItem.isLike) {
+      setCurrentItem({
+        ...currentItem,
+        likes: currentItem.likes + 1,
+        isLike: true,
+      });
+    } else {
+      setCurrentItem({
+        ...currentItem,
+        likes: currentItem.likes - 1,
+        isLike: false,
       });
     }
+    // }
+    AxiosInstance().post('/comment/like', {
+      comment_id: comment._id,
+    });
   };
   const onDeleteComment = () => {
     AxiosInstance().delete(`/comment/${comment._id}`);
@@ -90,8 +99,19 @@ const CommentItem = memo(props => {
     }
   };
 
+  useEffect(() => {
+    const a = async () => {
+      const res = await AxiosInstance().get(
+      `/comment/child-comments?comment_id=${comment._id}`,
+    );
+    setChildComments(res.data.list);
+    }
+    a()
+  }, [comment]);
+
   return (
     <TouchableOpacity
+      key={comment._id}
       onLongPress={() => setCommentFocus(comment._id)}
       style={[styles.container, {marginLeft: level * 10}]}>
       <View style={styles.commentRow}>
@@ -123,7 +143,12 @@ const CommentItem = memo(props => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Image source={Assets.icons.heart} style={{height: 20, width: 20}} />
+          <Image
+            source={
+              currentItem.isLike ? Assets.icons.heartFill : Assets.icons.heart
+            }
+            style={{height: 20, width: 20}}
+          />
           <Text>{currentItem.likes}</Text>
         </TouchableOpacity>
       </View>
@@ -133,7 +158,7 @@ const CommentItem = memo(props => {
             {!isHide ? (
               <TouchableOpacity
                 style={styles.button}
-                onPress={()=>handleViewMoreReplies()}>
+                onPress={() => handleViewMoreReplies()}>
                 <View
                   style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
                   <View
@@ -157,27 +182,34 @@ const CommentItem = memo(props => {
             ) : (
               <>
                 <FlatList
-            data={childComments}
-            renderItem={({item}) => (
-              <View>
-                <CommentItem comment={item} level={level + 1} />
-              </View>
-            )}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            style={styles.replyList}
-          />
-          <TouchableOpacity style={styles.button} onPress={()=>setIsHide(false)}>
-                <View style={[styles.commentRow, {alignItems: 'center'}]}>
-                  <View style={styles.lineShow} />
-                  <Text style={styles.showMoreText}>
-                    {t('postDetailScreen.hideReplies')}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+                  data={childComments}
+                  key={childComments?._id}
+                  renderItem={({item}) => (
+                    <View>
+                      <CommentItem
+                        comment={item}
+                        level={level + 1}
+                        inputRef={inputRef}
+                        setReplyId={setReplyId}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={item => item.id}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  style={styles.replyList}
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setIsHide(false)}>
+                  <View style={[styles.commentRow, {alignItems: 'center'}]}>
+                    <View style={styles.lineShow} />
+                    <Text style={styles.showMoreText}>
+                      {t('postDetailScreen.hideReplies')}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </>
-              
             )}
           </>
         )}
