@@ -32,11 +32,19 @@ export const APIGetPostDetail = createAsyncThunk(
 
 export const APIGetPostByUser = createAsyncThunk(
   'post/get-post-by-user',
-  async (user_id, {rejectWithValue}) => {
+  async ({user_id_view = '', _page = 1, _limit = 10}, {rejectWithValue}) => {
     try {
+      const query = new URLSearchParams({
+        ...(user_id_view && {user_id_view}),
+        ...(!!_page && {_page}),
+        ...(!!_limit && {_limit}),
+      }).toString();
+
       const response = await AxiosInstance().get(
-        `/post/get-post-by-user?_page=1&_limit=10`,
+       // `/post/get-post-by-user?_page=1&_limit=10`,
+        `/post/get-post-by-user?${query}`,
       );
+
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);

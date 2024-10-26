@@ -5,6 +5,7 @@ import {logoutRef} from '../components/LogoutDialog';
 
 const BASEURL = 'http://192.168.1.15:8012/api/';
 
+
 let isRefreshing = false;
 let queue = [];
 
@@ -43,6 +44,7 @@ const AxiosInstance = (contentType = 'application/json') => {
       if (store.getState().account.token.accessToken) {
         token = store.getState().account.token.accessToken;
       }
+
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
