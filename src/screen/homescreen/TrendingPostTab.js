@@ -13,28 +13,21 @@ const TrendingPostTab = (props) => {
   const timeOutId = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
 
-  const fetchTrendingPosts = async () => {
-    if (!loading && hasMore) {
-      try {
-        setLoading(true);
-        const res = await dispatch(APIGetTrendingPost(currentPage)).unwrap();
-        if (res.list.length === 0) {
-          setHasMore(false);
-        } else {
-          setDataPosts((prevData) => [...prevData, ...res.list]);
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 
   useEffect(() => {
-    fetchTrendingPosts();
+    setLoading(true);
+    dispatch(APIGetTrendingPost(currentPage))
+      .unwrap()
+      .then(res => {
+        const { list } = res;
+        const newData = [...dataPosts, ...list];
+        setDataPosts(newData);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, [currentPage]);
 
   const viewabilityConfigCallbackPairs = useRef([
@@ -62,29 +55,20 @@ const TrendingPostTab = (props) => {
     },
   ]);
 
-  const renderFooter = () => {
-    return loading ? <ActivityIndicator size="large" color="#0000ff" style={styles.footerIndicator} /> : null;
-  };
 
-  const handleLoadMore = () => {
-    if (!loading && hasMore) { // Thêm điều kiện để kiểm soát khi nào tải thêm
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+
 
   return (
-    <View style={styles.container}>
-      <Animated.FlatList
-        onScroll={scrollHandler}
-        data={dataPosts}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <ItemPost item={item} />}
-        keyExtractor={(item) => item._id.toString()}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        onEndReached={handleLoadMore}
-        ListFooterComponent={renderFooter}
-      />
-    </View>
+    <Animated.FlatList
+      style={styles.container}
+      onScroll={scrollHandler}
+      data={dataPosts}
+      renderItem={({ item }) => <ItemPost item={item} />}
+      keyExtractor={(item, index) => index.toString()}
+      viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+      onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 

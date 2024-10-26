@@ -68,14 +68,14 @@ export const APIFollowingPost = createAsyncThunk(
 export const APISetPostViewd = createAsyncThunk(
   'post/set-post-viewed',
   async (post_id, { rejectWithValue }) => {
-    console.log(post_id);
+    // console.log(post_id);
 
     try {
       const response = await AxiosInstance().post('/post/set-post-viewed', {
         post_id: post_id,
       });
 
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
