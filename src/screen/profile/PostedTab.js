@@ -1,14 +1,14 @@
-import {ActivityIndicator, FlatList, ToastAndroid, View} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import { ActivityIndicator, FlatList, ToastAndroid, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import ItemPost from '../../components/ItemPost';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
-import {APIGetPostByUser} from '../../store/api/PostAPI';
+import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
+import { APIGetPostByUser } from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 
 const PostedTab = props => {
-  const {scrollHandler, user_id_view} = props;
+  const { scrollHandler, user_id_view } = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -16,7 +16,7 @@ const PostedTab = props => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(APIGetPostByUser({user_id_view}))
+    dispatch(APIGetPostByUser())
       .unwrap()
       .then(res => {
         setDataPosts(res?.data.list);
@@ -34,14 +34,14 @@ const PostedTab = props => {
         <ActivityIndicator
           size="large"
           color="#ededed"
-          style={{justifyContent: 'center'}}
+          style={{ justifyContent: 'center' }}
         />
       ) : (
         <Animated.FlatList
           onScroll={scrollHandler}
           data={dataPosts}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <ItemPost item={item} />}
+          renderItem={({ item }) => <ItemPost item={item} />}
           keyExtractor={item => item._id}
         />
       )}
