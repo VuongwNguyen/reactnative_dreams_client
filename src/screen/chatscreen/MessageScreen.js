@@ -1,21 +1,185 @@
 import {
   FlatList,
   Image,
-  Keyboard,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Assets} from '../../styles';
-import {Message} from './components';
+import {Loading, Message} from './components';
 import {useNavigation} from '@react-navigation/native';
-import EmojiPicker, {tr} from 'rn-emoji-keyboard';
 import {stackName} from '../../navigations/screens';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {PermissionsAndroid, Platform} from 'react-native';
+import AxiosInstance from '../../configs/axiosInstance';
+import {useSocket} from '../../contexts/SocketContext';
+
+const MessageScreen = props => {
+  const {isGroup, participant, roomId} = props.route.params;
+  const [initial, setInitial] = useState(false);
+  const [room, setRoom] = useState(false);
+  const {socket} = useSocket();
+
+  const renderMesssage = ({item, index}) => {
+    let images = (index === 2 && [1, 2]) || [];
+
+    return (
+      <Message
+        images={images}
+        message={item.message}
+        isMe={item.userId === 1}
+        replyMessage={item.replyMessage}
+        isShowAvatar={item.isShowAvatar}
+        isNext={item.isNext}
+      />
+    );
+  };
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (isGroup) {
+    } else {
+      AxiosInstance()
+        .post('/room/get-room', {
+          participant,
+        })
+        .then(res => {
+          setInitial(true);
+          setRoom(res.data);
+          socket?.emit('join-room', res.data._id);
+        })
+        .catch(err => console.log('error: ', err));
+    }
+  }, [isGroup, participant, roomId]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on('message', () => {});
+
+    return () => {
+      console.log('leave');
+      socket.emit('leave-room', room._id);
+      socket.off('message');
+      socket.off('join-room');
+      socket.off('leave-room');
+    };
+  }, [socket]);
+
+  const renderImages = () => {
+    return (
+      <View style={styles.wrapper}>
+        {room?.members?.map(mem => {
+          if (!mem.isMe) {
+            return (
+              <Image
+                key={mem.account_id}
+                source={{uri: mem.avatar}}
+                style={[styles.avatar, {height: 50}]}
+              />
+            );
+          }
+
+          return null;
+        })}
+      </View>
+    );
+  };
+
+  if (!initial) {
+    return <Loading />;
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* header */}
+      <View style={styles.header}>
+        {/* info */}
+        <View style={styles.row}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={Assets.icons.arrowLeft} style={styles.icon} />
+          </TouchableOpacity>
+          {renderImages()}
+          {/* name */}
+          <View>
+            <Text style={styles.name}>{room.name}</Text>
+            <Text style={styles.status}>Active now</Text>
+          </View>
+        </View>
+        {/* call */}
+        <View style={styles.row}>
+          <TouchableOpacity>
+            <Image source={Assets.icons.call} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={Assets.icons.video} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={Assets.icons.option} style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* list */}
+      <View style={{flex: 1}}>
+        <FlatList
+          data={dummyMessages}
+          renderItem={renderMesssage}
+          inverted
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
+        />
+      </View>
+
+      {/* input */}
+      <View style={styles.inputArea}>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={() => hasAndroidPermission()}>
+            <Image source={Assets.icons.attach} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(stackName.camera.name)}>
+            <Image source={Assets.icons.camera} style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.wrapperInput}>
+          <TextInput placeholder="send message ..." style={styles.input} />
+          <TouchableOpacity>
+            <Image source={Assets.icons.send} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Gallery picker */}
+      {/* <View style={{flex: 1}}>
+        <FlatList
+          data={list}
+          renderItem={({item, index}) => {
+            return (
+              <Image
+                source={{uri: item.node.image.uri}}
+                style={{
+                  flex: 1 / 3,
+                  height: 'auto',
+                  aspectRatio: 1,
+                  resizeMode: 'cover',
+                }}
+              />
+            );
+          }}
+          numColumns={3}
+        />
+      </View> */}
+    </View>
+  );
+};
+
+export default MessageScreen;
 
 async function hasAndroidPermission() {
   const getCheckPermissionPromise = () => {
@@ -71,148 +235,6 @@ async function savePicture() {
 
   CameraRoll.save(tag, {type, album});
 }
-
-const MessageScreen = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [list, setList] = useState([]);
-
-  const renderMesssage = ({item, index}) => {
-    let images = (index === 2 && [1, 2]) || [];
-
-    return (
-      <Message
-        images={images}
-        message={item.message}
-        isMe={item.userId === 1}
-        replyMessage={item.replyMessage}
-        isShowAvatar={item.isShowAvatar}
-        isNext={item.isNext}
-      />
-    );
-  };
-
-  const handlePick = emojiObject => {
-    console.log(emojiObject);
-    /* example emojiObject = {
-        "emoji": "❤️",
-        "name": "red heart",
-        "slug": "red_heart",
-        "unicode_version": "0.6",
-      }
-    */
-  };
-
-  const navigation = useNavigation();
-
-  return (
-    <View style={styles.container}>
-      {/* header */}
-      <View style={styles.header}>
-        {/* info */}
-        <View style={styles.row}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={Assets.icons.arrowLeft} style={styles.icon} />
-          </TouchableOpacity>
-          <Image
-            source={{
-              uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-            }}
-            style={styles.avatar}
-          />
-          {/* name */}
-          <View>
-            <Text style={styles.name}>Coca cola</Text>
-            <Text style={styles.status}>Active now</Text>
-          </View>
-        </View>
-        {/* call */}
-        <View style={styles.row}>
-          <TouchableOpacity>
-            <Image source={Assets.icons.call} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image source={Assets.icons.video} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image source={Assets.icons.option} style={styles.icon} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* list */}
-      <View style={{flex: 1}}>
-        <FlatList
-          data={dummyMessages}
-          renderItem={renderMesssage}
-          inverted
-          contentContainerStyle={styles.list}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-        />
-      </View>
-
-      {/* input */}
-      <View style={styles.inputArea}>
-        <View style={styles.row}>
-          <TouchableOpacity onPress={() => hasAndroidPermission()}>
-            <Image source={Assets.icons.attach} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(stackName.camera.name)}>
-            <Image source={Assets.icons.camera} style={styles.icon} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.wrapperInput}>
-          {/* <TouchableOpacity
-            onPress={() =>
-              CameraRoll.getPhotos({
-                first: 20,
-                assetType: 'Photos',
-              })
-                .then(res => setList(res.edges))
-                .catch(console.log)
-            }>
-            <Text>show</Text>
-          </TouchableOpacity> */}
-          <TextInput placeholder="send message ..." style={styles.input} />
-          <TouchableOpacity onPress={() => setIsOpen(true)}>
-            <Image source={Assets.icons.send} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/*emoji keyboard  */}
-      <EmojiPicker
-        onEmojiSelected={handlePick}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
-
-      {/* Gallery picker */}
-      {/* <View style={{flex: 1}}>
-        <FlatList
-          data={list}
-          renderItem={({item, index}) => {
-            return (
-              <Image
-                source={{uri: item.node.image.uri}}
-                style={{
-                  flex: 1 / 3,
-                  height: 'auto',
-                  aspectRatio: 1,
-                  resizeMode: 'cover',
-                }}
-              />
-            );
-          }}
-          numColumns={3}
-        />
-      </View> */}
-    </View>
-  );
-};
-
-export default MessageScreen;
 
 const styles = StyleSheet.create({
   inputArea: {
@@ -272,9 +294,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   avatar: {
+    flexBasis: 25,
+    flex: 1,
+    aspectRatio: 1,
+  },
+  wrapper: {
     width: 50,
     height: 50,
+    overflow: 'hidden',
     borderRadius: 25,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
 

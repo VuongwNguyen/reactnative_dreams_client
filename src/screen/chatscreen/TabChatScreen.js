@@ -1,25 +1,50 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Chat} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchListRooms} from '../../store/api/ChatAPI';
 
 const TabChatScreen = () => {
   const navigation = useNavigation();
+  const {list, page} = useSelector(state => state.chatRoom);
+  const dispatch = useDispatch();
 
   const renderChat = ({item, index}) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate(stackName.conversation.name)}>
-        <Chat name={`User - ${index}`} message={`message - ${index}`} />
+        onPress={() =>
+          navigation.navigate(stackName.conversation.name, {
+            isGroup: item.is_group,
+            participant: !item.is_group
+              ? item.members[0].isMe
+                ? item.members[1]._id
+                : item.members[0]._id
+              : null,
+            roomId: item._id,
+          })
+        }>
+        <Chat
+          name={item.name}
+          message={`${item.message.author.fullname}: ${
+            item.message.images.length > 0
+              ? `send ${image.message.length} photo`
+              : item.message.content
+          }`}
+        />
       </TouchableOpacity>
     );
   };
 
+  useEffect(() => {
+    dispatch(fetchListRooms({}));
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={Array(10)}
+        data={list}
         renderItem={renderChat}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
         showsVerticalScrollIndicator={false}

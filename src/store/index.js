@@ -17,15 +17,18 @@ const persisConfig = {
   storage: AsyncStorage,
 };
 
-const rootReducer = combineReducers({
-  account: slices.accountSlice.reducer, // Add your reducers here
-  userBasicInf: slices.userBasicInfSlice.reducer,
-});
-
-const persistedReducer = persistReducer(persisConfig, rootReducer);
+const persistedReducer = persistReducer(
+  persisConfig,
+  slices.accountSlice.reducer,
+);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    account: persistedReducer,
+    userBasicInf: slices.userBasicInfSlice.reducer,
+    chatUser: slices.usersOnlineSlice.reducer,
+    chatRoom: slices.roomsSlice.reducer,
+  },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
       serializableCheck: {

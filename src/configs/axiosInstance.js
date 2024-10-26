@@ -30,7 +30,6 @@ const AxiosInstance = (contentType = 'application/json') => {
       queue.push({resolve, reject});
     })
       .then(token => {
-        console.log('new token provide: ', token);
         originRequest.headers.authorization = `Bearer ${token}`;
         return axiosInstance(originRequest);
       })

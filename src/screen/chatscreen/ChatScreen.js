@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -10,77 +10,83 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import TopBarNavigationChat from '../../navigations/TopBarNavigationChat';
 import {Assets} from '../../styles';
 import {UserOnline} from './components';
 import {useSocket} from '../../contexts/SocketContext';
 import AxiosInstance from '../../configs/axiosInstance';
 import TabChatScreen from './TabChatScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchFollowingUsers, fetchListRooms} from '../../store/api/ChatAPI';
+import {useNavigation} from '@react-navigation/native';
+import {stackName} from '../../navigations/screens';
 
 const {width, height} = Dimensions.get('window');
 
 const ChatScreen = () => {
-  const [refresh, setRefresh] = useState(false);
   const {socket} = useSocket();
+  const dispatch = useDispatch();
+  const {list} = useSelector(state => state.chatUser);
+  const navigation = useNavigation();
 
   const renderUsersOnline = ({item, index}) => {
-    return <UserOnline name={`User - ${index}`} />;
+    return (
+      <UserOnline
+        name={item.fullname}
+        image={item.avatar}
+        status={item.isOnline}
+        onPressed={() => {
+          navigation.navigate(stackName.conversation.name, {
+            isGroup: false,
+            participant: item._id,
+          });
+        }}
+      />
+    );
   };
+
+  useEffect(() => {
+    dispatch(fetchFollowingUsers({}));
+  }, []);
 
   return (
     <View style={styles.container}>
       {/* container */}
-      <View>
-        <ScrollView
-          scrollEnabled={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refresh}
-              onRefresh={() => {
-                setRefresh(true);
-                setTimeout(() => setRefresh(false), 1000);
-              }}
-            />
-          }>
-          {/* Header */}
-          <View style={styles.header}>
-            <Image source={{uri: mock_image}} style={styles.avatar} />
-            <Text style={styles.label}>CHATS</Text>
-            <TouchableOpacity>
-              <Image source={Assets.icons.add} style={styles.icon} />
-            </TouchableOpacity>
-          </View>
-          {/* Search */}
-          <TouchableOpacity
-            style={styles.search}
-            onPress={() => {
-              Promise.all([
-                AxiosInstance().get(''),
-                AxiosInstance().get(''),
-                AxiosInstance().get(''),
-              ]).then(values => console.log('values: ', values));
-            }}>
-            <Image source={Assets.icons.search} style={styles.searchIcon} />
-            <Text>Search ...</Text>
-          </TouchableOpacity>
+      {/* Header */}
+      <View style={styles.header}>
+        <Image source={{uri: mock_image}} style={styles.avatar} />
+        <Text style={styles.label}>CHATS</Text>
+        <TouchableOpacity>
+          <Image source={Assets.icons.add} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+      {/* Search */}
+      <TouchableOpacity
+        style={styles.search}
+        onPress={() => {
+          dispatch(fetchFollowingUsers());
+        }}>
+        <Image source={Assets.icons.search} style={styles.searchIcon} />
+        <Text>Search ...</Text>
+      </TouchableOpacity>
 
-          {/* users online */}
-          <View>
-            <FlatList
-              contentContainerStyle={styles.user}
-              data={Array(10)}
-              renderItem={renderUsersOnline}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{width: 20}} />}
-            />
-            <View style={styles.center}>
-              <Text style={styles.empty}>
-                Currently there are no online followers
-              </Text>
-            </View>
+      {/* users online */}
+      <View>
+        {list.length > 0 ? (
+          <FlatList
+            contentContainerStyle={styles.user}
+            data={list}
+            renderItem={renderUsersOnline}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{width: 20}} />}
+          />
+        ) : (
+          <View style={styles.center}>
+            <Text style={styles.empty}>
+              Currently there are no online followers
+            </Text>
           </View>
-        </ScrollView>
+        )}
       </View>
 
       {/* tab bar */}
