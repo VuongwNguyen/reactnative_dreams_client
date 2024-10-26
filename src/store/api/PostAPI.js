@@ -9,7 +9,6 @@ export const APICreatePost = createAsyncThunk(
         '/post/create-post',
         formData,
       );
-      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -42,6 +41,7 @@ export const APIGetPostByUser = createAsyncThunk(
       }).toString();
 
       const response = await AxiosInstance().get(
+        // `/post/get-post-by-user?_page=1&_limit=10`,
         `/post/get-post-by-user?${query}`,
       );
 
@@ -51,12 +51,27 @@ export const APIGetPostByUser = createAsyncThunk(
     }
   },
 );
+
+export const APIGetPostsTrending = createAsyncThunk(
+  'post/get-posts-trending',
+  async (page, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().get(
+        `/post/trending-posts`,
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+)
+
 export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
   async (page, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance().get(
-        `/post/following-posts/${page}/3`,
+        `/post/trending-posts`,
       );
       return response.data;
     } catch (error) {
@@ -68,14 +83,11 @@ export const APIFollowingPost = createAsyncThunk(
 export const APISetPostViewd = createAsyncThunk(
   'post/set-post-viewed',
   async (post_id, { rejectWithValue }) => {
-    // console.log(post_id);
-
     try {
       const response = await AxiosInstance().post('/post/set-post-viewed', {
         post_id: post_id,
       });
 
-      // console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);

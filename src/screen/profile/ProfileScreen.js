@@ -14,7 +14,10 @@ import { stackName } from '../../navigations/screens';
 import { ProfileStyle } from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
+import { useSelector } from 'react-redux';
 import { APIGetInf } from '../../store/api/InfAPI';
+import { useFocusEffect } from '@react-navigation/native';
+import { Assets } from '../../styles';
 
 const getInterpolation = (
   value,
@@ -33,6 +36,9 @@ const getInterpolation = (
 const ProfileScreen = props => {
   const { navigation, route } = props;
   const userViewId = route?.params?.userViewId;
+  const { userBasicInfData } = useSelector(state => state.userBasicInf);
+
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [coreInf, setCoreInf] = useState('');
@@ -117,12 +123,15 @@ const ProfileScreen = props => {
           />
         </View>
         <View style={ProfileStyle.rowAlign}>
+          //<Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
+          {/* <Text style={ProfileStyle.nickname}>{'(Ngộ Không)'}</Text> */}
           <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
 
           {!!coreInf.nickname && (
             <Text
               style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
           )}
+
         </View>
         {!!coreInf.description && (
           <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>

@@ -31,7 +31,7 @@ const AxiosInstance = (contentType = 'application/json') => {
     })
       .then(token => {
         console.log('new token provide: ', token);
-        originRequest.headers.authorization = `Bearer ${token}`;
+        originRequest.headers.aorization = `Bearer ${token}`;
         return axiosInstance(originRequest);
       })
       .catch(err => console.log('error: ', err));
