@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
@@ -10,15 +11,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useSocket} from '../../contexts/SocketContext';
+import {stackName} from '../../navigations/screens';
+import {fetchFollowingUsers, fetchListRooms} from '../../store/api/ChatAPI';
 import {Assets} from '../../styles';
 import {UserOnline} from './components';
-import {useSocket} from '../../contexts/SocketContext';
-import AxiosInstance from '../../configs/axiosInstance';
 import TabChatScreen from './TabChatScreen';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchFollowingUsers, fetchListRooms} from '../../store/api/ChatAPI';
-import {useNavigation} from '@react-navigation/native';
-import {stackName} from '../../navigations/screens';
 
 const {width, height} = Dimensions.get('window');
 
@@ -27,8 +26,9 @@ const ChatScreen = () => {
   const dispatch = useDispatch();
   const {list} = useSelector(state => state.chatUser);
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const renderUsersOnline = ({item, index}) => {
+  const renderUsersOnline = ({item}) => {
     return (
       <UserOnline
         name={item.fullname}
@@ -48,46 +48,64 @@ const ChatScreen = () => {
     dispatch(fetchFollowingUsers({}));
   }, []);
 
+  const refreshData = () => {
+    setLoading(true);
+    dispatch(fetchFollowingUsers({}))
+      .unwrap()
+      .then(() => dispatch(fetchListRooms({})).unwrap())
+      .then(() => setLoading(false));
+  };
+
   return (
     <View style={styles.container}>
       {/* container */}
-      {/* Header */}
-      <View style={styles.header}>
-        <Image source={{uri: mock_image}} style={styles.avatar} />
-        <Text style={styles.label}>CHATS</Text>
-        <TouchableOpacity>
-          <Image source={Assets.icons.add} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
-      {/* Search */}
-      <TouchableOpacity
-        style={styles.search}
-        onPress={() => {
-          dispatch(fetchFollowingUsers());
-        }}>
-        <Image source={Assets.icons.search} style={styles.searchIcon} />
-        <Text>Search ...</Text>
-      </TouchableOpacity>
-
-      {/* users online */}
       <View>
-        {list.length > 0 ? (
-          <FlatList
-            contentContainerStyle={styles.user}
-            data={list}
-            renderItem={renderUsersOnline}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{width: 20}} />}
-          />
-        ) : (
-          <View style={styles.center}>
-            <Text style={styles.empty}>
-              Currently there are no online followers
-            </Text>
+        <ScrollView
+          scrollEnabled={false}
+          refreshControl={
+            <RefreshControl onRefresh={refreshData} refreshing={loading} />
+          }>
+          {/* Header */}
+          <View style={styles.header}>
+            <Image source={{uri: mock_image}} style={styles.avatar} />
+            <Text style={styles.label}>CHATS</Text>
+            <TouchableOpacity>
+              <Image source={Assets.icons.add} style={styles.icon} />
+            </TouchableOpacity>
           </View>
-        )}
+          {/* Search */}
+          <TouchableOpacity
+            style={styles.search}
+            onPress={() => {
+              socket?.emit('test');
+            }}>
+            <Image source={Assets.icons.search} style={styles.searchIcon} />
+            <Text>Search ...</Text>
+          </TouchableOpacity>
+
+          {/* users online */}
+          <View>
+            {list.length > 0 ? (
+              <FlatList
+                contentContainerStyle={styles.user}
+                data={list}
+                renderItem={renderUsersOnline}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={{width: 20}} />}
+              />
+            ) : (
+              <View style={styles.center}>
+                <Text style={styles.empty}>
+                  Currently there are no online followers
+                </Text>
+              </View>
+            )}
+          </View>
+        </ScrollView>
       </View>
+
+      <View style={styles.divider} />
 
       {/* tab bar */}
       <TabChatScreen />
@@ -98,6 +116,12 @@ const ChatScreen = () => {
 export default ChatScreen;
 
 const styles = StyleSheet.create({
+  divider: {
+    alignSelf: 'stretch',
+    marginHorizontal: 16,
+    height: 1,
+    backgroundColor: 'gray',
+  },
   center: {
     justifyContent: 'center',
     alignItems: 'center',

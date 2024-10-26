@@ -10,11 +10,13 @@ const Chat = props => {
         <View>
           <Image
             source={{
-              uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+              uri: avatar
+                ? avatar
+                : 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
             }}
             style={styles.avatar}
           />
-          <View style={styles.dot} />
+          {isOnline && <View style={styles.dot} />}
         </View>
 
         <View style={styles.content}>
@@ -24,7 +26,6 @@ const Chat = props => {
       </View>
       <View>
         <Text style={styles.time}>2 phút</Text>
-        <Text style={styles.unread}>3</Text>
       </View>
     </View>
   );

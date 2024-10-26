@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {io} from 'socket.io-client';
+import SocketIO from '../configs/socket';
 
 const SocketContext = createContext({});
 
@@ -8,35 +9,22 @@ const URL = 'http://192.168.1.24:8012/';
 
 export const SocketProvider = ({children}) => {
   const [socket, setSocket] = useState(null);
-  const [usersOnline, setUsersOnline] = useState([]);
-  const [rooms, setRooms] = useState([]);
   const {token, authenticated} = useSelector(state => state.account);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!authenticated) return;
-    // create new socket connection
-    const newConnection = io(URL, {
-      reconnection: true,
-      retries: 10,
-      auth: {
-        token: token.accessToken,
-      },
-    });
 
-    setSocket(newConnection);
+    const socketInstance = new SocketIO(token.accessToken).socket;
+
+    setSocket(socketInstance);
 
     return () => {
-      console.log('disconnect');
-      newConnection?.disconnect();
-      setSocket(null);
+      socketInstance?.close();
     };
   }, [token, authenticated]);
 
   return (
-    <SocketContext.Provider value={{socket, usersOnline, rooms}}>
-      {children}
-    </SocketContext.Provider>
+    <SocketContext.Provider value={{socket}}>{children}</SocketContext.Provider>
   );
 };
 

@@ -32,6 +32,12 @@ const TabChatScreen = () => {
               ? `send ${image.message.length} photo`
               : item.message.content
           }`}
+          avatar={
+            item.members[0].isMe
+              ? item.members[1].avatar
+              : item.members[0].avatar
+          }
+          isOnline={false}
         />
       </TouchableOpacity>
     );
@@ -43,13 +49,19 @@ const TabChatScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={list}
-        renderItem={renderChat}
-        ItemSeparatorComponent={() => <View style={{height: 20}} />}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.list}
-      />
+      {list.length > 0 ? (
+        <FlatList
+          data={list}
+          renderItem={renderChat}
+          ItemSeparatorComponent={() => <View style={{height: 20}} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.list}
+        />
+      ) : (
+        <View style={styles.center}>
+          <Text>Chat room is empty</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -57,6 +69,11 @@ const TabChatScreen = () => {
 export default TabChatScreen;
 
 const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   list: {
     paddingVertical: 20,
   },

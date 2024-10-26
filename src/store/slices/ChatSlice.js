@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {fetchFollowingUsers, fetchListRooms} from '../api/ChatAPI';
+import {fetchFollowingUsers, fetchListRooms, fetchRoom} from '../api/ChatAPI';
 
 const usersOnlineSlice = createSlice({
   name: 'chat/usersOnline',
@@ -61,4 +61,45 @@ const roomsSlice = createSlice({
   },
 });
 
-export {usersOnlineSlice, roomsSlice};
+const chatSlice = createSlice({
+  name: 'chat/message',
+  initialState: {
+    initial: false,
+    room: {
+      _id: null,
+      members: [],
+      is_group: false,
+      name: null,
+    },
+    messages: [],
+    page: {},
+  },
+  reducers: {
+    reset: state => {
+      state.initial = false;
+      state.room = {
+        _id: null,
+        members: [],
+        is_group: false,
+        name: null,
+      };
+      state.messages = [];
+      state.page = {};
+    },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchRoom.pending, (state, action) => {
+        state.initial = false;
+      })
+      .addCase(fetchRoom.fulfilled, (state, action) => {
+        state.initial = true;
+        state.room = action.payload.data;
+      })
+      .addCase(fetchRoom.rejected, (state, action) => {
+        state.initial = true;
+      });
+  },
+});
+
+export {usersOnlineSlice, roomsSlice, chatSlice};

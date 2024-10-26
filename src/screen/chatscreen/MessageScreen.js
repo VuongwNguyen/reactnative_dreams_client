@@ -12,16 +12,16 @@ import {Assets} from '../../styles';
 import {Loading, Message} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
-import {PermissionsAndroid, Platform} from 'react-native';
-import AxiosInstance from '../../configs/axiosInstance';
 import {useSocket} from '../../contexts/SocketContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchRoom} from '../../store/api/ChatAPI';
 
 const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
-  const [initial, setInitial] = useState(false);
-  const [room, setRoom] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
   const {socket} = useSocket();
+  const dispatch = useDispatch();
+  const {room, initial} = useSelector(state => state.chatMessage);
 
   const renderMesssage = ({item, index}) => {
     let images = (index === 2 && [1, 2]) || [];
@@ -43,16 +43,9 @@ const MessageScreen = props => {
   useEffect(() => {
     if (isGroup) {
     } else {
-      AxiosInstance()
-        .post('/room/get-room', {
-          participant,
-        })
-        .then(res => {
-          setInitial(true);
-          setRoom(res.data);
-          socket?.emit('join-room', res.data._id);
-        })
-        .catch(err => console.log('error: ', err));
+      dispatch(fetchRoom({participant: participant}))
+        .unwrap()
+        .then(() => socket.emit('get-user-status', participant));
     }
   }, [isGroup, participant, roomId]);
 
@@ -61,12 +54,34 @@ const MessageScreen = props => {
 
     socket.on('message', () => {});
 
+    socket.on('participant-status', status => {
+      setIsOnline(status);
+    });
+
+    socket.on('user-disconnect', info => {
+      const {user_id = null} = info;
+      setIsOnline(prev => {
+        if (user_id === participant) {
+          return !prev;
+        }
+        return prev;
+      });
+    });
+
+    socket.on('user-online', info => {
+      const {user_id = null} = info;
+      setIsOnline(prev => {
+        if (user_id === participant) {
+          return !prev;
+        }
+        return prev;
+      });
+    });
+
     return () => {
-      console.log('leave');
-      socket.emit('leave-room', room._id);
       socket.off('message');
-      socket.off('join-room');
-      socket.off('leave-room');
+      socket.off('user-disconnect');
+      socket.off('participant-status');
     };
   }, [socket]);
 
@@ -79,7 +94,7 @@ const MessageScreen = props => {
               <Image
                 key={mem.account_id}
                 source={{uri: mem.avatar}}
-                style={[styles.avatar, {height: 50}]}
+                style={[styles.avatar]}
               />
             );
           }
@@ -100,14 +115,22 @@ const MessageScreen = props => {
       <View style={styles.header}>
         {/* info */}
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            onPress={() => {
+              socket.emit('leave-room', room?._id);
+              navigation.goBack();
+            }}>
             <Image source={Assets.icons.arrowLeft} style={styles.icon} />
           </TouchableOpacity>
           {renderImages()}
           {/* name */}
           <View>
-            <Text style={styles.name}>{room.name}</Text>
-            <Text style={styles.status}>Active now</Text>
+            <Text style={styles.name}>{room?.name}</Text>
+            {!isGroup && (
+              <Text style={[styles.status, isOnline && styles.online]}>
+                {!isOnline ? 'Offline' : 'Active now'}
+              </Text>
+            )}
           </View>
         </View>
         {/* call */}
@@ -139,7 +162,7 @@ const MessageScreen = props => {
       {/* input */}
       <View style={styles.inputArea}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => hasAndroidPermission()}>
+          <TouchableOpacity>
             <Image source={Assets.icons.attach} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -154,89 +177,16 @@ const MessageScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Gallery picker */}
-      {/* <View style={{flex: 1}}>
-        <FlatList
-          data={list}
-          renderItem={({item, index}) => {
-            return (
-              <Image
-                source={{uri: item.node.image.uri}}
-                style={{
-                  flex: 1 / 3,
-                  height: 'auto',
-                  aspectRatio: 1,
-                  resizeMode: 'cover',
-                }}
-              />
-            );
-          }}
-          numColumns={3}
-        />
-      </View> */}
     </View>
   );
 };
 
 export default MessageScreen;
 
-async function hasAndroidPermission() {
-  const getCheckPermissionPromise = () => {
-    if (Platform.Version >= 33) {
-      return Promise.all([
-        PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-        ),
-        PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-        ),
-      ]).then(
-        ([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
-          hasReadMediaImagesPermission && hasReadMediaVideoPermission,
-      );
-    } else {
-      return PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      );
-    }
-  };
-
-  const hasPermission = await getCheckPermissionPromise();
-  if (hasPermission) {
-    return true;
-  }
-  const getRequestPermissionPromise = () => {
-    if (Platform.Version >= 33) {
-      return PermissionsAndroid.requestMultiple([
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-      ]).then(
-        statuses =>
-          statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
-            PermissionsAndroid.RESULTS.GRANTED &&
-          statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
-            PermissionsAndroid.RESULTS.GRANTED,
-      );
-    } else {
-      return PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
-    }
-  };
-
-  return await getRequestPermissionPromise();
-}
-
-async function savePicture() {
-  if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-    return;
-  }
-
-  CameraRoll.save(tag, {type, album});
-}
-
 const styles = StyleSheet.create({
+  online: {
+    color: 'green',
+  },
   inputArea: {
     paddingHorizontal: 13,
     paddingVertical: 7,
@@ -263,7 +213,7 @@ const styles = StyleSheet.create({
   },
   status: {
     fontSize: 12,
-    color: 'grey',
+    color: 'red',
   },
   name: {
     fontSize: 15,
@@ -296,6 +246,8 @@ const styles = StyleSheet.create({
   avatar: {
     flexBasis: 25,
     flex: 1,
+    alignSelf: 'flex-start',
+    height: 'auto',
     aspectRatio: 1,
   },
   wrapper: {

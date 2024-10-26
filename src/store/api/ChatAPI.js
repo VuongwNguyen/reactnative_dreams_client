@@ -20,7 +20,7 @@ const fetchFollowingUsers = createAsyncThunk(
   },
 );
 
-const fetchListRooms = createAsyncThunk('chat/room', async (body, thunk) => {
+const fetchListRooms = createAsyncThunk('chat/rooms', async (body, thunk) => {
   try {
     const res = await AxiosInstance().get('/room', {
       params: {
@@ -35,4 +35,18 @@ const fetchListRooms = createAsyncThunk('chat/room', async (body, thunk) => {
   }
 });
 
-export {fetchFollowingUsers, fetchListRooms};
+const fetchRoom = createAsyncThunk('chat/room', async (body, thunk) => {
+  try {
+    const res = await AxiosInstance().post('/room/get-room', {
+      participant: body.participant,
+    });
+
+    return res;
+  } catch (e) {
+    return thunk.rejectWithValue(e);
+  }
+});
+
+const fetchGroup = createAsyncThunk('chat/group', async (body, thunk) => {});
+
+export {fetchFollowingUsers, fetchListRooms, fetchRoom, fetchGroup};
