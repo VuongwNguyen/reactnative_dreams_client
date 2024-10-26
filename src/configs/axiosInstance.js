@@ -3,7 +3,8 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'http://192.168.100.234:8012/api/';
+const BASEURL = 'http://192.168.1.15:8012/api/';
+
 
 let isRefreshing = false;
 let queue = [];
@@ -31,7 +32,7 @@ const AxiosInstance = (contentType = 'application/json') => {
     })
       .then(token => {
         console.log('new token provide: ', token);
-        originRequest.headers.authorization = `Bearer ${token}`;
+        originRequest.headers.aorization = `Bearer ${token}`;
         return axiosInstance(originRequest);
       })
       .catch(err => console.log('error: ', err));

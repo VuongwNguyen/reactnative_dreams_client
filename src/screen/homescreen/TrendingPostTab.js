@@ -1,30 +1,34 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Animated from 'react-native-reanimated';
 import AxiosInstance from '../../configs/axiosInstance';
 
 import ItemPost from '../../components/ItemPost';
+import { useFocusEffect } from '@react-navigation/native';
 
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await AxiosInstance().get(
-          '/post/trending-posts',
-        );
+        const response = await AxiosInstance().get('/post/trending-posts');
         setDataPosts(response.data.list);
         setLoading(false);
       } catch (error) {}
     };
     fetchData();
   }, []);
+
+  const handleSetItemClick = async (item) => {    
+    console.log(item);
+    setDataPosts(dataPosts.map((post) => (post._id === item.data._id ? item.data : post)));
+  };
   // console.log(dataPosts)
   const viewabilityConfigCallbackPairs = useRef([
     {
@@ -38,7 +42,6 @@ const TrendingPostTab = props => {
             clearTimeout(timeOutId);
           }
           const timeout = setTimeout(() => {
-            // console.log('ok');
             AxiosInstance()
               .post('/post/count-view-post', {
                 post_id: item.item._id,
@@ -73,7 +76,7 @@ const TrendingPostTab = props => {
           onScroll={scrollHandler}
           data={dataPosts}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <ItemPost item={item} />}
+          renderItem={({item}) => <ItemPost item={item} setItemClickId={(item) => handleSetItemClick(item)}/>}
           keyExtractor={(item, index) => index.toString()}
           // Truyền vào callback để log item đang xem
           viewabilityConfigCallbackPairs={
