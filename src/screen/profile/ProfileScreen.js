@@ -17,6 +17,7 @@ import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 import {APIGetInf} from '../../store/api/InfAPI';
 import {useFocusEffect} from '@react-navigation/native';
 import {Assets} from '../../styles';
+import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -39,6 +40,7 @@ const ProfileScreen = props => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
+  const [isFollowedStatus, setIsFollowedStatus] = useState(false);
   const translationY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler(e => {
@@ -75,6 +77,25 @@ const ProfileScreen = props => {
         <Text>{subtitle}</Text>
       </View>
     );
+  };
+
+  useEffect(() => {
+    if (coreInf) setIsFollowedStatus(coreInf.isFollowed);
+  }, [coreInf.isFollowed]);
+
+  const handleFollow = () => {
+    dispatch(APIToggleFollow({following: userViewId}))
+      .unwrap()
+      .then(res => {
+        if (res.message == 'Followed successfully') {
+          setIsFollowedStatus(true);
+        } else {
+          setIsFollowedStatus(false);
+        }
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
   };
   return (
     <View style={ProfileStyle.container}>
@@ -132,7 +153,7 @@ const ProfileScreen = props => {
           <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
         )}
 
-        {userViewId && (
+        {!coreInf.isSelf && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -140,12 +161,30 @@ const ProfileScreen = props => {
                 {t('profileScreen.inbox')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
-              <Text style={ProfileStyle.activeTabText}>
-                {t('profileScreen.follow')}
-              </Text>
-            </TouchableOpacity>
+            {isFollowedStatus ? (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followedButton,
+                ]}>
+                <Image source={Assets.icons.followed} />
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.followed')}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followButton,
+                ]}>
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.follow')}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </Animated.View>
