@@ -112,7 +112,7 @@ const ProfileScreen = props => {
   }, [coreInf]);
   return (
     <View style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} />
+      <AppHeader title={t('profile')} editIcon />
       <Animated.View ref={headerRef} style={headerStyle}>
         <View style={{padding: 10}}>
           <View style={ProfileStyle.infoContainer}>
