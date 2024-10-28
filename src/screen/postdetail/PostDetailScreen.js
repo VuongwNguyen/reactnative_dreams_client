@@ -45,11 +45,11 @@ const PostDetailScreen = props => {
         setLoading(false);
       })
   }, []);
-  const aaa = () => {
-    setItemClickId({
-      data:{...data?.post,isLiked:like.isLiked,likeCount:like.likeCount},
-    })
-  }
+  // const aaa = () => {
+  //   setItemClickId({
+  //     data:{...data?.post,isLiked:like.isLiked,likeCount:like.likeCount},
+  //   })
+  // }
 
   const handleSendComment = async () => {
     try {
@@ -98,7 +98,7 @@ const PostDetailScreen = props => {
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
         <>
-          <AppHeader title={t('postDetailScreen.post')} onGoBack={aaa}/>
+          <AppHeader title={t('postDetailScreen.post')}/>
           <FlatList
             style={{flex: 1}}
             key={data?._id}
@@ -120,25 +120,25 @@ const PostDetailScreen = props => {
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={<ItemPost item={data?.post} setLike={(item) => setLike(item)}/>}
           />
+          <View style={{height: 1, backgroundColor: '#ccc', width: '100%'}}></View>
           <View style={postDetailStyle.footer}>
-            <Image
-              style={postDetailStyle.avatarFooter}
-              source={{uri: data?.post?.author?.avatar}}
-            />
             <TextInput
               ref={inputRef}
               onChangeText={(text) => setContent(text)}
               style={postDetailStyle.inputComment}
               placeholder={t('postDetailScreen.writeComment')}
             />
-            <TouchableOpacity
+            { 
+              content &&
+              <TouchableOpacity
               onPress={handleSendComment}
               style={postDetailStyle.buttonSendComment}>
-              <Image
-                source={Assets.icons.send}
-                style={postDetailStyle.iconSend}
-              />
-            </TouchableOpacity>
+                <Image
+                  source={Assets.icons.send}
+                  style={postDetailStyle.iconSend}
+                />
+              </TouchableOpacity>
+            }
           </View>
         </>
       )}

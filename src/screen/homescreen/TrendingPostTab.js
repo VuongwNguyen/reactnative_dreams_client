@@ -4,6 +4,7 @@ import Animated from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import ItemPost from '../../components/ItemPost';
 import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../store/api/PostAPI';
+import { Colors } from '../../styles';
 
 const TrendingPostTab = (props) => {
   const { scrollHandler } = props;
@@ -55,8 +56,9 @@ const TrendingPostTab = (props) => {
     },
   ]);
 
-
-
+  const ItemSeparator = () => (
+    <View style={{ height: 5, backgroundColor: '#b5b5b5' }} />
+  );
 
   return (
     <Animated.FlatList
@@ -68,6 +70,7 @@ const TrendingPostTab = (props) => {
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
       showsVerticalScrollIndicator={false}
+      ItemSeparatorComponent={ItemSeparator}
     />
   );
 };
@@ -78,7 +81,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 10,
   },
   footerIndicator: {
     padding: 10, // Thêm padding để tạo khoảng cách
