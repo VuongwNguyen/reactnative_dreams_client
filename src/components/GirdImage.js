@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GridImageStyle} from '../styles/components/GridImage/GridImageStyle';
 import ImageViewing from 'react-native-image-viewing';
+import ViewGallery from './ViewGrallery';
 
 const GridImage = props => {
   const {arrImages = []} = props;
@@ -93,25 +94,7 @@ const GridImage = props => {
       ) : (
         <View style={GridImageStyle.gridContainer}>{renderImageGrid()}</View>
       )}
-      <ImageViewing
-        images={images} // Truyền mảng hình ảnh đã chuyển đổi
-        imageIndex={currentIndex} // Sử dụng currentIndex để hiển thị đúng ảnh mà người dùng nhấn
-        visible={visible}
-        onRequestClose={() => setIsVisible(false)}
-        onImageIndexChange={index => setCurrentIndex(index)}
-        FooterComponent={() => (
-          <View>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontSize: 10,
-              }}>
-              {currentIndex + 1}/{arrImages.length}
-            </Text>
-          </View>
-        )}
-      />
+      <ViewGallery data={images.map(img => ({type: 'image', uri: img.uri}))} modalVisible={visible} setModalVisible={setIsVisible}/>
     </View>
   );
 };
