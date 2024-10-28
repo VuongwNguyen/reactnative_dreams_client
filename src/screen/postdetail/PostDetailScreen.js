@@ -33,23 +33,26 @@ const PostDetailScreen = props => {
   const [replyId, setReplyId] = useState(null);
   const [commentFocus, setCommentFocus] = useState(null);
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
-  const [like,setLike] = useState({isLiked:data?.post?.isLiked,likeCount:data?.post?.likeCount});
-
+  const [like, setLike] = useState({
+    isLiked: data?.post?.isLiked,
+    likeCount: data?.post?.likeCount,
+  });
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
-      .then(res => {        
+      .then(res => {
         setPost(res.data);
         setList(res.data?.comments?.list);
         setLoading(false);
-      })
+      });
   }, []);
+
   const aaa = () => {
     setItemClickId({
-      data:{...data?.post,isLiked:like.isLiked,likeCount:like.likeCount},
-    })
-  }
+      data: {...data?.post, isLiked: like.isLiked, likeCount: like.likeCount},
+    });
+  };
 
   const handleSendComment = async () => {
     try {
@@ -65,8 +68,14 @@ const PostDetailScreen = props => {
         .then(res => {
           const replyCommentId = res.data.reply_comment_id;
           if (!replyCommentId) {
-            const newData = [...list]
-            newData.unshift({...res.data,author:{fullName:userBasicInfData?.fullName,avatar:{url:userBasicInfData?.avatar}}});
+            const newData = [...list];
+            newData.unshift({
+              ...res.data,
+              author: {
+                fullName: userBasicInfData?.fullName,
+                avatar: {url: userBasicInfData?.avatar},
+              },
+            });
             setList(newData);
           }
           setContent('');
@@ -98,7 +107,10 @@ const PostDetailScreen = props => {
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
         <>
-          <AppHeader title={t('postDetailScreen.post')} onGoBack={aaa}/>
+          <AppHeader
+            title={t('postDetailScreen.post')}
+            onGoBack={() => aaa()}
+          />
           <FlatList
             style={{flex: 1}}
             key={data?._id}
@@ -118,16 +130,18 @@ const PostDetailScreen = props => {
             keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={<ItemPost item={data?.post} setLike={(item) => setLike(item)}/>}
+            ListHeaderComponent={
+              <ItemPost item={data?.post} setLike={item => setLike(item)} />
+            }
           />
           <View style={postDetailStyle.footer}>
             <Image
               style={postDetailStyle.avatarFooter}
-              source={{uri: data?.post?.author?.avatar}}
+              source={{uri: userBasicInfData?.avatar}}
             />
             <TextInput
               ref={inputRef}
-              onChangeText={(text) => setContent(text)}
+              onChangeText={text => setContent(text)}
               style={postDetailStyle.inputComment}
               placeholder={t('postDetailScreen.writeComment')}
             />

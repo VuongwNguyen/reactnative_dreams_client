@@ -99,7 +99,7 @@ const HomeScreen = (props) => {
             <Image
               style={HomeStyles.avatar}
               source={{
-                uri: userBasicInfData?.avatar.url,
+                uri: userBasicInfData?.avatar,
               }}
             />
           )}
