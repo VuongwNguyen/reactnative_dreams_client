@@ -194,7 +194,7 @@ const chatSlice = createSlice({
 
         state.loading = false;
         state.page = action.payload.data.page;
-        state.messages = [...messages, ...state.messages];
+        state.messages = state.messages.concat(messages);
       })
       .addCase(fetchMessages.rejected, state => {
         state.loading = false;

@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -7,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Assets} from '../../styles';
 import {Loading, Message} from './components';
 import {useNavigation} from '@react-navigation/native';
@@ -17,6 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
 import {newMessage, reset} from '../../store/slices';
 import {parseJwt} from '../../utils/token';
+import throttle from '../../utils/throttle';
 
 const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
@@ -24,7 +26,9 @@ const MessageScreen = props => {
   const [mess, setMess] = useState('');
   const {socket} = useSocket();
   const dispatch = useDispatch();
-  const {room, initial, messages} = useSelector(state => state.chatMessage);
+  const {room, initial, messages, page, count, loading} = useSelector(
+    state => state.chatMessage,
+  );
   const {token} = useSelector(state => state.account);
   const [replied, setReplied] = useState(null);
 
@@ -66,8 +70,8 @@ const MessageScreen = props => {
             fetchMessages({
               roomId: res.data._id,
               timestamp: Date.now(),
-              _page: 1,
-              _limit: 20,
+              page: 1,
+              limit: 20,
             }),
           );
         });
@@ -118,6 +122,22 @@ const MessageScreen = props => {
     setMess('');
     setReplied(null);
   };
+
+  const onEndReached = useCallback(() => {
+    console.log(page.next, page.current, page.max);
+    if (page.next && page.current <= page.max) {
+      dispatch(
+        fetchMessages({
+          roomId: room._id,
+          page: page.current + 1,
+          limit: 20,
+          offset: count,
+        }),
+      );
+    }
+  }, [page, count, room, dispatch]);
+
+  const onRefresh = useCallback(throttle(onEndReached, 300), [onEndReached]);
 
   const renderImages = () => {
     return (
@@ -189,9 +209,25 @@ const MessageScreen = props => {
             data={messages}
             renderItem={renderMesssage}
             inverted
+            keyExtractor={item => item._id}
             contentContainerStyle={styles.list}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            onEndReachedThreshold={0.5}
+            onEndReached={onRefresh}
+            ListFooterComponent={() => {
+              !page.next ? (
+                <View style={styles.center}>
+                  <Text>Hết</Text>
+                </View>
+              ) : (
+                loading && (
+                  <View style={styles.center}>
+                    <ActivityIndicator size={20} color={'black'} />
+                  </View>
+                )
+              );
+            }}
           />
         ) : (
           <View style={styles.center}>

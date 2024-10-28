@@ -57,6 +57,7 @@ const fetchMessages = createAsyncThunk('chat/messages', async (body, thunk) => {
         _page: body.page,
         _limit: body.limit,
         timestamp: body.timestamp,
+        _offset: body.offset,
       },
     });
 
