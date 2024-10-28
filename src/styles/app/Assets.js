@@ -69,6 +69,7 @@ export const Assets = {
     nick: require(uriIcons + 'nickname.png'),
     rlts: require(uriIcons + 'relationship.png'),
     des: require(uriIcons + 'desc.png'),
+    more: require(uriIcons + 'more.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),

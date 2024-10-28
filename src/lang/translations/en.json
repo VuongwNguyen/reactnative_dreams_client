@@ -153,7 +153,7 @@
     "view": "View",
     "moreReplies": "more replies",
     "hideReplies": "Hide replies",
-    "writeComment": "Viết bình luận"
+    "writeComment": "Write a comment..."
   },
   "newPostScreen": {
     "title": "Create post",
@@ -288,5 +288,8 @@
     "chat": "Messages",
     "notification": "Notifications",
     "setting": "Settings"
+  },
+  "itemPost":{
+    "timeStatus":"en"
   }
 }

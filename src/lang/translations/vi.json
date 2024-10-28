@@ -306,5 +306,8 @@
     "chat": "Tin nhắn",
     "notification": "Thông báo",
     "setting": "Cài đặt"
+  },
+  "itemPost":{
+    "timeStatus":"vi"
   }
 }

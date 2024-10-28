@@ -6,7 +6,7 @@ export const AppHeaderStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    maxHeight: 50,
+    maxHeight: 40,
     justifyContent: 'space-between',
     paddingHorizontal: Spacings.md,
   },
