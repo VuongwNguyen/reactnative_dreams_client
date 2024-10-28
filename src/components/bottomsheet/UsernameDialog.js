@@ -17,7 +17,7 @@ import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
-import {APIUpdateInf} from '../../store/api/InfAPI';
+import {APIUpdateAvtUsername, APIUpdateInf} from '../../store/api/InfAPI';
 import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const UsernameDialog = forwardRef((props, ref) => {
@@ -45,18 +45,20 @@ const UsernameDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const fullName = `${firstName} ${lastName}`;
-    const body = {key: 'fullname', value: fullName};
-    dispatch(APIUpdateInf(body))
+    const fullname = `${firstName} ${lastName}`;
+    const formData = new FormData();
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+
+    dispatch(APIUpdateAvtUsername(formData))
       .unwrap()
       .then(() => {
-        dispatch(APIGetUserBasicInf());
         ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
         setVisible(false);
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
-    props.onSubmit(fullName);
+    props.onSubmit(fullname);
   };
   return (
     <Modal

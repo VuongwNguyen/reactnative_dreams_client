@@ -14,3 +14,18 @@ export const APIGetFollowing = createAsyncThunk(
     }
   },
 );
+
+
+export const APIToggleFollow = createAsyncThunk(
+  'follow/toggle-follow',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post(
+        '/follow/toggle-follow',body
+      );
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
