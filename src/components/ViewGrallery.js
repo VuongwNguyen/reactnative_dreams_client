@@ -3,7 +3,6 @@ import {
   View,
   Button,
   Modal,
-  StyleSheet,
   TouchableOpacity,
   Text,
   FlatList,
@@ -11,6 +10,7 @@ import {
   Image
 } from 'react-native';
 import Video from 'react-native-video';
+import { ViewGalleryStyle } from '../styles/components/view/ViewGalleryStyle';
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,7 +31,7 @@ const App = () => {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={ViewGalleryStyle.container}>
       <Button title="Show Videos" onPress={toggleModal} />
 
       <Modal
@@ -40,30 +40,30 @@ const App = () => {
         visible={modalVisible}
         onRequestClose={toggleModal}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
-              <Text style={styles.countText}>{`${currentIndex + 1}/${videoData.length}`}</Text>
-              <Text style={styles.closeButtonText}>Close</Text>
+        <View style={ViewGalleryStyle.modalContainer}>
+          <View style={ViewGalleryStyle.modalContent}>
+            <TouchableOpacity onPress={toggleModal} style={ViewGalleryStyle.closeButton}>
+              <Text style={ViewGalleryStyle.countText}>{`${currentIndex + 1}/${videoData.length}`}</Text>
+              <Text style={ViewGalleryStyle.closeButtonText}>Close</Text>
             </TouchableOpacity>
             <FlatList
               data={videoData}
               keyExtractor={(item) => item.id}
               renderItem={({ item,index }) => {
                 return(
-                  <View style={styles.videoContainer}>
+                  <View style={ViewGalleryStyle.videoContainer}>
                   {
                     item.type === 'video' ? (
                       <Video
                         source={{ uri: item.uri }}
-                        style={styles.video}
+                        style={ViewGalleryStyle.video}
                         resizeMode="contain"
                         controls
                       />
                     ) : (
                       <Image
                         source={{ uri: item.uri }}
-                        style={styles.image}
+                        style={ViewGalleryStyle.image}
                         resizeMode="contain"
                       />
                     )
@@ -88,60 +88,5 @@ const App = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-  },
-  modalContent: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'black',
-    overflow: 'hidden',
-  },
-  closeButton: {
-    alignSelf: 'flex-end',
-    padding: 10,
-    flexDirection:'row'
-  },
-  closeButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color:'white',
-    position:'absolute',
-    right:10,
-    top:7
-  },
-  videoContainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height * (19/20), // 16:9 aspect ratio
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  video: {
-    width: '100%',
-    height: '100%',
-  },
-  countText:{
-    fontSize: 16,
-    fontWeight: 'bold',
-    color:'white',
-    flex:1,
-    textAlign:'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  }
-});
 
 export default App;
