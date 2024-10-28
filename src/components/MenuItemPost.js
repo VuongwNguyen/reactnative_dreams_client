@@ -15,7 +15,6 @@ export const MenuItemPost = (props) => {
           titles.map((item, index) => (
             <TouchableOpacity onPress={() => handleItemMenuClick(item.key)} style={menuItemPostStyle.itemContainer} key={index}>
               <Text style={item.isDelete ? menuItemPostStyle.itemTextDelete : menuItemPostStyle.itemText}>{item.title}</Text>
-              <View style={menuItemPostStyle.line}></View>
             </TouchableOpacity>
           ))
         }

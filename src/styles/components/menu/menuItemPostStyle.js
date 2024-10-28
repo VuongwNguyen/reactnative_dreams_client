@@ -20,10 +20,4 @@ export const menuItemPostStyle = StyleSheet.create({
   itemTextDelete:{
     color:'red',
   },
-  line:{
-    backgroundColor: '#dbdbd9',
-    height: 1,
-    width: '100%',
-    marginVertical: 2
-  }
 });
