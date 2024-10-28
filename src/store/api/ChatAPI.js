@@ -47,7 +47,17 @@ const fetchRoom = createAsyncThunk('chat/room', async (body, thunk) => {
   }
 });
 
-const fetchGroup = createAsyncThunk('chat/group', async (body, thunk) => {});
+const fetchGroup = createAsyncThunk('chat/group', async (body, thunk) => {
+  try {
+    const res = await AxiosInstance().post('/room/get-group', {
+      room_id: body.roomId,
+    });
+
+    return res;
+  } catch (e) {
+    return thunk.rejectWithValue(e.message);
+  }
+});
 
 const fetchMessages = createAsyncThunk('chat/messages', async (body, thunk) => {
   try {

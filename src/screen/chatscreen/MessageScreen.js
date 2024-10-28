@@ -15,7 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {useSocket} from '../../contexts/SocketContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
+import {fetchGroup, fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
 import {newMessage, reset} from '../../store/slices';
 import {parseJwt} from '../../utils/token';
 import throttle from '../../utils/throttle';
@@ -60,6 +60,20 @@ const MessageScreen = props => {
 
   useEffect(() => {
     if (isGroup) {
+      dispatch(fetchGroup({roomId: roomId}))
+        .unwrap()
+        .then(res => {
+          socket.emit('join-room', res.data._id);
+          dispatch(
+            fetchMessages({
+              roomId: res.data._id,
+              timestamp: Date.now(),
+              page: 1,
+              limit: 20,
+            }),
+          );
+        })
+        .catch(err => console.log('fetch group failed'));
     } else {
       dispatch(fetchRoom({participant: participant}))
         .unwrap()
@@ -124,13 +138,12 @@ const MessageScreen = props => {
   };
 
   const onEndReached = useCallback(() => {
-    console.log(page.next, page.current, page.max);
     if (page.next && page.current <= page.max) {
       dispatch(
         fetchMessages({
           roomId: room._id,
           page: page.current + 1,
-          limit: 20,
+          limit: page.limit,
           offset: count,
         }),
       );
@@ -142,7 +155,7 @@ const MessageScreen = props => {
   const renderImages = () => {
     return (
       <View style={styles.wrapper}>
-        {room?.members?.map(mem => {
+        {room?.members?.slice(0, 3)?.map(mem => {
           if (!mem.isMe) {
             return (
               <Image
@@ -360,7 +373,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   avatar: {
-    flexBasis: 25,
+    flexBasis: 20,
     flex: 1,
     alignSelf: 'flex-start',
     height: 'auto',
@@ -373,5 +386,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 2,
   },
 });

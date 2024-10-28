@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
   fetchFollowingUsers,
+  fetchGroup,
   fetchListRooms,
   fetchMessages,
   fetchRoom,
@@ -165,9 +166,19 @@ const chatSlice = createSlice({
       .addCase(fetchMessages.pending, state => {
         state.loading = true;
       })
+      .addCase(fetchGroup.pending, state => {
+        state.initial = false;
+      })
+      .addCase(fetchGroup.fulfilled, (state, action) => {
+        state.initial = true;
+        state.room = action.payload.data;
+      })
+      .addCase(fetchGroup.rejected, state => {
+        state.initial = true;
+      })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         const messages = action.payload.data.list;
-        if (messages.length <= 1) {
+        if (messages.length <= 1 && messages.length > 0) {
           messages[0].showAvatar = true;
         } else {
           for (let i = 0; i < messages.length - 1; i++) {
