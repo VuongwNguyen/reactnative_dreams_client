@@ -15,7 +15,7 @@ const fetchFollowingUsers = createAsyncThunk(
       return res;
     } catch (e) {
       console.log(e);
-      return thunk.rejectWithValue(e);
+      return thunk.rejectWithValue(e.message);
     }
   },
 );
@@ -31,7 +31,7 @@ const fetchListRooms = createAsyncThunk('chat/rooms', async (body, thunk) => {
 
     return res;
   } catch (e) {
-    return thunk.rejectWithValue(e);
+    return thunk.rejectWithValue(e.message);
   }
 });
 
@@ -43,10 +43,33 @@ const fetchRoom = createAsyncThunk('chat/room', async (body, thunk) => {
 
     return res;
   } catch (e) {
-    return thunk.rejectWithValue(e);
+    return thunk.rejectWithValue(e.message);
   }
 });
 
 const fetchGroup = createAsyncThunk('chat/group', async (body, thunk) => {});
 
-export {fetchFollowingUsers, fetchListRooms, fetchRoom, fetchGroup};
+const fetchMessages = createAsyncThunk('chat/messages', async (body, thunk) => {
+  try {
+    const res = await AxiosInstance().get('/message', {
+      params: {
+        room_id: body.roomId,
+        _page: body.page,
+        _limit: body.limit,
+        timestamp: body.timestamp,
+      },
+    });
+
+    return res;
+  } catch (e) {
+    return thunk.rejectWithValue(e.message);
+  }
+});
+
+export {
+  fetchFollowingUsers,
+  fetchListRooms,
+  fetchRoom,
+  fetchGroup,
+  fetchMessages,
+};

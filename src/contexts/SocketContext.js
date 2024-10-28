@@ -1,15 +1,14 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {io} from 'socket.io-client';
 import SocketIO from '../configs/socket';
+import {updateOfflineUser, updateOnlineUser, updateRoom} from '../store/slices';
 
 const SocketContext = createContext({});
-
-const URL = 'http://192.168.1.24:8012/';
 
 export const SocketProvider = ({children}) => {
   const [socket, setSocket] = useState(null);
   const {token, authenticated} = useSelector(state => state.account);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!authenticated) return;
@@ -22,6 +21,28 @@ export const SocketProvider = ({children}) => {
       socketInstance?.close();
     };
   }, [token, authenticated]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on('update-room', (message, room) => {
+      dispatch(updateRoom({message, room}));
+    });
+
+    socket.on('user-online', info => {
+      dispatch(updateOnlineUser(info?.user_id));
+    });
+
+    socket.on('user-disconnect', info => {
+      dispatch(updateOfflineUser(info?.user_id));
+    });
+
+    return () => {
+      socket.off('update-room');
+      socket.off('user-online');
+      socket.off('user-disconnect');
+    };
+  }, [socket]);
 
   return (
     <SocketContext.Provider value={{socket}}>{children}</SocketContext.Provider>

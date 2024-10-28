@@ -53,7 +53,8 @@ const ChatScreen = () => {
     dispatch(fetchFollowingUsers({}))
       .unwrap()
       .then(() => dispatch(fetchListRooms({})).unwrap())
-      .then(() => setLoading(false));
+      .then(() => setLoading(false))
+      .catch(err => setLoading(false));
   };
 
   return (
@@ -118,7 +119,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   divider: {
     alignSelf: 'stretch',
-    marginHorizontal: 16,
+    marginHorizontal: 50,
     height: 1,
     backgroundColor: 'gray',
   },

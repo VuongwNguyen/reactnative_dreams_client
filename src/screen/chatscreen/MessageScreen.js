@@ -7,36 +7,50 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Assets} from '../../styles';
 import {Loading, Message} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {useSocket} from '../../contexts/SocketContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchRoom} from '../../store/api/ChatAPI';
+import {fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
+import {newMessage, reset} from '../../store/slices';
+import {parseJwt} from '../../utils/token';
 
 const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
   const [isOnline, setIsOnline] = useState(false);
+  const [mess, setMess] = useState('');
   const {socket} = useSocket();
   const dispatch = useDispatch();
-  const {room, initial} = useSelector(state => state.chatMessage);
+  const {room, initial, messages} = useSelector(state => state.chatMessage);
+  const {token} = useSelector(state => state.account);
+  const [replied, setReplied] = useState(null);
 
-  const renderMesssage = ({item, index}) => {
-    let images = (index === 2 && [1, 2]) || [];
-
-    return (
-      <Message
-        images={images}
-        message={item.message}
-        isMe={item.userId === 1}
-        replyMessage={item.replyMessage}
-        isShowAvatar={item.isShowAvatar}
-        isNext={item.isNext}
-      />
-    );
-  };
+  const renderMesssage = useCallback(
+    ({item}) => {
+      return (
+        <Message
+          images={item.images}
+          message={item.content}
+          isMe={
+            item.isMe !== undefined
+              ? item.isMe
+              : !!(parseJwt(token.accessToken)?.user_id === item.author._id)
+          }
+          avatar={item.author.avatar}
+          name={item.author.fullname}
+          replyMessage={item.replied}
+          isShowAvatar={item.showAvatar}
+          isNext={item.isNext}
+          time={item.send_at}
+          replyPressed={() => setReplied(item)}
+        />
+      );
+    },
+    [setReplied],
+  );
 
   const navigation = useNavigation();
 
@@ -45,14 +59,27 @@ const MessageScreen = props => {
     } else {
       dispatch(fetchRoom({participant: participant}))
         .unwrap()
-        .then(() => socket.emit('get-user-status', participant));
+        .then(res => {
+          socket.emit('get-user-status', participant);
+          socket.emit('join-room', res.data._id);
+          dispatch(
+            fetchMessages({
+              roomId: res.data._id,
+              timestamp: Date.now(),
+              _page: 1,
+              _limit: 20,
+            }),
+          );
+        });
     }
   }, [isGroup, participant, roomId]);
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on('message', () => {});
+    socket.on('message', message => {
+      dispatch(newMessage(message));
+    });
 
     socket.on('participant-status', status => {
       setIsOnline(status);
@@ -82,8 +109,15 @@ const MessageScreen = props => {
       socket.off('message');
       socket.off('user-disconnect');
       socket.off('participant-status');
+      socket.off('user-online');
     };
   }, [socket]);
+
+  const sendMessage = () => {
+    socket.emit('message', {content: mess, replied_id: replied?._id}, room._id);
+    setMess('');
+    setReplied(null);
+  };
 
   const renderImages = () => {
     return (
@@ -118,6 +152,7 @@ const MessageScreen = props => {
           <TouchableOpacity
             onPress={() => {
               socket.emit('leave-room', room?._id);
+              dispatch(reset());
               navigation.goBack();
             }}>
             <Image source={Assets.icons.arrowLeft} style={styles.icon} />
@@ -149,16 +184,38 @@ const MessageScreen = props => {
 
       {/* list */}
       <View style={{flex: 1}}>
-        <FlatList
-          data={dummyMessages}
-          renderItem={renderMesssage}
-          inverted
-          contentContainerStyle={styles.list}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-        />
+        {messages.length > 0 ? (
+          <FlatList
+            data={messages}
+            renderItem={renderMesssage}
+            inverted
+            contentContainerStyle={styles.list}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          />
+        ) : (
+          <View style={styles.center}>
+            <Text>Chưa có tin nhắn nào</Text>
+          </View>
+        )}
       </View>
 
+      {/* replied */}
+      {replied && (
+        <View style={styles.row}>
+          <View style={styles.replied}>
+            <Text style={styles.name}>
+              {'Trả lời' + ' ' + replied.author.fullname}
+            </Text>
+            <Text style={styles.common}>{replied.content}</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.cancel}
+            onPress={() => setReplied(null)}>
+            <Text>Hủy</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       {/* input */}
       <View style={styles.inputArea}>
         <View style={styles.row}>
@@ -171,10 +228,17 @@ const MessageScreen = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperInput}>
-          <TextInput placeholder="send message ..." style={styles.input} />
-          <TouchableOpacity>
-            <Image source={Assets.icons.send} />
-          </TouchableOpacity>
+          <TextInput
+            placeholder="send message ..."
+            style={styles.input}
+            onChangeText={setMess}
+            value={mess}
+          />
+          {!!mess && (
+            <TouchableOpacity onPress={sendMessage}>
+              <Image source={Assets.icons.send} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -184,6 +248,22 @@ const MessageScreen = props => {
 export default MessageScreen;
 
 const styles = StyleSheet.create({
+  cancel: {
+    position: 'absolute',
+    alignSelf: 'center',
+    right: 10,
+  },
+  replied: {
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#B1B1B1',
+    width: '100%',
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   online: {
     color: 'green',
   },
@@ -259,98 +339,3 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
 });
-
-const dummyMessages = [
-  {
-    id: 1,
-    userId: 1,
-    message: 'Hello, long time no see',
-    isNext: false,
-    isShowAvatar: false,
-    time: '11:00 AM',
-  },
-  {
-    id: 2,
-    userId: 1,
-    message: 'Hi, how are you today?',
-    isNext: true,
-    isShowAvatar: true,
-    time: '11:11 AM',
-  },
-  {
-    id: 3,
-    userId: 2,
-    message:
-      'Hi, I’m good. I’ve been really busy with work lately. How about you?',
-    isNext: true,
-    isShowAvatar: false,
-    time: '12:00 PM',
-    replyMessage: 'Hi, how are you today?',
-    replyMessageId: 2,
-    replyAuthor: 'David',
-  },
-  {
-    id: 4,
-    userId: 2,
-    message: 'That’s great to hear. What kind of projects are you working on?',
-    isNext: false,
-    isShowAvatar: true,
-    time: '12:10 PM',
-  },
-  {
-    id: 5,
-    userId: 1,
-    message:
-      'I’ve been good as well! Just working on some new projects and keeping myself occupied.',
-    isNext: true,
-    isShowAvatar: false,
-    time: '12:15 PM',
-  },
-  {
-    id: 6,
-    userId: 1,
-    message:
-      'I’m currently working on a mobile app. It’s been a challenging but rewarding experience.',
-    isNext: false,
-    isShowAvatar: true,
-    time: '12:20 PM',
-    replyMessage:
-      'I’ve been good as well! Just working on some new projects and keeping myself occupied.',
-    replyMessageId: 5,
-    replyAuthor: 'David',
-  },
-  {
-    id: 7,
-    userId: 2,
-    message:
-      'That sounds amazing! Is it a personal project or something for work?',
-    isNext: true,
-    isShowAvatar: false,
-    time: '12:25 PM',
-  },
-  {
-    id: 8,
-    userId: 2,
-    message: 'Good for you! Can’t wait to see it when it’s finished!',
-    isNext: false,
-    isShowAvatar: true,
-    time: '12:30 PM',
-  },
-  {
-    id: 9,
-    userId: 1,
-    message: 'Thanks! I’ll definitely share it with you when it’s done.',
-    isNext: true,
-    isShowAvatar: false,
-    time: '12:35 PM',
-  },
-  {
-    id: 10,
-    userId: 1,
-    message:
-      'It’s been a long journey, but I’m confident the result will be worth it.',
-    isNext: false,
-    isShowAvatar: true,
-    time: '12:40 PM',
-  },
-];

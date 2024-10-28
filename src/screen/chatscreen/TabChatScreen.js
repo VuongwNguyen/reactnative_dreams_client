@@ -50,13 +50,15 @@ const TabChatScreen = () => {
   return (
     <View style={styles.container}>
       {list.length > 0 ? (
-        <FlatList
-          data={list}
-          renderItem={renderChat}
-          ItemSeparatorComponent={() => <View style={{height: 20}} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.list}
-        />
+        <View style={{flex: 1}}>
+          <FlatList
+            data={list}
+            renderItem={renderChat}
+            ItemSeparatorComponent={() => <View style={{height: 20}} />}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.list}
+          />
+        </View>
       ) : (
         <View style={styles.center}>
           <Text>Chat room is empty</Text>
