@@ -1,5 +1,5 @@
 import {View, Image, TouchableOpacity, Text, ToastAndroid} from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -14,10 +14,10 @@ import {stackName} from '../../navigations/screens';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
+import {useSelector} from 'react-redux';
 import {APIGetInf} from '../../store/api/InfAPI';
 import {useFocusEffect} from '@react-navigation/native';
 import {Assets} from '../../styles';
-import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -36,6 +36,7 @@ const getInterpolation = (
 const ProfileScreen = props => {
   const {navigation, route} = props;
   const userViewId = route?.params?.userViewId;
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const dispatch = useDispatch();
   const {t} = useTranslation();
@@ -111,61 +112,54 @@ const ProfileScreen = props => {
   }, [coreInf]);
   return (
     <View style={ProfileStyle.container}>
-      <View style={ProfileStyle.headerContainer}>
-        <AppHeader title={t('profileScreen.profile')} />
-        {coreInf.isSelf && (
-          <TouchableOpacity
-            style={ProfileStyle.editBtn}
-            onPress={() => navigation.navigate(stackName.accountDetail.name)}>
-            <Image source={Assets.icons.editProfile} />
-          </TouchableOpacity>
-        )}
-      </View>
-      <Animated.View style={headerStyle}>
-        <View style={ProfileStyle.infoContainer}>
-          {!!coreInf.avatar && (
-            <Image
-              style={ProfileStyle.avatar}
-              source={{
-                uri: coreInf?.avatar,
-              }}
-            />
-          )}
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(stackName.following.name);
-            }}>
+      <AppHeader title={t('profile')} editIcon />
+      <Animated.View ref={headerRef} style={headerStyle}>
+        <View style={{padding: 10}}>
+          <View style={ProfileStyle.infoContainer}>
+            {!!coreInf.avatar && (
+              <Image
+                style={ProfileStyle.avatar}
+                source={{
+                  uri: coreInf?.avatar,
+                }}
+              />
+            )}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.following.name);
+              }}>
+              <InforItem
+                title={coreInf?.followerCount}
+                subtitle={t('profileScreen.followers')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.following.name);
+              }}>
+              <InforItem
+                title={coreInf?.followingCount}
+                subtitle={t('profileScreen.following')}
+              />
+            </TouchableOpacity>
             <InforItem
-              title={coreInf?.followerCount}
-              subtitle={t('profileScreen.followers')}
+              title={coreInf?.postCount}
+              subtitle={t('profileScreen.posts')}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(stackName.following.name);
-            }}>
-            <InforItem
-              title={coreInf?.followingCount}
-              subtitle={t('profileScreen.following')}
-            />
-          </TouchableOpacity>
-          <InforItem
-            title={coreInf?.postCount}
-            subtitle={t('profileScreen.posts')}
-          />
-        </View>
-        <View style={ProfileStyle.rowAlign}>
-          <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
+          </View>
+          <View style={ProfileStyle.rowAlign}>
+            <Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
+            <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
 
-          {!!coreInf.nickname && (
-            <Text
-              style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
+            {!!coreInf.nickname && (
+              <Text
+                style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
+            )}
+          </View>
+          {!!coreInf.description && (
+            <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
           )}
         </View>
-        {!!coreInf.description && (
-          <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
-        )}
 
         {!coreInf.isSelf && (
           <View style={ProfileStyle.grouptButtonContainer}>

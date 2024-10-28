@@ -18,7 +18,6 @@ export const ProfileStyle = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#fff',
   },
   rowContainer: {
@@ -116,7 +115,6 @@ export const ProfileStyle = StyleSheet.create({
     ...Typography.postName,
     color: 'black',
     marginVertical: 10,
-    marginRight: 5,
   },
   nickname: {
     fontFamily: Fonts.roboto.regular,
