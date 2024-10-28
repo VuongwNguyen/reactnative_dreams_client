@@ -41,9 +41,12 @@ const ProfileScreen = props => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
+
+  const [isFollowedStatus, setIsFollowedStatus] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
   const translationY = useSharedValue(0);
+
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
@@ -60,18 +63,18 @@ const ProfileScreen = props => {
     };
   });
 
-  useEffect(() => {
-    dispatch(APIGetInf(userViewId))
-      .unwrap()
-      .then(res => {
-        setCoreInf(res?.data);
-      })
-      .catch(err => {
-        console.log(err);
-
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(APIGetInf(userViewId))
+        .unwrap()
+        .then(res => {
+          setCoreInf(res?.data);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }, [userViewId]),
+  );
 
   const InforItem = ({title = '', subtitle = ''}) => {
     return (
@@ -81,6 +84,25 @@ const ProfileScreen = props => {
       </View>
     );
   };
+
+  useEffect(() => {
+    if (coreInf) setIsFollowedStatus(coreInf.isFollowed);
+  }, [coreInf.isFollowed]);
+
+  const handleFollow = () => {
+    dispatch(APIToggleFollow({following: userViewId}))
+      .unwrap()
+      .then(res => {
+        if (res.message == 'Followed successfully') {
+          setIsFollowedStatus(true);
+        } else {
+          setIsFollowedStatus(false);
+        }
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
+  };
   useEffect(() => {
     if (headerRef.current) {
       headerRef.current.measure((x, y, width, height) => {
@@ -88,7 +110,6 @@ const ProfileScreen = props => {
       });
     }
   }, [coreInf]);
-
   return (
     <View style={ProfileStyle.container}>
       <AppHeader title={t('profile')} />
@@ -140,7 +161,7 @@ const ProfileScreen = props => {
           )}
         </View>
 
-        {!!userViewId ? (
+        {!coreInf.isSelf && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -148,24 +169,30 @@ const ProfileScreen = props => {
                 {t('profileScreen.inbox')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
-              <Text style={ProfileStyle.activeTabText}>
-                {t('profileScreen.follow')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={ProfileStyle.editBtnContainer}>
-            <TouchableOpacity
-              style={ProfileStyle.btnEditProfile}
-              onPress={() => {
-                navigation.navigate(stackName.accountDetail.name);
-              }}>
-              <Text style={ProfileStyle.editBtnLabel}>
-                {t('profileScreen.editProfile')}
-              </Text>
-            </TouchableOpacity>
+            {isFollowedStatus ? (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followedButton,
+                ]}>
+                <Image source={Assets.icons.followed} />
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.followed')}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followButton,
+                ]}>
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.follow')}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </Animated.View>

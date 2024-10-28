@@ -74,6 +74,7 @@ const HomeScreen = (props) => {
       transition: { duration: 1000 },
     };
   });
+  // console.log(userBasicInfData);
 
   const handleSearch = () => {
     const searchText = inputSearch.current.value;

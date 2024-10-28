@@ -29,6 +29,7 @@ export const ProfileStyle = StyleSheet.create({
     alignItems: 'center',
   },
   infoContainer: {
+    // marginTop:10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -36,7 +37,8 @@ export const ProfileStyle = StyleSheet.create({
   grouptButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 5,
+    marginVertical: 10,
+    marginHorizontal: 5,
   },
   buttonContainer: {
     width: 150,
@@ -92,6 +94,13 @@ export const ProfileStyle = StyleSheet.create({
   inboxText: {
     ...Typography.postName,
     color: 'white',
+  },
+  followedButton: {
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    flexDirection: 'row',
+    gap: 5,
+    alignItems: 'center',
   },
   followButton: {
     borderWidth: 1,
