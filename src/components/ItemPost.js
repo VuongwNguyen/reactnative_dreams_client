@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
@@ -10,8 +10,9 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
 import AxiosInstance from '../configs/axiosInstance';
+import { useTranslation } from 'react-i18next';
+import { MenuItemPost } from './MenuItemPost';
 dayjs.extend(relativeTime);
-
 const customLocale = {
   ...dayjs.Ls.vi,
   relativeTime: {
@@ -39,6 +40,8 @@ export default ItemPost = props => {
   const {item, setItemClickId} = props;  
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
+  const { t } = useTranslation();
+  const [isShowMore, setIsShowMore] = useState(false);
 
   const toggleLike = async () => {
     await AxiosInstance().post('/post/like-post', {
@@ -51,6 +54,27 @@ export default ItemPost = props => {
       setCountLike(countLike + 1);
     }
   };
+
+  const handleItemMenuClick = (key) => {
+    switch (key) {
+      case 'report':
+        console.log('report');
+        break;
+      case 'edit':
+        console.log('edit');
+        break;
+      case 'privacy':
+        console.log('privacy');
+        break;
+      case 'delete':
+        console.log('delete');
+        break;
+      default:
+        console.log('default');
+        break;
+    }
+  };
+
 
   const navigation = useNavigation();
   return (
@@ -76,7 +100,7 @@ export default ItemPost = props => {
           <Text style={Typography.postName}>{item?.author?.fullname}</Text>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item?.createdAt).locale('vi').fromNow()}
+              {dayjs(item?.createdAt).locale(t('itemPost.timeStatus')).fromNow()}
             </Text>
             {item?.privacy_status == 'public' && (
               <View
@@ -97,6 +121,13 @@ export default ItemPost = props => {
             )}
           </View>
         </View>
+        {/* more */}
+        <TouchableOpacity onPress={() => setIsShowMore(!isShowMore)} style={itemPostStyle.headerMore}>
+          <Image
+            source={Assets.icons.more}
+            style={itemPostStyle.headerMoreIcon}
+          />
+        </TouchableOpacity>
       </View>
       {/* content */}
       <TouchableWithoutFeedback
@@ -189,6 +220,8 @@ export default ItemPost = props => {
           <Text style={itemPostStyle.interactLabel}>{item?.share}</Text>
         </TouchableOpacity>
       </View>
+      {/* header more modal */}
+      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick}/>}
     </View>
   );
 };

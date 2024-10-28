@@ -3,7 +3,7 @@ import { store } from '../store';
 import { updateTokens } from '../store/slices';
 import { logoutRef } from '../components/LogoutDialog';
 
-const BASEURL = 'http://192.168.1.4:8012/api/';
+const BASEURL = 'http://192.168.1.23:8012/api/';
 
 let isRefreshing = false;
 let queue = [];

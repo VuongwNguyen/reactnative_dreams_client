@@ -14,6 +14,8 @@ export const itemPostStyle = StyleSheet.create({
   },
   container: {
     gap: 10,
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
   header: {
     flexDirection: 'row',
@@ -27,8 +29,7 @@ export const itemPostStyle = StyleSheet.create({
     marginLeft: 10,
   },
   content: {
-    marginTop: 10,
-    gap: 5,
+    gap: 5
   },
   interactContainer: {
     alignContent: 'center',
@@ -36,7 +37,7 @@ export const itemPostStyle = StyleSheet.create({
     justifyContent: 'space-between',
     borderTopWidth: 0.5,
     borderColor: Colors.secondary,
-    padding: 10,
+    padding: 5,
     paddingHorizontal: 15,
   },
   interactLabel: {
@@ -56,4 +57,25 @@ export const itemPostStyle = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  headerMore: {
+    position: 'absolute',
+    right: 0,
+  },
+  headerMoreIcon: {
+    width: 20,
+    height: 20,
+  },
+  headerMoreContainer:{
+    backgroundColor: 'white',
+    width: 120,
+    height: 130,
+    position: 'absolute',
+    right: 20,
+    top: 10,
+    padding: 10,
+    gap: 10,
+    borderRadius: 10,
+    borderColor: Colors.secondary,
+    elevation: 8,
+  }
 });

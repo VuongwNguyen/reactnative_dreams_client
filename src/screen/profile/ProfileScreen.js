@@ -123,7 +123,7 @@ const ProfileScreen = props => {
           />
         </View>
         <View style={ProfileStyle.rowAlign}>
-          //<Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
+          <Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
           {/* <Text style={ProfileStyle.nickname}>{'(Ngộ Không)'}</Text> */}
           <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
 
