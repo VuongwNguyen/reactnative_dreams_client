@@ -1,13 +1,17 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import Animated from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
-import ItemPost from '../../components/ItemPost';
-import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../store/api/PostAPI';
-import { Colors } from '../../styles';
+import {useDispatch} from 'react-redux';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
+import {
+  APICountViewPost,
+  APIGetTrendingPost,
+  APISetPostViewd,
+} from '../../store/api/PostAPI';
+import {Colors} from '../../styles';
 
-const TrendingPostTab = (props) => {
-  const { scrollHandler } = props;
+const TrendingPostTab = props => {
+  const {scrollHandler} = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -15,13 +19,12 @@ const TrendingPostTab = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     setLoading(true);
     dispatch(APIGetTrendingPost(currentPage))
       .unwrap()
       .then(res => {
-        const { list } = res;
+        const {list} = res;
         const newData = [...dataPosts, ...list];
         setDataPosts(newData);
         setLoading(false);
@@ -36,7 +39,7 @@ const TrendingPostTab = (props) => {
       viewabilityConfig: {
         itemVisiblePercentThreshold: 100,
       },
-      onViewableItemsChanged: ({ viewableItems }) => {
+      onViewableItemsChanged: ({viewableItems}) => {
         if (viewableItems.length > 0) {
           clearTimeout(timeOutId.current);
           timeOutId.current = setTimeout(() => {
@@ -44,9 +47,9 @@ const TrendingPostTab = (props) => {
           }, 5000);
         }
 
-        viewableItems.forEach((item) => {
+        viewableItems.forEach(item => {
           if (!viewedItemIds.includes(item.item._id)) {
-            setViewedItemIds((prevViewedItemIds) => {
+            setViewedItemIds(prevViewedItemIds => {
               dispatch(APISetPostViewd(item.item._id)); // Gọi API để đánh dấu bài viết đã xem
               return [...prevViewedItemIds, item.item._id];
             });
@@ -56,21 +59,17 @@ const TrendingPostTab = (props) => {
     },
   ]);
 
-  const ItemSeparator = () => (
-    <View style={{ height: 5, backgroundColor: '#b5b5b5' }} />
-  );
-
   return (
     <Animated.FlatList
       style={styles.container}
       onScroll={scrollHandler}
       data={dataPosts}
-      renderItem={({ item }) => <ItemPost item={item} />}
+      renderItem={({item}) => <ItemPost item={item} />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
       showsVerticalScrollIndicator={false}
-      ItemSeparatorComponent={ItemSeparator}
+      ItemSeparatorComponent={() => <ItemSeparator />}
     />
   );
 };

@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, ToastAndroid, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import ItemPost from '../../components/ItemPost';
+import ItemPost, { ItemSeparator } from '../../components/ItemPost';
 import { useDispatch } from 'react-redux';
 
 import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
@@ -16,11 +16,10 @@ const PostedTab = props => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(APIGetPostByUser())
+    dispatch(APIGetPostByUser({user_id_view}))
       .unwrap()
       .then(res => {
         setDataPosts(res?.data.list);
-        // console.log(dataPosts);
         setLoading(false);
       })
       .catch(err => {
@@ -43,6 +42,7 @@ const PostedTab = props => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => <ItemPost item={item} />}
           keyExtractor={item => item._id}
+          ItemSeparatorComponent={() => <ItemSeparator/>}
         />
       )}
     </View>
