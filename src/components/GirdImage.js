@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GridImageStyle} from '../styles/components/GridImage/GridImageStyle';
 import ImageViewing from 'react-native-image-viewing';
 
@@ -80,10 +80,12 @@ const GridImage = props => {
   return (
     <View style={GridImageStyle.container}>
       {arrImages.length === 1 ? (
-        <Image
-          source={{uri: arrImages[0].url}}
-          style={GridImageStyle.mainImage}
+        <TouchableOpacity onPress={() => openImage(0)}>
+          <Image
+            source={{uri: arrImages[0].url}}
+            style={GridImageStyle.mainImage}
         />
+        </TouchableOpacity>
       ) : arrImages.length === 2 ? (
         renderTwoImages()
       ) : arrImages.length === 3 ? (
