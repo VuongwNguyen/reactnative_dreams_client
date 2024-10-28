@@ -7,7 +7,8 @@ import {
   Text,
   FlatList,
   Dimensions,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
 import Video from 'react-native-video';
 import { ViewGalleryStyle } from '../styles/components/view/ViewGalleryStyle';
@@ -19,6 +20,8 @@ const App = () => {
     setModalVisible(!modalVisible);
   };
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+
 
   const videoData = [
     { id: '1', type:'video', uri: 'https://firebasestorage.googleapis.com/v0/b/lazoapp-75ae8.appspot.com/o/Recording%202024-10-21%20134036.mp4?alt=media&token=60b8ce26-ef6f-4d38-86dd-72751e3c367c' },
@@ -29,6 +32,34 @@ const App = () => {
     { id: '6', type:'image', uri: 'https://firebasestorage.googleapis.com/v0/b/lazoapp-75ae8.appspot.com/o/Screenshot%202024-08-08%20134218.png?alt=media&token=94b06308-c1c5-4498-a883-02821ae86611' },
     // Add more video URLs as needed
   ];
+  const RenderItem = React.memo(({ item, index }) => {
+    const [loading, setLoading] = useState(true);
+    const handleLoad = () => {
+      setLoading(false);
+    };
+    return (
+      <View style={ViewGalleryStyle.videoContainer}>
+      {item.type === 'video' ? (
+        <Video
+          source={{ uri: item.uri }}
+          style={ViewGalleryStyle.video}
+          resizeMode="contain"
+          controls
+          onLoad={handleLoad}
+          paused={index !== currentIndex} // Play only the current video
+        />
+      ) : (
+        <Image
+          source={{ uri: item.uri }}
+          style={ViewGalleryStyle.image}
+          resizeMode="contain"
+          onLoad={handleLoad}
+        />
+      )}
+      {loading && <ActivityIndicator style={ViewGalleryStyle.loader} size="large" color="#0000ff" />}
+    </View>
+    )
+  });
 
   return (
     <View style={ViewGalleryStyle.container}>
@@ -49,28 +80,9 @@ const App = () => {
             <FlatList
               data={videoData}
               keyExtractor={(item) => item.id}
-              renderItem={({ item,index }) => {
-                return(
-                  <View style={ViewGalleryStyle.videoContainer}>
-                  {
-                    item.type === 'video' ? (
-                      <Video
-                        source={{ uri: item.uri }}
-                        style={ViewGalleryStyle.video}
-                        resizeMode="contain"
-                        controls
-                      />
-                    ) : (
-                      <Image
-                        source={{ uri: item.uri }}
-                        style={ViewGalleryStyle.image}
-                        resizeMode="contain"
-                      />
-                    )
-                  }
-                </View>
-                )
-              }}
+              renderItem={({ item,index }) => (
+                <RenderItem item={item} index={index} />
+              )}
               snapToAlignment='center'
               snapToInterval={Dimensions.get('window').width}
               onViewableItemsChanged={({ viewableItems }) => {
@@ -78,6 +90,7 @@ const App = () => {
                   setCurrentIndex(viewableItems[0].index);
                 }
               }}
+              viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
               horizontal={true}
               showsVerticalScrollIndicator={true}
               pagingEnabled={false}
