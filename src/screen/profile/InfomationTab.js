@@ -5,8 +5,9 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  RefreshControl,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +23,6 @@ const InfomationTab = props => {
 
   const [infAPI, setInfAPI] = useState('');
   const [infData, setInfData] = useState('');
-
   const [refreshing, setRefreshing] = useState(false);
 
   const infUI = [
@@ -38,18 +38,29 @@ const InfomationTab = props => {
     { key: 'rlts', title: t('profileScreen.infomationTab.rlts') },
   ];
 
+  const fetchGetInflist = useCallback(() => {
+    dispatch(APIGetInfList(user_id_view))
+      .unwrap()
+      .then(res => {
+        setInfAPI(res?.data?.infomation);
+        setRefreshing(false);
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        setRefreshing(false);
+      });
+  }, [dispatch, user_id_view]);
+
   useFocusEffect(
-    React.useCallback(() => {
-      dispatch(APIGetInfList(user_id_view))
-        .unwrap()
-        .then(res => {
-          setInfAPI(res?.data?.infomation);
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
-    }, [user_id_view]),
+    useCallback(() => {
+      fetchGetInflist();
+    }, [fetchGetInflist])
   );
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchGetInflist();
+  };
 
   useEffect(() => {
     if (infAPI.length !== 0) {
@@ -66,7 +77,7 @@ const InfomationTab = props => {
 
   const renderItem = ({ item }) => {
     if (!item.value) return null;
-    if (item.privacy_status == 'private') return null;
+    if (item.privacy_status === 'private') return null;
     return (
       <View style={InfomationTabStyle.itemContainer}>
         <Image
@@ -88,6 +99,9 @@ const InfomationTab = props => {
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           keyExtractor={item => item.key}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       ) : (
         <Text style={InfomationTabStyle.placeholder}>
