@@ -1,28 +1,28 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {stackName, tabName} from './screens';
-import {Assets} from '../styles';
+import { useTranslation } from 'react-i18next';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { stackName, tabName } from './screens';
+import { Assets } from '../styles';
 
 const tab = createBottomTabNavigator();
 
 const icons = [
-  {default: Assets.icons.home, selected: Assets.icons.homeSelected},
-  {default: Assets.icons.message, selected: Assets.icons.messageSelected},
+  { default: Assets.icons.home, selected: Assets.icons.homeSelected },
+  { default: Assets.icons.message, selected: Assets.icons.messageSelected },
   {
     default: Assets.icons.notification,
     selected: Assets.icons.notificationSelected,
   },
-  {default: Assets.icons.setting, selected: Assets.icons.settingSelected},
+  { default: Assets.icons.setting, selected: Assets.icons.settingSelected },
 ];
 
-const TabBar = ({state, descriptors, navigation}) => {
+const TabBar = ({ state, descriptors, navigation }) => {
   const renderIcon = (focus, index) => {
     return (
       <View>
         <Image
-          style={{width: 20, height: 20, resizeMode: 'contain'}}
+          style={{ width: 20, height: 20, resizeMode: 'contain' }}
           source={focus ? icons[index].selected : icons[index].default}
         />
       </View>
@@ -79,11 +79,11 @@ const TabBar = ({state, descriptors, navigation}) => {
 };
 
 const BottomTab = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <tab.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={tabName.home.name}
       tabBar={props => <TabBar {...props} />}>
       <tab.Screen

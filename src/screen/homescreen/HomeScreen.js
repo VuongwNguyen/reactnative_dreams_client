@@ -1,5 +1,5 @@
 import { View, Image, TextInput, TouchableOpacity } from 'react-native';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -15,7 +15,8 @@ import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
 import { HomeStyles } from '../../styles/homestyle/homestyle';
 import { Assets } from '../../styles';
 import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
-import { tr } from 'rn-emoji-keyboard';
+
+
 
 const getInterpolation = (value, startOut, endOut, startIn = 0, endIn = 100) => {
   'worklet';
