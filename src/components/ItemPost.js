@@ -193,7 +193,7 @@ export default ItemPost = props => {
       </TouchableWithoutFeedback>
       {/* image */}
       {item?.images && item?.images.length > 0 && (
-        <GridImage arrImages={item.images} />
+        <GridImage arrImages={item.images} arrVideos={item.videos} />
       )}
       {/* interact */}
       <View style={itemPostStyle.interactContainer}>
