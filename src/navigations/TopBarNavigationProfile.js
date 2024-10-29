@@ -11,7 +11,9 @@ const TopBarNavigationProfile = props => {
   const {scrollHandler, user_id_view} = props;
   const {t} = useTranslation();
   return (
-    <Tab.Navigator screenOptions={topBarOptions}>
+    <Tab.Navigator
+      screenOptions={topBarOptions}
+      style={{flex: 1, paddingHorizontal: 10}}>
       <Tab.Screen
         name={t('profileScreen.information')}
         children={() => (

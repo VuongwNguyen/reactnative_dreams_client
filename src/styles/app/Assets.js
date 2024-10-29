@@ -5,6 +5,7 @@
 const uriIcons = '../../../assets/icons/';
 export const Assets = {
   icons: {
+    followed:require(uriIcons + 'check-primary.png'),
     editProfile: require(uriIcons + 'edit-primary.png'),
     delete: require(uriIcons + 'delete.png'),
     hashTag: require(uriIcons + 'hashtags.png'),

@@ -10,8 +10,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
 import AxiosInstance from '../configs/axiosInstance';
-import { useTranslation } from 'react-i18next';
-import { MenuItemPost } from './MenuItemPost';
+import {useTranslation} from 'react-i18next';
+import {MenuItemPost} from './MenuItemPost';
 dayjs.extend(relativeTime);
 const customLocale = {
   ...dayjs.Ls.vi,
@@ -36,17 +36,21 @@ const customLocale = {
 // Sử dụng locale tùy chỉnh
 dayjs.locale(customLocale);
 
+export const ItemSeparator = () => (
+  <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
+);
+
 export default ItemPost = props => {
-  const {item, setItemClickId} = props;  
+  const {item, setItemClickId} = props;
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [isShowMore, setIsShowMore] = useState(false);
 
   const toggleLike = async () => {
     await AxiosInstance().post('/post/like-post', {
       post_id: item._id,
-    })
+    });
     setLiked(!liked);
     if (liked) {
       setCountLike(countLike - 1);
@@ -55,7 +59,7 @@ export default ItemPost = props => {
     }
   };
 
-  const handleItemMenuClick = (key) => {
+  const handleItemMenuClick = key => {
     switch (key) {
       case 'report':
         console.log('report');
@@ -74,7 +78,6 @@ export default ItemPost = props => {
         break;
     }
   };
-
 
   const navigation = useNavigation();
   return (
@@ -100,7 +103,9 @@ export default ItemPost = props => {
           <Text style={Typography.postName}>{item?.author?.fullname}</Text>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item?.createdAt).locale(t('itemPost.timeStatus')).fromNow()}
+              {dayjs(item?.createdAt)
+                .locale(t('itemPost.timeStatus'))
+                .fromNow()}
             </Text>
             {item?.privacy_status == 'public' && (
               <View
@@ -122,7 +127,9 @@ export default ItemPost = props => {
           </View>
         </View>
         {/* more */}
-        <TouchableOpacity onPress={() => setIsShowMore(!isShowMore)} style={itemPostStyle.headerMore}>
+        <TouchableOpacity
+          onPress={() => setIsShowMore(!isShowMore)}
+          style={itemPostStyle.headerMore}>
           <Image
             source={Assets.icons.more}
             style={itemPostStyle.headerMoreIcon}
@@ -132,10 +139,12 @@ export default ItemPost = props => {
       {/* content */}
       <TouchableWithoutFeedback
         style={itemPostStyle.content}
-        onPress={() =>{          
-          navigation.navigate(stackName.postDetail.name, {post_id: item._id, setItemClickId});
-        }
-        }>
+        onPress={() => {
+          navigation.navigate(stackName.postDetail.name, {
+            post_id: item._id,
+            setItemClickId,
+          });
+        }}>
         {/* title */}
         {!!item?.title && (
           <Text numberOfLines={2} style={Typography.postTitle}>
@@ -221,7 +230,7 @@ export default ItemPost = props => {
         </TouchableOpacity>
       </View>
       {/* header more modal */}
-      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick}/>}
+      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick} />}
     </View>
   );
 };

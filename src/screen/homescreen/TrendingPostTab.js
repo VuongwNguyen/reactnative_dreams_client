@@ -7,7 +7,7 @@ import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../sto
 import { Colors } from '../../styles';
 import { resetPostCreated } from '../../store/slices';
 
-const TrendingPostTab = (props) => {
+const TrendingPostTab = props => {
   const { scrollHandler } = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
