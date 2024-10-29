@@ -10,25 +10,26 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, useMemo, useEffect} from 'react';
-import {Dropdown} from 'react-native-element-dropdown';
-import {MultiSelect} from 'react-native-element-dropdown';
-import {useTranslation} from 'react-i18next';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Dropdown } from 'react-native-element-dropdown';
+import { MultiSelect } from 'react-native-element-dropdown';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../../components/Header';
-import {newPostStyle} from '../../styles/newpost/NewPostStyle';
-import {Assets, Colors} from '../../styles';
+import { newPostStyle } from '../../styles/newpost/NewPostStyle';
+import { Assets, Colors } from '../../styles';
 import useImagePicker from './ImagePickerPost';
-import {stackName} from '../../navigations/screens';
-import {APICreatePost} from '../../store/api/PostAPI';
-import {APIGetFollowing} from '../../store/api/FollowAPI';
+import { stackName } from '../../navigations/screens';
+import { APICreatePost } from '../../store/api/PostAPI';
+import { APIGetFollowing } from '../../store/api/FollowAPI';
+import { setPostCreated } from '../../store/slices';
 
 const NewPostScreen = props => {
-  const {navigation} = props;
-  const {t} = useTranslation();
+  const { navigation } = props;
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+  const { userBasicInfData } = useSelector(state => state.userBasicInf);
   const {
     images,
     videos,
@@ -40,8 +41,8 @@ const NewPostScreen = props => {
   } = useImagePicker();
 
   const pricvacyData = [
-    {label: 'Public', value: 'public'},
-    {label: 'Private', value: 'private'},
+    { label: 'Public', value: 'public' },
+    { label: 'Private', value: 'private' },
   ];
   const itemSelected = [...images, ...videos];
 
@@ -85,7 +86,7 @@ const NewPostScreen = props => {
                 style={newPostStyle.icPlay}
               />
             )}
-            <Image source={{uri: item?.uri}} style={newPostStyle.imgPost} />
+            <Image source={{ uri: item?.uri }} style={newPostStyle.imgPost} />
             <TouchableOpacity
               style={newPostStyle.removeIcon}
               onPress={() =>
@@ -146,6 +147,7 @@ const NewPostScreen = props => {
       .unwrap()
       .then(res => {
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+        dispatch(setPostCreated())
         navigation.navigate(stackName.bottomTab.name);
       })
       .catch(err => {
@@ -180,8 +182,8 @@ const NewPostScreen = props => {
     return (
       <View style={newPostStyle.item} key={item.id}>
         <Image
-          source={{uri: item?.avt}}
-          style={{width: 24, height: 24, borderRadius: 12}}
+          source={{ uri: item?.avt }}
+          style={{ width: 24, height: 24, borderRadius: 12 }}
         />
         <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
       </View>
@@ -223,7 +225,7 @@ const NewPostScreen = props => {
               }}>
               <Image
                 style={newPostStyle.avt}
-                source={{uri: userBasicInfData?.avatar}}
+                source={{ uri: userBasicInfData?.avatar }}
               />
             </TouchableOpacity>
 
@@ -249,7 +251,7 @@ const NewPostScreen = props => {
                         ? Assets.icons.public
                         : Assets.icons.privacy
                     }
-                    style={{height: 20, width: 20, marginRight: 5}}
+                    style={{ height: 20, width: 20, marginRight: 5 }}
                   />
                 )}
                 style={newPostStyle.privacyDropdown}
@@ -352,7 +354,7 @@ const NewPostScreen = props => {
               renderLeftIcon={() => (
                 <Image
                   source={Assets.icons.tagUser}
-                  style={{marginRight: 10}}
+                  style={{ marginRight: 10 }}
                 />
               )}
               renderItem={renderItem}
@@ -362,15 +364,15 @@ const NewPostScreen = props => {
                   key={item.id}>
                   <View style={newPostStyle.selectedStyle}>
                     <Image
-                      source={{uri: item?.avt}}
-                      style={{width: 24, height: 24, borderRadius: 12}}
+                      source={{ uri: item?.avt }}
+                      style={{ width: 24, height: 24, borderRadius: 12 }}
                     />
                     <Text style={newPostStyle.textSelectedStyle}>
                       {item.fullname}
                     </Text>
                     <Image
                       source={Assets.icons.delete}
-                      style={{width: 16, height: 16}}
+                      style={{ width: 16, height: 16 }}
                     />
                   </View>
                 </TouchableOpacity>
@@ -432,7 +434,7 @@ const NewPostScreen = props => {
                       <Text style={newPostStyle.textSelectedStyle}>{item}</Text>
                       <Image
                         source={Assets.icons.delete}
-                        style={{width: 16, height: 16}}
+                        style={{ width: 16, height: 16 }}
                       />
                     </TouchableOpacity>
                   );
