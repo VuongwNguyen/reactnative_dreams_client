@@ -15,8 +15,8 @@ import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
 import { HomeStyles } from '../../styles/homestyle/homestyle';
 import { Assets } from '../../styles';
 import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
-import { tr } from 'rn-emoji-keyboard';
-import { useFocusEffect } from '@react-navigation/native';
+
+
 
 const getInterpolation = (value, startOut, endOut, startIn = 0, endIn = 100) => {
   'worklet';

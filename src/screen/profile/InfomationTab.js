@@ -6,34 +6,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import {InfomationTabStyle} from '../../styles/profileStyle/InformationTabStyle';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { InfomationTabStyle } from '../../styles/profileStyle/InformationTabStyle';
 import Animated from 'react-native-reanimated';
-import {APIGetInfList} from '../../store/api/InfAPI';
-import {Assets} from '../../styles';
+import { APIGetInfList } from '../../store/api/InfAPI';
+import { Assets } from '../../styles';
 
 const InfomationTab = props => {
-  const {scrollHandler, user_id_view} = props;
+  const { scrollHandler, user_id_view } = props;
   const dispatch = useDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const [infAPI, setInfAPI] = useState('');
   const [infData, setInfData] = useState('');
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const infUI = [
-    {key: 'gender', title: t('profileScreen.infomationTab.gender')},
-    {key: 'dob', title: t('profileScreen.infomationTab.dob')},
-    {key: 'natl', title: t('profileScreen.infomationTab.natl')},
-    {key: 'htown', title: t('profileScreen.infomationTab.htown')},
-    {key: 'zone', title: t('profileScreen.infomationTab.zone')},
-    {key: 'job', title: t('profileScreen.infomationTab.job')},
-    {key: 'edu', title: t('profileScreen.infomationTab.edu')},
-    {key: 'zodiac', title: t('profileScreen.infomationTab.zodiac')},
-    {key: 'hobby', title: t('profileScreen.infomationTab.hobby')},
-    {key: 'rlts', title: t('profileScreen.infomationTab.rlts')},
+    { key: 'gender', title: t('profileScreen.infomationTab.gender') },
+    { key: 'dob', title: t('profileScreen.infomationTab.dob') },
+    { key: 'natl', title: t('profileScreen.infomationTab.natl') },
+    { key: 'htown', title: t('profileScreen.infomationTab.htown') },
+    { key: 'zone', title: t('profileScreen.infomationTab.zone') },
+    { key: 'job', title: t('profileScreen.infomationTab.job') },
+    { key: 'edu', title: t('profileScreen.infomationTab.edu') },
+    { key: 'zodiac', title: t('profileScreen.infomationTab.zodiac') },
+    { key: 'hobby', title: t('profileScreen.infomationTab.hobby') },
+    { key: 'rlts', title: t('profileScreen.infomationTab.rlts') },
   ];
 
   useFocusEffect(
@@ -62,7 +64,7 @@ const InfomationTab = props => {
     }
   }, [infAPI]);
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     if (!item.value) return null;
     if (item.privacy_status == 'private') return null;
     return (
