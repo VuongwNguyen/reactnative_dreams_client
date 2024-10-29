@@ -38,6 +38,7 @@ export const SocketProvider = ({children}) => {
     });
 
     return () => {
+      console.log('unregisted');
       socket.off('update-room');
       socket.off('user-online');
       socket.off('user-disconnect');

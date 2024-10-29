@@ -63,7 +63,7 @@ const MessageScreen = props => {
         />
       );
     },
-    [setReplied],
+    [setReplied, messages],
   );
 
   const navigation = useNavigation();
@@ -135,9 +135,7 @@ const MessageScreen = props => {
 
     return () => {
       socket.off('message');
-      socket.off('user-disconnect');
       socket.off('participant-status');
-      socket.off('user-online');
     };
   }, [socket]);
 
@@ -160,7 +158,6 @@ const MessageScreen = props => {
   };
 
   const onEndReached = useCallback(() => {
-    console.log(page.next, page.current, page.max);
     if (page.next && page.current <= page.max) {
       dispatch(
         fetchMessages({
@@ -173,7 +170,7 @@ const MessageScreen = props => {
     }
   }, [page, count, room, dispatch]);
 
-  const onLoadMessages = useCallback(throttle(onEndReached, 300), [
+  const onLoadMessages = useCallback(throttle(onEndReached, 500), [
     onEndReached,
   ]);
 

@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {PermissionsAndroid, StatusBar} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
@@ -11,14 +11,12 @@ import {persistor, store} from './src/store';
 
 export default function App() {
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      SplashScreen.hide();
-    }, 2000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    SplashScreen.hide();
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
   }, []);
+
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
