@@ -33,7 +33,7 @@ const TabChatScreen = () => {
               item.message
                 ? `${item.message.author.fullname}: ${
                     item.message.images.length > 0
-                      ? `đã gửi ${image.message.length} ảnh`
+                      ? `đã gửi ${item.message.images.length} ảnh`
                       : item.message.content
                   }`
                 : 'Chưa có tin nhắn nào'

@@ -60,6 +60,7 @@ export const Assets = {
     public: require(uriIcons + 'public.png'),
     private: require(uriIcons + 'private.png'),
     add: require(uriIcons + 'add.png'),
+    group: require(uriIcons + 'group.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),

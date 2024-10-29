@@ -1,19 +1,13 @@
-function throttle(func, limit) {
-  let lastFunc;
-  let lastRan;
-  return function (...args) {
-    const context = this;
-    if (!lastRan) {
-      func.apply(context, args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(function () {
-        if (Date.now() - lastRan >= limit) {
-          func.apply(context, args);
-          lastRan = Date.now();
-        }
-      }, limit - (Date.now() - lastRan));
+function throttle(func, delay) {
+  let timerFlag = null;
+  return (...args) => {
+    if (timerFlag === null) {
+      // If there is no timer currently running
+      func(...args); // Execute the main function
+      timerFlag = setTimeout(() => {
+        // Set a timer to clear the timerFlag after the specified delay
+        timerFlag = null; // Clear the timerFlag to allow the main function to be executed again
+      }, delay);
     }
   };
 }

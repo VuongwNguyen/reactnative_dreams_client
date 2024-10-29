@@ -1,15 +1,18 @@
 import {
   ActivityIndicator,
+  BackHandler,
+  Dimensions,
   FlatList,
   Image,
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import {Loading, Message} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
@@ -19,6 +22,10 @@ import {fetchGroup, fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
 import {newMessage, reset} from '../../store/slices';
 import {parseJwt} from '../../utils/token';
 import throttle from '../../utils/throttle';
+import {launchImageLibrary} from 'react-native-image-picker';
+import AxiosInstance from '../../configs/axiosInstance';
+
+const {width} = Dimensions.get('window');
 
 const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
@@ -26,9 +33,12 @@ const MessageScreen = props => {
   const [mess, setMess] = useState('');
   const {socket} = useSocket();
   const dispatch = useDispatch();
+  const [showMembers, setShowMembers] = useState(false);
   const {room, initial, messages, page, count, loading} = useSelector(
     state => state.chatMessage,
   );
+  const [images, setImages] = useState([]);
+  const [uploadStatus, setUploadStatus] = useState(false);
   const {token} = useSelector(state => state.account);
   const [replied, setReplied] = useState(null);
 
@@ -73,7 +83,7 @@ const MessageScreen = props => {
             }),
           );
         })
-        .catch(err => console.log('fetch group failed'));
+        .catch(err => console.log('[MessageScreen] fetch group failed: ', err));
     } else {
       dispatch(fetchRoom({participant: participant}))
         .unwrap()
@@ -131,6 +141,18 @@ const MessageScreen = props => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    const backhandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        socket.emit('leave-room', room?._id);
+        dispatch(reset());
+      },
+    );
+
+    return () => backhandler.remove();
+  }, [room]);
+
   const sendMessage = () => {
     socket.emit('message', {content: mess, replied_id: replied?._id}, room._id);
     setMess('');
@@ -138,6 +160,7 @@ const MessageScreen = props => {
   };
 
   const onEndReached = useCallback(() => {
+    console.log(page.next, page.current, page.max);
     if (page.next && page.current <= page.max) {
       dispatch(
         fetchMessages({
@@ -150,9 +173,11 @@ const MessageScreen = props => {
     }
   }, [page, count, room, dispatch]);
 
-  const onRefresh = useCallback(throttle(onEndReached, 300), [onEndReached]);
+  const onLoadMessages = useCallback(throttle(onEndReached, 300), [
+    onEndReached,
+  ]);
 
-  const renderImages = () => {
+  const renderImages = useCallback(() => {
     return (
       <View style={styles.wrapper}>
         {room?.members?.slice(0, 3)?.map(mem => {
@@ -170,6 +195,46 @@ const MessageScreen = props => {
         })}
       </View>
     );
+  }, [messages]);
+
+  const handleChooseImages = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 10,
+    });
+
+    if (result.didCancel) {
+      return;
+    }
+
+    setImages(result.assets);
+  };
+
+  const handleUploadImages = async () => {
+    setUploadStatus(true);
+    const data = new FormData();
+
+    images.forEach(image => {
+      data.append('images', {
+        uri: image.uri,
+        type: image.type,
+        name: image.fileName,
+      });
+    });
+
+    try {
+      const res = await AxiosInstance('multipart/form-data').post(
+        '/message/upload-images',
+        data,
+      );
+
+      socket.emit('message', {images: res.data}, room._id);
+      setUploadStatus(false);
+    } catch (e) {
+      setUploadStatus(false);
+      console.log('[MessageScreen] upload images failed: ', e);
+      ToastAndroid.show('Gửi ảnh thất bại, hãy thử lại sau', 300);
+    }
   };
 
   if (!initial) {
@@ -209,9 +274,14 @@ const MessageScreen = props => {
           <TouchableOpacity>
             <Image source={Assets.icons.video} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image source={Assets.icons.option} style={styles.icon} />
-          </TouchableOpacity>
+          {room.is_group && (
+            <TouchableOpacity
+              style={[styles.row, {gap: 2}]}
+              onPress={() => setShowMembers(true)}>
+              <Image source={Assets.icons.group} style={styles.icon} />
+              <Text>({room.members.length})</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -227,18 +297,16 @@ const MessageScreen = props => {
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
             onEndReachedThreshold={0.5}
-            onEndReached={onRefresh}
+            onEndReached={onLoadMessages}
             ListFooterComponent={() => {
-              !page.next ? (
+              return (
                 <View style={styles.center}>
-                  <Text>Hết</Text>
+                  {!page.next ? (
+                    <Text>Hết</Text>
+                  ) : (
+                    loading && <ActivityIndicator size={20} color={'black'} />
+                  )}
                 </View>
-              ) : (
-                loading && (
-                  <View style={styles.center}>
-                    <ActivityIndicator size={20} color={'black'} />
-                  </View>
-                )
               );
             }}
           />
@@ -268,7 +336,7 @@ const MessageScreen = props => {
       {/* input */}
       <View style={styles.inputArea}>
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleChooseImages}>
             <Image source={Assets.icons.attach} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -290,6 +358,79 @@ const MessageScreen = props => {
           )}
         </View>
       </View>
+
+      {/* show members */}
+      {showMembers && (
+        <View style={styles.fill}>
+          <TouchableOpacity onPress={() => setShowMembers(false)}>
+            <Text>Đóng</Text>
+          </TouchableOpacity>
+
+          {room.members.map(member => {
+            return (
+              <TouchableOpacity key={member.account_id} style={styles.row}>
+                <Image
+                  source={{uri: member.avatar}}
+                  style={{width: 50, height: 50, borderRadius: 25}}
+                />
+                <View>
+                  <Text>{member.fullname}</Text>
+                  <Text>Thành viên</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
+
+      {/* preview images */}
+      {images.length > 0 && (
+        <>
+          <View style={styles.preview}>
+            {images.map(elem => {
+              return (
+                <View style={styles.wrap} key={elem.originalPath}>
+                  <TouchableOpacity
+                    style={styles.close}
+                    onPress={() =>
+                      setImages(
+                        images.filter(
+                          item => item.originalPath !== elem.originalPath,
+                        ),
+                      )
+                    }>
+                    <Image
+                      source={Assets.icons.close}
+                      style={styles.tinyIcon}
+                    />
+                  </TouchableOpacity>
+                  <Image source={{uri: elem.uri}} style={styles.previewImage} />
+                </View>
+              );
+            })}
+          </View>
+          <View style={[styles.row, {padding: 10}]}>
+            {!uploadStatus ? (
+              <>
+                <TouchableOpacity
+                  style={[styles.button, {backgroundColor: 'gray'}]}
+                  onPress={() => setImages([])}>
+                  <Text style={styles.textButton}>hủy</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleUploadImages}>
+                  <Text style={styles.textButton}>Gửi {images.length} ảnh</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <View style={styles.center}>
+                <ActivityIndicator size={20} color={Colors.primary} />
+              </View>
+            )}
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -297,6 +438,47 @@ const MessageScreen = props => {
 export default MessageScreen;
 
 const styles = StyleSheet.create({
+  close: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 100,
+  },
+  tinyIcon: {
+    width: 15,
+    height: 15,
+  },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    paddingVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  wrap: {
+    width: width / 5,
+    height: 'auto',
+    aspectRatio: 1,
+    padding: 5,
+  },
+  previewImage: {
+    width: '100%',
+    height: '100%',
+  },
+  preview: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    flexWrap: 'wrap',
+  },
+  fill: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'white',
+    gap: 20,
+  },
   cancel: {
     position: 'absolute',
     alignSelf: 'center',

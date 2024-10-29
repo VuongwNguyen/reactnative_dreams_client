@@ -51,15 +51,17 @@ const Message = props => {
     replyPressed,
   } = props;
 
-  if (images.length > 0) {
+  const renderImages = () => {
     return (
       <View style={[styles.imageArea, isMe && styles.imageAreaR]}>
-        {Array.from({length: 5}).map((_, index) => {
+        {images.map(item => {
           return (
             <Image
-              key={index}
+              key={item.public_id}
               source={{
-                uri: 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
+                uri: item.url
+                  ? item.url
+                  : 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
               }}
               style={styles.img}
             />
@@ -67,7 +69,7 @@ const Message = props => {
         })}
       </View>
     );
-  }
+  };
 
   return (
     <View style={[styles.container, isMe && styles.containerR]}>
@@ -87,24 +89,30 @@ const Message = props => {
         </View>
       )}
       {/* messages */}
-      <TouchableOpacity
-        style={[styles.wrapper, isMe && styles.wrapperR]}
-        onLongPress={replyPressed}>
-        {!!replyMessage && (
-          <View style={styles.originArea}>
-            <View
-              style={[styles.divider, isMe && {backgroundColor: '#E5E5E5'}]}
-            />
-            <View>
-              <Text style={styles.author}>
-                {replyMessage?.author?.fullname}
-              </Text>
-              <Text style={styles.origin}>{replyMessage?.content}</Text>
+      {images?.length > 0 ? (
+        renderImages()
+      ) : (
+        <TouchableOpacity
+          style={[styles.wrapper, isMe && styles.wrapperR]}
+          onLongPress={replyPressed}>
+          {!!replyMessage && (
+            <View style={styles.originArea}>
+              <View
+                style={[styles.divider, isMe && {backgroundColor: '#E5E5E5'}]}
+              />
+              <View>
+                <Text style={styles.author}>
+                  {replyMessage?.author?.fullname}
+                </Text>
+                <Text style={styles.origin}>{replyMessage?.content}</Text>
+              </View>
             </View>
-          </View>
-        )}
-        <Text style={[styles.message, isMe && styles.messageR]}>{message}</Text>
-      </TouchableOpacity>
+          )}
+          <Text style={[styles.message, isMe && styles.messageR]}>
+            {message}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       {/* time stamp */}
       {!isNext && time && (
