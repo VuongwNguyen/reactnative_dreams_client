@@ -231,7 +231,7 @@ const NewPostScreen = props => {
 
             <View style={newPostStyle.inf}>
               <Text style={newPostStyle.userName}>
-                {userBasicInfData?.full_name}
+                {userBasicInfData?.fullname}
               </Text>
               <Dropdown
                 data={pricvacyData}

@@ -4,6 +4,9 @@ import {Typography} from '../app/Typographys';
 import {Fonts} from '../app/Fonts';
 
 export const ProfileStyle = StyleSheet.create({
+  infItem: {
+    alignItems: 'center',
+  },
   editBtn: {
     position: 'absolute',
     top: 10,
@@ -29,10 +32,9 @@ export const ProfileStyle = StyleSheet.create({
     alignItems: 'center',
   },
   infoContainer: {
-    // marginTop:10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   grouptButtonContainer: {
     flexDirection: 'row',

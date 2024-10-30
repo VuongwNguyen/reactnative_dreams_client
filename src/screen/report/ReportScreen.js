@@ -8,6 +8,7 @@ import AppButton from '../../components/Button';
 
 const ReportScreen = () => {
   const [selectedItem, setSelectedItem] = useState('');
+  const [desc, setDesc] = useState('');
   const reasonArr = [
     'Nội dung người lớn',
     'Gian lận, lừa đảo ',
@@ -28,7 +29,8 @@ const ReportScreen = () => {
                 item === selectedItem
                   ? reportStyle.itemSelected
                   : reportStyle.itemUnselected,
-              ]}>
+              ]}
+              key={index}>
               <Text
                 style={
                   item === selectedItem
@@ -56,6 +58,8 @@ const ReportScreen = () => {
         <View style={reportStyle.descContainer}>
           <Text style={reportStyle.titleText}>Hãy mô tả thêm về báo cáo </Text>
           <TextInput
+            value={desc}
+            onChangeText={(text)=> setDesc(text)}
             style={reportStyle.input}
             placeholder="Description"
             placeholderTextColor={Colors.secondary}

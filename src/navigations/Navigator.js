@@ -11,15 +11,15 @@ const Stack = createStackNavigator();
 export function Navigator() {
   const {authenticated} = useSelector(state => state.account);
 
-  // if (!authenticated) {
-  //   return <AuthNavigator />;
-  // }
+  if (!authenticated) {
+    return <AuthNavigator />;
+  }
 
   return (
     <SocketProvider>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={stackName.report.name}>
+        initialRouteName={stackName.bottomTab.name}>
         <Stack.Screen
           name={stackName.bottomTab.name}
           component={stackName.bottomTab.component}
@@ -44,18 +44,12 @@ export function Navigator() {
           name={stackName.changeNewPassword.name}
           component={stackName.changeNewPassword.component}
         />
-        <Stack.Screen
-          name={stackName.forgotPassword.name}
-          component={stackName.forgotPassword.component}
-        />
-        <Stack.Screen
-          name={stackName.otp.name}
-          component={stackName.otp.component}
-        />
+
         <Stack.Screen
           name={stackName.newPost.name}
           component={stackName.newPost.component}
         />
+
         <Stack.Screen
           name={stackName.search.name}
           component={stackName.search.component}
