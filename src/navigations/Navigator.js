@@ -11,15 +11,15 @@ const Stack = createStackNavigator();
 export function Navigator() {
   const {authenticated} = useSelector(state => state.account);
 
-  if (!authenticated) {
-    return <AuthNavigator />;
-  }
+  // if (!authenticated) {
+  //   return <AuthNavigator />;
+  // }
 
   return (
     <SocketProvider>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={stackName.bottomTab.name}>
+        initialRouteName={stackName.report.name}>
         <Stack.Screen
           name={stackName.bottomTab.name}
           component={stackName.bottomTab.component}
@@ -93,6 +93,11 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.camera.name}
           component={stackName.camera.component}
+        />
+
+        <Stack.Screen
+          name={stackName.report.name}
+          component={stackName.report.component}
         />
       </Stack.Navigator>
       <LogoutDialog ref={logoutRef} />
