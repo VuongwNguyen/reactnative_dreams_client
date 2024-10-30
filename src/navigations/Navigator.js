@@ -44,18 +44,12 @@ export function Navigator() {
           name={stackName.changeNewPassword.name}
           component={stackName.changeNewPassword.component}
         />
-        <Stack.Screen
-          name={stackName.forgotPassword.name}
-          component={stackName.forgotPassword.component}
-        />
-        <Stack.Screen
-          name={stackName.otp.name}
-          component={stackName.otp.component}
-        />
+
         <Stack.Screen
           name={stackName.newPost.name}
           component={stackName.newPost.component}
         />
+
         <Stack.Screen
           name={stackName.search.name}
           component={stackName.search.component}
@@ -93,6 +87,11 @@ export function Navigator() {
         <Stack.Screen
           name={stackName.camera.name}
           component={stackName.camera.component}
+        />
+
+        <Stack.Screen
+          name={stackName.report.name}
+          component={stackName.report.component}
         />
       </Stack.Navigator>
       <LogoutDialog ref={logoutRef} />

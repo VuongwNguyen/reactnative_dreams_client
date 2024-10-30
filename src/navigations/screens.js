@@ -22,6 +22,7 @@ import CreateGroupChatScreen from '../screen/creategroupchat/CreateGroupChatScre
 import MessageScreen from '../screen/chatscreen/MessageScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
+import ReportScreen from '../screen/report/ReportScreen';
 
 
 export const stackName = {
@@ -68,6 +69,10 @@ export const stackName = {
   camera: {
     name: 'camera',
     component: CameraScreen,
+  },
+  report: {
+    name: 'report',
+    component: ReportScreen,
   },
 };
 

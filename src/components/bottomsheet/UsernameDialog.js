@@ -55,6 +55,7 @@ const UsernameDialog = forwardRef((props, ref) => {
       .then(() => {
         ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
         setVisible(false);
+        dispatch(APIGetUserBasicInf());
       })
       .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
 
