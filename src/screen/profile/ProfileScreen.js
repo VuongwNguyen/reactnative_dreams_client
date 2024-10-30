@@ -17,6 +17,7 @@ import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
 import {APIGetInf} from '../../store/api/InfAPI';
 import {useFocusEffect} from '@react-navigation/native';
 import {Assets} from '../../styles';
+import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -113,14 +114,19 @@ const ProfileScreen = props => {
         <AppHeader title={t('profileScreen.profile')} />
         {coreInf.isSelf ? (
           <TouchableOpacity
-            style={ProfileStyle.editBtn}
+            style={ProfileStyle.rightIconBtn}
             onPress={() => navigation.navigate(stackName.accountDetail.name)}>
             <Image source={Assets.icons.editProfile} />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={ProfileStyle.editBtn}
-            onPress={() => navigation.navigate(stackName.accountDetail.name)}>
+            style={ProfileStyle.rightIconBtn}
+            onPress={() =>
+              navigation.navigate(stackName.report.name, {
+                type: 'user',
+                user_id: coreInf._id,
+              })
+            }>
             <Image source={Assets.icons.danger} />
           </TouchableOpacity>
         )}

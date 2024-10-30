@@ -7,7 +7,7 @@ export const ProfileStyle = StyleSheet.create({
   infItem: {
     alignItems: 'center',
   },
-  editBtn: {
+  rightIconBtn: {
     position: 'absolute',
     top: 10,
     right: 10,
