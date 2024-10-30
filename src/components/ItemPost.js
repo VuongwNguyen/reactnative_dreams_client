@@ -13,7 +13,6 @@ import AxiosInstance from '../configs/axiosInstance';
 import { useTranslation } from 'react-i18next';
 import { MenuItemPost } from './MenuItemPost';
 import { useDispatch } from 'react-redux';
-import { APIFollowingPost } from '../store/api/PostAPI';
 import { APIToggleFollow } from '../store/api/FollowAPI';
 
 dayjs.extend(relativeTime);
@@ -40,15 +39,12 @@ const customLocale = {
 // Sử dụng locale tùy chỉnh
 dayjs.locale(customLocale);
 
+export const ItemSeparator = () => (
+  <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
+);
+
 export default React.memo(ItemPost = props => {
   const {item, setItemClickId} = props;  
-// export const ItemSeparator = () => (
-//   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
-// );
-
-// export default ItemPost = props => {
-//   const navigation = useNavigation();
-//   const {item, setItemClickId} = props;
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
   const {t} = useTranslation();
