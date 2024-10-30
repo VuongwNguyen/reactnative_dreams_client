@@ -1,10 +1,9 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import {StyleSheet, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import Animated from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import ItemPost from '../../components/ItemPost';
 import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../store/api/PostAPI';
-import { Colors } from '../../styles';
 
 const TrendingPostTab = (props) => {
   const { scrollHandler } = props;
@@ -13,22 +12,19 @@ const TrendingPostTab = (props) => {
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
-    setLoading(true);
     dispatch(APIGetTrendingPost(currentPage))
       .unwrap()
       .then(res => {
         const { list } = res;
         const newData = [...dataPosts, ...list];
         setDataPosts(newData);
-        setLoading(false);
       })
       .catch(err => {
         console.log(err);
-      });
+      });            
   }, [currentPage]);
 
   const viewabilityConfigCallbackPairs = useRef([
@@ -66,7 +62,7 @@ const TrendingPostTab = (props) => {
       onScroll={scrollHandler}
       data={dataPosts}
       renderItem={({ item }) => <ItemPost item={item} />}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item, index) => item._id}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
       showsVerticalScrollIndicator={false}

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
@@ -36,7 +36,7 @@ const customLocale = {
 // Sử dụng locale tùy chỉnh
 dayjs.locale(customLocale);
 
-export default ItemPost = props => {
+export default React.memo(ItemPost = props => {
   const {item, setItemClickId} = props;  
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
@@ -74,7 +74,7 @@ export default ItemPost = props => {
         break;
     }
   };
-
+  
 
   const navigation = useNavigation();
   return (
@@ -192,7 +192,7 @@ export default ItemPost = props => {
         </View>
       </TouchableWithoutFeedback>
       {/* image */}
-      {item?.images && item?.images.length > 0 && (
+      {((item?.images && item?.images.length > 0) || (item?.videos && item?.videos.length > 0)) && (
         <GridImage arrImages={item.images} arrVideos={item.videos} />
       )}
       {/* interact */}
@@ -224,4 +224,4 @@ export default ItemPost = props => {
       {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick}/>}
     </View>
   );
-};
+});

@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {GridImageStyle} from '../styles/components/GridImage/GridImageStyle';
 import ViewGallery from './ViewGrallery';
-import Video from 'react-native-video';
+import ThumbnailVideo from './ThumbnailVideo';
 
 const GridImage = props => {
   const {arrImages = [], arrVideos = []} = props;
   const [visible, setIsVisible] = useState(false);
+  const [targetIndex, setTargetIndex] = useState(0);
 
   const openImage = index => {
+    setTargetIndex(index);  
     setIsVisible(true);
   };
 
@@ -16,24 +18,41 @@ const GridImage = props => {
   const images = arrImages.map(img => ({uri: img.url, type: 'image'}));
   const videos = arrVideos.map(video => ({uri: video.url, type: 'video'}));
   let galleries = images.concat(videos);
-  
+
+  // const RenderVideo = ({item, style}) => {
+  //   const [loading, setLoading] = useState(true);
+  //   return (
+  //     <View style={style}>
+  //       <Video 
+  //         style={{flex:1}} 
+  //         paused={false} 
+  //         controls={false} 
+  //         onLoad={() => setLoading(false)}
+  //         source={{uri: item.uri}}>
+  //       </Video>
+  //       {loading && <ActivityIndicator style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}} size="small" color="#0000ff" />}
+  //     </View>
+  //   )
+  // }
+
   const ImageORVideo = ({item}) => {
     if (item.type === 'image') {
       return <Image source={{uri: item.uri}} style={GridImageStyle.gridImage} />;
     } else if (item.type === 'video') {
-      return <Video style={{flex:1}} paused={false} controls={false} source={{uri: item.uri}}></Video>;
+      console.log('thumbnail', item.uri);
+      return <ThumbnailVideo videoUri={item.uri} style={GridImageStyle.gridImage} styleIcon={GridImageStyle.gridPlayIcon}/>
     }
   }
 
   const renderTwoImages = () => {
+    console.log('2')
     return (
-      <View style={GridImageStyle.rowContainer}>
+      <View style={GridImageStyle.rowContainer}>    
         {galleries.slice(0, 2).map((item, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => openImage(index)}
-            style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>
-              {console.log('item', item)}
+            style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>              
               <ImageORVideo item={item} />
           </TouchableOpacity>
         ))}
@@ -88,7 +107,7 @@ const GridImage = props => {
           {
             galleries[0].type === 'image' 
             ? <Image source={{uri: galleries[0].uri}} style={GridImageStyle.mainImage} />
-            :<Video style={GridImageStyle.mainImage} paused={false} controls={false} source={{uri: galleries[0].uri}}></Video>
+            : <ThumbnailVideo videoUri={galleries[0].uri} style={GridImageStyle.mainImage} styleIcon={GridImageStyle.mainPlayIcon}/>
           }
         </TouchableOpacity>
       ) : galleries.length === 2 ? (
@@ -98,7 +117,7 @@ const GridImage = props => {
       ) : (
         <View style={GridImageStyle.gridContainer}>{renderImageGrid()}</View>
       )}
-      <ViewGallery data={galleries} modalVisible={visible} setModalVisible={setIsVisible}/>
+      <ViewGallery data={galleries} modalVisible={visible} setModalVisible={setIsVisible} targetIndex={targetIndex}/>
     </View>
   );
 };
