@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { APIGetPostsTrending } from '../api/PostAPI';
 
 export const postTrendingSlice = createSlice({
@@ -6,6 +6,7 @@ export const postTrendingSlice = createSlice({
   initialState: {
     data: {},
     loading: true,
+    isPostCreated: false,
   },
   reducers: {
     setData: (state, action) => {
@@ -14,6 +15,12 @@ export const postTrendingSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setPostCreated: (state) => {
+      state.isPostCreated = true; // Đặt lại trạng thái khi đã tạo bài viết
+    },
+    resetPostCreated: (state) => {
+      state.isPostCreated = false; // Đặt lại trạng thái khi đã xử lý
+    }
   },
   extraReducers: builder => {
     builder.addCase(APIGetPostsTrending.fulfilled, (state, action) => {
@@ -22,3 +29,5 @@ export const postTrendingSlice = createSlice({
     });
   },
 });
+
+export const { setPostCreated, resetPostCreated } = postTrendingSlice.actions;

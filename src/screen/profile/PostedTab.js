@@ -1,6 +1,6 @@
-import { ActivityIndicator, FlatList, ToastAndroid, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, ToastAndroid, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import ItemPost from '../../components/ItemPost';
+import ItemPost, { ItemSeparator } from '../../components/ItemPost';
 import { useDispatch } from 'react-redux';
 
 import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
@@ -14,19 +14,32 @@ const PostedTab = props => {
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    dispatch(APIGetPostByUser())
+
+  const fetchPosts = () => {
+    dispatch(APIGetPostByUser({ user_id_view }))
       .unwrap()
       .then(res => {
         setDataPosts(res?.data.list);
-        // console.log(dataPosts);
         setLoading(false);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      })
+      .finally(() => {
+        setRefreshing(false);
       });
+  }
+
+  useEffect(() => {
+    fetchPosts();
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchPosts();
+  };
 
   return (
     <View style={PostedTabStyle.container}>
@@ -43,6 +56,10 @@ const PostedTab = props => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => <ItemPost item={item} />}
           keyExtractor={item => item._id}
+          ItemSeparatorComponent={() => <ItemSeparator />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       )}
     </View>

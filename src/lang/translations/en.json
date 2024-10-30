@@ -122,6 +122,7 @@
     "posts": "Posts",
     "inbox": "Inbox",
     "follow": "Follow",
+    "followed": "Followed",
     "editProfile": "Edit your profile",
     "information": "Information",
     "posted": "Posted",
@@ -138,7 +139,7 @@
       "job": "Job",
       "nick": "Nickname",
       "fullname": "Username",
-      "des":"Description"
+      "des": "Description"
     }
   },
   "homeScreen": {
@@ -288,7 +289,28 @@
     "notification": "Notifications",
     "setting": "Settings"
   },
-  "itemPost":{
-    "timeStatus":"en"
+  "itemPost": {
+    "timeStatus": "en"
+  },
+  "reportScreen": {
+    "reasonTitle": "Please state the reason you are making this report!",
+    "descTitle": "Please describe the report further",
+    "placeholder": "Description",
+    "post": {
+      "r1": "Adult content",
+      "r2": "Fraud, scam",
+      "r3": "I don't want to see this content",
+      "r4": "Negative content",
+      "r5": "False advertising",
+      "r6": "Copyright issues"
+    },
+    "user": {
+      "r1": "Impersonating someone else",
+      "r2": "Fake account",
+      "r3": "Fake name",
+      "r4": "Harassment or bullying",
+      "r5": "Other issues"
+    },
+    "submit": "submit"
   }
 }

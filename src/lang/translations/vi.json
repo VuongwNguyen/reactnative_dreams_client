@@ -128,6 +128,7 @@
     "posts": "Bài viết",
     "inbox": "Nhắn tin",
     "follow": "Theo dõi",
+    "followed": "Đã theo dõi",
     "editProfile": "Chỉnh sửa trang cá nhân",
     "information": "Thông tin",
     "posted": "Đã đăng",
@@ -306,7 +307,28 @@
     "notification": "Thông báo",
     "setting": "Cài đặt"
   },
-  "itemPost":{
-    "timeStatus":"vi"
+  "itemPost": {
+    "timeStatus": "vi"
+  },
+  "reportScreen": {
+    "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
+    "descTitle": "Please describe the report further",
+    "placeholder": "Nhập mô tả",
+    "post": {
+      "r1": "Nội dung người lớn",
+      "r2": "Gian lận, lừa đảo",
+      "r3": "Tôi không muốn xem nội dung này",
+      "r4": "Nội dung tiêu cực",
+      "r5": "Quảng cáo sai sự thật",
+      "r6": "Vấn đề bản quyền"
+    },
+    "user": {
+      "r1":"Giả mạo người khác",
+      "r2":"Tài khoản giả mạo",
+      "r3":"Tên giả mạo",
+      "r4":"Quấy rối hoặc bắt nạt",
+      "r5":"Vấn đề khác"
+    },
+    "submit": "Gửi"
   }
 }

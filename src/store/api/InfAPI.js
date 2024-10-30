@@ -64,3 +64,18 @@ export const APIUpdateInf = createAsyncThunk(
     }
   },
 );
+
+export const APIUpdateAvtUsername = createAsyncThunk(
+  'infomation/change-avatar-name',
+  async (formData, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance('multipart/form-data').post(
+        '/infomation/change-avatar-name',
+        formData,
+      );
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

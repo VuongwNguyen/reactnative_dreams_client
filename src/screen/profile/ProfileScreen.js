@@ -1,6 +1,6 @@
-import { View, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {View, Image, TouchableOpacity, Text, ToastAndroid} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -8,16 +8,16 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import { stackName } from '../../navigations/screens';
-import { ProfileStyle } from '../../styles/profileStyle/ProfileStyle';
+import {stackName} from '../../navigations/screens';
+import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
-import { useSelector } from 'react-redux';
-import { APIGetInf } from '../../store/api/InfAPI';
-import { useFocusEffect } from '@react-navigation/native';
-import { Assets } from '../../styles';
+import {APIGetInf} from '../../store/api/InfAPI';
+import {useFocusEffect} from '@react-navigation/native';
+import {Assets} from '../../styles';
+import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -34,22 +34,26 @@ const getInterpolation = (
 };
 
 const ProfileScreen = props => {
-  const { navigation, route } = props;
+  const {navigation, route} = props;
   const userViewId = route?.params?.userViewId;
-  const { userBasicInfData } = useSelector(state => state.userBasicInf);
-
-
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
+
+  const [isFollowedStatus, setIsFollowedStatus] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
   const translationY = useSharedValue(0);
+
   const scrollHandler = useAnimatedScrollHandler(e => {
     translationY.value = e.contentOffset.y;
   });
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, headerHeight == 0 ? 183 : headerHeight, 0);
+    const height = getInterpolation(
+      translationY.value,
+      headerHeight == 0 ? 183 : headerHeight,
+      0,
+    );
     const opacity = getInterpolation(translationY.value, 1, 0);
     return {
       height: height,
@@ -57,26 +61,45 @@ const ProfileScreen = props => {
     };
   });
 
-  useEffect(() => {
-    dispatch(APIGetInf(userViewId))
-      .unwrap()
-      .then(res => {
-        setCoreInf(res?.data);
-      })
-      .catch(err => {
-        console.log(err);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(APIGetInf(userViewId))
+        .unwrap()
+        .then(res => {
+          setCoreInf(res?.data);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }, [userViewId]),
+  );
 
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
-  }, []);
-
-  const InforItem = ({ title = '', subtitle = '' }) => {
+  const InforItem = ({title = '', subtitle = ''}) => {
     return (
       <View style={ProfileStyle.countItem}>
         <Text style={ProfileStyle.title}>{title}</Text>
         <Text>{subtitle}</Text>
       </View>
     );
+  };
+
+  useEffect(() => {
+    if (coreInf) setIsFollowedStatus(coreInf.isFollowed);
+  }, [coreInf.isFollowed]);
+
+  const handleFollow = () => {
+    dispatch(APIToggleFollow({following: userViewId}))
+      .unwrap()
+      .then(res => {
+        if (res.message == 'Followed successfully') {
+          setIsFollowedStatus(true);
+        } else {
+          setIsFollowedStatus(false);
+        }
+      })
+      .catch(err => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+      });
   };
   useEffect(() => {
     if (headerRef.current) {
@@ -85,59 +108,78 @@ const ProfileScreen = props => {
       });
     }
   }, [coreInf]);
-
   return (
     <View style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} />
-      <Animated.View ref={headerRef} style={headerStyle}>
-        <View style={ProfileStyle.infoContainer}>
-          {!!coreInf.avatar && (
-            <Image
-              style={ProfileStyle.avatar}
-              source={{
-                uri: coreInf?.avatar,
-              }}
-            />
-          )}
+      <View style={ProfileStyle.headerContainer}>
+        <AppHeader title={t('profileScreen.profile')} />
+        {coreInf.isSelf ? (
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(stackName.following.name);
-            }}>
-            <InforItem
-              title={coreInf?.followerCount}
-              subtitle={t('profileScreen.followers')}
-            />
+            style={ProfileStyle.rightIconBtn}
+            onPress={() => navigation.navigate(stackName.accountDetail.name)}>
+            <Image source={Assets.icons.editProfile} />
           </TouchableOpacity>
+        ) : (
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(stackName.following.name);
-            }}>
-            <InforItem
-              title={coreInf?.followingCount}
-              subtitle={t('profileScreen.following')}
-            />
+            style={ProfileStyle.rightIconBtn}
+            onPress={() =>
+              navigation.navigate(stackName.report.name, {
+                type: 'user',
+                user_id: coreInf._id,
+              })
+            }>
+            <Image source={Assets.icons.danger} />
           </TouchableOpacity>
-          <InforItem
-            title={coreInf?.postCount}
-            subtitle={t('profileScreen.posts')}
-          />
-        </View>
-        <View style={ProfileStyle.rowAlign}>
-          <Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
-          {/* <Text style={ProfileStyle.nickname}>{'(Ngộ Không)'}</Text> */}
-          <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
-
-          {!!coreInf.nickname && (
-            <Text
-              style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
-          )}
-
-        </View>
-        {!!coreInf.description && (
-          <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
         )}
+      </View>
+      <Animated.View ref={headerRef} style={headerStyle}>
+        <View style={{padding: 16}}>
+          <View style={ProfileStyle.infoContainer}>
+            {!!coreInf.avatar && (
+              <Image
+                style={ProfileStyle.avatar}
+                source={{
+                  uri: coreInf?.avatar,
+                }}
+              />
+            )}
 
-        {!!userViewId ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.following.name);
+              }}>
+              <InforItem
+                title={coreInf?.followerCount}
+                subtitle={t('profileScreen.followers')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(stackName.following.name);
+              }}>
+              <InforItem
+                title={coreInf?.followingCount}
+                subtitle={t('profileScreen.following')}
+              />
+            </TouchableOpacity>
+            <InforItem
+              title={coreInf?.postCount}
+              subtitle={t('profileScreen.posts')}
+            />
+          </View>
+          <View style={ProfileStyle.rowAlign}>
+            <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
+
+            {!!coreInf.nickname && (
+              <Text
+                style={ProfileStyle.nickname}>{`(${coreInf?.nickname})`}</Text>
+            )}
+          </View>
+          {!!coreInf.description && (
+            <Text style={ProfileStyle.subtitle}>{coreInf?.description}</Text>
+          )}
+        </View>
+
+        {!coreInf.isSelf && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
@@ -145,24 +187,30 @@ const ProfileScreen = props => {
                 {t('profileScreen.inbox')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[ProfileStyle.buttonContainer, ProfileStyle.followButton]}>
-              <Text style={ProfileStyle.activeTabText}>
-                {t('profileScreen.follow')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={ProfileStyle.editBtnContainer}>
-            <TouchableOpacity
-              style={ProfileStyle.btnEditProfile}
-              onPress={() => {
-                navigation.navigate(stackName.accountDetail.name);
-              }}>
-              <Text style={ProfileStyle.editBtnLabel}>
-                {t('profileScreen.editProfile')}
-              </Text>
-            </TouchableOpacity>
+            {isFollowedStatus ? (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followedButton,
+                ]}>
+                <Image source={Assets.icons.followed} />
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.followed')}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => handleFollow()}
+                style={[
+                  ProfileStyle.buttonContainer,
+                  ProfileStyle.followButton,
+                ]}>
+                <Text style={ProfileStyle.activeTabText}>
+                  {t('profileScreen.follow')}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </Animated.View>

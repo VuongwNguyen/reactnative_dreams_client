@@ -15,6 +15,7 @@ import { MenuItemPost } from './MenuItemPost';
 import { useDispatch } from 'react-redux';
 import { APIFollowingPost } from '../store/api/PostAPI';
 import { APIToggleFollow } from '../store/api/FollowAPI';
+
 dayjs.extend(relativeTime);
 const customLocale = {
   ...dayjs.Ls.vi,
@@ -41,9 +42,16 @@ dayjs.locale(customLocale);
 
 export default React.memo(ItemPost = props => {
   const {item, setItemClickId} = props;  
+// export const ItemSeparator = () => (
+//   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
+// );
+
+// export default ItemPost = props => {
+//   const navigation = useNavigation();
+//   const {item, setItemClickId} = props;
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [isShowMore, setIsShowMore] = useState(false);
   const dispatch = useDispatch();
   const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
@@ -51,7 +59,7 @@ export default React.memo(ItemPost = props => {
   const toggleLike = async () => {
     await AxiosInstance().post('/post/like-post', {
       post_id: item._id,
-    })
+    });
     setLiked(!liked);
     if (liked) {
       setCountLike(countLike - 1);
@@ -60,10 +68,14 @@ export default React.memo(ItemPost = props => {
     }
   };
 
-  const handleItemMenuClick = (key) => {
+  const handleItemMenuClick = key => {
     switch (key) {
       case 'report':
-        console.log('report');
+        navigation.navigate(stackName.report.name, {
+          post_id: item._id,
+          type: 'post',
+        });
+        setIsShowMore(false);
         break;
       case 'edit':
         console.log('edit');
@@ -117,7 +129,9 @@ export default React.memo(ItemPost = props => {
           </View>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item?.createdAt).locale(t('itemPost.timeStatus')).fromNow()}
+              {dayjs(item?.createdAt)
+                .locale(t('itemPost.timeStatus'))
+                .fromNow()}
             </Text>
             {item?.privacy_status == 'public' && (
               <View
@@ -139,7 +153,9 @@ export default React.memo(ItemPost = props => {
           </View>
         </View>
         {/* more */}
-        <TouchableOpacity onPress={() => setIsShowMore(!isShowMore)} style={itemPostStyle.headerMore}>
+        <TouchableOpacity
+          onPress={() => setIsShowMore(!isShowMore)}
+          style={itemPostStyle.headerMore}>
           <Image
             source={Assets.icons.more}
             style={itemPostStyle.headerMoreIcon}
@@ -149,10 +165,12 @@ export default React.memo(ItemPost = props => {
       {/* content */}
       <TouchableWithoutFeedback
         style={itemPostStyle.content}
-        onPress={() =>{          
-          navigation.navigate(stackName.postDetail.name, {post_id: item._id, setItemClickId});
-        }
-        }>
+        onPress={() => {
+          navigation.navigate(stackName.postDetail.name, {
+            post_id: item._id,
+            setItemClickId,
+          });
+        }}>
         {/* title */}
         {!!item?.title && (
           <Text numberOfLines={2} style={Typography.postTitle}>
@@ -238,7 +256,7 @@ export default React.memo(ItemPost = props => {
         </TouchableOpacity>
       </View>
       {/* header more modal */}
-      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick}/>}
+      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick} />}
     </View>
   );
 });

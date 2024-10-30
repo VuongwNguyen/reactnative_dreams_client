@@ -12,7 +12,7 @@ import {
 
 import React, {useState, useRef, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import AppHeader from '../../components/Header';
@@ -20,7 +20,10 @@ import TagInf from '../../components/TagInf';
 import {Assets} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
 
-import {APIPersonalDetailInf} from '../../store/api/InfAPI';
+import {
+  APIPersonalDetailInf,
+  APIUpdateAvtUsername,
+} from '../../store/api/InfAPI';
 import DateOfBirthDialog from '../../components/bottomsheet/DateOfBirthDialog';
 import NicknameDialog from '../../components/bottomsheet/NicknameDialog';
 import DescriptionDialog from '../../components/bottomsheet/DescriptionDialog';
@@ -35,7 +38,7 @@ import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
 import {basicInfArr, otherInfArr} from './InfoArr';
-import {stackName} from '../../navigations/screens';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
 
 const showBasicInf = () => {
   return (
@@ -90,9 +93,45 @@ const AccountDetailScreen = ({navigation}) => {
       });
   }, []);
 
+  const handleChangeAvt = () => {
+    if (image) {
+      console.log(image);
+
+      const formData = new FormData();
+      if (image?.[0]?.fileName) {
+        formData.append('avatar', {
+          uri: image?.[0]?.uri,
+          name: image?.[0]?.fileName,
+          // name: `image_${image?.[0]?.fileName}.${image?.[0]?.type.split('/')[1]}`,
+          type: image?.[0]?.type,
+        });
+      } else {
+        formData.append('avatar', {
+          uri: image?.[0]?.uri,
+          name: 'defaultAvt.jpg',
+          type: 'image/jpeg',
+        });
+      }
+      dispatch(APIUpdateAvtUsername(formData))
+        .unwrap()
+        .then(res => {
+          ToastAndroid.show('Cập nhật avatar thành công', ToastAndroid.SHORT);
+          dispatch(APIGetUserBasicInf());
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }
+  };
+  useEffect(() => {
+    if (image) {
+      handleChangeAvt();
+    }
+  }, [image]);
+
   const basicInfUI = [
     {key: 'fullname', title: t('profileScreen.infomationTab.fullname')},
-    {key: 'nick',title: t('profileScreen.infomationTab.nick')},
+    {key: 'nick', title: t('profileScreen.infomationTab.nick')},
     {key: 'dob', title: t('profileScreen.infomationTab.dob')},
     {key: 'gender', title: t('profileScreen.infomationTab.gender')},
     {key: 'natl', title: t('profileScreen.infomationTab.natl')},
@@ -100,8 +139,8 @@ const AccountDetailScreen = ({navigation}) => {
   ];
   const otherInfUI = [
     {key: 'des', title: t('profileScreen.infomationTab.des')},
-    {key: 'zone', title:t('profileScreen.infomationTab.zone')},
-    {key: 'job', title:t('profileScreen.infomationTab.job')},
+    {key: 'zone', title: t('profileScreen.infomationTab.zone')},
+    {key: 'job', title: t('profileScreen.infomationTab.job')},
     {key: 'edu', title: t('profileScreen.infomationTab.edu')},
     {key: 'zodiac', title: t('profileScreen.infomationTab.zodiac')},
     {key: 'hobby', title: t('profileScreen.infomationTab.hobby')},
@@ -175,7 +214,7 @@ const AccountDetailScreen = ({navigation}) => {
           <TagInf
             key={item.key}
             tagTitle={item.title}
-            content={item.value}
+            content={!!item.value ? item.value : 'null'}
             icon={Assets.icons[item.key]}
             func={() => openDialog(item.key)}
           />
@@ -195,8 +234,6 @@ const AccountDetailScreen = ({navigation}) => {
         item.key === 'zodiac' ? {...item, value: zodiacSign} : item,
       ),
     );
-    // console.log(dateString);
-    // console.log(zodiacSign);
   };
   const updateNickname = newNickname => {
     setBasicInfData(prev =>
@@ -283,8 +320,6 @@ const AccountDetailScreen = ({navigation}) => {
   const htownValue = getValueByKey(basicInfData, 'htown');
   const genderValue = getValueByKey(basicInfData, 'gender');
   const rlstValue = getValueByKey(otherInfData, 'rlst');
-  // const hobbiesValue = getValueByKey(otherInfData, 'hobby');
-  // const hobbiesArr = hobbiesValue ? hobbiesValue.split(', ') : [];
   const jobValue = getValueByKey(otherInfData, 'job');
   const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
   const eduValue = getValueByKey(otherInfData, 'edu');
@@ -321,7 +356,10 @@ const AccountDetailScreen = ({navigation}) => {
               onRequestClose={() => {
                 setModalVisible(!modalVisible);
               }}>
-              <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
                 <View style={accountDetailStyle.modalView}>
                   <View style={accountDetailStyle.centeredView}>
                     <Text style={accountDetailStyle.modalTitle}>
