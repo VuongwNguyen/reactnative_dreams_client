@@ -13,7 +13,6 @@ const ThumbnailVideo = ({ videoUri, style, styleIcon }) => {
       timeStamp: 2000, // Thời điểm lấy thumbnail (đơn vị: ms)
     })
       .then(response => {        
-        console.log("Thumbnail created:", response.path);
         setThumbnail(response.path);
       })
       .catch(err => {

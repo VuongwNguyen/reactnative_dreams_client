@@ -12,6 +12,9 @@ import 'dayjs/locale/vi';
 import AxiosInstance from '../configs/axiosInstance';
 import { useTranslation } from 'react-i18next';
 import { MenuItemPost } from './MenuItemPost';
+import { useDispatch } from 'react-redux';
+import { APIFollowingPost } from '../store/api/PostAPI';
+import { APIToggleFollow } from '../store/api/FollowAPI';
 dayjs.extend(relativeTime);
 const customLocale = {
   ...dayjs.Ls.vi,
@@ -42,6 +45,8 @@ export default React.memo(ItemPost = props => {
   const [countLike, setCountLike] = useState(item.likeCount);
   const { t } = useTranslation();
   const [isShowMore, setIsShowMore] = useState(false);
+  const dispatch = useDispatch();
+  const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
 
   const toggleLike = async () => {
     await AxiosInstance().post('/post/like-post', {
@@ -75,6 +80,10 @@ export default React.memo(ItemPost = props => {
     }
   };
   
+  const handleFollow = (item) => {
+    dispatch(APIToggleFollow({following: item?.author?._id}));
+    setIsFollowed(!isFollowed);
+  };
 
   const navigation = useNavigation();
   return (
@@ -97,7 +106,15 @@ export default React.memo(ItemPost = props => {
         )}
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+          <View style={{flexDirection:'row',gap:10,alignContent:'center',alignItems:'center'}}>
+            <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+            {
+              !isFollowed && 
+              <TouchableOpacity onPress={() => handleFollow(item)}>
+                <Image style={{width:12, height:12}} source={Assets.icons.follow}/>
+              </TouchableOpacity>
+            }
+          </View>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
               {dayjs(item?.createdAt).locale(t('itemPost.timeStatus')).fromNow()}
