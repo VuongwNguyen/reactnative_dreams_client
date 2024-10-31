@@ -38,6 +38,7 @@ import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
 import {basicInfArr, otherInfArr} from './InfoArr';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
 
 const showBasicInf = () => {
   return (
@@ -115,6 +116,7 @@ const AccountDetailScreen = ({navigation}) => {
         .unwrap()
         .then(res => {
           ToastAndroid.show('Cập nhật avatar thành công', ToastAndroid.SHORT);
+          dispatch(APIGetUserBasicInf());
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -212,7 +214,7 @@ const AccountDetailScreen = ({navigation}) => {
           <TagInf
             key={item.key}
             tagTitle={item.title}
-            content={item.value}
+            content={!!item.value ? item.value : 'null'}
             icon={Assets.icons[item.key]}
             func={() => openDialog(item.key)}
           />
@@ -232,8 +234,6 @@ const AccountDetailScreen = ({navigation}) => {
         item.key === 'zodiac' ? {...item, value: zodiacSign} : item,
       ),
     );
-    // console.log(dateString);
-    // console.log(zodiacSign);
   };
   const updateNickname = newNickname => {
     setBasicInfData(prev =>
@@ -320,8 +320,6 @@ const AccountDetailScreen = ({navigation}) => {
   const htownValue = getValueByKey(basicInfData, 'htown');
   const genderValue = getValueByKey(basicInfData, 'gender');
   const rlstValue = getValueByKey(otherInfData, 'rlst');
-  // const hobbiesValue = getValueByKey(otherInfData, 'hobby');
-  // const hobbiesArr = hobbiesValue ? hobbiesValue.split(', ') : [];
   const jobValue = getValueByKey(otherInfData, 'job');
   const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
   const eduValue = getValueByKey(otherInfData, 'edu');

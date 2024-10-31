@@ -14,10 +14,10 @@ import {stackName} from '../../navigations/screens';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
-import {useSelector} from 'react-redux';
 import {APIGetInf} from '../../store/api/InfAPI';
 import {useFocusEffect} from '@react-navigation/native';
 import {Assets} from '../../styles';
+import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -36,8 +36,6 @@ const getInterpolation = (
 const ProfileScreen = props => {
   const {navigation, route} = props;
   const userViewId = route?.params?.userViewId;
-  const {userBasicInfData} = useSelector(state => state.userBasicInf);
-
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
@@ -112,9 +110,29 @@ const ProfileScreen = props => {
   }, [coreInf]);
   return (
     <View style={ProfileStyle.container}>
-      <AppHeader title={t('profile')} editIcon />
+      <View style={ProfileStyle.headerContainer}>
+        <AppHeader title={t('profileScreen.profile')} />
+        {coreInf.isSelf ? (
+          <TouchableOpacity
+            style={ProfileStyle.rightIconBtn}
+            onPress={() => navigation.navigate(stackName.accountDetail.name)}>
+            <Image source={Assets.icons.editProfile} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={ProfileStyle.rightIconBtn}
+            onPress={() =>
+              navigation.navigate(stackName.report.name, {
+                type: 'user',
+                user_id: coreInf._id,
+              })
+            }>
+            <Image source={Assets.icons.danger} />
+          </TouchableOpacity>
+        )}
+      </View>
       <Animated.View ref={headerRef} style={headerStyle}>
-        <View style={{padding: 10}}>
+        <View style={{padding: 16}}>
           <View style={ProfileStyle.infoContainer}>
             {!!coreInf.avatar && (
               <Image
@@ -124,6 +142,7 @@ const ProfileScreen = props => {
                 }}
               />
             )}
+
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(stackName.following.name);
@@ -148,7 +167,6 @@ const ProfileScreen = props => {
             />
           </View>
           <View style={ProfileStyle.rowAlign}>
-            <Text style={ProfileStyle.name}>{userBasicInfData?.full_name}</Text>
             <Text style={ProfileStyle.name}>{coreInf?.fullname}</Text>
 
             {!!coreInf.nickname && (

@@ -41,6 +41,7 @@ export const ItemSeparator = () => (
 );
 
 export default ItemPost = props => {
+  const navigation = useNavigation();
   const {item, setItemClickId} = props;
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
@@ -62,7 +63,11 @@ export default ItemPost = props => {
   const handleItemMenuClick = key => {
     switch (key) {
       case 'report':
-        console.log('report');
+        navigation.navigate(stackName.report.name, {
+          post_id: item._id,
+          type: 'post',
+        });
+        setIsShowMore(false);
         break;
       case 'edit':
         console.log('edit');
@@ -79,7 +84,6 @@ export default ItemPost = props => {
     }
   };
 
-  const navigation = useNavigation();
   return (
     <View style={itemPostStyle.container}>
       {/* header */}
