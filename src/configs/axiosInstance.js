@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {store} from '../store';
-import {updateTokens} from '../store/slices';
-import {logoutRef} from '../components/LogoutDialog';
+import { store } from '../store';
+import { updateTokens } from '../store/slices';
+import { logoutRef } from '../components/LogoutDialog';
 
 const BASEURL =
   'https://1edd-2402-800-637c-9e22-d9a5-d0cb-113f-1b55.ngrok-free.app/api';
@@ -27,7 +27,7 @@ const AxiosInstance = (contentType = 'application/json') => {
 
   const addRequest = originRequest => {
     return new Promise((resolve, reject) => {
-      queue.push({resolve, reject});
+      queue.push({ resolve, reject });
     })
       .then(token => {
         console.log('new token provide: ', token);
