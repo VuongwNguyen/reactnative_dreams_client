@@ -3,7 +3,6 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {useTranslation} from 'react-i18next';
 import InfomationTab from '../screen/profile/InfomationTab';
 import PostedTab from '../screen/profile/PostedTab';
-import {Colors} from '../styles';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -13,7 +12,7 @@ const TopBarNavigationProfile = props => {
   return (
     <Tab.Navigator
       screenOptions={topBarOptions}
-      style={{flex: 1, paddingHorizontal: 10}}>
+      style={{flex: 1}}>
       <Tab.Screen
         name={t('profileScreen.information')}
         children={() => (
