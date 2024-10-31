@@ -29,14 +29,14 @@ export const FlingStyle = StyleSheet.create({
     paddingHorizontal: 12
   },
   flowwing: {
-    height: 24,
+    height: 30,
     width: 100,
     backgroundColor: Colors.primary,
     borderRadius: 12,
     justifyContent: 'center'
   },
   flowwed: {
-    height: 24,
+    height: 30,
     width: 100,
     borderRadius: 12,
     borderWidth: 1,

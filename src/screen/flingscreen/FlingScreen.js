@@ -1,10 +1,11 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { FlingStyle } from '../../styles/flingstyle/FlingStyle';
 import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
-import { APIGetFollowers, APIGetFollowing } from '../../store/api/FollowAPI';
+import { APIGetFollowers, APIGetFollowing, APIToggleFollow } from '../../store/api/FollowAPI';
 import { current } from '@reduxjs/toolkit';
+import { id } from 'rn-emoji-keyboard';
 
 const FlingScreen = (props) => {
   const params = props.route.params
@@ -12,6 +13,7 @@ const FlingScreen = (props) => {
   const user_id_view = params?.user_id_view
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
 
@@ -30,6 +32,7 @@ const FlingScreen = (props) => {
       setIsLoading(false)
     } finally {
       setIsLoading(false);
+      setRefreshing(false);
     }
   }
 
@@ -37,30 +40,54 @@ const FlingScreen = (props) => {
     fetchData()
   }, [page]);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    setPage(1);
+    fetchData();
+  }
+
   const RenderItems = ({ item }) => {
+    const id_user = item.follower?._id || item.user?._id;
+    const [isFollowing, setIsFollowing] = useState(item.isFollowing);
+
+    const handleFollow = async () => {
+      try {
+        const body = { following: id_user };
+        const result = await dispatch(APIToggleFollow(body)).unwrap();
+        console.log(result);
+
+        // Toggle trạng thái isFollowing
+        setIsFollowing(prevState => !prevState);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     return (
       <View style={FlingStyle.item}>
         <Image
           style={FlingStyle.avatar}
-          source={{
-            uri: item.follower?.avatar || item.user.avatar
-          }}
+          source={{ uri: item.follower?.avatar || item.user.avatar }}
         />
-        <Text style={FlingStyle.name}>{item.follower?.fullname || item.user?.fullname}</Text>
-        <TouchableOpacity
-          style={item.isFollowing ? FlingStyle.flowwing : FlingStyle.flowwed}>
-          <Text
-            style={
-              item.isFollowing
-                ? FlingStyle.flowwingText
-                : FlingStyle.flowwedText
-            }>
-            {item.isFollowing ? 'Followed' : 'Follow'}
-          </Text>
-        </TouchableOpacity>
+        <Text style={FlingStyle.name}>
+          {item.follower?.fullname || item.user?.fullname}
+        </Text>
+        {
+          !item.isSelf && (
+            <TouchableOpacity
+              style={isFollowing ? FlingStyle.flowwing : FlingStyle.flowwed}
+              onPress={handleFollow}
+            >
+              <Text style={isFollowing ? FlingStyle.flowwingText : FlingStyle.flowwedText}>
+                {isFollowing ? 'Followed' : 'Follow'}
+              </Text>
+            </TouchableOpacity>
+          )
+        }
       </View>
-    )
-  }
+    );
+  };
+
 
   return (
     <View style={FlingStyle.container}>
@@ -69,6 +96,9 @@ const FlingScreen = (props) => {
         data={data}
         renderItem={({ item }) => <RenderItems item={item} />}
         keyExtractor={(item, index) => index.toString()}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );
