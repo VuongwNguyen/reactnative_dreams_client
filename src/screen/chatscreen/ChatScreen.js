@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Linking,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -15,9 +16,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useSocket} from '../../contexts/SocketContext';
 import {stackName} from '../../navigations/screens';
 import {fetchFollowingUsers, fetchListRooms} from '../../store/api/ChatAPI';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import {UserOnline} from './components';
 import TabChatScreen from './TabChatScreen';
+import notifee, {AuthorizationStatus} from '@notifee/react-native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -27,6 +29,7 @@ const ChatScreen = () => {
   const {list} = useSelector(state => state.chatUser);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [isAuthorizedPermission, setIsAuthorizedPermission] = useState(true);
 
   const renderUsersOnline = ({item}) => {
     return (
@@ -46,6 +49,17 @@ const ChatScreen = () => {
 
   useEffect(() => {
     dispatch(fetchFollowingUsers({}));
+    async function checkNotificationPermission() {
+      const settings = await notifee.getNotificationSettings();
+
+      if (settings.authorizationStatus == AuthorizationStatus.AUTHORIZED) {
+        setIsAuthorizedPermission(true);
+      } else if (settings.authorizationStatus == AuthorizationStatus.DENIED) {
+        setIsAuthorizedPermission(false);
+      }
+    }
+
+    checkNotificationPermission();
   }, []);
 
   const refreshData = () => {
@@ -66,6 +80,17 @@ const ChatScreen = () => {
           refreshControl={
             <RefreshControl onRefresh={refreshData} refreshing={loading} />
           }>
+          {/* navigate to setting  */}
+          {!isAuthorizedPermission && (
+            <Text style={{textAlign: 'center'}}>
+              Thông báo đã bị tắt,
+              <Text
+                style={{color: Colors.primary, fontWeight: 'bold'}}
+                onPress={() => Linking.openSettings()}>
+                bấm vào đây để bật lại
+              </Text>
+            </Text>
+          )}
           {/* Header */}
           <View style={styles.header}>
             <Image source={{uri: mock_image}} style={styles.avatar} />
@@ -78,7 +103,7 @@ const ChatScreen = () => {
           <TouchableOpacity
             style={styles.search}
             onPress={() => {
-              socket?.emit('test');
+              Linking.openURL('https://google.com/');
             }}>
             <Image source={Assets.icons.search} style={styles.searchIcon} />
             <Text>Search ...</Text>

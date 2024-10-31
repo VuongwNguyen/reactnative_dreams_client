@@ -63,7 +63,7 @@ const Message = props => {
                   ? item.url
                   : 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
               }}
-              style={styles.img}
+              style={[styles.img]}
             />
           );
         })}
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    alignSelf: 'flex-start',
     gap: 5,
     maxWidth: width * 0.8,
   },
