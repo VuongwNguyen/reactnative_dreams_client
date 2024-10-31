@@ -9,11 +9,11 @@ import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
-import AxiosInstance from '../configs/axiosInstance';
 import { useTranslation } from 'react-i18next';
 import { MenuItemPost } from './MenuItemPost';
 import { useDispatch } from 'react-redux';
 import { APIToggleFollow } from '../store/api/FollowAPI';
+import { APILikePost } from '../store/api/PostAPI';
 
 dayjs.extend(relativeTime);
 const customLocale = {
@@ -53,15 +53,14 @@ export default React.memo(ItemPost = props => {
   const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
 
   const toggleLike = async () => {
-    await AxiosInstance().post('/post/like-post', {
-      post_id: item._id,
+    dispatch(APILikePost({post_id: item._id})).then(res => {
+      setLiked(!liked);
+      if (liked) {
+        setCountLike(countLike - 1);
+      } else {
+        setCountLike(countLike + 1);
+      }
     });
-    setLiked(!liked);
-    if (liked) {
-      setCountLike(countLike - 1);
-    } else {
-      setCountLike(countLike + 1);
-    }
   };
 
   const handleItemMenuClick = key => {
@@ -117,7 +116,7 @@ export default React.memo(ItemPost = props => {
           <View style={{flexDirection:'row',gap:10,alignContent:'center',alignItems:'center'}}>
             <Text style={Typography.postName}>{item?.author?.fullname}</Text>
             {
-              !isFollowed && 
+              !isFollowed && !item?.isSelf && 
               <TouchableOpacity onPress={() => handleFollow(item)}>
                 <Image style={{width:12, height:12}} source={Assets.icons.follow}/>
               </TouchableOpacity>
@@ -141,7 +140,7 @@ export default React.memo(ItemPost = props => {
                   }}
                 />
                 <Image
-                  source={require('../../assets/icons/earth.png')}
+                  source={Assets.icons.earth}
                   style={{height: 15, width: 15}}
                 />
               </View>

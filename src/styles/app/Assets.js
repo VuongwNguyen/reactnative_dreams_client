@@ -74,6 +74,7 @@ export const Assets = {
     cross: require(uriIcons + 'cross.png'),
     play_video: require(uriIcons + 'play_video.png'),
     follow: require(uriIcons + 'follow.png'),
+    earth: require(uriIcons + 'earth.png'),
   },
   image: {
     logo: require('../../../assets/images/logo.png'),
