@@ -122,19 +122,24 @@
     "posts": "Posts",
     "inbox": "Inbox",
     "follow": "Follow",
+    "followed": "Followed",
     "editProfile": "Edit your profile",
     "information": "Information",
     "posted": "Posted",
     "infomationTab": {
-      "curlive": "Currently living in",
-      "nationality": "Nationality",
-      "home": "Hometown",
-      "school": "School",
+      "zone": "Location",
+      "natl": "Nationality",
+      "htown": "Hometown",
+      "edu": "Education",
       "gender": "Gender",
       "dob": "Birthday",
-      "bobby": "Hobby",
-      "relation": "Relationship",
-      "zodiac": "Zodiac sign"
+      "hobby": "Hobby",
+      "rlts": "Relationship status",
+      "zodiac": "Zodiac sign",
+      "job": "Job",
+      "nick": "Nickname",
+      "fullname": "Username",
+      "des": "Description"
     }
   },
   "homeScreen": {
@@ -148,7 +153,7 @@
     "view": "View",
     "moreReplies": "more replies",
     "hideReplies": "Hide replies",
-    "writeComment": "Viết bình luận"
+    "writeComment": "Write a comment..."
   },
   "newPostScreen": {
     "title": "Create post",
@@ -181,6 +186,12 @@
     "placeholder": "Choose your educaton level",
     "school": "Your school",
     "confirm": "CONFIRM"
+  },
+  "jobDialog": {
+    "title": "What is your current job?",
+    "desc": "Share your work to reach out to like-minded professionals.",
+    "job": "Your job",
+    "workplace": "Workplace"
   },
   "usernameDialog": {
     "title": "What is your name?",
@@ -264,10 +275,42 @@
     "placeholder": "Something about you",
     "confirm": "CONFIRM"
   },
+  "rlstStatusDialog": {
+    "title": "Tình trạng hôn nhân",
+    "desc": "Please select your marital status to display on your profile..",
+    "single": "Single",
+    "dating": "Dating",
+    "married": "Married",
+    "placeholder": "Chọn trạng thái"
+  },
   "navigation": {
     "home": "Home",
     "chat": "Messages",
     "notification": "Notifications",
     "setting": "Settings"
+  },
+  "itemPost": {
+    "timeStatus": "en"
+  },
+  "reportScreen": {
+    "reasonTitle": "Please state the reason you are making this report!",
+    "descTitle": "Please describe the report further",
+    "placeholder": "Description",
+    "post": {
+      "r1": "Adult content",
+      "r2": "Fraud, scam",
+      "r3": "I don't want to see this content",
+      "r4": "Negative content",
+      "r5": "False advertising",
+      "r6": "Copyright issues"
+    },
+    "user": {
+      "r1": "Impersonating someone else",
+      "r2": "Fake account",
+      "r3": "Fake name",
+      "r4": "Harassment or bullying",
+      "r5": "Other issues"
+    },
+    "submit": "submit"
   }
 }

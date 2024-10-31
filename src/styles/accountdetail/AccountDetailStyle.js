@@ -6,6 +6,10 @@ const avtRadius = avtSize / 2;
 const changeBtnSize = avtSize / 3;
 const changeBtnRadius = changeBtnSize / 2;
 export const accountDetailStyle = {
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scrollContainer: {
     flex: 1,
   },
@@ -50,7 +54,7 @@ export const accountDetailStyle = {
     borderWidth: 1,
     borderColor: Colors.secondary,
     borderRadius: 15,
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     gap: 12,
   },

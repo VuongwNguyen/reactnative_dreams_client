@@ -3,7 +3,6 @@ export const postDetailStyle = {
     flex: 1,
     height: '100%',
     backgroundColor: '#fff',
-    padding: 10,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -57,7 +56,7 @@ export const postDetailStyle = {
     flexDirection: 'row',
     gap: 10,
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 5,
     alignItems: 'center',
   },
   avatarFooter: {
@@ -69,6 +68,9 @@ export const postDetailStyle = {
     flex: 1,
     paddingVertical: 10,
     fontSize: 16,
+    backgroundColor: '#F1F1F1',
+    borderRadius: 999,
+    paddingHorizontal: 10,
   },
   buttonSendComment: {
     width: 40,

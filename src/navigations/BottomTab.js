@@ -1,8 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Assets} from '../styles';
 import {stackName, tabName} from './screens';
+import {Assets} from '../styles';
 
 const tab = createBottomTabNavigator();
 

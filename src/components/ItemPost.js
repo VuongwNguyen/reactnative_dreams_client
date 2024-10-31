@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
@@ -9,8 +9,10 @@ import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
+import AxiosInstance from '../configs/axiosInstance';
+import {useTranslation} from 'react-i18next';
+import {MenuItemPost} from './MenuItemPost';
 dayjs.extend(relativeTime);
-
 const customLocale = {
   ...dayjs.Ls.vi,
   relativeTime: {
@@ -34,10 +36,54 @@ const customLocale = {
 // Sử dụng locale tùy chỉnh
 dayjs.locale(customLocale);
 
+export const ItemSeparator = () => (
+  <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
+);
+
 export default ItemPost = props => {
-  const {item, isLike = true} = props;
-  const [like, setLike] = useState(isLike);
   const navigation = useNavigation();
+  const {item, setItemClickId} = props;
+  const [liked, setLiked] = useState(item.isLiked);
+  const [countLike, setCountLike] = useState(item.likeCount);
+  const {t} = useTranslation();
+  const [isShowMore, setIsShowMore] = useState(false);
+
+  const toggleLike = async () => {
+    await AxiosInstance().post('/post/like-post', {
+      post_id: item._id,
+    });
+    setLiked(!liked);
+    if (liked) {
+      setCountLike(countLike - 1);
+    } else {
+      setCountLike(countLike + 1);
+    }
+  };
+
+  const handleItemMenuClick = key => {
+    switch (key) {
+      case 'report':
+        navigation.navigate(stackName.report.name, {
+          post_id: item._id,
+          type: 'post',
+        });
+        setIsShowMore(false);
+        break;
+      case 'edit':
+        console.log('edit');
+        break;
+      case 'privacy':
+        console.log('privacy');
+        break;
+      case 'delete':
+        console.log('delete');
+        break;
+      default:
+        console.log('default');
+        break;
+    }
+  };
+
   return (
     <View style={itemPostStyle.container}>
       {/* header */}
@@ -61,7 +107,9 @@ export default ItemPost = props => {
           <Text style={Typography.postName}>{item?.author?.fullname}</Text>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item?.createdAt).locale('vi').fromNow()}
+              {dayjs(item?.createdAt)
+                .locale(t('itemPost.timeStatus'))
+                .fromNow()}
             </Text>
             {item?.privacy_status == 'public' && (
               <View
@@ -82,13 +130,25 @@ export default ItemPost = props => {
             )}
           </View>
         </View>
+        {/* more */}
+        <TouchableOpacity
+          onPress={() => setIsShowMore(!isShowMore)}
+          style={itemPostStyle.headerMore}>
+          <Image
+            source={Assets.icons.more}
+            style={itemPostStyle.headerMoreIcon}
+          />
+        </TouchableOpacity>
       </View>
       {/* content */}
       <TouchableWithoutFeedback
         style={itemPostStyle.content}
-        onPress={() =>
-          navigation.navigate(stackName.postDetail.name, {post_id: item._id})
-        }>
+        onPress={() => {
+          navigation.navigate(stackName.postDetail.name, {
+            post_id: item._id,
+            setItemClickId,
+          });
+        }}>
         {/* title */}
         {!!item?.title && (
           <Text numberOfLines={2} style={Typography.postTitle}>
@@ -153,12 +213,12 @@ export default ItemPost = props => {
         {/* like */}
         <TouchableOpacity
           style={itemPostStyle.itemInteract}
-          onPress={() => setLike(!like)}>
+          onPress={() => toggleLike(!liked)}>
           <Image
             style={{height: 20, width: 20}}
-            source={like ? Assets.icons.heartFill : Assets.icons.heart}
+            source={liked ? Assets.icons.heartFill : Assets.icons.heart}
           />
-          <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
+          <Text style={itemPostStyle.interactLabel}>{countLike}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
@@ -173,6 +233,8 @@ export default ItemPost = props => {
           <Text style={itemPostStyle.interactLabel}>{item?.share}</Text>
         </TouchableOpacity>
       </View>
+      {/* header more modal */}
+      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick} />}
     </View>
   );
 };

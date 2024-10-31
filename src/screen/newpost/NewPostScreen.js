@@ -23,6 +23,7 @@ import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {APIGetFollowing} from '../../store/api/FollowAPI';
+import {setPostCreated} from '../../store/slices';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -146,6 +147,7 @@ const NewPostScreen = props => {
       .unwrap()
       .then(res => {
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+        dispatch(setPostCreated());
         navigation.navigate(stackName.bottomTab.name);
       })
       .catch(err => {
@@ -181,7 +183,7 @@ const NewPostScreen = props => {
       <View style={newPostStyle.item} key={item.id}>
         <Image
           source={{uri: item?.avt}}
-          style={{width: 24, height: 24, borderRadius: 12}}
+          style={{width: 40, height: 40, borderRadius: 20}}
         />
         <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
       </View>
@@ -229,7 +231,7 @@ const NewPostScreen = props => {
 
             <View style={newPostStyle.inf}>
               <Text style={newPostStyle.userName}>
-                {userBasicInfData?.full_name}
+                {userBasicInfData?.fullname}
               </Text>
               <Dropdown
                 data={pricvacyData}
@@ -246,7 +248,7 @@ const NewPostScreen = props => {
                   <Image
                     source={
                       privacyStatus == 'public'
-                        ? Assets.icons.earth
+                        ? Assets.icons.public
                         : Assets.icons.privacy
                     }
                     style={{height: 20, width: 20, marginRight: 5}}
@@ -363,7 +365,7 @@ const NewPostScreen = props => {
                   <View style={newPostStyle.selectedStyle}>
                     <Image
                       source={{uri: item?.avt}}
-                      style={{width: 24, height: 24, borderRadius: 12}}
+                      style={{width: 40, height: 40, borderRadius: 20}}
                     />
                     <Text style={newPostStyle.textSelectedStyle}>
                       {item.fullname}

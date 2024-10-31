@@ -8,17 +8,29 @@ import {Colors} from '../styles';
 const Tab = createMaterialTopTabNavigator();
 
 const TopBarNavigationProfile = props => {
-  const {scrollHandler} = props;
+  const {scrollHandler, user_id_view} = props;
   const {t} = useTranslation();
   return (
-    <Tab.Navigator screenOptions={topBarOptions}>
+    <Tab.Navigator
+      screenOptions={topBarOptions}
+      style={{flex: 1, paddingHorizontal: 10}}>
       <Tab.Screen
         name={t('profileScreen.information')}
-        children={() => <InfomationTab scrollHandler={scrollHandler} />}
+        children={() => (
+          <InfomationTab
+            scrollHandler={scrollHandler}
+            user_id_view={user_id_view}
+          />
+        )}
       />
       <Tab.Screen
         name={t('profileScreen.posted')}
-        children={() => <PostedTab scrollHandler={scrollHandler} />}
+        children={() => (
+          <PostedTab
+            scrollHandler={scrollHandler}
+            user_id_view={user_id_view}
+          />
+        )}
       />
     </Tab.Navigator>
   );

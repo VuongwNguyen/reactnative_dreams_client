@@ -1,5 +1,5 @@
 import {View, Image, TextInput, TouchableOpacity} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -36,19 +36,46 @@ const HomeScreen = props => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
+
   const translationY = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler(e => {
-    translationY.value = e.contentOffset.y;
+  const previousScrollY = useSharedValue(0);
+  const isScrollingDown = useSharedValue(true);
+  const lastUpdate = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      const currentY = e.contentOffset.y;
+      translationY.value = currentY;
+
+      if (Math.abs(currentY - previousScrollY.value) > 10) {
+        if (Date.now() - lastUpdate.value > 500) {
+          isScrollingDown.value = currentY > previousScrollY.value;
+          previousScrollY.value = currentY;
+          lastUpdate.value = Date.now();
+        }
+      }
+
+      // Reset khi cuộn về đầu
+      if (currentY <= 0) {
+        isScrollingDown.value = true;
+        previousScrollY.value = 0;
+      }
+    },
   });
 
   const headerStyle = useAnimatedStyle(() => {
-    const height = getInterpolation(translationY.value, 60, 0);
-    const opacity = getInterpolation(translationY.value, 1, 0);
-    const padding = getInterpolation(translationY.value, 10, 0);
+    const height = isScrollingDown.value
+      ? getInterpolation(translationY.value, 60, 0)
+      : getInterpolation(translationY.value, 0, 60);
+
+    const translateY = isScrollingDown.value
+      ? getInterpolation(translationY.value, 0, -60)
+      : getInterpolation(translationY.value, -60, 0);
+
     return {
-      height: height,
-      opacity: opacity,
-      padding: padding,
+      height,
+      transform: [{translateY}],
+      transition: {duration: 1000},
     };
   });
 
@@ -62,7 +89,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     dispatch(APIGetUserBasicInf());
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={HomeStyles.container}>
@@ -71,12 +98,14 @@ const HomeScreen = props => {
           onPress={() => {
             navigation.navigate(stackName.profile.name);
           }}>
-          {/* <Image
-            style={HomeStyles.avatar}
-            source={{
-              uri: userBasicInfData?.avatar,
-            }}
-          /> */}
+          {!!userBasicInfData.avatar && (
+            <Image
+              style={HomeStyles.avatar}
+              source={{
+                uri: userBasicInfData?.avatar,
+              }}
+            />
+          )}
         </TouchableOpacity>
         <View style={HomeStyles.wraperInputSearch}>
           <TextInput
@@ -84,14 +113,11 @@ const HomeScreen = props => {
             style={HomeStyles.inputSearch}
             placeholder={t('homeScreen.search')}
             onSubmitEditing={handleSearch}
+            keyboardShouldPersistTaps="handled"
           />
-          <Image
-            source={Assets.icons.search}
-            style={HomeStyles.iconSearch}
-            onPress={() => {
-              inputSearch.current.focus();
-            }}
-          />
+          <TouchableOpacity onPress={() => inputSearch.current.focus()}>
+            <Image source={Assets.icons.search} style={HomeStyles.iconSearch} />
+          </TouchableOpacity>
         </View>
       </Animated.View>
       <TopBarNavigationHome scrollHandler={scrollHandler} />

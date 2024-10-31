@@ -1,14 +1,42 @@
-import {Text, View, TouchableOpacity, Image, } from 'react-native';
-import React, {useState} from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Modal,
+  ToastAndroid,
+} from 'react-native';
+import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
-const NationalityDialog = () => {
+import { useDispatch } from 'react-redux';
+import { APIUpdateInf } from '../../store/api/InfAPI';
+
+const NationalityDialog = forwardRef((props, ref) => {
+  const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false);
   const {t} = useTranslation();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props?.data);
   const [isFocus, setIsFocus] = useState(false);
   const [icon, setIcon] = useState(Assets.image.nationality);
+  const isDisable = !value;
+
+  useEffect(() => {
+    if (props?.data) {
+      setValue(props.data);
+    }
+  }, [props?.data]);
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true);
+    },
+    close() {
+      setVisible(false);
+    },
+  }));
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -27,64 +55,86 @@ const NationalityDialog = () => {
     setIcon(item.icon);
     setIsFocus(false);
   };
-  const isDisable = !value;
+
+  const handleSubmit = () => {
+    const body = {key: 'natl', value: value};
+    dispatch(APIUpdateInf(body))
+      .unwrap()
+      .then(() => {
+        ToastAndroid.show('Cập nhật thành công', ToastAndroid.SHORT);
+        setVisible(false);
+      })
+      .catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT));
+
+    props.onSubmit(value);
+  };
   return (
-    <View>
-      <View style={bottomSheetStyle.container}>
-        <View>
-          <Image source={Assets.icons.close} style={{height: 20, width: 20}} />
-        </View>
-        <View style={bottomSheetStyle.bodyContainer}>
-          <Text style={bottomSheetStyle.titleDialog}>
-            {t('nationalityDialog.title')}
-          </Text>
-          <Text style={bottomSheetStyle.desc}>
-            {t('nationalityDialog.desc')}
-          </Text>
-          <View style={bottomSheetStyle.dropdownContainer}>
-            {renderLabel()}
-            <Dropdown
-              style={[
-                bottomSheetStyle.dropdown,
-                isFocus && {borderColor: Colors.primary},
-              ]}
-              placeholderStyle={bottomSheetStyle.selectPlaceholder}
-              selectedTextStyle={bottomSheetStyle.selectText}
-              inputSearchStyle={bottomSheetStyle.selectText}
-              iconStyle={bottomSheetStyle.iconDrop}
-              data={data}
-              search
-              maxHeight={250}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !isFocus ? t('nationalityDialog.placeholder') : '...'
-              }
-              searchPlaceholder={t('nationalityDialog.search')}
-              value={value}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              onChange={handleDropdownChange}
-              renderLeftIcon={() => (
-                <Image source={icon} style={bottomSheetStyle.iconFlag} />
-              )}
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="slide"
+      onRequestClose={() => setVisible(false)}>
+      <View style={bottomSheetStyle.modalBackground}>
+        <View style={bottomSheetStyle.container}>
+          <TouchableOpacity onPress={() => setVisible(false)}>
+            <Image
+              source={Assets.icons.close}
+              style={{height: 20, width: 20}}
             />
-          </View>
-          <TouchableOpacity
-            disabled={isDisable}
-            style={[
-              bottomSheetStyle.btnContainer,
-              isDisable && {opacity: 0.5},
-            ]}>
-            <Text style={bottomSheetStyle.btnLabel}>
-              {t('nationalityDialog.confirm')}
-            </Text>
           </TouchableOpacity>
+          <View style={bottomSheetStyle.bodyContainer}>
+            <Text style={bottomSheetStyle.titleDialog}>
+              {t('nationalityDialog.title')}
+            </Text>
+            <Text style={bottomSheetStyle.desc}>
+              {t('nationalityDialog.desc')}
+            </Text>
+            <View style={bottomSheetStyle.dropdownContainer}>
+              {renderLabel()}
+              <Dropdown
+                style={[
+                  bottomSheetStyle.dropdown,
+                  isFocus && {borderColor: Colors.primary},
+                ]}
+                placeholderStyle={bottomSheetStyle.selectPlaceholder}
+                selectedTextStyle={bottomSheetStyle.selectText}
+                inputSearchStyle={bottomSheetStyle.selectText}
+                iconStyle={bottomSheetStyle.iconDrop}
+                data={data}
+                search
+                maxHeight={250}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !isFocus ? t('nationalityDialog.placeholder') : '...'
+                }
+                searchPlaceholder={t('nationalityDialog.search')}
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={handleDropdownChange}
+                renderLeftIcon={() => (
+                  <Image source={icon} style={bottomSheetStyle.iconFlag} />
+                )}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => handleSubmit()}
+              disabled={isDisable}
+              style={[
+                bottomSheetStyle.btnContainer,
+                isDisable && {opacity: 0.5},
+              ]}>
+              <Text style={bottomSheetStyle.btnLabel}>
+                {t('nationalityDialog.confirm')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </Modal>
   );
-};
+});
 
 export default NationalityDialog;
 

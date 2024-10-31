@@ -128,19 +128,24 @@
     "posts": "Bài viết",
     "inbox": "Nhắn tin",
     "follow": "Theo dõi",
+    "followed": "Đã theo dõi",
     "editProfile": "Chỉnh sửa trang cá nhân",
     "information": "Thông tin",
     "posted": "Đã đăng",
     "infomationTab": {
-      "curlive": "Nơi ở hiện tại",
-      "nationality": "Quốc tịch",
-      "home": "Quê quán",
-      "school": "Trường",
-      "gender": "Giới tínhh",
+      "zone": "Vị trí",
+      "natl": "Quốc tịch",
+      "htown": "Quê quán",
+      "edu": "Giáo dục",
+      "gender": "Giới tính",
       "dob": "Ngày sinh",
-      "bobby": "Sở thích",
-      "relation": "Tình trạng quan hệ",
-      "zodiac": "Cung hoàng đạo"
+      "hobby": "Sở thích",
+      "rlts": "Tình trạng hôn nhân",
+      "zodiac": "Cung hoàng đạo",
+      "job": "Công việc",
+      "nick": "Biệt danh",
+      "fullname": "Tên người dùng",
+      "des": "Mô tả"
     }
   },
   "accountDetailScreen": {
@@ -199,6 +204,12 @@
     "placeholder": "Chọn cấp độ học vấn ",
     "school": "Trường học của bạn",
     "confirm": "XÁC NHẬN"
+  },
+  "jobDialog": {
+    "title": "Công việc hiện tại của bạn là gì?",
+    "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
+    "job": "Công việc của bạn",
+    "workplace": "Nơi làm việc"
   },
   "usernameDialog": {
     "title": "Tên của bạn là gì",
@@ -282,10 +293,42 @@
     "placeholder": "Điều gì đó về bạn",
     "confirm": "XÁC NHẬN"
   },
+  "rlstStatusDialog": {
+    "title": "Relationship status",
+    "desc": "Vui lòng chọn tình trạng hôn nhân của bạn để hiển thị trên hồ sơ cá nhân.",
+    "single": "Độc thân",
+    "dating": "Hẹn hò",
+    "married": "Đã kết hôn",
+    "placeholder": "Choose your status"
+  },
   "navigation": {
     "home": "Trang chủ",
     "chat": "Tin nhắn",
     "notification": "Thông báo",
     "setting": "Cài đặt"
+  },
+  "itemPost": {
+    "timeStatus": "vi"
+  },
+  "reportScreen": {
+    "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
+    "descTitle": "Please describe the report further",
+    "placeholder": "Nhập mô tả",
+    "post": {
+      "r1": "Nội dung người lớn",
+      "r2": "Gian lận, lừa đảo",
+      "r3": "Tôi không muốn xem nội dung này",
+      "r4": "Nội dung tiêu cực",
+      "r5": "Quảng cáo sai sự thật",
+      "r6": "Vấn đề bản quyền"
+    },
+    "user": {
+      "r1":"Giả mạo người khác",
+      "r2":"Tài khoản giả mạo",
+      "r3":"Tên giả mạo",
+      "r4":"Quấy rối hoặc bắt nạt",
+      "r5":"Vấn đề khác"
+    },
+    "submit": "Gửi"
   }
 }

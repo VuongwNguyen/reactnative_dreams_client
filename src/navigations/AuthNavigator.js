@@ -20,6 +20,10 @@ const AuthNavigator = () => {
         name={stackName.forgotPassword.name}
         component={stackName.forgotPassword.component}
       />
+      <AuthStack.Screen
+        name={stackName.otp.name}
+        component={stackName.otp.component}
+      />
     </AuthStack.Navigator>
   );
 };
