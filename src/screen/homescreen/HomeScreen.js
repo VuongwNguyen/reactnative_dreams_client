@@ -1,6 +1,6 @@
-import { View, Image, TextInput, TouchableOpacity } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {View, Image, TextInput, TouchableOpacity} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -8,17 +8,21 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { stackName } from '../../navigations/screens';
+import {stackName} from '../../navigations/screens';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
-import { HomeStyles } from '../../styles/homestyle/homestyle';
-import { Assets } from '../../styles';
-import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
+import {HomeStyles} from '../../styles/homestyle/homestyle';
+import {Assets} from '../../styles';
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
-
-
-const getInterpolation = (value, startOut, endOut, startIn = 0, endIn = 100) => {
+const getInterpolation = (
+  value,
+  startOut,
+  endOut,
+  startIn = 0,
+  endIn = 100,
+) => {
   'worklet';
   return interpolate(value, [startIn, endIn], [startOut, endOut], {
     extrapolateLeft: Extrapolation.CLAMP,
@@ -26,12 +30,12 @@ const getInterpolation = (value, startOut, endOut, startIn = 0, endIn = 100) => 
   });
 };
 
-const HomeScreen = (props) => {
-  const { navigation } = props;
+const HomeScreen = props => {
+  const {navigation} = props;
   const inputSearch = useRef(null);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const dispatch = useDispatch();
-  const { userBasicInfData } = useSelector(state => state.userBasicInf);
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const translationY = useSharedValue(0);
   const previousScrollY = useSharedValue(0);
@@ -39,10 +43,9 @@ const HomeScreen = (props) => {
   const lastUpdate = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (e) => {
+    onScroll: e => {
       const currentY = e.contentOffset.y;
       translationY.value = currentY;
-
 
       if (Math.abs(currentY - previousScrollY.value) > 10) {
         if (Date.now() - lastUpdate.value > 500) {
@@ -71,8 +74,8 @@ const HomeScreen = (props) => {
 
     return {
       height,
-      transform: [{ translateY }],
-      transition: { duration: 1000 },
+      transform: [{translateY}],
+      transition: {duration: 1000},
     };
   });
 
@@ -113,10 +116,7 @@ const HomeScreen = (props) => {
             keyboardShouldPersistTaps="handled"
           />
           <TouchableOpacity onPress={() => inputSearch.current.focus()}>
-            <Image
-              source={Assets.icons.search}
-              style={HomeStyles.iconSearch}
-            />
+            <Image source={Assets.icons.search} style={HomeStyles.iconSearch} />
           </TouchableOpacity>
         </View>
       </Animated.View>

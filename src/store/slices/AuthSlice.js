@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {APILogin, APILogout} from '../api/AccountAPI';
-import {tr} from 'rn-emoji-keyboard';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -15,7 +14,6 @@ export const accountSlice = createSlice({
   },
   reducers: {
     updateTokens: (state, action) => {
-      console.log(action.payload);
       state.token.accessToken = action.payload.accessToken;
       state.token.refreshToken = action.payload.refreshToken;
     },

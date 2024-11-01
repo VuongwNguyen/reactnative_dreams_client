@@ -7,6 +7,33 @@ import {
   Dimensions,
 } from 'react-native';
 import React from 'react';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi';
+dayjs.extend(relativeTime);
+
+const customLocale = {
+  ...dayjs.Ls.vi,
+  relativeTime: {
+    ...dayjs.Ls.vi.relativeTime,
+    future: 'in %s',
+    past: '%s trước',
+    s: 'vài giây',
+    m: '1 phút',
+    mm: '%d phút',
+    h: '1 giờ',
+    hh: '%d giờ',
+    d: '1 ngày',
+    dd: '%d ngày',
+    M: '1 tháng',
+    MM: '%d tháng',
+    y: '1 năm',
+    yy: '%d năm',
+  },
+};
+
+// Sử dụng locale tùy chỉnh
+dayjs.locale(customLocale);
 
 const {width} = Dimensions.get('window');
 
@@ -14,64 +41,85 @@ const Message = props => {
   const {
     message,
     isMe = false,
-    time = '11:00 AM',
+    time,
     images = [],
     isShowAvatar,
+    avatar,
+    name,
     isNext = false,
     replyMessage,
+    replyPressed,
   } = props;
 
-  if (images.length > 0) {
+  const renderImages = () => {
     return (
       <View style={[styles.imageArea, isMe && styles.imageAreaR]}>
-        {Array.from({length: 5}).map((_, index) => {
+        {images.map(item => {
           return (
             <Image
-              key={index}
+              key={item.public_id}
               source={{
-                uri: 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
+                uri: item.url
+                  ? item.url
+                  : 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
               }}
-              style={styles.img}
+              style={[styles.img]}
             />
           );
         })}
       </View>
     );
-  }
+  };
 
   return (
     <View style={[styles.container, isMe && styles.containerR]}>
       {/* avatar */}
       {isShowAvatar && (
         <View style={[styles.credential, isMe && styles.credentialR]}>
-          {isMe && <Text style={styles.name}>User 1</Text>}
+          {isMe && <Text style={styles.name}>{name}</Text>}
           <Image
             source={{
-              uri: 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
+              uri: avatar
+                ? avatar
+                : 'https://i.pinimg.com/736x/25/d5/82/25d5824a93f9c47b8f2b7399aae14851.jpg',
             }}
             style={styles.ava}
           />
-          {!isMe && <Text style={styles.name}>User 1</Text>}
+          {!isMe && <Text style={styles.name}>{name}</Text>}
         </View>
       )}
       {/* messages */}
-      <TouchableOpacity style={[styles.wrapper, isMe && styles.wrapperR]}>
-        {!!replyMessage && (
-          <View style={styles.originArea}>
-            <View
-              style={[styles.divider, isMe && {backgroundColor: '#E5E5E5'}]}
-            />
-            <View>
-              <Text style={styles.author}>Auth - 1</Text>
-              <Text style={styles.origin}>{replyMessage}</Text>
+      {images?.length > 0 ? (
+        renderImages()
+      ) : (
+        <TouchableOpacity
+          style={[styles.wrapper, isMe && styles.wrapperR]}
+          onLongPress={replyPressed}>
+          {!!replyMessage && (
+            <View style={styles.originArea}>
+              <View
+                style={[styles.divider, isMe && {backgroundColor: '#E5E5E5'}]}
+              />
+              <View>
+                <Text style={styles.author}>
+                  {replyMessage?.author?.fullname}
+                </Text>
+                <Text style={styles.origin}>{replyMessage?.content}</Text>
+              </View>
             </View>
-          </View>
-        )}
-        <Text style={[styles.message, isMe && styles.messageR]}>{message}</Text>
-      </TouchableOpacity>
+          )}
+          <Text style={[styles.message, isMe && styles.messageR]}>
+            {message}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       {/* time stamp */}
-      {!isNext && <Text style={styles.time}>{time}</Text>}
+      {!isNext && time && (
+        <Text style={[styles.time, isMe && styles.timeR]}>
+          {dayjs(time).locale('vi').fromNow()}
+        </Text>
+      )}
     </View>
   );
 };
@@ -92,6 +140,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    alignSelf: 'flex-start',
     gap: 5,
     maxWidth: width * 0.8,
   },
@@ -123,11 +172,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 10,
     backgroundColor: '#E5E5E5',
+    alignSelf: 'flex-start',
   },
   wrapperR: {
     borderTopRightRadius: 0,
     borderTopLeftRadius: 10,
     backgroundColor: '#0CBBF0',
+    alignSelf: 'flex-end',
   },
   credentialR: {
     alignSelf: 'flex-end',
@@ -165,6 +216,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   time: {
+    alignSelf: 'flex-start',
+  },
+  timeR: {
     alignSelf: 'flex-end',
   },
 });
