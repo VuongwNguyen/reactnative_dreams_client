@@ -123,8 +123,6 @@ export const newPostStyle = {
   modalView: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItem: 'center',
   },
   centeredView: {
     top: 0.25 * height,

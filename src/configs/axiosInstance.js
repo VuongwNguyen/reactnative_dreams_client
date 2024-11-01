@@ -4,7 +4,8 @@ import { updateTokens } from '../store/slices';
 import { logoutRef } from '../components/LogoutDialog';
 
 const BASEURL =
-  'https://1edd-2402-800-637c-9e22-d9a5-d0cb-113f-1b55.ngrok-free.app/api';
+  // 'https://7bdf-2402-800-637c-9e22-d9a5-d0cb-113f-1b55.ngrok-free.app/api';
+  'http://192.168.100.234:8012/api'
 let isRefreshing = false;
 let queue = [];
 
