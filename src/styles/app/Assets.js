@@ -5,8 +5,8 @@
 const uriIcons = '../../../assets/icons/';
 export const Assets = {
   icons: {
-    danger:require(uriIcons + 'danger.png'),
-    followed:require(uriIcons + 'check-primary.png'),
+    danger: require(uriIcons + 'danger.png'),
+    followed: require(uriIcons + 'check-primary.png'),
     editProfile: require(uriIcons + 'edit-primary.png'),
     delete: require(uriIcons + 'delete.png'),
     hashTag: require(uriIcons + 'hashtags.png'),
@@ -56,6 +56,7 @@ export const Assets = {
     public: require(uriIcons + 'public.png'),
     private: require(uriIcons + 'private.png'),
     add: require(uriIcons + 'add.png'),
+    group: require(uriIcons + 'group.png'),
     //profile icon
     hobby: require(uriIcons + 'hobby.png'),
     zodiac: require(uriIcons + 'zodiac.png'),

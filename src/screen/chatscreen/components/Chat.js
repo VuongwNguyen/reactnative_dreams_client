@@ -1,20 +1,31 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 
 const Chat = props => {
-  const {name, message, unread, time, avatar, isOnline} = props;
+  const {name, message, time, avatar, isOnline} = props;
+
+  const renderImage = () => {
+    if (avatar instanceof Array) {
+      return (
+        <View style={styles.wrapperAvatar}>
+          {avatar.map((url, index) => {
+            return (
+              <Image key={index} source={{uri: url}} style={styles.avatar} />
+            );
+          })}
+        </View>
+      );
+    }
+
+    return <Image source={{uri: avatar}} style={styles.ava} />;
+  };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.row}>
         <View>
-          <Image
-            source={{
-              uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-            }}
-            style={styles.avatar}
-          />
-          <View style={styles.dot} />
+          {renderImage()}
+          {isOnline && <View style={styles.dot} />}
         </View>
 
         <View style={styles.content}>
@@ -22,10 +33,7 @@ const Chat = props => {
           <Text style={styles.message}>{message}</Text>
         </View>
       </View>
-      <View>
-        <Text style={styles.time}>2 phút</Text>
-        <Text style={styles.unread}>3</Text>
-      </View>
+      <View>{time && <Text style={styles.time}>{time}</Text>}</View>
     </View>
   );
 };
@@ -77,8 +85,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   avatar: {
+    flex: 1,
+    alignSelf: 'flex-start',
+    flexBasis: 25,
+    height: 'auto',
+    aspectRatio: 1,
+  },
+  ava: {
     width: 60,
     height: 60,
     borderRadius: 30,
+  },
+  wrapperAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    overflow: 'hidden',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    gap: 2,
   },
 });

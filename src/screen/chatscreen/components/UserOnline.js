@@ -1,22 +1,22 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
 const UserOnline = props => {
-  const {name, image, status} = props;
+  const {name, image, status, onPressed} = props;
 
   return (
-    <View style={styles.wrapper}>
+    <TouchableOpacity style={styles.wrapper} onPress={onPressed}>
       <View>
         <Image
           source={{
-            uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
+            uri: image,
           }}
           style={styles.avatar}
         />
-        <View style={styles.dot} />
+        {status && <View style={styles.dot} />}
       </View>
       <Text numberOfLines={1}>{name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
