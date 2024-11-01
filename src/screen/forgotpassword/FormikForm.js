@@ -1,27 +1,27 @@
-import {View, Text, TouchableOpacity, ToastAndroid} from 'react-native';
-import {forgotPasswordStyles} from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
+import { View, Text, TouchableOpacity, ToastAndroid } from 'react-native';
+import { forgotPasswordStyles } from '../../styles/forgotpasswordstyle/ForgotPasswordStyle';
 import AppInput from '../../components/Input';
-import {useTranslation} from 'react-i18next';
-import {useFormikH} from '../../configs/hooks/useFormikH';
-import {forgotPasswordSchema} from '../../configs/validateSchema/forgotPasswordSchema';
-import {useDispatch} from 'react-redux';
-import {apiSendOtpResetPW, APIVerifyAccount} from '../../store/api/AccountAPI';
-import {useNavigation} from '@react-navigation/native';
-import {stackName} from '../../navigations/screens';
+import { useTranslation } from 'react-i18next';
+import { useFormikH } from '../../configs/hooks/useFormikH';
+import { forgotPasswordSchema } from '../../configs/validateSchema/forgotPasswordSchema';
+import { useDispatch } from 'react-redux';
+import { apiSendOtpResetPW, APIVerifyAccount } from '../../store/api/AccountAPI';
+import { useNavigation } from '@react-navigation/native';
+import { stackName } from '../../navigations/screens';
 
 export const FormikFG = props => {
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const useAppDispatch = () => useDispatch();
   const dispatch = useAppDispatch();
 
-  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
+  const { handleSubmit, handleChange, values, errors, touched } = useFormikH(
     {
       emailAddress: '',
     },
     forgotPasswordSchema,
-    (values, {resetForm}) => {
+    (values, { resetForm }) => {
       try {
         const body = {
           email: values.emailAddress,
@@ -29,11 +29,11 @@ export const FormikFG = props => {
         dispatch(APIVerifyAccount(body))
           .unwrap()
           .then(res => {
-            resetForm();
             navigation.navigate(stackName.otp.name, {
               email: values.emailAddress,
               isForgot: true,
             });
+            resetForm();
           })
           .catch(err => {
             ToastAndroid.show(err.message, ToastAndroid.SHORT);

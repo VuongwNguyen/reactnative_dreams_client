@@ -9,8 +9,13 @@ import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
-dayjs.extend(relativeTime);
+import { useTranslation } from 'react-i18next';
+import { MenuItemPost } from './MenuItemPost';
+import { useDispatch } from 'react-redux';
+import { APIToggleFollow } from '../store/api/FollowAPI';
+import { APILikePost } from '../store/api/PostAPI';
 
+dayjs.extend(relativeTime);
 const customLocale = {
   ...dayjs.Ls.vi,
   relativeTime: {
@@ -34,9 +39,59 @@ const customLocale = {
 // Sử dụng locale tùy chỉnh
 dayjs.locale(customLocale);
 
-export default ItemPost = props => {
-  const {item, isLike = true} = props;
-  const [like, setLike] = useState(isLike);
+export const ItemSeparator = () => (
+  <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
+);
+
+export default React.memo(ItemPost = props => {
+  const {item, setItemClickId} = props;  
+  const [liked, setLiked] = useState(item.isLiked);
+  const [countLike, setCountLike] = useState(item.likeCount);
+  const {t} = useTranslation();
+  const [isShowMore, setIsShowMore] = useState(false);
+  const dispatch = useDispatch();
+  const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
+
+  const toggleLike = async () => {
+    dispatch(APILikePost({post_id: item._id})).then(res => {
+      setLiked(!liked);
+      if (liked) {
+        setCountLike(countLike - 1);
+      } else {
+        setCountLike(countLike + 1);
+      }
+    });
+  };
+
+  const handleItemMenuClick = key => {
+    switch (key) {
+      case 'report':
+        navigation.navigate(stackName.report.name, {
+          post_id: item._id,
+          type: 'post',
+        });
+        setIsShowMore(false);
+        break;
+      case 'edit':
+        console.log('edit');
+        break;
+      case 'privacy':
+        console.log('privacy');
+        break;
+      case 'delete':
+        console.log('delete');
+        break;
+      default:
+        console.log('default');
+        break;
+    }
+  };
+  
+  const handleFollow = (item) => {
+    dispatch(APIToggleFollow({following: item?.author?._id}));
+    setIsFollowed(!isFollowed);
+  };
+
   const navigation = useNavigation();
   return (
     <View style={itemPostStyle.container}>
@@ -58,10 +113,20 @@ export default ItemPost = props => {
         )}
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+          <View style={{flexDirection:'row',gap:10,alignContent:'center',alignItems:'center'}}>
+            <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+            {
+              !isFollowed && !item?.isSelf && 
+              <TouchableOpacity onPress={() => handleFollow(item)}>
+                <Image style={{width:12, height:12}} source={Assets.icons.follow}/>
+              </TouchableOpacity>
+            }
+          </View>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
-              {dayjs(item?.createdAt).locale('vi').fromNow()}
+              {dayjs(item?.createdAt)
+                .locale(t('itemPost.timeStatus'))
+                .fromNow()}
             </Text>
             {item?.privacy_status == 'public' && (
               <View
@@ -75,20 +140,32 @@ export default ItemPost = props => {
                   }}
                 />
                 <Image
-                  source={require('../../assets/icons/earth.png')}
+                  source={Assets.icons.earth}
                   style={{height: 15, width: 15}}
                 />
               </View>
             )}
           </View>
         </View>
+        {/* more */}
+        <TouchableOpacity
+          onPress={() => setIsShowMore(!isShowMore)}
+          style={itemPostStyle.headerMore}>
+          <Image
+            source={Assets.icons.more}
+            style={itemPostStyle.headerMoreIcon}
+          />
+        </TouchableOpacity>
       </View>
       {/* content */}
       <TouchableWithoutFeedback
         style={itemPostStyle.content}
-        onPress={() =>
-          navigation.navigate(stackName.postDetail.name, {post_id: item._id})
-        }>
+        onPress={() => {
+          navigation.navigate(stackName.postDetail.name, {
+            post_id: item._id,
+            setItemClickId,
+          });
+        }}>
         {/* title */}
         {!!item?.title && (
           <Text numberOfLines={2} style={Typography.postTitle}>
@@ -145,20 +222,20 @@ export default ItemPost = props => {
         </View>
       </TouchableWithoutFeedback>
       {/* image */}
-      {item?.images && item?.images.length > 0 && (
-        <GridImage arrImages={item.images} />
+      {((item?.images && item?.images.length > 0) || (item?.videos && item?.videos.length > 0)) && (
+        <GridImage arrImages={item.images} arrVideos={item.videos} />
       )}
       {/* interact */}
       <View style={itemPostStyle.interactContainer}>
         {/* like */}
         <TouchableOpacity
           style={itemPostStyle.itemInteract}
-          onPress={() => setLike(!like)}>
+          onPress={() => toggleLike(!liked)}>
           <Image
             style={{height: 20, width: 20}}
-            source={like ? Assets.icons.heartFill : Assets.icons.heart}
+            source={liked ? Assets.icons.heartFill : Assets.icons.heart}
           />
-          <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
+          <Text style={itemPostStyle.interactLabel}>{countLike}</Text>
         </TouchableOpacity>
         {/* comment */}
         <TouchableOpacity style={itemPostStyle.itemInteract}>
@@ -173,6 +250,8 @@ export default ItemPost = props => {
           <Text style={itemPostStyle.interactLabel}>{item?.share}</Text>
         </TouchableOpacity>
       </View>
+      {/* header more modal */}
+      {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick} />}
     </View>
   );
-};
+});

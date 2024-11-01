@@ -8,7 +8,8 @@ export const HomeStyles = {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 20,
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   avatar: {
     width: 50,
@@ -34,6 +35,6 @@ export const HomeStyles = {
   iconSearch: {
     position: 'absolute',
     left: 15,
-    top: 8,
+    top: -32,
   },
 };

@@ -1,30 +1,59 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {GridImageStyle} from '../styles/components/GridImage/GridImageStyle';
-import ImageViewing from 'react-native-image-viewing';
+import ViewGallery from './ViewGrallery';
+import ThumbnailVideo from './ThumbnailVideo';
 
 const GridImage = props => {
-  const {arrImages = []} = props;
+  const {arrImages = [], arrVideos = []} = props;
   const [visible, setIsVisible] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [targetIndex, setTargetIndex] = useState(0);
 
   const openImage = index => {
-    setCurrentIndex(index);
+    setTargetIndex(index);  
     setIsVisible(true);
   };
 
-  // Chuyển đổi arrImages sang định dạng { uri: 'image-url' }
-  const images = arrImages.map(img => ({uri: img.url}));
+  // Chuyển đổi images sang định dạng { uri: 'image-url' }
+  const images = arrImages.map(img => ({uri: img.url, type: 'image'}));
+  const videos = arrVideos.map(video => ({uri: video.url, type: 'video'}));
+  let galleries = images.concat(videos);
+
+  // const RenderVideo = ({item, style}) => {
+  //   const [loading, setLoading] = useState(true);
+  //   return (
+  //     <View style={style}>
+  //       <Video 
+  //         style={{flex:1}} 
+  //         paused={false} 
+  //         controls={false} 
+  //         onLoad={() => setLoading(false)}
+  //         source={{uri: item.uri}}>
+  //       </Video>
+  //       {loading && <ActivityIndicator style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}} size="small" color="#0000ff" />}
+  //     </View>
+  //   )
+  // }
+
+  const ImageORVideo = ({item}) => {
+    if (item.type === 'image') {
+      return <Image source={{uri: item.uri}} style={GridImageStyle.gridImage} />;
+    } else if (item.type === 'video') {
+      console.log('thumbnail', item.uri);
+      return <ThumbnailVideo videoUri={item.uri} style={GridImageStyle.gridImage} styleIcon={GridImageStyle.gridPlayIcon}/>
+    }
+  }
 
   const renderTwoImages = () => {
+    console.log('2')
     return (
-      <View style={GridImageStyle.rowContainer}>
-        {arrImages.slice(0, 2).map((item, index) => (
+      <View style={GridImageStyle.rowContainer}>    
+        {galleries.slice(0, 2).map((item, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => openImage(index)}
-            style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>
-            <Image source={{uri: item.url}} style={GridImageStyle.gridImage} />
+            style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>              
+              <ImageORVideo item={item} />
           </TouchableOpacity>
         ))}
       </View>
@@ -35,41 +64,35 @@ const GridImage = props => {
     return (
       <View style={{ gap: 10 }}>
         <View style={GridImageStyle.rowContainer}>
-          {arrImages.slice(0, 2).map((item, index) => (
+          {galleries.slice(0, 2).map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => openImage(index)}
               style={[GridImageStyle.gridImageContainer, {width: '48%'}]}>
-              <Image
-                source={{uri: item.url}}
-                style={GridImageStyle.gridImage}
-              />
+              <ImageORVideo item={item} />
             </TouchableOpacity>
           ))}
         </View>
         <TouchableOpacity
           onPress={() => openImage(2)}
           style={[GridImageStyle.gridImageContainer, {width: '100%'}]}>
-          <Image
-            source={{ uri: arrImages[2].url }}
-            style={GridImageStyle.gridImage}
-          />
+          <ImageORVideo item={galleries[2]} />
         </TouchableOpacity>
       </View>
     );
   };
 
   const renderImageGrid = () => {
-    return arrImages.slice(0, 4).map((item, index) => (
+    return galleries.slice(0, 4).map((item, index) => (
       <TouchableOpacity
         key={index}
         onPress={() => openImage(index)}
         style={GridImageStyle.gridImageContainer}>
-        <Image source={{ uri: item.url }} style={GridImageStyle.gridImage} />
+        <ImageORVideo item={item} />
         {index === 3 && arrImages?.length > 4 && (
           <View style={GridImageStyle.moreOverlay}>
             <Text style={GridImageStyle.moreText}>
-              +{arrImages.length - 4}
+              +{galleries.length - 4}
             </Text>
           </View>
         )}
@@ -79,37 +102,22 @@ const GridImage = props => {
 
   return (
     <View style={GridImageStyle.container}>
-      {arrImages.length === 1 ? (
-        <Image
-          source={{uri: arrImages[0].url}}
-          style={GridImageStyle.mainImage}
-        />
-      ) : arrImages.length === 2 ? (
+      {galleries.length === 1 ? (
+        <TouchableOpacity onPress={() => setIsVisible(true)}>
+          {
+            galleries[0].type === 'image' 
+            ? <Image source={{uri: galleries[0].uri}} style={GridImageStyle.mainImage} />
+            : <ThumbnailVideo videoUri={galleries[0].uri} style={GridImageStyle.mainImage} styleIcon={GridImageStyle.mainPlayIcon}/>
+          }
+        </TouchableOpacity>
+      ) : galleries.length === 2 ? (
         renderTwoImages()
-      ) : arrImages.length === 3 ? (
+      ) : galleries.length === 3 ? (
         renderThreeImages()
       ) : (
         <View style={GridImageStyle.gridContainer}>{renderImageGrid()}</View>
       )}
-      <ImageViewing
-        images={images} // Truyền mảng hình ảnh đã chuyển đổi
-        imageIndex={currentIndex} // Sử dụng currentIndex để hiển thị đúng ảnh mà người dùng nhấn
-        visible={visible}
-        onRequestClose={() => setIsVisible(false)}
-        onImageIndexChange={index => setCurrentIndex(index)}
-        FooterComponent={() => (
-          <View>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontSize: 10,
-              }}>
-              {currentIndex + 1}/{arrImages.length}
-            </Text>
-          </View>
-        )}
-      />
+      <ViewGallery data={galleries} modalVisible={visible} setModalVisible={setIsVisible} targetIndex={targetIndex}/>
     </View>
   );
 };

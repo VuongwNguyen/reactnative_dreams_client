@@ -44,4 +44,18 @@ export const GridImageStyle = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
       },
+      mainPlayIcon:{
+        position: 'absolute',
+        top: '45%',
+        left: '45%',
+        transform: [{ translateX: -12 }, { translateY: -12 }],
+      },
+      gridPlayIcon:{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -12 }, { translateY: -12 }],
+        width: 24,
+        height: 24,
+      }
 });

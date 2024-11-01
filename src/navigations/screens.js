@@ -1,4 +1,3 @@
-import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import ChangeNewPasswordScreen from '../screen/changenewpassword/ChangeNewPasswordScreen';
 import ChangePasswordScreen from '../screen/changepassword/ChangePasswordScreen';
 import ForgotPasswordScreen from '../screen/forgotpassword/ForgotPasswordScreen';
@@ -21,7 +20,10 @@ import PolicyPrivacyScreen from '../screen/privacypolicy/PolicyPrivacyScreen';
 import FlingScreen from '../screen/flingscreen/FlingScreen';
 import CreateGroupChatScreen from '../screen/creategroupchat/CreateGroupChatScreen';
 import MessageScreen from '../screen/chatscreen/MessageScreen';
+import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
+import ReportScreen from '../screen/report/ReportScreen';
+
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -67,6 +69,10 @@ export const stackName = {
   camera: {
     name: 'camera',
     component: CameraScreen,
+  },
+  report: {
+    name: 'report',
+    component: ReportScreen,
   },
 };
 

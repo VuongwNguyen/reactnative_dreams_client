@@ -17,6 +17,11 @@ const persisConfig = {
   storage: AsyncStorage,
 };
 
+const rootReducer = combineReducers({
+  account: slices.accountSlice.reducer, // Add your reducers here
+  userBasicInf: slices.userBasicInfSlice.reducer,
+});
+
 const persistedReducer = persistReducer(
   persisConfig,
   slices.accountSlice.reducer,
@@ -29,6 +34,8 @@ export const store = configureStore({
     chatUser: slices.usersOnlineSlice.reducer,
     chatRoom: slices.roomsSlice.reducer,
     chatMessage: slices.chatSlice.reducer,
+    postDetail: slices.postDetailSlice.reducer,
+    postTrending: slices.postTrendingSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({

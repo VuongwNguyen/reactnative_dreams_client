@@ -4,7 +4,7 @@ import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
 const BASEURL =
-  'https://91eb-2402-800-637c-9e22-54ac-eb16-37e5-b470.ngrok-free.app/api/';
+  'https://1edd-2402-800-637c-9e22-d9a5-d0cb-113f-1b55.ngrok-free.app/api';
 
 let isRefreshing = false;
 let queue = [];
@@ -43,6 +43,7 @@ const AxiosInstance = (contentType = 'application/json') => {
       if (store.getState().account.token.accessToken) {
         token = store.getState().account.token.accessToken;
       }
+
       config.headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',

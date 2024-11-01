@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -9,6 +8,7 @@ import {
   Keyboard,
   Modal,
   ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useMemo, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -23,6 +23,7 @@ import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {APIGetFollowing} from '../../store/api/FollowAPI';
+import {setPostCreated} from '../../store/slices';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -53,12 +54,14 @@ const NewPostScreen = props => {
   const [modalTagUserVisible, setModalTagUserVisible] = useState(false);
   const [selected, setSelected] = useState([]);
   const [selectedFullNames, setSelectedFullNames] = useState([]);
-
   const [data, setData] = useState([]);
-  const [fetchAPIStatus, setFetchAPIStatus] = useState('loading');
   const [hashTagList, setHashTagList] = useState([]);
   const [modalHashTagVisible, setModalHashtagVisible] = useState(false);
   const [hashTagField, setHashTagField] = useState('');
+  const [postStatus, setPostStatus] = useState('');
+
+  const [editableTextInput, setEditableTextInput] = useState(true);
+  const [buttonDisable, setPostClickable] = useState(false);
 
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -104,15 +107,24 @@ const NewPostScreen = props => {
     );
   };
 
-  Keyboard.addListener('keyboardDidShow', () => {
-    setIsPreviewed(false);
-  });
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setIsPreviewed(false),
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setIsPreviewed(true),
+    );
 
-  Keyboard.addListener('keyboardDidHide', () => {
-    setIsPreviewed(true);
-  });
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const handleCreatePost = async () => {
+    setPostStatus('loading');
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
@@ -145,20 +157,33 @@ const NewPostScreen = props => {
     dispatch(APICreatePost(formData))
       .unwrap()
       .then(res => {
-        ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+        setPostStatus('successfully');
         navigation.navigate(stackName.bottomTab.name);
+        dispatch(setPostCreated(true));
+        ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   };
 
+  useEffect(() => {
+    if (postStatus == 'loading') {
+      setEditableTextInput(false);
+      setPostClickable(true);
+    }
+  }, [postStatus]);
+
   const handleTagUser = () => {
-    setModalTagUserVisible(true);
-    dispatch(APIGetFollowing('67010e3da2ce9ed2d170ba13'))
+    dispatch(APIGetFollowing())
       .then(res => {
-        setFetchAPIStatus(res?.meta?.requestStatus);
-        setData(res?.payload?.data?.list);
+        if (res?.payload?.data) {
+          setModalTagUserVisible(true);
+          setData(res?.payload?.data?.list);
+        } else {
+          ToastAndroid.show('Danh sách following trống!', ToastAndroid.SHORT);
+        }
+        // setFetchAPIStatus(res?.meta?.requestStatus);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -170,9 +195,9 @@ const NewPostScreen = props => {
   };
   const userData = data?.map(item => {
     return {
-      id: item?.following?._id,
-      fullname: `${item?.following?.first_name} ${item?.following?.last_name}`,
-      avt: item?.following?.avatar,
+      id: item?.user?._id,
+      fullname: item?.user?.fullname,
+      avt: item?.user?.avatar,
     };
   });
 
@@ -181,7 +206,7 @@ const NewPostScreen = props => {
       <View style={newPostStyle.item} key={item.id}>
         <Image
           source={{uri: item?.avt}}
-          style={{width: 24, height: 24, borderRadius: 12}}
+          style={{width: 40, height: 40, borderRadius: 20}}
         />
         <Text style={newPostStyle.selectedTextStyle}>{item.fullname}</Text>
       </View>
@@ -206,18 +231,28 @@ const NewPostScreen = props => {
 
   return (
     <View style={newPostStyle.container}>
-      <AppHeader
-        title={t('newPostScreen.title')}
-        rightButton={true}
-        rightButtonTitle={t('newPostScreen.post')}
-        rightButtonAction={handleCreatePost}
-        isDisabled={!postContent || !openLine}
-      />
+      <View style={newPostStyle.headerContainer}>
+        <AppHeader
+          title={t('newPostScreen.title')}
+          rightButton={true}
+          rightButtonTitle={!buttonDisable && t('newPostScreen.post')}
+          rightButtonAction={handleCreatePost}
+          isDisabled={!postContent || !openLine || buttonDisable}
+        />
 
+        {postStatus == 'loading' && (
+          <ActivityIndicator
+            size="small"
+            color={Colors.primary}
+            style={newPostStyle.activityIndicator}
+          />
+        )}
+      </View>
       <ScrollView contentContainerStyle={newPostStyle.scrollContainer}>
         <View style={newPostStyle.bodyContainer}>
           <View style={newPostStyle.accountContainer}>
             <TouchableOpacity
+              disabled={buttonDisable}
               onPress={() => {
                 navigation.navigate(stackName.profile.name);
               }}>
@@ -229,9 +264,10 @@ const NewPostScreen = props => {
 
             <View style={newPostStyle.inf}>
               <Text style={newPostStyle.userName}>
-                {userBasicInfData?.full_name}
+                {userBasicInfData?.fullname}
               </Text>
               <Dropdown
+                disable={buttonDisable}
                 data={pricvacyData}
                 labelField="label"
                 valueField="value"
@@ -246,7 +282,7 @@ const NewPostScreen = props => {
                   <Image
                     source={
                       privacyStatus == 'public'
-                        ? Assets.icons.earth
+                        ? Assets.icons.public
                         : Assets.icons.privacy
                     }
                     style={{height: 20, width: 20, marginRight: 5}}
@@ -259,6 +295,7 @@ const NewPostScreen = props => {
 
           <View style={newPostStyle.postContainer}>
             <TextInput
+              editable={editableTextInput}
               multiline={true}
               placeholder={t('newPostScreen.openLine')}
               placeholderTextColor={Colors.secondary}
@@ -267,6 +304,7 @@ const NewPostScreen = props => {
               style={newPostStyle.openLine}
             />
             <TextInput
+              editable={editableTextInput}
               multiline={true}
               placeholder={t('newPostScreen.contentPost')}
               placeholderTextColor={Colors.secondary}
@@ -295,28 +333,41 @@ const NewPostScreen = props => {
           <View style={newPostStyle.showAttachContainer}>
             {itemSelected?.[0]?.uri && isPreviewed ? renderImg() : ''}
             <View style={newPostStyle.attachmentContainer}>
-              <TouchableOpacity onPress={() => onOpenCamera()}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => onOpenCamera()}>
                 <Image source={Assets.icons.camera} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => onOpenVideoCamera()}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => onOpenVideoCamera()}>
                 <Image source={Assets.icons.video} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => pickMedia('image')}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => pickMedia('image')}>
                 <Image source={Assets.icons.gallery} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => pickMedia('video')}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => pickMedia('video')}>
                 <Image source={Assets.icons.videoGallery} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTagUser()}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => handleTagUser()}>
                 <Image source={Assets.icons.tagUser} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handelHashtag()}>
+              <TouchableOpacity
+                disabled={buttonDisable}
+                onPress={() => handelHashtag()}>
                 <Image source={Assets.icons.hashTag} />
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </ScrollView>
+
       {/* modal tag user */}
       <Modal
         animationType="fade"
@@ -363,7 +414,7 @@ const NewPostScreen = props => {
                   <View style={newPostStyle.selectedStyle}>
                     <Image
                       source={{uri: item?.avt}}
-                      style={{width: 24, height: 24, borderRadius: 12}}
+                      style={{width: 40, height: 40, borderRadius: 20}}
                     />
                     <Text style={newPostStyle.textSelectedStyle}>
                       {item.fullname}
@@ -453,5 +504,3 @@ const NewPostScreen = props => {
 };
 
 export default NewPostScreen;
-
-const styles = StyleSheet.create({});

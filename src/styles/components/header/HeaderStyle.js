@@ -6,7 +6,7 @@ export const AppHeaderStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    maxHeight: 50,
+    maxHeight: 40,
     justifyContent: 'space-between',
     paddingHorizontal: Spacings.md,
   },
@@ -22,6 +22,8 @@ export const AppHeaderStyle = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 6,
     opacity: 0.4,
+    minHeight: 30,
+    minWidth: 55,
   },
   titleRightButton: {
     fontFamily: Fonts.roboto.bold,
