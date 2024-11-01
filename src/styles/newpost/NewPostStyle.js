@@ -5,6 +5,21 @@ const avtSize = width * 0.18;
 const imgPostWidth = width * 0.25;
 const imgPostHeight = height * 0.16;
 export const newPostStyle = {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItem: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+  headerContainer: {
+    height: 40,
+    marginHorizontal: -12,
+  },
+  activityIndicator: {
+    position: 'absolute',
+    top: 10,
+    right: 28,
+  },
   container: {
     flex: 1,
     padding: Spacings.lg,
@@ -108,6 +123,8 @@ export const newPostStyle = {
   modalView: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItem: 'center',
   },
   centeredView: {
     top: 0.25 * height,

@@ -15,6 +15,8 @@ import {AppHeaderStyle} from '../../styles/components/header/HeaderStyle';
 import {useDispatch, useSelector} from 'react-redux';
 import {APILogout} from '../../store/api/AccountAPI';
 import {useSocket} from '../../contexts/SocketContext';
+import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LIGHT = 'light';
 const DARK = 'dark';
@@ -39,6 +41,15 @@ const SettingScreen = props => {
             .then(res => {
               socket?.disconnect();
               ToastAndroid.show('Logout success', 1000);
+              return Promise.all([
+                messaging().deleteToken(),
+                AsyncStorage.removeItem('credential'),
+              ]);
+            })
+            .then(() => {
+              console.log(
+                '[SettingScreen] revoke token and remove credential success',
+              );
             })
             .catch(err =>
               ToastAndroid.show(

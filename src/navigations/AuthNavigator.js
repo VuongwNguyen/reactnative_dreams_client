@@ -1,5 +1,5 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import {stackName} from './screens';
+import { createStackNavigator } from '@react-navigation/stack';
+import { stackName } from './screens';
 
 const AuthStack = createStackNavigator();
 
@@ -7,7 +7,7 @@ const AuthNavigator = () => {
   return (
     <AuthStack.Navigator
       initialRouteName={stackName.login.name}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}>
       <AuthStack.Screen
         name={stackName.register.name}
         component={stackName.register.component}
@@ -23,6 +23,10 @@ const AuthNavigator = () => {
       <AuthStack.Screen
         name={stackName.otp.name}
         component={stackName.otp.component}
+      />
+      <AuthStack.Screen
+        name={stackName.changeNewPassword.name}
+        component={stackName.changeNewPassword.component}
       />
     </AuthStack.Navigator>
   );

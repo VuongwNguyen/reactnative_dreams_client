@@ -1,61 +1,104 @@
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {FlingStyle} from '../../styles/flingstyle/FlingStyle';
+import { FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlingStyle } from '../../styles/flingstyle/FlingStyle';
 import Header from '../../components/Header';
-const data = [
-  {
-    name: 'Fling 1',
-    folowwing: true,
-  },
-  {
-    name: 'Fling 1',
-    folowwing: true,
-  },
-  {
-    name: 'Fling 1',
-    folowwing: false,
-  },
-  {
-    name: 'Fling 1',
-    folowwing: false,
-  },
-  {
-    name: 'Fling 1',
-    folowwing: true,
-  },
-  {
-    name: 'Fling 1',
-    folowwing: true,
-  },
-];
-const FlingScreen = () => {
-  return (
-    <View style={FlingStyle.container}>
-      <Header title={'Fling Screen'} />
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <View style={FlingStyle.item}>
-            <Image
-              style={FlingStyle.avatar}
-              source={{
-                uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg',
-              }}
-            />
-            <Text style={FlingStyle.name}>{item.name}</Text>
+import { useDispatch } from 'react-redux';
+import { APIGetFollowers, APIGetFollowing, APIToggleFollow } from '../../store/api/FollowAPI';
+import { current } from '@reduxjs/toolkit';
+import { id } from 'rn-emoji-keyboard';
+
+const FlingScreen = (props) => {
+  const params = props.route.params
+  const type = params?.type
+  const user_id_view = params?.user_id_view
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      if (type === 'Followers') {
+        const result = await dispatch(APIGetFollowers({ user_id_view, page })).unwrap();
+        setData(result.list);
+      }
+      if (type === 'Following') {
+        const result = await dispatch(APIGetFollowing({ user_id_view, page })).unwrap();
+        setData(result.list);
+      }
+    } catch (error) {
+      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
+      setRefreshing(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [page]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setPage(1);
+    fetchData();
+  }
+
+  const RenderItems = ({ item }) => {
+    const id_user = item.follower?._id || item.user?._id;
+    const [isFollowing, setIsFollowing] = useState(item.isFollowing);
+
+    const handleFollow = async () => {
+      try {
+        const body = { following: id_user };
+        const result = await dispatch(APIToggleFollow(body)).unwrap();
+        console.log(result);
+
+        // Toggle trạng thái isFollowing
+        setIsFollowing(prevState => !prevState);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    return (
+      <View style={FlingStyle.item}>
+        <Image
+          style={FlingStyle.avatar}
+          source={{ uri: item.follower?.avatar || item.user.avatar }}
+        />
+        <Text style={FlingStyle.name}>
+          {item.follower?.fullname || item.user?.fullname}
+        </Text>
+        {
+          !item.isSelf && (
             <TouchableOpacity
-              style={item.folowwing ? FlingStyle.flowwing : FlingStyle.flowwed}>
-              <Text
-                style={
-                  item.folowwing
-                    ? FlingStyle.flowwingText
-                    : FlingStyle.flowwedText
-                }>
-                {item.folowwing ? 'Followed' : 'Follow'}
+              style={isFollowing ? FlingStyle.flowwing : FlingStyle.flowwed}
+              onPress={handleFollow}
+            >
+              <Text style={isFollowing ? FlingStyle.flowwingText : FlingStyle.flowwedText}>
+                {isFollowing ? 'Followed' : 'Follow'}
               </Text>
             </TouchableOpacity>
-          </View>
-        )}
+          )
+        }
+      </View>
+    );
+  };
+
+
+  return (
+    <View style={FlingStyle.container}>
+      <Header title={type} />
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <RenderItems item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );

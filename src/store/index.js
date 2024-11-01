@@ -20,14 +20,23 @@ const persisConfig = {
 const rootReducer = combineReducers({
   account: slices.accountSlice.reducer, // Add your reducers here
   userBasicInf: slices.userBasicInfSlice.reducer,
-  postDetail: slices.postDetailSlice.reducer,
-  postTrending: slices.postTrendingSlice.reducer,
 });
 
-const persistedReducer = persistReducer(persisConfig, rootReducer);
+const persistedReducer = persistReducer(
+  persisConfig,
+  slices.accountSlice.reducer,
+);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    account: persistedReducer,
+    userBasicInf: slices.userBasicInfSlice.reducer,
+    chatUser: slices.usersOnlineSlice.reducer,
+    chatRoom: slices.roomsSlice.reducer,
+    chatMessage: slices.chatSlice.reducer,
+    postDetail: slices.postDetailSlice.reducer,
+    postTrending: slices.postTrendingSlice.reducer,
+  },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
       serializableCheck: {
