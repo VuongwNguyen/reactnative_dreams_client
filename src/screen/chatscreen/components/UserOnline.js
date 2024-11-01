@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     alignItems: 'center',
+    maxWidth: 80,
   },
   avatar: {
     width: 60,

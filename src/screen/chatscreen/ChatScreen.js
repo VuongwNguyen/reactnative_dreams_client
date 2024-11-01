@@ -103,7 +103,7 @@ const ChatScreen = () => {
           <TouchableOpacity
             style={styles.search}
             onPress={() => {
-              Linking.openURL('https://google.com/');
+              navigation.navigate(stackName.chatSearch.name);
             }}>
             <Image source={Assets.icons.search} style={styles.searchIcon} />
             <Text>Search ...</Text>

@@ -166,6 +166,11 @@ export function Navigator() {
           name={stackName.report.name}
           component={stackName.report.component}
         />
+
+        <Stack.Screen
+          name={stackName.chatSearch.name}
+          component={stackName.chatSearch.component}
+        />
       </Stack.Navigator>
       <LogoutDialog ref={logoutRef} />
     </SocketProvider>

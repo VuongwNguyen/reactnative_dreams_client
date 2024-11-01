@@ -23,7 +23,7 @@ import MessageScreen from '../screen/chatscreen/MessageScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
 import ReportScreen from '../screen/report/ReportScreen';
-
+import ChatSearch from '../screen/chatscreen/ChatSearch';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -73,6 +73,10 @@ export const stackName = {
   report: {
     name: 'report',
     component: ReportScreen,
+  },
+  chatSearch: {
+    name: 'chat_search',
+    component: ChatSearch,
   },
 };
 

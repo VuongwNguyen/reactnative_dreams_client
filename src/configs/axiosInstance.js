@@ -3,8 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL =
-  'https://1edd-2402-800-637c-9e22-d9a5-d0cb-113f-1b55.ngrok-free.app/api';
+const BASEURL = 'http://192.168.1.10:8012/api';
 
 let isRefreshing = false;
 let queue = [];
@@ -12,6 +11,7 @@ let queue = [];
 const AxiosInstance = (contentType = 'application/json') => {
   const axiosInstance = axios.create({
     baseURL: BASEURL,
+    timeout: 60000,
   });
 
   const processQueue = (err, accessToken) => {

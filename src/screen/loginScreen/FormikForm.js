@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
   Image,
@@ -9,29 +9,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Input from '../../components/Input';
-import { useFormikH } from '../../configs/hooks/useFormikH';
-import { loginSchema } from '../../configs/validateSchema/LoginSchema';
-import { stackName } from '../../navigations/screens';
-import { APILogin } from '../../store/api/AccountAPI';
-import { Assets, Typography } from '../../styles';
-import { ButtonStyle } from '../../styles/components/button/ButtonStyle';
-import { LoginStyle } from '../../styles/loginStyle/LoginStyle';
+import {useFormikH} from '../../configs/hooks/useFormikH';
+import {loginSchema} from '../../configs/validateSchema/LoginSchema';
+import {stackName} from '../../navigations/screens';
+import {APILogin} from '../../store/api/AccountAPI';
+import {Assets, Typography} from '../../styles';
+import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
+import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 
 const FormikForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.account);
-  const { t } = useTranslation();
+  const {loading} = useSelector(state => state.account);
+  const {t} = useTranslation();
   const [isRememberMe, setIsRememberMe] = useState(false);
-  const { handleSubmit, handleChange, values, errors, touched } = useFormikH(
+  const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       emailOrPhoneNumber: '',
       password: '',
     },
     loginSchema,
-    (val, { resetForm }) => {
+    (val, {resetForm}) => {
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
@@ -46,7 +46,7 @@ const FormikForm = () => {
           ToastAndroid.show('Login success', 1000);
         })
         .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          ToastAndroid.show(err, ToastAndroid.SHORT);
         });
     },
   );
@@ -74,7 +74,7 @@ const FormikForm = () => {
           <Text style={Typography.errorText}>{errors.password}</Text>
         )}
       </View>
-      <View style={[LoginStyle.rowContainer, { justifyContent: 'flex-end' }]}>
+      <View style={[LoginStyle.rowContainer, {justifyContent: 'flex-end'}]}>
         {/* <TouchableOpacity
           style={LoginStyle.checkBoxContainer}
           onPress={() => setIsRememberMe(!isRememberMe)}>
@@ -84,7 +84,8 @@ const FormikForm = () => {
           <Text>{t('loginScreen.remmberMe')}</Text>
         </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() => navigation.navigate(stackName.forgotPassword.name)} style={{}}>
+          onPress={() => navigation.navigate(stackName.forgotPassword.name)}
+          style={{}}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
@@ -98,7 +99,7 @@ const FormikForm = () => {
           <Text style={ButtonStyle.title}>{t('loginScreen.login')}</Text>
         )}
       </TouchableOpacity>
-      <View style={{ gap: 20 }}>
+      <View style={{gap: 20}}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
           <TouchableOpacity>

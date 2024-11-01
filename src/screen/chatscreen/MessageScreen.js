@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Assets, Colors} from '../../styles';
-import {Loading, Message} from './components';
+import {Loading, Message, User} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {useSocket} from '../../contexts/SocketContext';
@@ -271,14 +271,6 @@ const MessageScreen = props => {
           <TouchableOpacity>
             <Image source={Assets.icons.video} style={styles.icon} />
           </TouchableOpacity>
-          {room.is_group && (
-            <TouchableOpacity
-              style={[styles.row, {gap: 2}]}
-              onPress={() => setShowMembers(true)}>
-              <Image source={Assets.icons.group} style={styles.icon} />
-              <Text>({room.members.length})</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
 
@@ -362,21 +354,6 @@ const MessageScreen = props => {
           <TouchableOpacity onPress={() => setShowMembers(false)}>
             <Text>Đóng</Text>
           </TouchableOpacity>
-
-          {room.members.map(member => {
-            return (
-              <TouchableOpacity key={member.account_id} style={styles.row}>
-                <Image
-                  source={{uri: member.avatar}}
-                  style={{width: 50, height: 50, borderRadius: 25}}
-                />
-                <View>
-                  <Text>{member.fullname}</Text>
-                  <Text>Thành viên</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
         </View>
       )}
 
