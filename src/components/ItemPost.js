@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Modal, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
@@ -9,9 +9,12 @@ import {Assets, Typography} from './../styles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
-import AxiosInstance from '../configs/axiosInstance';
-import {useTranslation} from 'react-i18next';
-import {MenuItemPost} from './MenuItemPost';
+import { useTranslation } from 'react-i18next';
+import { MenuItemPost } from './MenuItemPost';
+import { useDispatch } from 'react-redux';
+import { APIToggleFollow } from '../store/api/FollowAPI';
+import { APILikePost } from '../store/api/PostAPI';
+
 dayjs.extend(relativeTime);
 const customLocale = {
   ...dayjs.Ls.vi,
@@ -40,24 +43,24 @@ export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
 );
 
-export default ItemPost = props => {
-  const navigation = useNavigation();
-  const {item, setItemClickId} = props;
+export default React.memo(ItemPost = props => {
+  const {item, setItemClickId} = props;  
   const [liked, setLiked] = useState(item.isLiked);
   const [countLike, setCountLike] = useState(item.likeCount);
   const {t} = useTranslation();
   const [isShowMore, setIsShowMore] = useState(false);
+  const dispatch = useDispatch();
+  const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
 
   const toggleLike = async () => {
-    await AxiosInstance().post('/post/like-post', {
-      post_id: item._id,
+    dispatch(APILikePost({post_id: item._id})).then(res => {
+      setLiked(!liked);
+      if (liked) {
+        setCountLike(countLike - 1);
+      } else {
+        setCountLike(countLike + 1);
+      }
     });
-    setLiked(!liked);
-    if (liked) {
-      setCountLike(countLike - 1);
-    } else {
-      setCountLike(countLike + 1);
-    }
   };
 
   const handleItemMenuClick = key => {
@@ -83,7 +86,13 @@ export default ItemPost = props => {
         break;
     }
   };
+  
+  const handleFollow = (item) => {
+    dispatch(APIToggleFollow({following: item?.author?._id}));
+    setIsFollowed(!isFollowed);
+  };
 
+  const navigation = useNavigation();
   return (
     <View style={itemPostStyle.container}>
       {/* header */}
@@ -104,7 +113,15 @@ export default ItemPost = props => {
         )}
         {/* name, hour */}
         <View>
-          <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+          <View style={{flexDirection:'row',gap:10,alignContent:'center',alignItems:'center'}}>
+            <Text style={Typography.postName}>{item?.author?.fullname}</Text>
+            {
+              !isFollowed && !item?.isSelf && 
+              <TouchableOpacity onPress={() => handleFollow(item)}>
+                <Image style={{width:12, height:12}} source={Assets.icons.follow}/>
+              </TouchableOpacity>
+            }
+          </View>
           <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Text style={itemPostStyle.headerLabel}>
               {dayjs(item?.createdAt)
@@ -123,7 +140,7 @@ export default ItemPost = props => {
                   }}
                 />
                 <Image
-                  source={require('../../assets/icons/earth.png')}
+                  source={Assets.icons.earth}
                   style={{height: 15, width: 15}}
                 />
               </View>
@@ -205,8 +222,8 @@ export default ItemPost = props => {
         </View>
       </TouchableWithoutFeedback>
       {/* image */}
-      {item?.images && item?.images.length > 0 && (
-        <GridImage arrImages={item.images} />
+      {((item?.images && item?.images.length > 0) || (item?.videos && item?.videos.length > 0)) && (
+        <GridImage arrImages={item.images} arrVideos={item.videos} />
       )}
       {/* interact */}
       <View style={itemPostStyle.interactContainer}>
@@ -237,4 +254,4 @@ export default ItemPost = props => {
       {isShowMore && <MenuItemPost handleItemMenuClick={handleItemMenuClick} />}
     </View>
   );
-};
+});

@@ -68,7 +68,7 @@ export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
   async (page, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().get(`/post/trending-posts`);
+      const response = await AxiosInstance().get(`/post/following-posts/1/1`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -118,3 +118,16 @@ export const APIGetTrendingPost = createAsyncThunk(
     }
   },
 );
+
+///post/like-post
+export const APILikePost = createAsyncThunk(
+  'post/like-post',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post('/post/like-post', body);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+)

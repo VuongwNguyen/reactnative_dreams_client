@@ -1,8 +1,8 @@
-import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Animated from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
-import ItemPost from '../../components/ItemPost';
+import ItemPost, { ItemSeparator } from '../../components/ItemPost';
 import { APICountViewPost, APIGetTrendingPost, APISetPostViewd } from '../../store/api/PostAPI';
 import { Colors } from '../../styles';
 import { resetPostCreated } from '../../store/slices';
@@ -84,10 +84,6 @@ const TrendingPostTab = props => {
     onViewableItemsChanged,
   }]);
 
-  const ItemSeparator = () => (
-    <View style={{ height: 5, backgroundColor: '#b5b5b5' }} />
-  );
-
   const renderLoader = () => {
     return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
   };
@@ -99,7 +95,7 @@ const TrendingPostTab = props => {
       onScroll={scrollHandler}
       data={dataPosts}
       renderItem={({ item }) => <ItemPost item={item} />}
-      keyExtractor={({ item }, index) => index.toString()} // Sử dụng item._id để đảm bảo tính duy nhất
+      keyExtractor={({ item }, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={() => {
         // Chỉ tăng currentPage khi không đang tải dữ liệu
