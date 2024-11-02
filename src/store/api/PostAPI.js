@@ -45,7 +45,7 @@ export const APIGetPostByUser = createAsyncThunk(
         `/post/get-post-by-user?${query}`,
       );
 
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
