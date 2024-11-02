@@ -100,13 +100,13 @@ const CommentItem = memo(props => {
   };
 
   useEffect(() => {
-    const a = async () => {
+    const fetchChildComment = async () => {
       const res = await AxiosInstance().get(
       `/comment/child-comments?comment_id=${comment._id}`,
     );
     setChildComments(res.data.list);
     }
-    a()
+    fetchChildComment()
   }, [comment]);
 
   return (
@@ -183,10 +183,11 @@ const CommentItem = memo(props => {
               <>
                 <FlatList
                   data={childComments}
-                  key={childComments?._id}
+                  // key={childComments?._id}
                   renderItem={({item}) => (
                     <View>
                       <CommentItem
+                        key={item.id}
                         comment={item}
                         level={level + 1}
                         inputRef={inputRef}
