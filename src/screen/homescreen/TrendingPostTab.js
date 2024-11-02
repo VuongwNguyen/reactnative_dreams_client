@@ -18,12 +18,6 @@ import {Colors} from '../../styles';
 import {resetPostCreated} from '../../store/slices';
 
 const TrendingPostTab = props => {
-  return (
-    <View>
-      <Text>Con cặc</Text>
-    </View>
-  );
-
   const {scrollHandler} = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);

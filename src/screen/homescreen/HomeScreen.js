@@ -87,10 +87,6 @@ const HomeScreen = props => {
     });
   };
 
-  useEffect(() => {
-    dispatch(APIGetUserBasicInf());
-  }, [dispatch]);
-
   return (
     <View style={HomeStyles.container}>
       <Animated.View style={[HomeStyles.header, headerStyle]}>

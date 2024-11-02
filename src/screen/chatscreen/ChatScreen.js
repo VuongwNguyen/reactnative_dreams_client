@@ -30,6 +30,7 @@ const ChatScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [isAuthorizedPermission, setIsAuthorizedPermission] = useState(true);
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const renderUsersOnline = ({item}) => {
     return (
@@ -94,7 +95,12 @@ const ChatScreen = () => {
             )}
             {/* Header */}
             <View style={styles.header}>
-              <Image source={{uri: mock_image}} style={styles.avatar} />
+              {!!userBasicInfData.avatar && (
+                <Image
+                  source={{uri: userBasicInfData.avatar}}
+                  style={styles.avatar}
+                />
+              )}
               <Text style={styles.label}>CHATS</Text>
               <TouchableOpacity
                 onPress={() => {
@@ -209,6 +215,3 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
 });
-
-const mock_image =
-  'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg';

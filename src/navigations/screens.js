@@ -25,6 +25,8 @@ import CameraScreen from '../screen/chatscreen/CameraScreen';
 import ReportScreen from '../screen/report/ReportScreen';
 import ChatSearch from '../screen/chatscreen/ChatSearch';
 import CreateGroup from '../screen/chatscreen/CreateGroup';
+import {name} from '@stream-io/video-react-native-sdk';
+import Call from '../screen/callscreen/Call';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -82,6 +84,10 @@ export const stackName = {
   createGroup: {
     name: 'create_group',
     component: CreateGroup,
+  },
+  call: {
+    name: 'call',
+    component: Call,
   },
 };
 

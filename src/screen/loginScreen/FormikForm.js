@@ -14,7 +14,7 @@ import Input from '../../components/Input';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
 import {stackName} from '../../navigations/screens';
-import {APILogin} from '../../store/api/AccountAPI';
+import {APIGetUserBasicInf, APILogin} from '../../store/api/AccountAPI';
 import {Assets, Typography} from '../../styles';
 import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
@@ -40,8 +40,6 @@ const FormikForm = () => {
       )
         .unwrap()
         .then(res => {
-          if (isRememberMe) {
-          }
           resetForm();
           ToastAndroid.show('Login success', 1000);
         })

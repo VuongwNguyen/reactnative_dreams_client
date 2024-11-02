@@ -24,6 +24,7 @@ import {parseJwt} from '../../utils/token';
 import throttle from '../../utils/throttle';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AxiosInstance from '../../configs/axiosInstance';
+import {useCallContext} from '../../contexts/CallContext';
 
 const {width} = Dimensions.get('window');
 
@@ -41,6 +42,7 @@ const MessageScreen = props => {
   const [uploadStatus, setUploadStatus] = useState(false);
   const {token} = useSelector(state => state.account);
   const [replied, setReplied] = useState(null);
+  const {registerCall} = useCallContext();
 
   const renderMesssage = useCallback(
     ({item}) => {
@@ -238,6 +240,24 @@ const MessageScreen = props => {
     return <Loading />;
   }
 
+  const createAudioCall = () => {
+    registerCall(
+      room.members.map(mem => ({user_id: mem.account_id})),
+      0,
+    ).catch(err =>
+      console.log('[MessageScreen] create call video error: ', err),
+    );
+  };
+
+  const createVideoCall = () => {
+    registerCall(
+      room.members.map(mem => ({user_id: mem.account_id})),
+      1,
+    ).catch(err =>
+      console.log('[MessageScreen] create call video error: ', err),
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* header */}
@@ -267,10 +287,10 @@ const MessageScreen = props => {
         </View>
         {/* call */}
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={createAudioCall}>
             <Image source={Assets.icons.call} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={createVideoCall}>
             <Image source={Assets.icons.video} style={styles.icon} />
           </TouchableOpacity>
         </View>

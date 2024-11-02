@@ -9,7 +9,7 @@ export const APILogin = createAsyncThunk(
       const response = await AxiosInstance().post('/account/login', data);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -126,12 +126,10 @@ export const APILogout = createAsyncThunk(
 );
 
 export const APIGetUserBasicInf = createAsyncThunk(
-  'account/get-name-avatar-user',
+  'account/get-info',
   async (_, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post(
-        '/account/get-name-avatar-user',
-      );
+      const response = await AxiosInstance().get('/account/get-info');
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
