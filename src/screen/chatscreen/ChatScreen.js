@@ -30,6 +30,7 @@ const ChatScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [isAuthorizedPermission, setIsAuthorizedPermission] = useState(true);
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const renderUsersOnline = ({item}) => {
     return (
@@ -93,7 +94,14 @@ const ChatScreen = () => {
           )}
           {/* Header */}
           <View style={styles.header}>
-            <Image source={{uri: mock_image}} style={styles.avatar} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate(stackName.profile.name)}>
+              <Image
+                source={{uri: userBasicInfData?.avatar}}
+                style={styles.avatar}
+              />
+            </TouchableOpacity>
+
             <Text style={styles.label}>CHATS</Text>
             <TouchableOpacity>
               <Image source={Assets.icons.add} style={styles.icon} />

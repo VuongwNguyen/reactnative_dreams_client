@@ -24,7 +24,6 @@ import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
 import ReportScreen from '../screen/report/ReportScreen';
 
-
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
   register: {name: 'register', component: RegisterScreen},

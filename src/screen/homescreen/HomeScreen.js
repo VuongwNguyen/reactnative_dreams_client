@@ -90,6 +90,7 @@ const HomeScreen = props => {
   useEffect(() => {
     dispatch(APIGetUserBasicInf());
   }, [dispatch]);
+  console.log(userBasicInfData);
 
   return (
     <View style={HomeStyles.container}>
