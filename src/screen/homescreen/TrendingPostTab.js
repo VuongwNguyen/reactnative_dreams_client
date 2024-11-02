@@ -14,6 +14,8 @@ const TrendingPostTab = props => {
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState({});
+  const [nextPage, setNextPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const { isPostCreated } = useSelector(state => state.postTrending);
@@ -24,7 +26,8 @@ const TrendingPostTab = props => {
     dispatch(APIGetTrendingPost(currentPage))
       .unwrap()
       .then(res => {
-        const { list } = res;
+        const { list, page } = res;
+        setPage(page);
         if (currentPage === 1) {
           setDataPosts(list);
         } else {
@@ -39,7 +42,6 @@ const TrendingPostTab = props => {
         setRefreshing(false);
       });
   };
-
   useEffect(() => {
     fetchPosts();
   }, [currentPage]);
@@ -84,6 +86,15 @@ const TrendingPostTab = props => {
     onViewableItemsChanged,
   }]);
 
+
+
+  const onEndReached = useCallback(() => {
+    if (currentPage < page.maxPage && !isLoading) {
+      setCurrentPage(prevPage => prevPage + 1);
+      setNextPage(true)
+    }
+  }, [currentPage, nextPage, isLoading, dispatch]);
+
   const renderLoader = () => {
     return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
   };
@@ -95,16 +106,11 @@ const TrendingPostTab = props => {
       onScroll={scrollHandler}
       data={dataPosts}
       renderItem={({ item }) => <ItemPost item={item} />}
-      keyExtractor={({ item }, index) => index.toString()}
+      keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-      onEndReached={() => {
-        // Chỉ tăng currentPage khi không đang tải dữ liệu
-        if (!isLoading) {
-          setCurrentPage(prevPage => prevPage + 1);
-        }
-      }}
+      onEndReached={onEndReached}
       showsVerticalScrollIndicator={false}
-      onEndReachedThreshold={1}
+      onEndReachedThreshold={0.5}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }

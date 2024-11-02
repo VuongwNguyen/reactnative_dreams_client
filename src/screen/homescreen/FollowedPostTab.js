@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet } from 'react-native';
 import ItemPost, { ItemSeparator } from '../../components/ItemPost';
 import { useDispatch } from 'react-redux';
 import {
@@ -8,11 +8,15 @@ import {
   APISetPostViewd,
 } from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
+import { Colors } from '../../styles';
 
 const FollowedPostTab = props => {
   const { scrollHandler } = props;
   const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState({});
+  const [nextPage, setNextPage] = useState(false);
   const [dataPosts, setDataPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
   const dispatch = useDispatch();
@@ -20,10 +24,13 @@ const FollowedPostTab = props => {
 
 
   const fetchPosts = () => {
+    setIsLoading(true);
     dispatch(APIFollowingPost(currentPage))
       .unwrap()
       .then(res => {
-        const { list } = res;
+        const { list, page } = res;
+        setPage(page);
+        console.log(page)
         if (currentPage === 1) {
           setDataPosts(list);
         } else {
@@ -34,6 +41,7 @@ const FollowedPostTab = props => {
         console.log(err);
       })
       .finally(() => {
+        setIsLoading(false);
         setRefreshing(false);
       });
   }
@@ -80,7 +88,19 @@ const FollowedPostTab = props => {
     },
   ]);
 
+  const onEndReached = useCallback(() => {
+    if (currentPage <= page.maxPage && !isLoading) {
+      console.log("page: " + currentPage)
+      setCurrentPage(prevPage => prevPage + 1);
+      setNextPage(true)
+    }
+    setNextPage(false)
+  }, [currentPage, nextPage, isLoading, dispatch]);
 
+
+  const renderLoader = () => {
+    return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
+  };
 
 
   return (
@@ -91,12 +111,14 @@ const FollowedPostTab = props => {
       renderItem={({ item }) => <ItemPost item={item} />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-      onEndReached={() => setCurrentPage(prevPage => prevPage + 1)}
       showsVerticalScrollIndicator={false}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       ItemSeparatorComponent={() => <ItemSeparator />}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      ListFooterComponent={renderLoader}
     />
   );
 };
