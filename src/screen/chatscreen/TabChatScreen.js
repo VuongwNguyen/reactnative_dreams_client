@@ -40,7 +40,7 @@ const TabChatScreen = () => {
             }
             avatar={
               item.is_group
-                ? item.members.slice(0, 3).map(mem => mem.avatar)
+                ? item.members.slice(0, 4).map(mem => mem.avatar)
                 : item.members[0].isMe
                 ? item.members[1].avatar
                 : item.members[0].avatar

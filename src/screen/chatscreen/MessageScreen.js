@@ -177,7 +177,7 @@ const MessageScreen = props => {
   const renderImages = useCallback(() => {
     return (
       <View style={styles.wrapper}>
-        {room?.members?.slice(0, 3)?.map(mem => {
+        {room?.members?.slice(0, 4)?.map(mem => {
           if (!mem.isMe) {
             return (
               <Image

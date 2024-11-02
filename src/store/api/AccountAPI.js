@@ -9,7 +9,7 @@ export const APILogin = createAsyncThunk(
       const response = await AxiosInstance().post('/account/login', data);
       return response;
     } catch (error) {
-      return rejectWithValue('Đăng nhập thất bại thử lại sau');
+      return rejectWithValue(error.response.data);
     }
   },
 );
@@ -23,7 +23,7 @@ export const APIVerifyAccount = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -34,7 +34,7 @@ export const APISendOtpCode = createAsyncThunk(
       const response = await AxiosInstance().post('account/verify-email', data);
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -49,7 +49,7 @@ export const apiSendOtpResetPW = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -65,7 +65,7 @@ export const apiVerifyCodeResetPW = createAsyncThunk(
       console.log(response);
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -78,9 +78,7 @@ export const APIRegister = createAsyncThunk(
       console.log(response, 'register response');
       return response;
     } catch (error) {
-      console.log('register error');
-
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -95,7 +93,7 @@ export const APIResetPassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -110,7 +108,7 @@ export const APIChangePassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -122,7 +120,7 @@ export const APILogout = createAsyncThunk(
       const response = await AxiosInstance().post('/account/logout');
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -136,7 +134,7 @@ export const APIGetUserBasicInf = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error?.message);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );

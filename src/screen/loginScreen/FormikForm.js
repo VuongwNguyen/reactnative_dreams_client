@@ -46,7 +46,7 @@ const FormikForm = () => {
           ToastAndroid.show('Login success', 1000);
         })
         .catch(err => {
-          ToastAndroid.show(err, ToastAndroid.SHORT);
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     },
   );
