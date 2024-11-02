@@ -24,6 +24,7 @@ import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
 import ReportScreen from '../screen/report/ReportScreen';
 import ChatSearch from '../screen/chatscreen/ChatSearch';
+import CreateGroup from '../screen/chatscreen/CreateGroup';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -77,6 +78,10 @@ export const stackName = {
   chatSearch: {
     name: 'chat_search',
     component: ChatSearch,
+  },
+  createGroup: {
+    name: 'create_group',
+    component: CreateGroup,
   },
 };
 

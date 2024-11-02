@@ -171,6 +171,11 @@ export function Navigator() {
           name={stackName.chatSearch.name}
           component={stackName.chatSearch.component}
         />
+
+        <Stack.Screen
+          name={stackName.createGroup.name}
+          component={stackName.createGroup.component}
+        />
       </Stack.Navigator>
       <LogoutDialog ref={logoutRef} />
     </SocketProvider>

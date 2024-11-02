@@ -255,7 +255,9 @@ const MessageScreen = props => {
           {renderImages()}
           {/* name */}
           <View>
-            <Text style={styles.name}>{room?.name}</Text>
+            <Text style={styles.name} numberOfLines={2}>
+              {room?.name}
+            </Text>
             {!isGroup && (
               <Text style={[styles.status, isOnline && styles.online]}>
                 {!isOnline ? 'Offline' : 'Active now'}
@@ -504,6 +506,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     fontWeight: '500',
+    maxWidth: '85%',
   },
   row: {
     flexDirection: 'row',

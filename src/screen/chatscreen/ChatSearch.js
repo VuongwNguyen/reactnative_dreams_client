@@ -26,14 +26,12 @@ const ChatSearch = () => {
   const [listSearch, setListSearch] = useState(list);
   const [type, setType] = useState(types[0]);
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const fetchData = (keyword = '') => {
     if (keyword.length === 0 && type !== types[1]) {
       return;
     }
 
-    setLoading(true);
     AxiosInstance()
       .get('/room/search', {
         params: {
@@ -46,8 +44,7 @@ const ChatSearch = () => {
         setPage(res.data.page);
         setListSearch(res.data.list);
       })
-      .catch(err => ToastAndroid.show('Lỗi tìm kiếm', 300))
-      .finally(() => setLoading(false));
+      .catch(err => ToastAndroid.show('Lỗi tìm kiếm', 300));
   };
 
   const fetch = useCallback(debounce(fetchData, 500), [type]);

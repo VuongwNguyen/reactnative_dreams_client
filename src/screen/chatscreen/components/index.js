@@ -5,5 +5,6 @@ import Loading from './Loading';
 import User from './User';
 import Chip from './Chip';
 import Group from './Group';
+import SearchDialog from './SearchDialog';
 
-export {Group, Chip, UserOnline, Chat, Message, Loading, User};
+export {Group, SearchDialog, Chip, UserOnline, Chat, Message, Loading, User};
