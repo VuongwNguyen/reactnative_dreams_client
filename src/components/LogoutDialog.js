@@ -11,10 +11,14 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../styles';
 import {logout as logoutAction} from '../store/slices/AuthSlice';
 import {useSocket} from '../contexts/SocketContext';
+import AxiosInstance from '../configs/axiosInstance';
+import {parseJwt} from '../utils/token';
+import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const logoutRef = createRef();
 
@@ -28,6 +32,7 @@ const LogoutDialog = (
   const [show, setShow] = useState(false);
   const [mess, setMess] = useState(message);
   const {socket} = useSocket();
+  const {token} = useSelector(state => state.account);
 
   useImperativeHandle(
     ref,
@@ -43,6 +48,11 @@ const LogoutDialog = (
   const logout = () => {
     socket?.disconnect();
     dispatch(logoutAction());
+    messaging().deleteToken();
+    AxiosInstance().post('/account/revoke-fcm', {
+      user_id: parseJwt(token.accessToken)?.user_id,
+    });
+    AsyncStorage.removeItem('credentials');
     setShow(false);
   };
 
