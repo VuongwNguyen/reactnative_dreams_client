@@ -4,9 +4,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
-  Text,
   TextInput,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,10 +16,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
+import { childCommentSlice } from '../../store/slices/ChildCommentSlice';
 
 const PostDetailScreen = props => {
   const post_id = props.route?.params?.post_id;
-  const setItemClickId = props.route?.params?.setItemClickId;
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
@@ -48,12 +46,6 @@ const PostDetailScreen = props => {
       });
   }, []);
 
-  // const aaa = () => {
-  //   setItemClickId({
-  //     data:{...data?.post,isLiked:like.isLiked,likeCount:like.likeCount},
-  //   })
-  // }
-
   const handleSendComment = async () => {
     try {
       const data = {
@@ -63,43 +55,41 @@ const PostDetailScreen = props => {
       if (replyId) {
         data.reply_comment_id = replyId;
       }
+      setReplyId(null);
       AxiosInstance()
         .post('/comment', data)
         .then(res => {
           const replyCommentId = res.data.reply_comment_id;
           if (!replyCommentId) {
             const newData = [...list];
-            newData.unshift({
+            const newComment = {
               ...res.data,
               author: {
-                fullName: userBasicInfData?.fullName,
+                fullname: userBasicInfData?.fullname,
                 avatar: {url: userBasicInfData?.avatar},
               },
-            });
+              likes: 0
+            }
+            newData.unshift(newComment);
             setList(newData);
+          }else{            
+            const newComment = {
+              ...res.data,
+              author: {
+                fullname: userBasicInfData?.fullname,
+                avatar: {url: userBasicInfData?.avatar},
+              },
+              likes: 0
+            }
+            dispatch(childCommentSlice.actions.setPushChildComment(newComment));
           }
           setContent('');
           inputRef.current.clear();
-          dispatch(APIGetPostDetail(post_id))
-            .unwrap()
-            .then(res => {
-              setPost(res.data);
-              if (replyCommentId) {
-                setList(res.data?.comments?.list);
-              }
-            })
-            .catch(err => {
-              ToastAndroid.show(err.message, ToastAndroid.SHORT);
-            });
         });
     } catch (error) {
       console.log('Error', error);
     }
   };
-
-  // useEffect(() => {
-  //   dispatch(APIGetPostDetail(post_id));
-  // }, []);
 
   return (
     <View style={postDetailStyle.container}>
@@ -107,7 +97,6 @@ const PostDetailScreen = props => {
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
         <>
-
           <AppHeader title={t('postDetailScreen.post')}/>
           <FlatList
             style={{flex: 1}}
@@ -145,7 +134,7 @@ const PostDetailScreen = props => {
               style={postDetailStyle.inputComment}
               placeholder={t('postDetailScreen.writeComment')}
             />
-            { 
+            {
               content &&
               <TouchableOpacity
               onPress={handleSendComment}

@@ -16,3 +16,17 @@ export const APICreateComment = createAsyncThunk(
     }
   },
 );
+
+export const APIGetChildComment = createAsyncThunk(
+  '/comment/child-comments?comment_id',
+  async (comment_id, page = 1, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().get(
+        `/comment/child-comments?comment_id=${comment_id}&page=${page}&_limit=10`,
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

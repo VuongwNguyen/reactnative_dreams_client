@@ -13,7 +13,8 @@ import AxiosInstance from '../configs/axiosInstance';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
-import {Axios} from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+
 dayjs.extend(relativeTime);
 
 const customLocale = {
@@ -55,11 +56,9 @@ const CommentItem = memo(props => {
   const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
   const [currentItem, setCurrentItem] = useState(comment);
   const [childComments, setChildComments] = useState([]);
-  const [isHide, setIsHide] = useState(false);
-  const handleViewMoreReplies = () => {
-    setIsHide(true);
-    getChildComment();
-  };
+  const childCommentData = useSelector((state) => state.childComment.data);
+
+
   const handleRefInput = () => {
     inputRef.current.focus();
     setReplyId(comment._id);
@@ -90,14 +89,22 @@ const CommentItem = memo(props => {
     setCommentFocus(null);
   };
 
-  const getChildComment = async () => {
-    if (comment.childCommentCount > 0) {
-      const res = await AxiosInstance().get(
-        `/comment/child-comments?comment_id=${comment._id}`,
-      );
-      setChildComments(res.data.list);
+  useEffect(() => {    
+    const onNewReplyComment = (parrentCommentId,childComment) => {
+      if (parrentCommentId === comment._id) {
+        setChildComments([childComment,...childComments]);
+        setVisibleReplies(visibleReplies + 1);
+      }
     }
-  };
+    if (childCommentData && childCommentData.length !== 0) {
+      childCommentData.forEach(element => {
+        const isExist = childComments.some((item) => item._id === element._id)
+        if (!isExist){
+          onNewReplyComment(element.reply_comment_id,element);
+        }
+      });
+    }
+  }, [childCommentData]);
 
   useEffect(() => {
     const fetchChildComment = async () => {
@@ -153,12 +160,29 @@ const CommentItem = memo(props => {
         </TouchableOpacity>
       </View>
       <>
-        {comment.childCommentCount > 0 && (
+        {childComments.length > 0 && (
           <>
-            {!isHide ? (
+          <FlatList
+                  data={childComments.slice(0, visibleReplies)}
+                  renderItem={({item}) => (
+                    <View>
+                      <CommentItem
+                        comment={item}
+                        level={level + 1}
+                        inputRef={inputRef}
+                        setReplyId={setReplyId}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={item => item._id}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  style={styles.replyList}
+                />
+            {childComments.length > visibleReplies ? (
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => handleViewMoreReplies()}>
+                onPress={() => setVisibleReplies(childComments.length)}>
                 <View
                   style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
                   <View
@@ -172,7 +196,7 @@ const CommentItem = memo(props => {
                   <Text style={styles.showMoreText}>
                     {t('postDetailScreen.view')}{' '}
                     {Math.min(
-                      comment.childCommentCount - visibleReplies,
+                      childComments.length - visibleReplies,
                       INCREMENT_REPLIES,
                     )}{' '}
                     {t('postDetailScreen.moreReplies')}
@@ -181,28 +205,9 @@ const CommentItem = memo(props => {
               </TouchableOpacity>
             ) : (
               <>
-                <FlatList
-                  data={childComments}
-                  // key={childComments?._id}
-                  renderItem={({item}) => (
-                    <View>
-                      <CommentItem
-                        key={item.id}
-                        comment={item}
-                        level={level + 1}
-                        inputRef={inputRef}
-                        setReplyId={setReplyId}
-                      />
-                    </View>
-                  )}
-                  keyExtractor={item => item.id}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  style={styles.replyList}
-                />
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => setIsHide(false)}>
+                  onPress={() => setVisibleReplies(0)}>
                   <View style={[styles.commentRow, {alignItems: 'center'}]}>
                     <View style={styles.lineShow} />
                     <Text style={styles.showMoreText}>
