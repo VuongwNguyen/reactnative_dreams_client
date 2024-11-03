@@ -290,8 +290,9 @@
   "descDialog": {
     "title": "Nhập mô tả về bạn",
     "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
-    "placeholder": "Điều gì đó về bạn",
-    "confirm": "XÁC NHẬN"
+    "placeholder": "Viết một vài điều về bạn tối đa 100 kí tự",
+    "confirm": "XÁC NHẬN",
+    "warm":"Mô tả tối đa 100 kí tự !"
   },
   "rlstStatusDialog": {
     "title": "Relationship status",
@@ -308,7 +309,13 @@
     "setting": "Cài đặt"
   },
   "itemPost": {
-    "timeStatus": "vi"
+    "timeStatus": "vi",
+    "menu": {
+      "report": "Báo cáo",
+      "delete": "Xóa bài viết",
+      "edit": "Chỉnh sửa",
+      "privacy": "Quyền riêng tư"
+    }
   },
   "reportScreen": {
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",

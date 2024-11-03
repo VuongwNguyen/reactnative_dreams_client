@@ -26,6 +26,7 @@ const DescriptionDialog = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(props?.data);
   const isDiable = !desc;
+  const [inputEditable, setInputEditable] = useState(true);
 
   useEffect(() => {
     if (props?.data) {
@@ -78,9 +79,21 @@ const DescriptionDialog = forwardRef((props, ref) => {
               placeholder={t('descDialog.placeholder')}
               placeholderTextColor={Colors.secondary}
               value={desc}
-              onChangeText={text => setDesc(text)}
+              onChangeText={text => {
+                if (text.length <= 100) {
+                  setDesc(text);
+                  setInputEditable(true);
+                } else {
+                  setInputEditable(false);
+                }
+              }}
               multiline={true}
             />
+            {!inputEditable && (
+              <Text style={bottomSheetStyle.warmText}>
+                {t('descDialog.warm')}
+              </Text>
+            )}
 
             <TouchableOpacity
               disabled={isDiable}

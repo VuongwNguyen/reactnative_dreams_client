@@ -272,8 +272,9 @@
   "descDialog": {
     "title": "Enter your description",
     "desc": "Provide more descriptive information about you.",
-    "placeholder": "Something about you",
-    "confirm": "CONFIRM"
+    "placeholder": "Something about you maximum 100 characters",
+    "confirm": "CONFIRM",
+    "warm":"Description maximum 100 characters"
   },
   "rlstStatusDialog": {
     "title": "Tình trạng hôn nhân",
@@ -290,7 +291,13 @@
     "setting": "Settings"
   },
   "itemPost": {
-    "timeStatus": "en"
+    "timeStatus": "en",
+    "menu": {
+      "report": "Report",
+      "delete": "Delete post",
+      "edit": "Edit post",
+      "privacy": "Privacy"
+    }
   },
   "reportScreen": {
     "reasonTitle": "Please state the reason you are making this report!",

@@ -19,7 +19,7 @@ const TagInf = props => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity style={{paddingLeft:5}}>
+      <TouchableOpacity style={{paddingHorizontal:5}}>
         <Image
           source={Assets.image.right_arrow}
           size={Sizing.lg}
