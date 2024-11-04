@@ -67,7 +67,7 @@ const FlingScreen = (props) => {
       <View style={FlingStyle.item}>
         <Image
           style={FlingStyle.avatar}
-          source={{ uri: item.follower?.avatar || item.user.avatar }}
+          source={{ uri: item.follower?.avatar || item.user?.avatar }}
         />
         <Text style={FlingStyle.name}>
           {item.follower?.fullname || item.user?.fullname}
