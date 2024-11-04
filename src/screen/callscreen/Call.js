@@ -1,14 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
+  CallContent,
   RingingCallContent,
   StreamCall,
 } from '@stream-io/video-react-native-sdk';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {useCallContext} from '../../contexts/CallContext';
 import {Loading} from '../chatscreen/components';
 
 const Call = () => {
   const {callState} = useCallContext();
+  const navigation = useNavigation();
 
   if (!callState) {
     return <Loading />;
@@ -16,7 +19,18 @@ const Call = () => {
 
   return (
     <StreamCall call={callState}>
-      <RingingCallContent />
+      <RingingCallContent
+        CallContent={() => (
+          <CallContent
+            onHangupCallHandler={() => {
+              if (navigation.canGoBack()) navigation.goBack();
+            }}
+            onBackPressed={() => {
+              if (navigation.canGoBack()) navigation.goBack();
+            }}
+          />
+        )}
+      />
     </StreamCall>
   );
 };

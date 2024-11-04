@@ -22,7 +22,7 @@ import {fetchGroup, fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
 import {newMessage, reset} from '../../store/slices';
 import {parseJwt} from '../../utils/token';
 import throttle from '../../utils/throttle';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AxiosInstance from '../../configs/axiosInstance';
 import {useCallContext} from '../../contexts/CallContext';
 
@@ -32,17 +32,17 @@ const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
   const [isOnline, setIsOnline] = useState(false);
   const [mess, setMess] = useState('');
+  const [showMembers, setShowMembers] = useState(false);
+  const [images, setImages] = useState([]);
+  const [uploadStatus, setUploadStatus] = useState(false);
+  const [replied, setReplied] = useState(null);
+  const {token} = useSelector(state => state.account);
+  const {registerCall} = useCallContext();
   const {socket} = useSocket();
   const dispatch = useDispatch();
-  const [showMembers, setShowMembers] = useState(false);
   const {room, initial, messages, page, count, loading} = useSelector(
     state => state.chatMessage,
   );
-  const [images, setImages] = useState([]);
-  const [uploadStatus, setUploadStatus] = useState(false);
-  const {token} = useSelector(state => state.account);
-  const [replied, setReplied] = useState(null);
-  const {registerCall} = useCallContext();
 
   const renderMesssage = useCallback(
     ({item}) => {
@@ -197,16 +197,20 @@ const MessageScreen = props => {
   }, [messages]);
 
   const handleChooseImages = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 10,
-    });
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 10,
+      });
 
-    if (result.didCancel) {
-      return;
+      if (result.didCancel) {
+        return;
+      }
+
+      setImages(result?.assets || []);
+    } catch (e) {
+      console.log('[MessageScreen] choose images error: ', e);
     }
-
-    setImages(result.assets);
   };
 
   const handleUploadImages = async () => {
@@ -229,10 +233,28 @@ const MessageScreen = props => {
 
       socket.emit('message', {images: res.data}, room._id);
       setUploadStatus(false);
+      setImages([]);
+      ToastAndroid.show('Gửi ảnh thành công', 300);
     } catch (e) {
       setUploadStatus(false);
       console.log('[MessageScreen] upload images failed: ', e);
       ToastAndroid.show('Gửi ảnh thất bại, hãy thử lại sau', 300);
+    }
+  };
+
+  const handleTakeImage = async () => {
+    try {
+      const result = await launchCamera({
+        mediaType: 'photo',
+      });
+
+      if (result.didCancel) {
+        return;
+      }
+
+      setImages(result?.assets || []);
+    } catch (e) {
+      console.log('[MessageScreen] error when take picture: ', e);
     }
   };
 
@@ -245,7 +267,7 @@ const MessageScreen = props => {
       room.members.map(mem => ({user_id: mem.account_id})),
       0,
     ).catch(err =>
-      console.log('[MessageScreen] create call video error: ', err),
+      console.log('[MessageScreen] create call audio error: ', err),
     );
   };
 
@@ -350,8 +372,7 @@ const MessageScreen = props => {
           <TouchableOpacity onPress={handleChooseImages}>
             <Image source={Assets.icons.attach} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(stackName.camera.name)}>
+          <TouchableOpacity onPress={handleTakeImage}>
             <Image source={Assets.icons.camera} style={styles.icon} />
           </TouchableOpacity>
         </View>

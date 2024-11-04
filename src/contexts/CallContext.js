@@ -37,6 +37,7 @@ export const CallProvider = ({children}) => {
           ring: true,
         });
         setCall(newCall);
+        return;
       }
 
       throw new Error('Client may be null');
