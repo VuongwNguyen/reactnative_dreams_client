@@ -36,6 +36,7 @@ export const store = configureStore({
     chatMessage: slices.chatSlice.reducer,
     postDetail: slices.postDetailSlice.reducer,
     postTrending: slices.postTrendingSlice.reducer,
+    childComment: slices.childCommentSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
