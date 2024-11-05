@@ -12,6 +12,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
 import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
+import { Colors } from '../../styles';
 
 const PostedTab = props => {
   const {scrollHandler, user_id_view} = props;
@@ -19,20 +20,26 @@ const PostedTab = props => {
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const [timeOutId, setTimeOutId] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchPosts = () => {
     dispatch(APIGetPostByUser({user_id_view}))
       .unwrap()
       .then(res => {
-        setDataPosts(res?.data.list);
-        setLoading(false);
+        const { list, page } = res;
+        setNextPage(res);
+        setPage(page);
+        if (currentPage === 1) {
+          setDataPosts(list);
+        } else {
+          setDataPosts(prevDataPosts => [...prevDataPosts, ...list]);
+        }
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       })
       .finally(() => {
+        setIsLoading(false);
         setRefreshing(false);
       });
   };
@@ -45,7 +52,18 @@ const PostedTab = props => {
 
   const onRefresh = () => {
     setRefreshing(true);
+    setCurrentPage(1);
     fetchPosts();
+  };
+  const onEndReached = useCallback(() => {
+    if (currentPage < page.maxPage && !isLoading) {
+      setCurrentPage(prevPage => prevPage + 1);
+      setNextPage(true)
+    }
+  }, [currentPage, nextPage, isLoading, dispatch]);
+
+  const renderLoader = () => {
+    return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
   };
 
   return (
