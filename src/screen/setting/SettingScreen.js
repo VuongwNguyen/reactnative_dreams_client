@@ -99,10 +99,7 @@ const SettingScreen = props => {
         onPress={() => {
           navigation.navigate(stackName.privacyPolicy.name);
         }}>
-        <Image
-          source={Assets.icons.notification}
-          style={{width: 20, height: 20}}
-        />
+        <Image source={Assets.icons.policy} style={{width: 24, height: 24}} />
         <Text style={SettingStyle.title}>Privacy Policy</Text>
       </TouchableOpacity>
       <View style={SettingStyle.line} />
@@ -111,10 +108,7 @@ const SettingScreen = props => {
         onPress={() => {
           navigation.navigate(stackName.changePassword.name);
         }}>
-        <Image
-          source={Assets.icons.notification}
-          style={{width: 20, height: 20}}
-        />
+        <Image source={Assets.icons.changePw} style={{width: 24, height: 24}} />
         <Text style={SettingStyle.title}>Change password</Text>
       </TouchableOpacity>
       <TouchableOpacity

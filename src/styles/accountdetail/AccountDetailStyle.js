@@ -35,6 +35,11 @@ export const accountDetailStyle = {
     height: '100%',
     borderRadius: avtRadius,
   },
+  loadingAvt: {
+    position: 'absolute',
+    top: avtSize * 0.4,
+    left: avtSize * 0.4,
+  },
   changeAvtButton: {
     width: changeBtnSize,
     height: changeBtnSize,
