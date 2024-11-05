@@ -1,14 +1,20 @@
-import { ActivityIndicator, FlatList, RefreshControl, ToastAndroid, View } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import ItemPost, { ItemSeparator } from '../../components/ItemPost';
-import { useDispatch } from 'react-redux';
-
-import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
-import { APIGetPostByUser } from '../../store/api/PostAPI';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  ToastAndroid,
+  View,
+} from 'react-native';
+import React, {useEffect, useRef, useState,useCallback} from 'react';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
+import {useDispatch} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
+import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
+import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 
 const PostedTab = props => {
-  const { scrollHandler, user_id_view } = props;
+  const {scrollHandler, user_id_view} = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -16,9 +22,8 @@ const PostedTab = props => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-
   const fetchPosts = () => {
-    dispatch(APIGetPostByUser({ user_id_view }))
+    dispatch(APIGetPostByUser({user_id_view}))
       .unwrap()
       .then(res => {
         setDataPosts(res?.data.list);
@@ -30,11 +35,13 @@ const PostedTab = props => {
       .finally(() => {
         setRefreshing(false);
       });
-  }
+  };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchPosts();
+    }, [user_id_view])
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -47,14 +54,14 @@ const PostedTab = props => {
         <ActivityIndicator
           size="large"
           color="#ededed"
-          style={{ justifyContent: 'center' }}
+          style={{justifyContent: 'center'}}
         />
       ) : (
         <Animated.FlatList
           onScroll={scrollHandler}
           data={dataPosts}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <ItemPost item={item} />}
+          renderItem={({item}) => <ItemPost item={item} />}
           keyExtractor={item => item._id}
           ItemSeparatorComponent={() => <ItemSeparator />}
           refreshControl={

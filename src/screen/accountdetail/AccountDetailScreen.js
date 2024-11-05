@@ -9,7 +9,6 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-
 import React, {useState, useRef, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,7 +18,6 @@ import AppHeader from '../../components/Header';
 import TagInf from '../../components/TagInf';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
-
 import {
   APIPersonalDetailInf,
   APIUpdateAvtUsername,
@@ -36,7 +34,6 @@ import EducationDialog from '../../components/bottomsheet/EducationDialog';
 import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
-
 import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const AccountDetailScreen = ({navigation}) => {
@@ -63,7 +60,6 @@ const AccountDetailScreen = ({navigation}) => {
 
   const handleChangeAvt = () => {
     setIsLoadingAvt(true);
-    console.log(image);
 
     if (image) {
       const formData = new FormData();
