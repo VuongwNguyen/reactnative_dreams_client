@@ -2,6 +2,9 @@ import {StyleSheet} from 'react-native';
 import {Colors, Fonts} from './../../../styles';
 
 export const itemPostStyle = StyleSheet.create({
+  mainContent:{
+    gap:5
+  },
   headerLabel: {
     fontSize: 14,
     fontWeight: '400',

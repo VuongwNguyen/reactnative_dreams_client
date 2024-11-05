@@ -175,15 +175,16 @@ const NewPostScreen = props => {
   }, [postStatus]);
 
   const handleTagUser = () => {
-    dispatch(APIGetFollowing())
+    dispatch(APIGetFollowing({user_id_view: '', page: 1}))
       .then(res => {
-        if (res?.payload?.data) {
+        console.log(res);
+
+        if (res?.payload?.list) {
           setModalTagUserVisible(true);
-          setData(res?.payload?.data?.list);
+          setData(res?.payload?.list);
         } else {
           ToastAndroid.show('Danh sách following trống!', ToastAndroid.SHORT);
         }
-        // setFetchAPIStatus(res?.meta?.requestStatus);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);

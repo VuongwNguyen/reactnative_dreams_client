@@ -5,10 +5,7 @@ export const APISendReport = createAsyncThunk(
   'report-reason/report',
   async (body, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post(
-        '/report-reason/report',
-        body,
-      );
+      const response = await AxiosInstance().post('/report/report', body);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
