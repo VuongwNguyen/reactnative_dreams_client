@@ -1,7 +1,7 @@
 import {io} from 'socket.io-client';
 
 const BASE_URL =
-  'https://91eb-2402-800-637c-9e22-54ac-eb16-37e5-b470.ngrok-free.app';
+  'https://a2f5-2402-800-637c-9e22-c0db-d808-83b1-f64b.ngrok-free.app';
 
 class SocketIO {
   constructor(token) {
