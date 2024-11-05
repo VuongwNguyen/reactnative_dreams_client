@@ -3,41 +3,14 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {stackName} from '../navigations/screens';
 import {Assets, Typography} from './../styles';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/vi';
 import {useTranslation} from 'react-i18next';
 import {MenuItemPost} from './MenuItemPost';
 import {useDispatch} from 'react-redux';
 import {APIToggleFollow} from '../store/api/FollowAPI';
 import {APILikePost} from '../store/api/PostAPI';
-
-dayjs.extend(relativeTime);
-const customLocale = {
-  ...dayjs.Ls.vi,
-  relativeTime: {
-    ...dayjs.Ls.vi.relativeTime,
-    future: 'in %s',
-    past: '%s trước',
-    s: 'vài giây',
-    m: '1 phút',
-    mm: '%d phút',
-    h: '1 giờ',
-    hh: '%d giờ',
-    d: '1 ngày',
-    dd: '%d ngày',
-    M: '1 tháng',
-    MM: '%d tháng',
-    y: '1 năm',
-    yy: '%d năm',
-  },
-};
-
-// Sử dụng locale tùy chỉnh
-dayjs.locale(customLocale);
+import {useDayjs} from '../configs/hooks/useDayjs';
 
 export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
@@ -133,7 +106,7 @@ export default React.memo(
             </View>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
               <Text style={itemPostStyle.headerLabel}>
-                {dayjs(item?.createdAt)
+                {useDayjs(item?.createdAt)
                   .locale(t('itemPost.timeStatus'))
                   .fromNow()}
               </Text>

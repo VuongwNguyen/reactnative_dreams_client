@@ -10,7 +10,6 @@ export const userBasicInfSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(APIGetUserBasicInf.fulfilled, (state, action) => {
       state.userBasicInfData = action.payload.data;
-      console.log(action.payload.data);
     });
   },
 });

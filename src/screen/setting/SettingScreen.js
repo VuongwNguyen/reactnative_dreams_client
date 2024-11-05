@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Assets} from '../../styles';
 import Header from '../../components/Header';
 import {SettingStyle} from '../../styles/settingstyle/SettingStyle';
@@ -17,15 +17,48 @@ import {APILogout} from '../../store/api/AccountAPI';
 import {useSocket} from '../../contexts/SocketContext';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
-const LIGHT = 'light';
-const DARK = 'dark';
 const SettingScreen = props => {
+  const {t} = useTranslation();
   const {navigation} = props;
-  const [currentThemeMode, setCurrentThemeMode] = useState(LIGHT);
   const dispatch = useDispatch();
-  const {loading} = useSelector(state => state.account);
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
+
   const {socket} = useSocket();
+  const SettingList = [
+    {
+      title: t('settingScreen.privacy_safety'),
+      icon: Assets.icons.privacy,
+      onClick: () => navigation.navigate(stackName.privacySetting.name),
+    },
+    {
+      title: t('settingScreen.notification'),
+      icon: Assets.icons.notification,
+      onClick: () => navigation.navigate(stackName.notificationSetting.name),
+    },
+    {
+      title: t('settingScreen.language'),
+      icon: Assets.icons.translate,
+      onClick: () => navigation.navigate(stackName.languageSetting.name),
+    },
+    {
+      title: t('settingScreen.privacyPolicy'),
+      icon: Assets.icons.term,
+      onClick: () => navigation.navigate(stackName.privacyPolicy.name),
+    },
+    {
+      title: t('settingScreen.password'),
+      icon: Assets.icons.password,
+      onClick: () => navigation.navigate(stackName.changePassword.name),
+    },
+
+    {
+      title: t('settingScreen.logout'),
+      icon: Assets.icons.logout,
+      onClick: logout,
+    },
+  ];
 
   const logout = () => {
     Alert.alert('Logout', 'Are you sure you want to log out?', [
@@ -63,67 +96,83 @@ const SettingScreen = props => {
 
   return (
     <View style={SettingStyle.container}>
-      <Header title="Settings" />
+      <Header title={t('settingScreen.title')} />
       <TouchableOpacity
-        style={SettingStyle.itemSettingContainer}
-        onPress={() => {
-          navigation.navigate(stackName.privacySetting.name);
-        }}>
-        <Image source={Assets.icons.privacy} style={AppHeaderStyle.icon} />
-        <Text style={SettingStyle.title}>Privacy & Safety</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={SettingStyle.itemSettingContainer}
-        onPress={() => {
-          navigation.navigate(stackName.notificationSetting.name);
-        }}>
+        style={{flexDirection: 'row', gap: 20, marginBottom: 14}}
+        onPress={() => navigation.navigate(stackName.profile.name)}>
         <Image
-          source={Assets.icons.notification}
-          style={{width: 20, height: 20}}
+          source={{
+            uri: userBasicInfData?.avatar,
+          }}
+          style={{
+            height: 60,
+            width: 60,
+            borderRadius: 40,
+          }}
+          resizeMode="cover"
         />
-        <Text style={SettingStyle.title}>Notifications</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderBottomColor: '#d8d8d8',
+            paddingBottom: 10,
+          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              flexDirection: 'column',
+            }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                alignSelf: 'center',
+                color: 'black',
+              }}>
+              {userBasicInfData?.fullname}
+            </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                alignSelf: 'center',
+                color: 'black',
+              }}>
+              invalid@gmail.com
+            </Text>
+          </View>
+          <Image
+            source={Assets.icons.arrowRight}
+            style={{
+              height: 20,
+              width: 20,
+              alignSelf: 'center',
+            }}
+          />
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={SettingStyle.itemSettingContainer}
-        onPress={() => {
-          navigation.navigate(stackName.languageSetting.name);
-        }}>
-        <Image
-          source={Assets.icons.translate}
-          style={{width: 20, height: 20}}
-        />
-        <Text style={SettingStyle.title}>Language</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={SettingStyle.itemSettingContainer}
-        onPress={() => {
-          navigation.navigate(stackName.privacyPolicy.name);
-        }}>
-        <Image
-          source={Assets.icons.notification}
-          style={{width: 20, height: 20}}
-        />
-        <Text style={SettingStyle.title}>Privacy Policy</Text>
-      </TouchableOpacity>
-      <View style={SettingStyle.line} />
-      <TouchableOpacity
-        style={SettingStyle.itemSettingContainer}
-        onPress={() => {
-          navigation.navigate(stackName.changePassword.name);
-        }}>
-        <Image
-          source={Assets.icons.notification}
-          style={{width: 20, height: 20}}
-        />
-        <Text style={SettingStyle.title}>Change password</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        disabled={loading}
-        style={SettingStyle.itemSettingContainer}
-        onPress={logout}>
-        <Image source={Assets.icons.logout} style={{width: 20, height: 20}} />
-        <Text style={SettingStyle.titleRed}>Log out</Text>
-      </TouchableOpacity>
+
+      {SettingList.map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          style={SettingStyle.itemSettingContainer}
+          onPress={item.onClick}>
+          <Image source={item.icon} style={AppHeaderStyle.icon} />
+          <Text
+            style={[
+              SettingStyle.title,
+              {
+                color:
+                  item.title === t('settingScreen.logout') ? 'red' : 'black',
+              },
+            ]}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
