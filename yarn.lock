@@ -9771,6 +9771,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-video@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "react-native-video@npm:6.7.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ad8b321ef5ac078fededcafa63d7a21fada7c13ecaf34cd795058868ef386791347ba3e5b6f320aa7ab6bf95bcb0b3958cfca540a0675c8c57fdeaf2e828b1cf
+  languageName: node
+  linkType: hard
+
 "react-native-vision-camera@npm:^4.5.3":
   version: 4.5.3
   resolution: "react-native-vision-camera@npm:4.5.3"
