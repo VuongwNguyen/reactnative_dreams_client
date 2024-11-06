@@ -87,7 +87,6 @@ const TrendingPostTab = props => {
   }]);
 
 
-
   const onEndReached = useCallback(() => {
     if (currentPage < page.maxPage && !isLoading) {
       setCurrentPage(prevPage => prevPage + 1);

@@ -56,7 +56,7 @@ const SettingScreen = props => {
     {
       title: t('settingScreen.logout'),
       icon: Assets.icons.logout,
-      onClick: logout,
+      onClick: ()=> logout(),
     },
   ];
 

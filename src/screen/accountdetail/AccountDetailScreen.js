@@ -38,7 +38,7 @@ import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
 import {basicInfArr, otherInfArr} from './InfoArr';
-import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const showBasicInf = () => {
   return (
@@ -95,14 +95,11 @@ const AccountDetailScreen = ({navigation}) => {
 
   const handleChangeAvt = () => {
     if (image) {
-      console.log(image);
-
       const formData = new FormData();
       if (image?.[0]?.fileName) {
         formData.append('avatar', {
           uri: image?.[0]?.uri,
           name: image?.[0]?.fileName,
-          // name: `image_${image?.[0]?.fileName}.${image?.[0]?.type.split('/')[1]}`,
           type: image?.[0]?.type,
         });
       } else {
