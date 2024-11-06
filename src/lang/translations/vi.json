@@ -193,7 +193,7 @@
   },
   "privacySettingScreen": {
     "title": "Cài đặt quyền riêng tư",
-    "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây.",
+    "desc": "Quản lý quyền riêng tư cho các mục thông tin của bạn và quyết định thông tin nào sẽ được hiển thị công khai với người dùng khác. Bảo vệ dữ liệu cá nhân của bạn và tùy chỉnh mức độ chia sẻ phù hợp với nhu cầu.",
     "public": "Cộng đồng",
     "private": "Riêng tư"
   },
@@ -292,8 +292,9 @@
   "descDialog": {
     "title": "Nhập mô tả về bạn",
     "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
-    "placeholder": "Điều gì đó về bạn",
-    "confirm": "XÁC NHẬN"
+    "placeholder": "Viết một vài điều về bạn tối đa 100 kí tự",
+    "confirm": "XÁC NHẬN",
+    "warm": "Mô tả tối đa 100 kí tự !"
   },
   "rlstStatusDialog": {
     "title": "Relationship status",
@@ -310,7 +311,13 @@
     "setting": "Cài đặt"
   },
   "itemPost": {
-    "timeStatus": "vi"
+    "timeStatus": "vi",
+    "menu": {
+      "report": "Báo cáo",
+      "delete": "Xóa bài viết",
+      "edit": "Chỉnh sửa",
+      "privacy": "Quyền riêng tư"
+    }
   },
   "reportScreen": {
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",

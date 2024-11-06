@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { APIGetUserBasicInf } from '../api/AccountAPI';
+import {createSlice} from '@reduxjs/toolkit';
+import {APIGetUserBasicInf} from '../api/AccountAPI';
 
 export const userBasicInfSlice = createSlice({
   name: 'userBasicInf',

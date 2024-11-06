@@ -1,10 +1,11 @@
 import {Colors, Fonts, Typography} from '../../styles';
 export const tagInfStyle = {
   container: {
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingLeft: 15,
+    paddingRight: 35,
   },
   infContainer: {
     flexDirection: 'row',
@@ -22,5 +23,6 @@ export const tagInfStyle = {
   },
   textContainer: {
     gap: 5,
+    flex: 1,
   },
 };

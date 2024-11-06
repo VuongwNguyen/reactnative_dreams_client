@@ -9,7 +9,6 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-
 import React, {useState, useRef, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,9 +16,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {accountDetailStyle} from '../../styles/accountdetail/AccountDetailStyle';
 import AppHeader from '../../components/Header';
 import TagInf from '../../components/TagInf';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerAvt';
-
 import {
   APIPersonalDetailInf,
   APIUpdateAvtUsername,
@@ -38,7 +36,7 @@ import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
 
 import {basicInfArr, otherInfArr} from './InfoArr';
-import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
 
 const showBasicInf = () => {
   return (
@@ -81,6 +79,7 @@ const AccountDetailScreen = ({navigation}) => {
   const [personalInf, setPersonalInf] = useState('');
   const [basicInfData, setBasicInfData] = useState([]);
   const [otherInfData, setOtherInfData] = useState([]);
+  const [isLoadingAvt, setIsLoadingAvt] = useState(false);
 
   useEffect(() => {
     dispatch(APIPersonalDetailInf())
@@ -94,6 +93,8 @@ const AccountDetailScreen = ({navigation}) => {
   }, []);
 
   const handleChangeAvt = () => {
+    setIsLoadingAvt(true);
+
     if (image) {
       const formData = new FormData();
       if (image?.[0]?.fileName) {
@@ -109,9 +110,12 @@ const AccountDetailScreen = ({navigation}) => {
           type: 'image/jpeg',
         });
       }
+
       dispatch(APIUpdateAvtUsername(formData))
         .unwrap()
         .then(res => {
+          setIsLoadingAvt(false);
+
           ToastAndroid.show('Cập nhật avatar thành công', ToastAndroid.SHORT);
           dispatch(APIGetUserBasicInf());
         })
@@ -125,6 +129,9 @@ const AccountDetailScreen = ({navigation}) => {
       handleChangeAvt();
     }
   }, [image]);
+  useEffect(() => {
+    if (isLoadingAvt) ToastAndroid.show('Đang cập nhật...', ToastAndroid.SHORT);
+  }, [isLoadingAvt]);
 
   const basicInfUI = [
     {key: 'fullname', title: t('profileScreen.infomationTab.fullname')},
@@ -344,6 +351,13 @@ const AccountDetailScreen = ({navigation}) => {
                   style={{width: 20, height: 20}}
                 />
               </TouchableOpacity>
+              {isLoadingAvt && (
+                <ActivityIndicator
+                  size={'large'}
+                  color={Colors.primary}
+                  style={accountDetailStyle.loadingAvt}
+                />
+              )}
             </View>
             {/* View modal */}
             <Modal

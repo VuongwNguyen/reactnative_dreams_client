@@ -1,5 +1,5 @@
 import {View, Image, TouchableOpacity, Text, ToastAndroid} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
@@ -9,7 +9,6 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
-
 import {stackName} from '../../navigations/screens';
 import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
@@ -39,7 +38,6 @@ const ProfileScreen = props => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
-
   const [isFollowedStatus, setIsFollowedStatus] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
@@ -62,7 +60,7 @@ const ProfileScreen = props => {
   });
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(APIGetInf(userViewId))
         .unwrap()
         .then(res => {

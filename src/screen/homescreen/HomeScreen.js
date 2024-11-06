@@ -1,6 +1,6 @@
-import {View, Image, TextInput, TouchableOpacity} from 'react-native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -8,13 +8,13 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
+import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import TopBarNavigationHome from '../../navigations/TopBarNavigationHome';
-import {HomeStyles} from '../../styles/homestyle/homestyle';
 import {Assets} from '../../styles';
-import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+import {HomeStyles} from '../../styles/homestyle/homestyle';
 
 const getInterpolation = (
   value,
@@ -31,16 +31,14 @@ const getInterpolation = (
 };
 
 const HomeScreen = props => {
-  const {navigation} = props;
-  const inputSearch = useRef(null);
   const {t} = useTranslation();
-  const dispatch = useDispatch();
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const translationY = useSharedValue(0);
   const previousScrollY = useSharedValue(0);
   const isScrollingDown = useSharedValue(true);
   const lastUpdate = useSharedValue(0);
+  const navigation = useNavigation();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
@@ -79,46 +77,35 @@ const HomeScreen = props => {
     };
   });
 
-  const handleSearch = () => {
-    const searchText = inputSearch.current.value;
-
-    navigation.navigate(stackName.search.name, {
-      searchText: searchText,
-    });
-  };
-
-  useEffect(() => {
-    dispatch(APIGetUserBasicInf());
-  }, [dispatch]);
-
   return (
     <View style={HomeStyles.container}>
       <Animated.View style={[HomeStyles.header, headerStyle]}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate(stackName.profile.name);
-          }}>
-          {!!userBasicInfData.avatar && (
-            <Image
-              style={HomeStyles.avatar}
-              source={{
-                uri: userBasicInfData?.avatar,
-              }}
-            />
-          )}
-        </TouchableOpacity>
-        <View style={HomeStyles.wraperInputSearch}>
-          <TextInput
-            ref={inputSearch}
-            style={HomeStyles.inputSearch}
-            placeholder={t('homeScreen.search')}
-            onSubmitEditing={handleSearch}
-            keyboardShouldPersistTaps="handled"
-          />
-          <TouchableOpacity onPress={() => inputSearch.current.focus()}>
-            <Image source={Assets.icons.search} style={HomeStyles.iconSearch} />
+        <View style={HomeStyles.row}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(stackName.profile.name);
+            }}>
+            {!!userBasicInfData.avatar && (
+              <Image
+                style={HomeStyles.avatar}
+                source={{
+                  uri: userBasicInfData?.avatar,
+                }}
+              />
+            )}
           </TouchableOpacity>
+          {!!userBasicInfData?.fullname && (
+            <View>
+              <Text>Xin chào,</Text>
+              <Text style={HomeStyles.name}>{userBasicInfData?.fullname}</Text>
+            </View>
+          )}
         </View>
+        <TouchableOpacity
+          style={HomeStyles.iconButton}
+          onPress={() => navigation.navigate(stackName.search.name)}>
+          <Image source={Assets.icons.search} style={HomeStyles.search} />
+        </TouchableOpacity>
       </Animated.View>
       <TopBarNavigationHome scrollHandler={scrollHandler} />
     </View>

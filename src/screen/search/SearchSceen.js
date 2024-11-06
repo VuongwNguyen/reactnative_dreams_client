@@ -11,17 +11,19 @@ import {searchStyle} from '../../styles/search/SearchStyle';
 import {Assets, Colors, Sizing} from '../../styles';
 import ItemPost from '../../components/ItemPost';
 import SearchAccountComponent from './SearchAccountComponent';
-const SearchSceen = props => {
-  const {navigation, route} = props;
-  const searchText = props.route?.params?.searchText;
-  console.log(searchText);
+import {useNavigation} from '@react-navigation/native';
 
-  const [searchValue, setSearchValue] = useState(searchText);
-  const optionsArr = ['All', 'Post', 'Accounts'];
-  const [isSelected, setIsSelected] = useState(optionsArr[0]);
+const options = ['All', 'Post', 'Accounts'];
+
+const SearchSceen = () => {
+  const navigation = useNavigation();
+  const [searchValue, setSearchValue] = useState('');
+  const [isSelected, setIsSelected] = useState(options[0]);
+
   const goBack = () => {
-    navigation.goBack();
+    if (navigation.canGoBack()) navigation.goBack();
   };
+
   return (
     <View style={searchStyle.container}>
       {/* header */}
@@ -59,7 +61,7 @@ const SearchSceen = props => {
       </View>
       {/* tag options filter */}
       <View style={searchStyle.tagContainer}>
-        {optionsArr.map((item, index) => (
+        {options.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={
