@@ -11,6 +11,7 @@ const TopBarNavigationProfile = props => {
   const {t} = useTranslation();
   return (
     <Tab.Navigator
+      initialRouteName={t('profileScreen.information')}
       screenOptions={topBarOptions}
       style={{flex: 1}}>
       <Tab.Screen

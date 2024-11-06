@@ -94,6 +94,7 @@ export default React.memo(
     };
 
     const navigation = useNavigation();
+
     return (
       <View style={itemPostStyle.container}>
         {/* header */}
@@ -269,7 +270,7 @@ export default React.memo(
         </View>
         {/* header more modal */}
         {isShowMore && (
-          <MenuItemPost handleItemMenuClick={handleItemMenuClick} />
+          <MenuItemPost handleItemMenuClick={handleItemMenuClick} isSelf={item?.isSelf}/>
         )}
       </View>
     );
