@@ -1,13 +1,16 @@
-import {Image, Text, View} from 'react-native';
+import {Image, Text, ToastAndroid, View} from 'react-native';
 import React, {useState} from 'react';
 import {privacySettingItemStyle} from '../../styles/privacysetting/PrivacySettingItemStyle';
 import {Dropdown} from 'react-native-element-dropdown';
-import {Assets, Sizing} from '../../styles';
+import {useDispatch} from 'react-redux';
+import {Assets, } from '../../styles';
+import {APIUpdateInf} from '../../store/api/InfAPI';
+
 const PrivacySettingItem = props => {
-  const {title, content, status} = props;
+  const {icon, title, status, infKey} = props;
   const [icStatus, setIcStatus] = useState(status);
   const [value, setValue] = useState(status);
-
+  const dispatch = useDispatch();
   const data = [
     {label: 'Public', value: 'public'},
     {label: 'Private', value: 'private'},
@@ -15,11 +18,8 @@ const PrivacySettingItem = props => {
   return (
     <View style={privacySettingItemStyle.container}>
       <View style={privacySettingItemStyle.infContainer}>
-        <Image source={Assets.icons.user} style={{height: 20, width: 20}} />
-        <View style={privacySettingItemStyle.contentContainer}>
-          <Text style={privacySettingItemStyle.title}>{title}</Text>
-          <Text style={privacySettingItemStyle.content}>{content}</Text>
-        </View>
+        <Image source={icon} style={{height: 24, width: 24}} />
+        <Text style={privacySettingItemStyle.title}>{title}</Text>
       </View>
       <Dropdown
         placeholderStyle={privacySettingItemStyle.dropdownText}
@@ -31,6 +31,14 @@ const PrivacySettingItem = props => {
         onChange={item => {
           setValue(item.value);
           setIcStatus(item.value);
+          dispatch(APIUpdateInf({key: infKey, privacy_status: item.value}))
+            .unwrap()
+            .then(() =>
+              ToastAndroid.show('Cập nhật thành công!', ToastAndroid.SHORT),
+            )
+            .catch(err => {
+              ToastAndroid.show(err.message, ToastAndroid.SHORT);
+            });
         }}
         renderLeftIcon={() => (
           <Image

@@ -173,7 +173,7 @@
   },
   "privacySettingScreen": {
     "title": "Privacy Setting",
-    "desc": "Please review this info form your profile and decide who you’re comfortable with seeing it. Your profile may have more than is listed here.",
+    "desc": "Manage the privacy of your information items and decide what information is publicly visible to other users. Protect your personal data and customize the level of sharing to suit your needs.",
     "public": "Public",
     "private": "Private"
   },
@@ -272,8 +272,9 @@
   "descDialog": {
     "title": "Enter your description",
     "desc": "Provide more descriptive information about you.",
-    "placeholder": "Something about you",
-    "confirm": "CONFIRM"
+    "placeholder": "Something about you maximum 100 characters",
+    "confirm": "CONFIRM",
+    "warm": "Description maximum 100 characters"
   },
   "rlstStatusDialog": {
     "title": "Tình trạng hôn nhân",
@@ -290,7 +291,13 @@
     "setting": "Settings"
   },
   "itemPost": {
-    "timeStatus": "en"
+    "timeStatus": "en",
+    "menu": {
+      "report": "Report",
+      "delete": "Delete post",
+      "edit": "Edit post",
+      "privacy": "Privacy"
+    }
   },
   "reportScreen": {
     "reasonTitle": "Please state the reason you are making this report!",

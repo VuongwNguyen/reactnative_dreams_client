@@ -1,15 +1,21 @@
-import { ActivityIndicator, FlatList, RefreshControl, ToastAndroid, View } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import ItemPost, { ItemSeparator } from '../../components/ItemPost';
-import { useDispatch } from 'react-redux';
-
-import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
-import { APIGetPostByUser } from '../../store/api/PostAPI';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  ToastAndroid,
+  View,
+} from 'react-native';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
+import {useDispatch} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
+import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
+import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
-import { Colors } from '../../styles';
+import {Colors} from '../../styles';
 
 const PostedTab = props => {
-  const { scrollHandler, user_id_view } = props;
+  const {scrollHandler, user_id_view} = props;
   const dispatch = useDispatch();
   const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
@@ -20,13 +26,11 @@ const PostedTab = props => {
   const [nextPage, setNextPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const fetchPosts = () => {
-    setIsLoading(true);
-    dispatch(APIGetPostByUser({ user_id_view, _page: currentPage }))
+    dispatch(APIGetPostByUser({user_id_view}))
       .unwrap()
       .then(res => {
-        const { list, page } = res;
+        const {list, page} = res;
         setNextPage(res);
         setPage(page);
         if (currentPage === 1) {
@@ -42,11 +46,14 @@ const PostedTab = props => {
         setIsLoading(false);
         setRefreshing(false);
       });
-  }
+  };
 
-  useEffect(() => {
-    fetchPosts();
-  }, [currentPage]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchPosts();
+      setRefreshing(true);
+    }, [user_id_view, currentPage]),
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -56,12 +63,14 @@ const PostedTab = props => {
   const onEndReached = useCallback(() => {
     if (currentPage < page.maxPage && !isLoading) {
       setCurrentPage(prevPage => prevPage + 1);
-      setNextPage(true)
+      setNextPage(true);
     }
   }, [currentPage, nextPage, isLoading, dispatch]);
 
   const renderLoader = () => {
-    return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
+    return isLoading ? (
+      <ActivityIndicator size="large" color={Colors.primary} />
+    ) : null;
   };
 
   return (
@@ -70,15 +79,12 @@ const PostedTab = props => {
         onScroll={scrollHandler}
         data={dataPosts}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <ItemPost item={item} />}
+        renderItem={({item}) => <ItemPost item={item} />}
         keyExtractor={item => item._id}
         ItemSeparatorComponent={() => <ItemSeparator />}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        ListFooterComponent={renderLoader}
       />
     </View>
   );

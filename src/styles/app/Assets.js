@@ -5,6 +5,8 @@
 const uriIcons = '../../../assets/icons/';
 export const Assets = {
   icons: {
+    policy:require(uriIcons + 'policy.png'),
+    changePw: require(uriIcons + 'change-password.png'),
     danger: require(uriIcons + 'danger.png'),
     followed: require(uriIcons + 'check-primary.png'),
     editProfile: require(uriIcons + 'edit-primary.png'),
