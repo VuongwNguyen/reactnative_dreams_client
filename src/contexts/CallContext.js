@@ -47,7 +47,7 @@ export const CallProvider = ({children}) => {
   };
 
   return (
-    <CallContext.Provider value={{callState: call, registerCall}}>
+    <CallContext.Provider value={{callState: call, registerCall, setCall}}>
       {children}
     </CallContext.Provider>
   );
