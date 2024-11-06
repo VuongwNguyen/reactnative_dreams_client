@@ -30,7 +30,9 @@ const Chat = props => {
 
         <View style={styles.content}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.message}>{message}</Text>
+          <Text style={styles.message} numberOfLines={1}>
+            {message}
+          </Text>
         </View>
       </View>
       <View>{time && <Text style={styles.time}>{time}</Text>}</View>
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
+    maxWidth: '75%',
   },
   avatar: {
     flex: 1,

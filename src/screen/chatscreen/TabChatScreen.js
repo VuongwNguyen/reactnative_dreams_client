@@ -40,7 +40,7 @@ const TabChatScreen = () => {
             }
             avatar={
               item.is_group
-                ? item.members.slice(0, 3).map(mem => mem.avatar)
+                ? item.members.slice(0, 4).map(mem => mem.avatar)
                 : item.members[0].isMe
                 ? item.members[1].avatar
                 : item.members[0].avatar
@@ -64,8 +64,8 @@ const TabChatScreen = () => {
 
   return (
     <View style={styles.container}>
-      {list.length > 0 ? (
-        <View style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        {list.length > 0 ? (
           <FlatList
             data={list}
             renderItem={renderChat}
@@ -73,12 +73,12 @@ const TabChatScreen = () => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.list}
           />
-        </View>
-      ) : (
-        <View style={styles.center}>
-          <Text>Chat room is empty</Text>
-        </View>
-      )}
+        ) : (
+          <View style={styles.center}>
+            <Text>Chat room is empty</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };

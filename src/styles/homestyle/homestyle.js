@@ -1,4 +1,17 @@
-export const HomeStyles = {
+import {StyleSheet} from 'react-native';
+import {Colors} from '../app/Colors';
+
+export const HomeStyles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 21,
+  },
+  name: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -10,6 +23,7 @@ export const HomeStyles = {
     gap: 20,
     paddingLeft: 10,
     paddingRight: 10,
+    justifyContent: 'space-between',
   },
   avatar: {
     width: 50,
@@ -37,4 +51,15 @@ export const HomeStyles = {
     left: 15,
     top: -32,
   },
-};
+  iconButton: {
+    padding: 8,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 999,
+  },
+  search: {
+    width: 24,
+    height: 24,
+    resizeMode: 'cover',
+  },
+});
