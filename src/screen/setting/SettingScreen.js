@@ -123,14 +123,12 @@ const SettingScreen = props => {
           }}>
           <View
             style={{
-              justifyContent: 'center',
               flexDirection: 'column',
             }}>
             <Text
               style={{
                 fontSize: 20,
                 fontWeight: 'bold',
-                alignSelf: 'center',
                 color: 'black',
               }}>
               {userBasicInfData?.fullname}
@@ -138,10 +136,9 @@ const SettingScreen = props => {
             <Text
               style={{
                 fontSize: 14,
-                alignSelf: 'center',
                 color: 'black',
               }}>
-              invalid@gmail.com
+              {userBasicInfData?.email}
             </Text>
           </View>
           <Image
