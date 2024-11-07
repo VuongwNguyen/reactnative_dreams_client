@@ -10,35 +10,8 @@ import {
 } from 'react-native';
 import {Assets, Colors} from '../styles';
 import AxiosInstance from '../configs/axiosInstance';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/vi';
-import { useDispatch, useSelector } from 'react-redux';
-
-dayjs.extend(relativeTime);
-
-const customLocale = {
-  ...dayjs.Ls.vi,
-  relativeTime: {
-    ...dayjs.Ls.vi.relativeTime,
-    future: 'in %s',
-    past: '%s trước',
-    s: 'vài giây',
-    m: '1 phút',
-    mm: '%d phút',
-    h: '1 giờ',
-    hh: '%d giờ',
-    d: '1 ngày',
-    dd: '%d ngày',
-    M: '1 tháng',
-    MM: '%d tháng',
-    y: '1 năm',
-    yy: '%d năm',
-  },
-};
-
-// Sử dụng locale tùy chỉnh
-dayjs.locale(customLocale);
+import {useDayjs} from '../configs/hooks/useDayjs';
+import {useSelector} from 'react-redux';
 
 const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
@@ -56,8 +29,7 @@ const CommentItem = memo(props => {
   const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
   const [currentItem, setCurrentItem] = useState(comment);
   const [childComments, setChildComments] = useState([]);
-  const childCommentData = useSelector((state) => state.childComment.data);
-
+  const childCommentData = useSelector(state => state.childComment.data);
 
   const handleRefInput = () => {
     inputRef.current.focus();
@@ -89,18 +61,18 @@ const CommentItem = memo(props => {
     setCommentFocus(null);
   };
 
-  useEffect(() => {    
-    const onNewReplyComment = (parrentCommentId,childComment) => {
+  useEffect(() => {
+    const onNewReplyComment = (parrentCommentId, childComment) => {
       if (parrentCommentId === comment._id) {
-        setChildComments([childComment,...childComments]);
+        setChildComments([childComment, ...childComments]);
         setVisibleReplies(visibleReplies + 1);
       }
-    }
+    };
     if (childCommentData && childCommentData.length !== 0) {
       childCommentData.forEach(element => {
-        const isExist = childComments.some((item) => item._id === element._id)
-        if (!isExist){
-          onNewReplyComment(element.reply_comment_id,element);
+        const isExist = childComments.some(item => item._id === element._id);
+        if (!isExist) {
+          onNewReplyComment(element.reply_comment_id, element);
         }
       });
     }
@@ -109,11 +81,11 @@ const CommentItem = memo(props => {
   useEffect(() => {
     const fetchChildComment = async () => {
       const res = await AxiosInstance().get(
-      `/comment/child-comments?comment_id=${comment._id}`,
-    );
-    setChildComments(res.data.list);
-    }
-    fetchChildComment()
+        `/comment/child-comments?comment_id=${comment._id}`,
+      );
+      setChildComments(res.data.list);
+    };
+    fetchChildComment();
   }, [comment]);
 
   return (
@@ -133,11 +105,18 @@ const CommentItem = memo(props => {
             <View style={[styles.commentRow, {alignItems: 'center'}]}>
               <Text style={styles.textUser}>{comment?.author?.fullname}</Text>
               <Text style={styles.createAt}>
-                {dayjs(comment?.createdAt).locale('vi').fromNow()}
+                {useDayjs(comment?.createdAt)
+                  .locale(t('itemPost.timeStatus'))
+                  .fromNow()}
               </Text>
             </View>
             <Text style={styles.content}>{comment.content}</Text>
-            <Text style={styles.textReply} onPress={handleRefInput}>
+            <Text
+              style={styles.textReply}
+              onPress={() => {
+                handleRefInput();
+                setCommentFocus(comment);
+              }}>
               {t('postDetailScreen.reply')}
             </Text>
           </View>
@@ -162,23 +141,23 @@ const CommentItem = memo(props => {
       <>
         {childComments.length > 0 && (
           <>
-          <FlatList
-                  data={childComments.slice(0, visibleReplies)}
-                  renderItem={({item}) => (
-                    <View>
-                      <CommentItem
-                        comment={item}
-                        level={level + 1}
-                        inputRef={inputRef}
-                        setReplyId={setReplyId}
-                      />
-                    </View>
-                  )}
-                  keyExtractor={item => item._id}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  style={styles.replyList}
-                />
+            <FlatList
+              data={childComments.slice(0, visibleReplies)}
+              renderItem={({item}) => (
+                <View>
+                  <CommentItem
+                    comment={item}
+                    level={level + 1}
+                    inputRef={inputRef}
+                    setReplyId={setReplyId}
+                  />
+                </View>
+              )}
+              keyExtractor={item => item._id}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              style={styles.replyList}
+            />
             {childComments.length > visibleReplies ? (
               <TouchableOpacity
                 style={styles.button}

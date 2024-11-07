@@ -153,7 +153,9 @@
     "view": "View",
     "moreReplies": "more replies",
     "hideReplies": "Hide replies",
-    "writeComment": "Write a comment..."
+    "writeComment": "Write a comment...",
+    "replyingTo": "Replying to",
+    "cancel": "Cancel"
   },
   "newPostScreen": {
     "title": "Create post",
@@ -319,5 +321,15 @@
       "r5": "Other issues"
     },
     "submit": "submit"
+  },
+  "settingScreen": {
+    "title": "Settings",
+    "account": "Account",
+    "privacy_safety": "Privacy & Safety",
+    "notification": "Notifications",
+    "language": "Language",
+    "logout": "Logout",
+    "password": "Change password",
+    "privacyPolicy": "Privacy Policy"
   }
 }

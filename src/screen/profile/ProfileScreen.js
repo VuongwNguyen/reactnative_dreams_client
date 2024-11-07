@@ -67,7 +67,7 @@ const ProfileScreen = props => {
           setCoreInf(res?.data);
         })
         .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          console.log(err);
         });
     }, [userViewId]),
   );
@@ -96,7 +96,7 @@ const ProfileScreen = props => {
         }
       })
       .catch(err => {
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        console.log(err);
       });
   };
   useEffect(() => {
