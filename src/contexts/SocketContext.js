@@ -2,6 +2,7 @@ import {createContext, useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import SocketIO from '../configs/socket';
 import {updateOfflineUser, updateOnlineUser, updateRoom} from '../store/slices';
+import {parseJwt} from '../utils/token';
 
 const SocketContext = createContext({});
 
@@ -26,7 +27,13 @@ export const SocketProvider = ({children}) => {
     if (!socket) return;
 
     socket.on('update-room', (message, room) => {
-      dispatch(updateRoom({message, room}));
+      dispatch(
+        updateRoom({
+          message,
+          room,
+          userId: parseJwt(token.accessToken)?.user_id,
+        }),
+      );
     });
 
     socket.on('user-online', info => {
@@ -42,7 +49,7 @@ export const SocketProvider = ({children}) => {
       socket.off('user-online');
       socket.off('user-disconnect');
     };
-  }, [socket]);
+  }, [socket, token]);
 
   return (
     <SocketContext.Provider value={{socket}}>{children}</SocketContext.Provider>
