@@ -162,23 +162,25 @@ const CommentItem = memo(props => {
       <>
         {childComments.length > 0 && (
           <>
-          <FlatList
-                  data={childComments.slice(0, visibleReplies)}
-                  renderItem={({item}) => (
-                    <View>
-                      <CommentItem
-                        comment={item}
-                        level={level + 1}
-                        inputRef={inputRef}
-                        setReplyId={setReplyId}
-                      />
-                    </View>
-                  )}
-                  keyExtractor={item => item._id}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  style={styles.replyList}
-                />
+            <FlatList
+              data={childComments.slice(0, visibleReplies)}
+              renderItem={({item}) => (
+                <View>
+                  <CommentItem
+                    comment={item}
+                    level={level + 1}
+                    inputRef={inputRef}
+                    commentFocus={commentFocus}
+                    setCommentFocus={setCommentFocus}
+                    setReplyId={setReplyId}
+                  />
+                </View>
+              )}
+              keyExtractor={item => item._id}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              style={styles.replyList}
+            />
             {childComments.length > visibleReplies ? (
               <TouchableOpacity
                 style={styles.button}

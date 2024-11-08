@@ -46,6 +46,11 @@ const PostDetailScreen = props => {
       });
   }, []);
 
+  const handleCancelReply = () => {
+    setReplyId(null);
+    setCommentFocus(null);
+  };
+
   const handleSendComment = async () => {
     try {
       const data = {
@@ -121,8 +126,30 @@ const PostDetailScreen = props => {
               <ItemPost item={data?.post} setLike={item => setLike(item)} />
             }
           />
-          <View
-            style={{height: 1, backgroundColor: '#ccc', width: '100%'}}></View>
+          {commentFocus && (
+            <View
+              style={{
+                paddingHorizontal: 10,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+              }}>
+              <Text>
+                {t('postDetailScreen.replyingTo')}{' '}
+                <Text style={{fontWeight: 'bold'}}>
+                  {commentFocus?.author?.fullname}
+                </Text>
+              </Text>
+              <TouchableOpacity onPress={() => handleCancelReply()}>
+                <Text
+                  style={{
+                    color: 'red',
+                    fontWeight: 'bold',
+                  }}>
+                  {t('postDetailScreen.cancel')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
           <View style={postDetailStyle.footer}>
             <Image
               style={postDetailStyle.avatarFooter}
