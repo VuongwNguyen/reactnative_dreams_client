@@ -20,8 +20,9 @@ import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
-import {setIds, setPostCreated} from '../../store/slices/IdsTagUserSlice';
+import {setIds} from '../../store/slices/IdsTagUserSlice';
 import TagUserMention from './TagUserMention';
+import { setPostCreated } from '../../store/slices/PostTrendingSlice';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -131,7 +132,7 @@ const NewPostScreen = props => {
         ?.match(/#(\w+)/g)
         ?.map(word => word.replace('#', ''));
       result.length > 0 &&
-      result.forEach(item => {
+        result.forEach(item => {
           formData.append('hashtags', item);
         });
     }
@@ -158,10 +159,12 @@ const NewPostScreen = props => {
         setPostStatus('successfully');
         navigation.navigate(stackName.bottomTab.name);
         dispatch(setPostCreated(true));
-        dispatch(setIds([]))
+        dispatch(setIds([]));
         ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
       })
       .catch(err => {
+        console.log(err);
+
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       });
   };
