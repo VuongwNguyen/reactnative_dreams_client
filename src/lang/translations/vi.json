@@ -171,7 +171,9 @@
     "view": "Xem",
     "moreReplies": "câu trả lời khác",
     "hideReplies": "Ẩn câu trả lời",
-    "writeComment": "Viết bình luận"
+    "writeComment": "Viết bình luận",
+    "replyingTo": "Đang trả lời",
+    "cancel": "Hủy"
   },
   "newPostScreen": {
     "title": "Tạo bài viết",
@@ -337,5 +339,15 @@
       "r5": "Vấn đề khác"
     },
     "submit": "Gửi"
+  },
+  "settingScreen": {
+    "title": "Cài đặt",
+    "account": "Tài khoản",
+    "privacy_safety": "Quyền riêng tư và an toàn",
+    "notification": "Thông báo",
+    "language": "Ngôn ngữ",
+    "logout": "Đăng xuất",
+    "password": "Đổi mật khẩu",
+    "privacyPolicy": "Chính sách bảo mật"
   }
 }

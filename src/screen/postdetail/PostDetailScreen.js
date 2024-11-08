@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Text,
 } from 'react-native';
 import CommentItem from '../../components/CommentItem';
 import {postDetailStyle} from '../../styles/postdetailstyle/PostDetailStyle';
@@ -16,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
-import { childCommentSlice } from '../../store/slices/ChildCommentSlice';
+import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
 
 const PostDetailScreen = props => {
   const post_id = props.route?.params?.post_id;
@@ -73,22 +74,23 @@ const PostDetailScreen = props => {
                 fullname: userBasicInfData?.fullname,
                 avatar: {url: userBasicInfData?.avatar},
               },
-              likes: 0
-            }
+              likes: 0,
+            };
             newData.unshift(newComment);
             setList(newData);
-          }else{            
+          } else {
             const newComment = {
               ...res.data,
               author: {
                 fullname: userBasicInfData?.fullname,
                 avatar: {url: userBasicInfData?.avatar},
               },
-              likes: 0
-            }
+              likes: 0,
+            };
             dispatch(childCommentSlice.actions.setPushChildComment(newComment));
           }
           setContent('');
+          setCommentFocus(null);
           inputRef.current.clear();
         });
     } catch (error) {
@@ -99,7 +101,7 @@ const PostDetailScreen = props => {
   return (
     <View style={postDetailStyle.container}>
       {loading ? (
-        <ActivityIndicator size="large" color="#00ff00" />
+        <ActivityIndicator size="large" color="#00C3FE" />
       ) : (
         <>
           <AppHeader title={t('postDetailScreen.post')} />

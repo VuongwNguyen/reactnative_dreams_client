@@ -68,7 +68,7 @@ export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
   async (page, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance().get(`/post/following-posts/${page}/10`);
+      const response = await AxiosInstance().get(`/post/following-posts?_page=${page}&_limit=10`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
