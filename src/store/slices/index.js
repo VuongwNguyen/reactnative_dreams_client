@@ -5,3 +5,4 @@ export * from './PostTrendingSlice';
 export * from './ChatSlice';
 export * from './ChildCommentSlice';
 export * from './NotificationSlice';
+export * from './IdsTagUserSlice';

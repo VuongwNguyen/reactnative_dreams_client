@@ -47,6 +47,11 @@ const PostDetailScreen = props => {
       });
   }, []);
 
+  const handleCancelReply = () => {
+    setReplyId(null);
+    setCommentFocus(null);
+  };
+
   const handleSendComment = async () => {
     try {
       const data = {
@@ -136,7 +141,7 @@ const PostDetailScreen = props => {
                   {commentFocus?.author?.fullname}
                 </Text>
               </Text>
-              <TouchableOpacity onPress={() => setCommentFocus(null)}>
+              <TouchableOpacity onPress={() => handleCancelReply()}>
                 <Text
                   style={{
                     color: 'red',

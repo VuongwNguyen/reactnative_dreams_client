@@ -149,6 +149,8 @@ const CommentItem = memo(props => {
                     comment={item}
                     level={level + 1}
                     inputRef={inputRef}
+                    commentFocus={commentFocus}
+                    setCommentFocus={setCommentFocus}
                     setReplyId={setReplyId}
                   />
                 </View>
