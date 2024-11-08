@@ -34,6 +34,7 @@ export const LoginStyle = StyleSheet.create({
     ...Typography.title,
     color: 'black',
     lineHeight: 30,
+    textAlign: 'center',
   },
 
   link: {
