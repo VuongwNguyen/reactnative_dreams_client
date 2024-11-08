@@ -3,7 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'https://4800-2402-800-637d-9a2f-956c-9b52-b6e3-ad95.ngrok-free.app/api';
+const BASEURL = 'https://2e5c-171-249-87-166.ngrok-free.app/api';
 
 let isRefreshing = false;
 let queue = [];

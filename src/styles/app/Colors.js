@@ -1,5 +1,4 @@
-import {green} from 'react-native-reanimated/lib/typescript/Colors';
-
+// Note: Colors for the app
 export const Colors = {
   primary: '#0CBBF0',
   secondary: '#6C757D',
