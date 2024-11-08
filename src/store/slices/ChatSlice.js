@@ -74,8 +74,26 @@ const roomsSlice = createSlice({
       );
       if (room) {
         room.message = action.payload.message;
+        state.list = [
+          room,
+          ...state.list.filter(r => r._id !== action.payload.room._id),
+        ];
       } else {
         const newRoom = action.payload.room;
+
+        if (!newRoom.is_group) {
+          newRoom.members = newRoom.members.map(mem => {
+            return {
+              ...mem,
+              isMe: mem._id === action.payload.userId,
+            };
+          });
+          newRoom.name =
+            newRoom.members[0]._id === action.payload.userId
+              ? newRoom.members[1].fullname
+              : newRoom.members[0].fullname;
+        }
+
         newRoom.message = action.payload.message;
 
         state.list = [newRoom, ...state.list];
