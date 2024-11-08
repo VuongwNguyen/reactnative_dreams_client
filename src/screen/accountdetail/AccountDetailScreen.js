@@ -34,7 +34,41 @@ import EducationDialog from '../../components/bottomsheet/EducationDialog';
 import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
-import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
+
+import {basicInfArr, otherInfArr} from './InfoArr';
+import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
+
+const showBasicInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {basicInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+          func={item.func}
+        />
+      ))}
+    </View>
+  );
+};
+
+const showOtherInf = () => {
+  return (
+    <View style={accountDetailStyle.infBox}>
+      {otherInfArr.map((item, index) => (
+        <TagInf
+          key={index}
+          tagTitle={item.title}
+          content={item.content}
+          icon={item.icon}
+          func={item.func}
+        />
+      ))}
+    </View>
+  );
+};
 
 const AccountDetailScreen = ({navigation}) => {
   const {t} = useTranslation();
