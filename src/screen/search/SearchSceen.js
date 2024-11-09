@@ -31,7 +31,20 @@ const SearchSceen = () => {
   };
 
   useEffect(() => {
-    console.log('isSelected', isSelected);
+    setAccountArr([]);
+    if (isSelected === 'Accounts' && searchValue !== '') {
+      dispatch(APISearch(searchValue))
+        .unwrap()
+        .then(res => {          
+          setAccountArr(res.data.list);
+        })
+        .catch(err => {
+          console.log('err', err);
+        })
+    }
+  }, [searchValue, isSelected]);
+
+  const handleSearch = () => {
     setAccountArr([]);
     setPostArr([]);
     if (isSelected === 'Post' && searchValue !== '') {
@@ -80,8 +93,7 @@ const SearchSceen = () => {
           console.log('err', err);
         })
     }
-     
-  }, [searchValue, isSelected]);
+  }
 
   return (
     <View style={searchStyle.container}>
@@ -100,6 +112,8 @@ const SearchSceen = () => {
             value={searchValue}
             onChangeText={text => setSearchValue(text)}
             style={searchStyle.searchInput}
+            inputMode = 'search'
+            onSubmitEditing={handleSearch}
           />
           {!!searchValue ? (
             <TouchableOpacity
@@ -111,10 +125,14 @@ const SearchSceen = () => {
               />
             </TouchableOpacity>
           ) : (
-            <Image
-              source={Assets.icons.search}
-              style={searchStyle.rightIconContainer}
-            />
+            <TouchableOpacity
+              onPress={handleSearch}
+              style={searchStyle.rightIconContainer}>
+                <Image
+                  style={searchStyle.rightIcon}
+                  source={Assets.icons.search}
+                />
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -146,7 +164,17 @@ const SearchSceen = () => {
       <ScrollView
         style={searchStyle.scrollContainer}
         showsVerticalScrollIndicator={false}>
-        <View style={searchStyle.resultContainer}>
+        {
+          (postArr.length === 0 && accountArr.length === 0) 
+          ? (
+            <View style={searchStyle.noContent}>
+              <Text style={searchStyle.noResult}>
+                Không có kết quả phù hợp
+              </Text>
+            </View>
+          )
+          :
+          <View style={searchStyle.resultContainer}>
           {(isSelected === 'Accounts' || isSelected === 'All') && accountArr.map((item, index) => (
             <SearchAccountComponent
               key={index}
@@ -161,6 +189,7 @@ const SearchSceen = () => {
             <ItemPost key={index} item={item} />
           ))}
         </View>
+        }
       </ScrollView>
     </View>
   );
