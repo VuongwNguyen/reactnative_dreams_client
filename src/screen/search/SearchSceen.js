@@ -42,7 +42,7 @@ const SearchSceen = () => {
           console.log('err', err);
         })
     }
-  }, [searchValue, isSelected]);
+  }, [searchValue]);
 
   const handleSearch = () => {
     setAccountArr([]);
