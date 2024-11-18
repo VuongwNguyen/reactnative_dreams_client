@@ -30,24 +30,8 @@ const SearchSceen = () => {
     if (navigation.canGoBack()) navigation.goBack();
   };
 
-  useEffect(() => {
-    setAccountArr([]);
-    if (isSelected === 'Accounts' && searchValue !== '') {
-      dispatch(APISearch(searchValue))
-        .unwrap()
-        .then(res => {          
-          setAccountArr(res.data.list);
-        })
-        .catch(err => {
-          console.log('err', err);
-        })
-    }
-  }, [searchValue]);
-
-  const handleSearch = () => {
-    setAccountArr([]);
-    setPostArr([]);
-    if (isSelected === 'Post' && searchValue !== '') {
+  const setData = ({type, searchValue}) => {
+    if (type === 'Post' && searchValue !== '') {
       dispatch(APISearchPost(searchValue))
         .unwrap()
         .then(res => {    
@@ -56,7 +40,7 @@ const SearchSceen = () => {
         .catch(err => {
           console.log('err', err);
         })
-    }else if (isSelected === 'Accounts' && searchValue !== '') {            
+    }else if (type === 'Accounts' && searchValue !== '') {            
       dispatch(APISearch(searchValue))
         .unwrap()
         .then(res => {          
@@ -65,7 +49,7 @@ const SearchSceen = () => {
         .catch(err => {
           console.log('err', err);
         })
-    }else if (isSelected === 'Hashtag' && searchValue !== '') {
+    }else if (type === 'Hashtag' && searchValue !== '') {
       dispatch(APISearchHashtag(searchValue))
         .unwrap()
         .then(res => {
@@ -74,7 +58,7 @@ const SearchSceen = () => {
         .catch(err => {
           console.log('err', err);
         })
-    }else if (isSelected === 'All' && searchValue !== ''){
+    }else if (type === 'All' && searchValue !== ''){
       dispatch(APISearchPost(searchValue))
         .unwrap()
         .then(res => {    
@@ -95,6 +79,25 @@ const SearchSceen = () => {
     }
   }
 
+  //keywork change
+  useEffect(() => {
+    setAccountArr([]);
+    if (isSelected === 'Accounts' && searchValue !== '') {
+      setData({type: isSelected, searchValue});
+    }
+  }, [searchValue, isSelected]);
+
+  //tag change
+  useEffect(() => {
+    if (isSelected === 'Post' && searchValue !== '') {
+      setData({type: isSelected, searchValue});
+    }else if (isSelected === 'Hashtag' && searchValue !== '') {
+      setData({type: isSelected, searchValue});
+    }else if (isSelected === 'All' && searchValue !== ''){
+      setData({type: isSelected, searchValue});
+    }
+  },[isSelected])
+
   return (
     <View style={searchStyle.container}>
       {/* header */}
@@ -113,7 +116,7 @@ const SearchSceen = () => {
             onChangeText={text => setSearchValue(text)}
             style={searchStyle.searchInput}
             inputMode = 'search'
-            onSubmitEditing={handleSearch}
+            onSubmitEditing={() => setData({type: isSelected, searchValue})}
           />
           {!!searchValue ? (
             <TouchableOpacity
@@ -126,7 +129,6 @@ const SearchSceen = () => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={handleSearch}
               style={searchStyle.rightIconContainer}>
                 <Image
                   style={searchStyle.rightIcon}

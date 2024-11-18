@@ -6,7 +6,7 @@ export const APISearch = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `/search?keyword=${data}&_limit=10&_page=1`,
+        `/search?keyword=${data}&_limit=20&_page=1`,
       );
       return response;
     } catch (error) {      
@@ -20,7 +20,7 @@ export const APISearchHashtag = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `/search-hashtag?keyword=${data}&_limit=10&_page=1`,
+        `/search-hashtag?keyword=${data}&_limit=20&_page=1`,
       );
       return response;
     } catch (error) {      
@@ -34,7 +34,7 @@ export const APISearchPost = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
-        `/search/search-post?keyword=${data}&_limit=10&_page=1`,
+        `/search/search-post?keyword=${data}&_limit=20&_page=1`,
       );
       return response;
     } catch (error) {      
