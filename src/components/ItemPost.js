@@ -243,7 +243,7 @@ export default React.memo(
               source={Assets.icons.comment}
               style={itemPostStyle.image}></Image>
             <Text style={itemPostStyle.interactLabel}>
-              {item?.commentCount}
+              {item?.commentCount || 0}
             </Text>
           </TouchableOpacity>
           {/* share */}

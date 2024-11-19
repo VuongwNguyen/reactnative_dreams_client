@@ -32,6 +32,8 @@ const FormikForm = () => {
     },
     loginSchema,
     (val, {resetForm}) => {
+      console.log('ssssss');
+      
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
@@ -40,11 +42,11 @@ const FormikForm = () => {
       )
         .unwrap()
         .then(res => {
-          resetForm();
-          ToastAndroid.show('Login success', 1000);
+          // resetForm();
+          // ToastAndroid.show('Login success', 1000);
         })
         .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          // ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     },
   );
