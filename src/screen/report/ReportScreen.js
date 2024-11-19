@@ -150,7 +150,11 @@ const ReportScreen = props => {
           />
         </View>
         <View style={reportStyle.buttonContainer}>
-          <AppButton title={t('reportScreen.submit')} onPress={onSubmit} />
+          <AppButton
+            title={t('reportScreen.submit')}
+            onPress={onSubmit}
+            isDisable={!selectedItem}
+          />
         </View>
       </View>
     </View>
