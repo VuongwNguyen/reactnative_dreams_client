@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
 import Button from '../../components/Button';
@@ -12,11 +12,38 @@ import {useDispatch} from 'react-redux';
 import {APIRegister, APIVerifyAccount} from '../../store/api/AccountAPI';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const RegisterForm = () => {
+  useEffect(function () {
+    GoogleSignin.configure(
+      {
+        webClientId:'650950443769-f7i4uimhuh6bru16p13db1ik86pbv0la.apps.googleusercontent.com',
+        offlineAccess:false
+      },
+      [],
+    );
+  });
   const navigation = useNavigation();
   const {t} = useTranslation();
   const dispatch = useDispatch();
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {idToken} = await GoogleSignin.signIn();
+
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      const user = await auth().signInWithCredential(googleCredential);
+
+      console.log('User info:', user);
+    } catch (error) {
+      console.error('Google Sign-In error:', error);
+    }
+  };
+
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       firstName: '',
@@ -129,7 +156,7 @@ const RegisterForm = () => {
         }}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={signInWithGoogle}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>
           <TouchableOpacity>
