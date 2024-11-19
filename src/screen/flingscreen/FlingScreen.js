@@ -100,11 +100,11 @@ const FlingScreen = props => {
 
         {!item.isSelf && (
           <TouchableOpacity
-            style={isFollowing ? FlingStyle.flowwing : FlingStyle.flowwed}
+            style={isFollowing ? FlingStyle.followed : FlingStyle.follow}
             onPress={handleFollow}>
             <Text
               style={
-                isFollowing ? FlingStyle.flowwingText : FlingStyle.flowwedText
+                isFollowing ? FlingStyle.followedText : FlingStyle.followText
               }>
               {isFollowing ? 'Followed' : 'Follow'}
             </Text>
@@ -124,6 +124,7 @@ const FlingScreen = props => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
+        style={FlingStyle.bodyContainer}
       />
     </View>
   );

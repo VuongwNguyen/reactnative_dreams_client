@@ -18,6 +18,7 @@ import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const LocationDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
@@ -31,7 +32,7 @@ const LocationDialog = forwardRef((props, ref) => {
       setLocation(props.data);
     }
   }, [props?.data]);
-  
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -81,18 +82,13 @@ const LocationDialog = forwardRef((props, ref) => {
               value={location}
               onChangeText={text => setLocation(text)}
             />
-
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              disabled={isDisable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('locationDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={{marginTop: 30}}>
+              <AppButton
+                title={t('locationDialog.confirm')}
+                isDisable={isDisable}
+                onPress={() => handleSubmit()}
+              />
+            </View>
           </View>
         </View>
       </View>

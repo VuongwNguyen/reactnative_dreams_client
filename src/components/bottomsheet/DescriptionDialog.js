@@ -19,13 +19,14 @@ import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const DescriptionDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(props?.data);
-  const isDiable = !desc;
+  const isDisable = !desc;
   const [inputEditable, setInputEditable] = useState(true);
 
   useEffect(() => {
@@ -95,17 +96,11 @@ const DescriptionDialog = forwardRef((props, ref) => {
               </Text>
             )}
 
-            <TouchableOpacity
-              disabled={isDiable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDiable && {opacity: 0.5},
-              ]}
-              onPress={() => handleSubmit()}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('descDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <AppButton
+              title={t('descDialog.confirm')}
+              onPress={() => handleSubmit()}
+              isDisabled={isDisable}
+            />
           </View>
         </View>
       </View>

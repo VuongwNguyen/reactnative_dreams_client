@@ -34,41 +34,7 @@ import EducationDialog from '../../components/bottomsheet/EducationDialog';
 import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
-
-import {basicInfArr, otherInfArr} from './InfoArr';
-import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
-
-const showBasicInf = () => {
-  return (
-    <View style={accountDetailStyle.infBox}>
-      {basicInfArr.map((item, index) => (
-        <TagInf
-          key={index}
-          tagTitle={item.title}
-          content={item.content}
-          icon={item.icon}
-          func={item.func}
-        />
-      ))}
-    </View>
-  );
-};
-
-const showOtherInf = () => {
-  return (
-    <View style={accountDetailStyle.infBox}>
-      {otherInfArr.map((item, index) => (
-        <TagInf
-          key={index}
-          tagTitle={item.title}
-          content={item.content}
-          icon={item.icon}
-          func={item.func}
-        />
-      ))}
-    </View>
-  );
-};
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const AccountDetailScreen = ({navigation}) => {
   const {t} = useTranslation();
@@ -329,9 +295,11 @@ const AccountDetailScreen = ({navigation}) => {
   const eduValue = getValueByKey(otherInfData, 'edu');
   const [level, , school] = eduValue ? eduValue.split(' ') : ['', , ''];
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={accountDetailStyle.scrollContainer}>
+      <AppHeader title={t('accountDetailScreen.infTitle')} />
       <View style={accountDetailStyle.container}>
-        <AppHeader title={t('accountDetailScreen.infTitle')} />
         {!!basicInfData && !!otherInfData && !!personalInf ? (
           <View style={accountDetailStyle.bodyContainer}>
             <View style={accountDetailStyle.avtContainer}>

@@ -1,8 +1,8 @@
 import {Colors, Fonts, Typography} from '../../styles';
 export const bottomSheetStyle = {
   // common
-  warmText:{
-    ...Typography.errorText
+  warmText: {
+    ...Typography.errorText,
   },
   normalText: {
     fontFamily: Fonts.roboto.regular,

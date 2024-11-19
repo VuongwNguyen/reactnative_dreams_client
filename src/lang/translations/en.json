@@ -173,6 +173,11 @@
   "notificationScreen": {
     "title": "Notifications"
   },
+  "languageSetting":{
+    "title":"Language Setting",
+    "en":"English",
+    "vi":"Vietnamese"
+  },
   "privacySettingScreen": {
     "title": "Privacy Setting",
     "desc": "Manage the privacy of your information items and decide what information is publicly visible to other users. Protect your personal data and customize the level of sharing to suit your needs.",
@@ -302,6 +307,7 @@
     }
   },
   "reportScreen": {
+    "title":"Report",
     "reasonTitle": "Please state the reason you are making this report!",
     "descTitle": "Please describe the report further",
     "placeholder": "Description",
@@ -326,7 +332,7 @@
     "title": "Settings",
     "account": "Account",
     "privacy_safety": "Privacy & Safety",
-    "notification": "Notifications",
+    "notification": "Push notification",
     "language": "Language",
     "logout": "Logout",
     "password": "Change password",

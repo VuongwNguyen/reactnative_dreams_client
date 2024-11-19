@@ -4,4 +4,5 @@ export const Spacings = {
   md: 12,
   lg: 20,
   xl: 40,
+  pd:16
 };

@@ -191,6 +191,11 @@
   "notificationScreen": {
     "title": "Thông báo"
   },
+  "languageSetting": {
+    "title": "Cài đặt ngôn ngữ",
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt"
+  },
   "privacySettingScreen": {
     "title": "Cài đặt quyền riêng tư",
     "desc": "Quản lý quyền riêng tư cho các mục thông tin của bạn và quyết định thông tin nào sẽ được hiển thị công khai với người dùng khác. Bảo vệ dữ liệu cá nhân của bạn và tùy chỉnh mức độ chia sẻ phù hợp với nhu cầu.",
@@ -320,8 +325,9 @@
     }
   },
   "reportScreen": {
+    "title":"Báo cáo",
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
-    "descTitle": "Please describe the report further",
+    "descTitle": "Hãy mô tả thêm về lí do của bạn",
     "placeholder": "Nhập mô tả",
     "post": {
       "r1": "Nội dung người lớn",
@@ -344,7 +350,7 @@
     "title": "Cài đặt",
     "account": "Tài khoản",
     "privacy_safety": "Quyền riêng tư và an toàn",
-    "notification": "Thông báo",
+    "notification": "Thông báo đẩy",
     "language": "Ngôn ngữ",
     "logout": "Đăng xuất",
     "password": "Đổi mật khẩu",
