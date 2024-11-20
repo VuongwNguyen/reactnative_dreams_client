@@ -12,7 +12,6 @@ const CallContext = createContext();
 const callTypes = ['audio_room', 'default'];
 
 export const CallProvider = ({children}) => {
-  const [call, setCall] = useState(null);
   const allCall = useCalls();
   const incommingCall = allCall[0];
   const navigation = useNavigation();
@@ -21,7 +20,6 @@ export const CallProvider = ({children}) => {
   useEffect(() => {
     if (!incommingCall) return;
 
-    setCall(incommingCall);
     navigation.navigate(stackName.call.name);
   }, [incommingCall]);
 
@@ -30,13 +28,13 @@ export const CallProvider = ({children}) => {
       if (client) {
         const id = uuid.v4();
         const newCall = client.call(callTypes[type], id);
-        newCall.getOrCreate({
+        await newCall.getOrCreate({
           data: {
             members: members,
           },
           ring: true,
         });
-        setCall(newCall);
+
         return;
       }
 
@@ -47,7 +45,7 @@ export const CallProvider = ({children}) => {
   };
 
   return (
-    <CallContext.Provider value={{callState: call, registerCall, setCall}}>
+    <CallContext.Provider value={{registerCall}}>
       {children}
     </CallContext.Provider>
   );
