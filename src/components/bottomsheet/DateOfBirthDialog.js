@@ -17,6 +17,7 @@ import {
   APIPersonalDetailInf,
   APIUpdateInf,
 } from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const DateOfBirthDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
@@ -173,17 +174,13 @@ const DateOfBirthDialog = forwardRef((props, ref) => {
                 onChange={onChange}
               />
             )}
-            <TouchableOpacity
-              disabled={age <= 0}
-              style={[
-                bottomSheetStyle.btnContainer,
-                age <= 0 && {opacity: 0.5},
-              ]}
-              onPress={handleSubmit}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('dateOfBirthDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={{marginTop: 30}}>
+              <AppButton
+                title={t('dateOfBirthDialog.confirm')}
+                isDisable={age <= 0}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

@@ -216,7 +216,8 @@
     "title": "Công việc hiện tại của bạn là gì?",
     "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
     "job": "Công việc của bạn",
-    "workplace": "Nơi làm việc"
+    "workplace": "Nơi làm việc",
+    "confirm": "XÁC NHẬN"
   },
   "usernameDialog": {
     "title": "Tên của bạn là gì",
@@ -307,7 +308,8 @@
     "single": "Độc thân",
     "dating": "Hẹn hò",
     "married": "Đã kết hôn",
-    "placeholder": "Choose your status"
+    "placeholder": "Choose your status",
+    "confirm": "XÁC NHẬN"
   },
   "navigation": {
     "home": "Trang chủ",
@@ -325,7 +327,7 @@
     }
   },
   "reportScreen": {
-    "title":"Báo cáo",
+    "title": "Báo cáo",
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
     "descTitle": "Hãy mô tả thêm về lí do của bạn",
     "placeholder": "Nhập mô tả",

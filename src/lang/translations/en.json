@@ -198,7 +198,8 @@
     "title": "What is your current job?",
     "desc": "Share your work to reach out to like-minded professionals.",
     "job": "Your job",
-    "workplace": "Workplace"
+    "workplace": "Workplace",
+    "confirm": "CONFIRM"
   },
   "usernameDialog": {
     "title": "What is your name?",
@@ -289,7 +290,8 @@
     "single": "Single",
     "dating": "Dating",
     "married": "Married",
-    "placeholder": "Chọn trạng thái"
+    "placeholder": "Chọn trạng thái",
+    "confirm":"CONFIRM"
   },
   "navigation": {
     "home": "Home",

@@ -95,12 +95,13 @@ const DescriptionDialog = forwardRef((props, ref) => {
                 {t('descDialog.warm')}
               </Text>
             )}
-
-            <AppButton
-              title={t('descDialog.confirm')}
-              onPress={() => handleSubmit()}
-              isDisabled={isDisable}
-            />
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('descDialog.confirm')}
+                onPress={() => handleSubmit()}
+                isDisabled={isDisable}
+              />
+            </View>
           </View>
         </View>
       </View>

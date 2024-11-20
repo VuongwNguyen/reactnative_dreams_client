@@ -39,10 +39,10 @@ const PostDetailScreen = props => {
     likeCount: data?.post?.likeCount,
   });
 
-  useEffect(() => {
-    console.log('currentPostDetail', currentPostDetail);
+  // useEffect(() => {
+  //   console.log('currentPostDetail', currentPostDetail);
     
-  }, [currentPostDetail]);
+  // }, [currentPostDetail]);
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))

@@ -35,11 +35,6 @@ export const bottomSheetStyle = {
   },
   btnContainer: {
     marginTop: 30,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 25,
   },
   btnLabel: {
     ...Typography.btnLabelDialog,

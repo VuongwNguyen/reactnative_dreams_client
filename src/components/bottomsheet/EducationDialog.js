@@ -19,6 +19,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const EducationDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
@@ -105,18 +106,13 @@ const EducationDialog = forwardRef((props, ref) => {
               value={school}
               onChangeText={text => setSchool(text)}
             />
-
-            <TouchableOpacity
-              disabled={isDisable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
-              ]}
-              onPress={() => handleSubmit()}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('educationDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={{marginTop: 30}}>
+              <AppButton
+                title={t('educationDialog.confirm')}
+                isDisable={isDisable}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

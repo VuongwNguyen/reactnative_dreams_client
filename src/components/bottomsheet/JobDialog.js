@@ -18,6 +18,7 @@ import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const JobDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
@@ -93,18 +94,13 @@ const JobDialog = forwardRef((props, ref) => {
                 onChangeText={text => setWorkplace(text)}
               />
             </View>
-
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              disabled={isDisable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('educationDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('jobDialog.confirm')}
+                isDisable={isDisable}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

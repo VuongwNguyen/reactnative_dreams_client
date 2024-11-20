@@ -7,12 +7,18 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState,useEffect, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 const NicknameDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
@@ -75,18 +81,13 @@ const NicknameDialog = forwardRef((props, ref) => {
               value={nickName}
               onChangeText={text => setNickName(text)}
             />
-
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              disabled={isDisabled}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('nicknameDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('nicknameDialog.confirm')}
+                isDisable={isDisabled}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

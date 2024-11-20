@@ -7,7 +7,7 @@ const AppButton = props => {
     <TouchableOpacity
       style={[
         ButtonStyle.container,
-        isDisable && {backgroundColor: 'gray'},
+        isDisable && {backgroundColor: 'rgba(12, 187, 240, 0.5)'},
       ]}
       onPress={onPress}
       disabled={isDisable}>

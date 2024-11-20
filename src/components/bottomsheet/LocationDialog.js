@@ -82,7 +82,7 @@ const LocationDialog = forwardRef((props, ref) => {
               value={location}
               onChangeText={text => setLocation(text)}
             />
-            <View style={{marginTop: 30}}>
+            <View style={bottomSheetStyle.btnContainer}>
               <AppButton
                 title={t('locationDialog.confirm')}
                 isDisable={isDisable}
