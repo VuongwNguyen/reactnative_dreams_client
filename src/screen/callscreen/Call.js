@@ -3,24 +3,27 @@ import {
   CallContent,
   RingingCallContent,
   StreamCall,
-  useStreamVideoClient,
+  useCall,
+  useCalls,
 } from '@stream-io/video-react-native-sdk';
 import React, {useEffect} from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {useCallContext} from '../../contexts/CallContext';
 import {Loading} from '../chatscreen/components';
 
 const Call = () => {
-  const {callState, setCall} = useCallContext();
+  const calls = useCalls();
+  const call = calls[0];
   const navigation = useNavigation();
 
   useEffect(() => {
     const unsub = BackHandler.addEventListener(
       'hardwareBackPress',
       async () => {
-        if (!callState) return true;
-        else {
-          await callState.leave();
+        if (!call) {
+          navigation.canGoBack() && navigation.goBack();
+          return true;
+        } else {
+          await call.leave();
           navigation.canGoBack() && navigation.goBack();
           return true;
         }
@@ -30,26 +33,26 @@ const Call = () => {
     return () => {
       unsub.remove();
     };
-  }, [callState]);
+  }, [call]);
 
   useEffect(() => {
-    if (!callState) return;
+    if (!call) return;
+
     const unsubs = [];
 
     unsubs.push(
-      callState.on('call.rejected', event => {
+      call.on('call.rejected', event => {
         if (
           navigation.canGoBack() &&
           event?.call?.session?.participants?.length < 2
         ) {
-          setCall(null);
           navigation.goBack();
         }
       }),
     );
 
     unsubs.push(
-      callState.on('call.ended', () => {
+      call.on('call.ended', () => {
         if (navigation.canGoBack()) {
           navigation.goBack();
         }
@@ -59,14 +62,14 @@ const Call = () => {
     return () => {
       unsubs.forEach(unsub => unsub());
     };
-  }, []);
+  }, [call]);
 
-  if (!callState) {
+  if (!call) {
     return <Loading />;
   }
 
   return (
-    <StreamCall call={callState}>
+    <StreamCall call={call}>
       <RingingCallContent
         CallContent={() => (
           <CallContent
