@@ -53,11 +53,11 @@ export const newPostStyle = {
   openLine: {
     minHeight: 50,
     ...Typography.postContent,
-    color: Colors.black,
+    fontFamily: Fonts.roboto.medium,
   },
   contentPost: {
     ...Typography.postContent,
-    color: Colors.black,
+    
   },
   privacyDropdown: {
     minWidth: 110,

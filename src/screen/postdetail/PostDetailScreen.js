@@ -18,6 +18,7 @@ import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
 import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
+import { getPostDetail, setCommentCount } from '../../store/slices';
 
 const PostDetailScreen = props => {
   const post_id = props.route?.params?.post_id;
@@ -25,6 +26,7 @@ const PostDetailScreen = props => {
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
+  const {currentPostDetail} = useSelector(state => state.postTrending);
   const [data, setPost] = useState(null);
   const [list, setList] = useState(data?.comments?.list || []);
   const [loading, setLoading] = useState(true);
@@ -38,6 +40,11 @@ const PostDetailScreen = props => {
   });
 
   useEffect(() => {
+    console.log('currentPostDetail', currentPostDetail);
+    
+  }, [currentPostDetail]);
+
+  useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
@@ -45,7 +52,13 @@ const PostDetailScreen = props => {
         setList(res.data?.comments?.list);
         setLoading(false);
       });
+      dispatch(getPostDetail({id:post_id}))
   }, []);
+
+  const handleCancelReply = () => {
+    setReplyId(null);
+    setCommentFocus(null);
+  };
 
   const handleSendComment = async () => {
     try {
@@ -84,6 +97,7 @@ const PostDetailScreen = props => {
             };
             dispatch(childCommentSlice.actions.setPushChildComment(newComment));
           }
+          dispatch(setCommentCount({id: post_id, commentCount: currentPostDetail.commentCount + 1}));
           setContent('');
           setCommentFocus(null);
           inputRef.current.clear();
@@ -120,7 +134,7 @@ const PostDetailScreen = props => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={
-              <ItemPost item={data?.post} setLike={item => setLike(item)} />
+              <ItemPost item={currentPostDetail} setLike={item => setLike(item)} />
             }
           />
           {commentFocus && (
@@ -136,7 +150,7 @@ const PostDetailScreen = props => {
                   {commentFocus?.author?.fullname}
                 </Text>
               </Text>
-              <TouchableOpacity onPress={() => setCommentFocus(null)}>
+              <TouchableOpacity onPress={() => handleCancelReply()}>
                 <Text
                   style={{
                     color: 'red',

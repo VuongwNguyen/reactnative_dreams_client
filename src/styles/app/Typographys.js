@@ -39,6 +39,7 @@ export const Typography = StyleSheet.create({
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '400',
+    color:'black'
   },
   bsdTitle: {
     fontFamily: Fonts.roboto.bold,
