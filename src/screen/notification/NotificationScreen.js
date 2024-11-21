@@ -59,6 +59,7 @@ const NotificationScreen = () => {
         userViewId: item.sender._id,
       });
     } else {
+      console.log('item', item.post_id);
       navigation.navigate(stackName.postDetail.name, {post_id: item.post_id});
     }
   }

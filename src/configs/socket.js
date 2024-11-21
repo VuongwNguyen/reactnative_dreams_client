@@ -1,6 +1,6 @@
 import {io} from 'socket.io-client';
 
-const BASE_URL = 'http://192.168.1.44:8012';
+const BASE_URL = 'https://dreams-server-bmd-4sx0.onrender.com';
 
 class SocketIO {
   constructor(token) {

@@ -3,7 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'https://0701-2402-800-637d-9a2f-ede5-ad2b-ce9e-a7fb.ngrok-free.app/api';
+const BASEURL = 'https://dreams-server-bmd-4sx0.onrender.com/api';
 
 let isRefreshing = false;
 let queue = [];
@@ -48,7 +48,6 @@ const AxiosInstance = (contentType = 'application/json') => {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': contentType,
-        security: 'secure_code',
       };
       return config;
     },
