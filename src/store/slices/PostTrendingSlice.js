@@ -43,9 +43,7 @@ export const postTrendingSlice = createSlice({
     setToggleLike: (state, action) => {      
       const {id} = action.payload;
       state.data = state.data.map(post => {
-        if (post._id === id) {
-          console.log('dô');
-          
+        if (post._id === id) {          
           return {
             ...post,
             isLiked: !post.isLiked,
