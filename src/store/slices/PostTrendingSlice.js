@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { APIGetPostsTrending } from '../api/PostAPI';
+import { APIGetPostDetail, APIGetPostsTrending } from '../api/PostAPI';
 
 export const postTrendingSlice = createSlice({
   name: 'postTrending',
@@ -20,13 +20,12 @@ export const postTrendingSlice = createSlice({
       state.isPostCreated = true; // Đặt lại trạng thái khi đã tạo bài viết
     },
     getPostDetail: (state, action) => {
-      const { id } = action.payload;
-      state.currentPostDetail = state.data.find(post => post._id === id);
+      // const { id } = action.payload;
+      // state.currentPostDetail = state.data.find(post => post._id === id);
+      state.currentPostDetail = action.payload;
     },
     setCommentCount: (state, action) => {
-      const { id, commentCount } = action.payload;
-      console.log('commentCount', commentCount);
-      
+      const { id, commentCount } = action.payload;      
       
       state.data = state.data.map(post => {
         if (post._id === id) {
@@ -42,16 +41,18 @@ export const postTrendingSlice = createSlice({
     },
     setToggleLike: (state, action) => {      
       const {id} = action.payload;
-      state.data = state.data.map(post => {
-        if (post._id === id) {          
-          return {
-            ...post,
-            isLiked: !post.isLiked,
-            likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
-          };
-        }
-        return post;
-      })
+      if (state.data.length > 0) {
+        state.data = state.data.map(post => {
+          if (post._id === id) {          
+            return {
+              ...post,
+              isLiked: !post.isLiked,
+              likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
+            };
+          }
+          return post;
+        })
+      }
       if (id === state.currentPostDetail._id) {
         state.currentPostDetail = {
           ...state.currentPostDetail,
@@ -67,10 +68,14 @@ export const postTrendingSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(APIGetPostsTrending.fulfilled, (state, action) => {
-      // state.data = action.payload.data;
-      state.loading = false;
-    });
+    builder
+      .addCase(APIGetPostsTrending.fulfilled, (state, action) => {
+        // state.data = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(APIGetPostDetail.fulfilled, (state, action) => {
+        state.currentPostDetail = action.payload.data.post;
+      })
   },
 });
 

@@ -135,7 +135,7 @@ export default React.memo(
             />
           </TouchableOpacity>
         </View>
-        {item.childrenPost && (
+        {item?.childrenPost && (
           <ItemShare item={item.childrenPost} setItemClickId={setItemClickId} />
         )}
 
@@ -227,9 +227,9 @@ export default React.memo(
             onPress={() => toggleLike(!item.isLiked)}>
             <Image
               style={{height: 20, width: 20}}
-              source={item.isLiked ? Assets.icons.heartFill : Assets.icons.heart}
+              source={item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart}
             />
-            <Text style={itemPostStyle.interactLabel}>{item.likeCount}</Text>
+            <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
           </TouchableOpacity>
           {/* comment */}
           <TouchableOpacity style={itemPostStyle.itemInteract}>
