@@ -349,5 +349,8 @@
     "logout": "Đăng xuất",
     "password": "Đổi mật khẩu",
     "privacyPolicy": "Chính sách bảo mật"
+  },
+  "policyScreen":{
+    "title":"Tiêu chuẩn cộng đồng"
   }
 }
