@@ -34,15 +34,11 @@ const PostDetailScreen = props => {
   const [replyId, setReplyId] = useState(null);
   const [commentFocus, setCommentFocus] = useState(null);
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
-  const [like, setLike] = useState({
-    isLiked: data?.post?.isLiked,
-    likeCount: data?.post?.likeCount,
-  });
 
-  useEffect(() => {
-    console.log('currentPostDetail', currentPostDetail);
+  // useEffect(() => {
+  //   console.log('currentPostDetail', currentPostDetail);
     
-  }, [currentPostDetail]);
+  // }, [currentPostDetail]);
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
@@ -134,7 +130,7 @@ const PostDetailScreen = props => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={
-              <ItemPost item={currentPostDetail} setLike={item => setLike(item)} />
+              <ItemPost item={currentPostDetail} />
             }
           />
           {commentFocus && (
