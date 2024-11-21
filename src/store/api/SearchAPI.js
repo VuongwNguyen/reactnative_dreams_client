@@ -19,8 +19,10 @@ export const APISearchHashtag = createAsyncThunk(
   'search/search-hashtag',
   async (data, {rejectWithValue}) => {
     try {
+      console.log('data', data);
+      
       const response = await AxiosInstance().get(
-        `/search-hashtag?keyword=${data}&_limit=20&_page=1`,
+        `search/search-hashtag?keyword=${data}&_page&_limit`,
       );
       return response;
     } catch (error) {      
