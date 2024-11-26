@@ -339,5 +339,8 @@
     "logout": "Logout",
     "password": "Change password",
     "privacyPolicy": "Privacy Policy"
+  },
+  "policyScreen":{
+    "title":"Community Standards"
   }
 }

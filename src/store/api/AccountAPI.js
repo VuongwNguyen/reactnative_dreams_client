@@ -1,11 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import AxiosInstance from '../../configs/axiosInstance';
+import axios from 'axios';
 
 export const APILogin = createAsyncThunk(
   'account/login',
   async (data, {rejectWithValue}) => {
-    try {
-      const response = await AxiosInstance().post('/account/login', data);      
+    try {      
+      // await axios.post('http://192.168.1.8:8012/api/account/login', data);
+      const response = await AxiosInstance().post('/account/login', data);            
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

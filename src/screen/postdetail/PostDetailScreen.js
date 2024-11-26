@@ -21,38 +21,28 @@ import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
 import { getPostDetail, setCommentCount } from '../../store/slices';
 
 const PostDetailScreen = props => {
-  const post_id = props.route?.params?.post_id;
+  const post_id = props.route?.params?.post_id;  
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const {currentPostDetail} = useSelector(state => state.postTrending);
   const [data, setPost] = useState(null);
-  const [list, setList] = useState(data?.comments?.list || []);
+  const [list, setList] = useState(currentPostDetail?.comments?.list || []);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
   const [replyId, setReplyId] = useState(null);
   const [commentFocus, setCommentFocus] = useState(null);
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
-  const [like, setLike] = useState({
-    isLiked: data?.post?.isLiked,
-    likeCount: data?.post?.likeCount,
-  });
-
-  // useEffect(() => {
-  //   console.log('currentPostDetail', currentPostDetail);
-    
-  // }, [currentPostDetail]);
 
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
-      .then(res => {
-        setPost(res.data);
+      .then(res => {                
+        //setPost(res.data.post);
         setList(res.data?.comments?.list);
         setLoading(false);
       });
-      dispatch(getPostDetail({id:post_id}))
   }, []);
 
   const handleCancelReply = () => {
@@ -116,7 +106,7 @@ const PostDetailScreen = props => {
           <AppHeader title={t('postDetailScreen.post')} />
           <FlatList
             style={{flex: 1}}
-            key={data?._id}
+            key={currentPostDetail?._id}
             data={list}
             renderItem={({item}) => (
               <View style={{padding: 10}} key={item._id}>
@@ -134,7 +124,7 @@ const PostDetailScreen = props => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={
-              <ItemPost item={currentPostDetail} setLike={item => setLike(item)} />
+              <ItemPost item={currentPostDetail} />
             }
           />
           {commentFocus && (
