@@ -173,10 +173,10 @@
   "notificationScreen": {
     "title": "Notifications"
   },
-  "languageSetting":{
-    "title":"Language Setting",
-    "en":"English",
-    "vi":"Vietnamese"
+  "languageSetting": {
+    "title": "Language Setting",
+    "en": "English",
+    "vi": "Vietnamese"
   },
   "privacySettingScreen": {
     "title": "Privacy Setting",
@@ -285,13 +285,13 @@
     "warm": "Description maximum 100 characters"
   },
   "rlstStatusDialog": {
-    "title": "Tình trạng hôn nhân",
+    "title": "Relationship status",
     "desc": "Please select your marital status to display on your profile..",
     "single": "Single",
     "dating": "Dating",
     "married": "Married",
     "placeholder": "Chọn trạng thái",
-    "confirm":"CONFIRM"
+    "confirm": "CONFIRM"
   },
   "navigation": {
     "home": "Home",
@@ -309,7 +309,7 @@
     }
   },
   "reportScreen": {
-    "title":"Report",
+    "title": "Report",
     "reasonTitle": "Please state the reason you are making this report!",
     "descTitle": "Please describe the report further",
     "placeholder": "Description",

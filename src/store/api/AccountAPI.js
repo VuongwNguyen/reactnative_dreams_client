@@ -135,3 +135,15 @@ export const APIGetUserBasicInf = createAsyncThunk(
     }
   },
 );
+
+export const APIAuthThirdPartner = createAsyncThunk(
+  'account/auth-third-partner',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post('/account/auth-third-partner',body);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);

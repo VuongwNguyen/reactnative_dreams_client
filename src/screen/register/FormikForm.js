@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
@@ -9,41 +16,63 @@ import {registerSchema} from '../../configs/validateSchema/registerSchema';
 import {Assets, Typography} from '../../styles';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {useDispatch} from 'react-redux';
-import {APIRegister, APIVerifyAccount} from '../../store/api/AccountAPI';
+import {
+  APIAuthThirdPartner,
+  APIRegister,
+  APIVerifyAccount,
+} from '../../store/api/AccountAPI';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
 const RegisterForm = () => {
-  useEffect(function () {
-    GoogleSignin.configure(
-      {
-        webClientId:'650950443769-f7i4uimhuh6bru16p13db1ik86pbv0la.apps.googleusercontent.com',
-        offlineAccess:false
-      },
-      [],
-    );
-  });
   const navigation = useNavigation();
   const {t} = useTranslation();
   const dispatch = useDispatch();
-
-  const signInWithGoogle = async () => {
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '650950443769-ogc8o7mqb2viqkrct0ls5vqtt4ajei9n.apps.googleusercontent.com',
+    });
+  }, []);
+  async function onGoogleButtonPress() {
     try {
-      await GoogleSignin.hasPlayServices();
-      const {idToken} = await GoogleSignin.signIn();
-
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      const signInResult = await GoogleSignin.signIn();
+      // console.log('Google Sign-In Result:', signInResult);
+      const idToken = signInResult.data.idToken;
+      if (!idToken) {
+        throw new Error('Không thể lấy được ID token từ Google Sign-In.');
+      }
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      const user = await auth().signInWithCredential(googleCredential);
-
-      console.log('User info:', user);
+      const userCredential = await auth().signInWithCredential(
+        googleCredential,
+      );
+      // console.log('Google Sign-In thành công:', userCredential);
+      const body = {
+        email: userCredential.user.email,
+        first_name: userCredential.additionalUserInfo.profile?.family_name,
+        last_name: userCredential.additionalUserInfo.profile?.given_name,
+        avatar: userCredential.user?.photoURL,
+        partner_id: userCredential.user.uid,
+        password: '',
+        phone:userCredential.user.phoneNumber
+      };
+      // console.log(body);
+      dispatch(APIAuthThirdPartner(body))
+        .unwrap()
+        .then(res => {
+          Alert.alert('Đăng nhập thành công với Google!');
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
     } catch (error) {
-      console.error('Google Sign-In error:', error);
+      console.error('Lỗi khi đăng nhập với Google:', error.message);
+      Alert.alert('Đăng nhập thất bại:', error.message);
     }
-  };
-
+  }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       firstName: '',
@@ -67,11 +96,6 @@ const RegisterForm = () => {
         .unwrap()
         .then(res => {
           resetForm();
-          dispatch(
-            APIVerifyAccount({
-              email: val.email,
-            }),
-          );
           navigation.navigate(stackName.otp.name, {email: val.email});
         })
         .catch(err => {
@@ -156,7 +180,7 @@ const RegisterForm = () => {
         }}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
-          <TouchableOpacity onPress={signInWithGoogle}>
+          <TouchableOpacity onPress={onGoogleButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>
           <TouchableOpacity>
