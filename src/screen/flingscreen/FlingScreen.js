@@ -71,7 +71,7 @@ const FlingScreen = props => {
       try {
         const body = {following: id_user};
         const result = await dispatch(APIToggleFollow(body)).unwrap();
-        console.log(result);
+        // console.log(result);
 
         // Toggle trạng thái isFollowing
         setIsFollowing(prevState => !prevState);

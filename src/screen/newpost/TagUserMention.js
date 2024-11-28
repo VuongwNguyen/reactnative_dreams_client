@@ -12,7 +12,7 @@ const TagUserMention = () => {
   const [followingUserList, setFollowingUserList] = useState([]);
   const [listTagUser, setListTagUser] = useState([]);
   useEffect(() => {
-    dispatch(APIGetFollowing({user_id_view: '', page: 1, limit: 10}))
+    dispatch(APIGetFollowing({user_id_view: ''}))
       .then(res => {
         const resData = res?.payload?.list;
         const usersTransformed = resData.map(item => ({
@@ -96,23 +96,29 @@ const TagUserMention = () => {
   }, [value]);
 
   return (
-    <MentionInput
-      autoFocus
-      value={value}
-      onChange={setValue}
-      partTypes={[
-        {
-          trigger: '@',
-          renderSuggestions: renderSuggestions(followingUserList),
-          textStyle: {fontWeight: 'bold', color: Colors.primary},
-        },
-      ]}
-      style={{
-        fontSize: 15,
-      }}
-      placeholder="Tag others with @username"
-      placeholderTextColor={Colors.secondary}
-    />
+    <View>
+      {followingUserList?.length == 0 ? (
+        ''
+      ) : (
+        <MentionInput
+          autoFocus
+          value={value}
+          onChange={setValue}
+          partTypes={[
+            {
+              trigger: '@',
+              renderSuggestions: renderSuggestions(followingUserList),
+              textStyle: {fontWeight: 'bold', color: Colors.primary},
+            },
+          ]}
+          style={{
+            fontSize: 15,
+          }}
+          placeholder="Tag others with @username"
+          placeholderTextColor={Colors.secondary}
+        />
+      )}
+    </View>
   );
 };
 

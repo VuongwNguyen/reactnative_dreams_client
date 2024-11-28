@@ -61,7 +61,6 @@ const FormikForm = () => {
         .unwrap()
         .then(res => {
           Alert.alert('Đăng nhập thành công với Google!');
-          
         })
         .catch(err => {
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -89,7 +88,7 @@ const FormikForm = () => {
         .unwrap()
         .then(res => {
           // resetForm();
-          // ToastAndroid.show('Login success', 1000);
+          // ToastAndroid.show('Login success');
         })
         .catch(err => {
           // ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -130,8 +129,7 @@ const FormikForm = () => {
           <Text>{t('loginScreen.remmberMe')}</Text>
         </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() => navigation.navigate(stackName.forgotPassword.name)}
-          style={{}}>
+          onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
