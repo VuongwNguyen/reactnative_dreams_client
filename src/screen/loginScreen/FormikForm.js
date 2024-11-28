@@ -76,9 +76,7 @@ const FormikForm = () => {
       password: '',
     },
     loginSchema,
-    (val, {resetForm}) => {
-      console.log('ssssss');
-
+    (val, {resetForm}) => {      
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,

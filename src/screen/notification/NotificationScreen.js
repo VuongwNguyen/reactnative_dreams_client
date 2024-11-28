@@ -13,7 +13,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {APIGetNotification} from '../../store/api/NotificationAPI';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
-import axios from 'axios';
 import AxiosInstance from '../../configs/axiosInstance';
 
 const NotificationScreen = () => {
@@ -60,6 +59,7 @@ const NotificationScreen = () => {
         userViewId: item.sender._id,
       });
     } else {
+      console.log('item', item.post_id);
       navigation.navigate(stackName.postDetail.name, {post_id: item.post_id});
     }
   }
