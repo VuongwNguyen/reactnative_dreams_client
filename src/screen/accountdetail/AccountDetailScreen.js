@@ -291,9 +291,31 @@ const AccountDetailScreen = ({navigation}) => {
   const genderValue = getValueByKey(basicInfData, 'gender');
   const rlstValue = getValueByKey(otherInfData, 'rlst');
   const jobValue = getValueByKey(otherInfData, 'job');
-  const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
+  let job = '';
+  let workplace = '';
+  if (jobValue && jobValue.includes('tại')) {
+    const [jobPart, ...workplaceParts] = jobValue.split(`${t('jobDialog.at')}`);
+    job = jobPart.trim();
+    workplace = workplaceParts.join(' ').trim();
+  } else {
+    job = jobValue || '';
+    workplace = '';
+  }
+
   const eduValue = getValueByKey(otherInfData, 'edu');
-  const [level, , school] = eduValue ? eduValue.split(' ') : ['', , ''];
+  let level = '';
+  let school = '';
+
+  if (eduValue && eduValue.includes('tại')) {
+    const [levelPart, ...schoolParts] = eduValue.split(
+      `${t('educationDialog.at')}`,
+    );
+    level = levelPart.trim();
+    school = schoolParts.join(' ').trim();
+  } else {
+    level = eduValue || '';
+    school = '';
+  }
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

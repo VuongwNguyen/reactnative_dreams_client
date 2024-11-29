@@ -135,16 +135,19 @@ const DateOfBirthDialog = forwardRef((props, ref) => {
             <Text style={bottomSheetStyle.desc}>
               {t('dateOfBirthDialog.desc')}
             </Text>
-            <View style={bottomSheetStyle.derivedFieldContainer}>
-              <Text style={bottomSheetStyle.derivedField}>
-                {t('dateOfBirthDialog.age')}:{' '}
-                <Text style={bottomSheetStyle.normalText}>{age}</Text>
-              </Text>
-              <Text style={bottomSheetStyle.derivedField}>
-                {t('dateOfBirthDialog.zodiac')}:{' '}
-                <Text style={bottomSheetStyle.normalText}>{zodiacSign}</Text>
-              </Text>
-            </View>
+            {age > 0 && (
+              <View style={bottomSheetStyle.derivedFieldContainer}>
+                <Text style={bottomSheetStyle.derivedField}>
+                  {t('dateOfBirthDialog.age')}:{' '}
+                  <Text style={bottomSheetStyle.normalText}>{age}</Text>
+                </Text>
+                <Text style={bottomSheetStyle.derivedField}>
+                  {t('dateOfBirthDialog.zodiac')}:{' '}
+                  <Text style={bottomSheetStyle.normalText}>{zodiacSign}</Text>
+                </Text>
+              </View>
+            )}
+
             <TouchableOpacity
               onPress={showDatepicker}
               style={bottomSheetStyle.datePickerButton}>

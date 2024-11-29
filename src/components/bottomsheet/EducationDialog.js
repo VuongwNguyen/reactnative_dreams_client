@@ -46,13 +46,15 @@ const EducationDialog = forwardRef((props, ref) => {
   }));
 
   const data = [
-    {label: t('educationDialog.level1'), value: 'Basic'},
-    {label: t('educationDialog.level2'), value: 'Undergraduate'},
-    {label: t('educationDialog.level3'), value: 'Postgraduate'},
+    {label: t('educationDialog.level1'), value: t('educationDialog.level1')},
+    {label: t('educationDialog.level2'), value: t('educationDialog.level2')},
+    {label: t('educationDialog.level3'), value: t('educationDialog.level3')},
   ];
 
   const handleSubmit = () => {
-    const eduString = `${value} at ${school}`;
+    const eduString = !!school
+      ? `${value} ${t('educationDialog.at')} ${school}`
+      : `${value}`;
 
     const body = {key: 'edu', value: eduString};
     dispatch(APIUpdateInf(body))

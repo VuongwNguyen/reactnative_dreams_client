@@ -45,8 +45,9 @@ const JobDialog = forwardRef((props, ref) => {
   }));
 
   const handleSubmit = () => {
-    const jobString = `${job} at ${workplace}`;
-    console.log();
+    const jobString = !!workplace
+      ? `${job} ${t('jobDialog.at')} ${workplace}`
+      : `${job}`;
 
     const body = {key: 'job', value: jobString};
     dispatch(APIUpdateInf(body))

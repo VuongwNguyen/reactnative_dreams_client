@@ -187,10 +187,11 @@
   "educationDialog": {
     "title": "What is your education?",
     "desc": "Please select your highest level of education to help us provide better recommendations and connect you with people of similar backgrounds.",
-    "level1": "Basic Education",
+    "level1": "General Education",
     "level2": "Undergraduate Education",
     "level3": "Postgraduate Education",
     "placeholder": "Choose your educaton level",
+    "at":"at",
     "school": "Your school",
     "confirm": "CONFIRM"
   },
@@ -199,6 +200,7 @@
     "desc": "Share your work to reach out to like-minded professionals.",
     "job": "Your job",
     "workplace": "Workplace",
+    "at":"at",
     "confirm": "CONFIRM"
   },
   "usernameDialog": {
