@@ -25,8 +25,6 @@ import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 
 const RegisterForm = () => {
   const navigation = useNavigation();
@@ -178,7 +176,6 @@ const RegisterForm = () => {
         }}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
-          <TouchableOpacity onPress={onGoogleButtonPress}>
           <TouchableOpacity onPress={onGoogleButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>
