@@ -1,8 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
+  Alert,
   Alert,
   Image,
   Text,
@@ -19,6 +21,8 @@ import {APIAuthThirdPartner, APILogin} from '../../store/api/AccountAPI';
 import {Assets, Colors, Typography} from '../../styles';
 import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
@@ -82,6 +86,7 @@ const FormikForm = () => {
         .then(res => {
           // resetForm();
           // ToastAndroid.show('Login success');
+          // ToastAndroid.show('Login success');
         })
         .catch(err => {
           // ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -123,6 +128,7 @@ const FormikForm = () => {
         </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
+          onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
@@ -139,6 +145,7 @@ const FormikForm = () => {
       <View style={{gap: 20}}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
+          <TouchableOpacity onPress={onGoogleButtonPress}>
           <TouchableOpacity onPress={onGoogleButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>

@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {APIAuthThirdPartner, APILogin, APILogout} from '../api/AccountAPI';
+import {APIAuthThirdPartner, APILogin, APILogout} from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
