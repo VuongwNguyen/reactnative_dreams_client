@@ -5,16 +5,19 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator
 } from 'react-native';
 import React from 'react';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import MyForm from './FormikForm';
 import {stackName} from '../../navigations/screens';
+import {useSelector} from 'react-redux';
 
 const RegisterScreen = props => {
   const {t} = useTranslation();
+  const {ggSigninLoading} = useSelector(state => state.account);
   const {navigation} = props;
   return (
     <KeyboardAvoidingView style={RegisterStyle.viewContainer}>
@@ -41,6 +44,21 @@ const RegisterScreen = props => {
           </View>
         </View>
       </ScrollView>
+      {ggSigninLoading && (
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          }}>
+          <ActivityIndicator size="large" color={Colors.primary} />
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 };
