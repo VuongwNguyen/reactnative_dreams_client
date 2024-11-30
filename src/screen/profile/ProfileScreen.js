@@ -186,6 +186,12 @@ const ProfileScreen = props => {
         {!coreInf.isSelf && (
           <View style={ProfileStyle.grouptButtonContainer}>
             <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(stackName.conversation.name, {
+                isGroup: false,
+                participant: userViewId,
+              });
+            }}
               style={[ProfileStyle.buttonContainer, ProfileStyle.inboxButton]}>
               <Text style={ProfileStyle.inboxText}>
                 {t('profileScreen.inbox')}
