@@ -11,6 +11,7 @@ export const accountSlice = createSlice({
     authenticated: false,
     loading: false,
     error: false,
+    ggSigninLoading: false,
   },
   reducers: {
     updateTokens: (state, action) => {
@@ -48,6 +49,7 @@ export const accountSlice = createSlice({
       })
       .addCase(APILogout.fulfilled, (state, _) => {
         state.loading = false;
+        state.ggSigninLoading = false;
         state.error = false;
         state.authenticated = false;
         state.token.accessToken = null;
@@ -57,12 +59,17 @@ export const accountSlice = createSlice({
         state.loading = false;
         state.error = true;
       })
+      .addCase(APIAuthThirdPartner.pending, (state, _) => {
+        state.ggSigninLoading = true;
+      })
       .addCase(APIAuthThirdPartner.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = false;
         state.authenticated = true;
         state.token.accessToken = action.payload.data.accessToken;
         state.token.refreshToken = action.payload.data.refreshToken;
+      })
+      .addCase(APIAuthThirdPartner.rejected, (state, _) => {
+        state.ggSigninLoading = false;
       });
   },
 });

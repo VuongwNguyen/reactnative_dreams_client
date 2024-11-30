@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   View,
@@ -7,19 +7,19 @@ import {
   Image,
   ToastAndroid,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {RegisterStyle} from '../../styles/RegisterStyle/ResgisterStyle';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {registerSchema} from '../../configs/validateSchema/registerSchema';
-import {Assets, Typography} from '../../styles';
+import {Assets, Colors, Typography} from '../../styles';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {useDispatch} from 'react-redux';
 import {
   APIAuthThirdPartner,
   APIRegister,
-  APIVerifyAccount,
 } from '../../store/api/AccountAPI';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
@@ -30,6 +30,7 @@ const RegisterForm = () => {
   const navigation = useNavigation();
   const {t} = useTranslation();
   const dispatch = useDispatch();
+
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -38,6 +39,7 @@ const RegisterForm = () => {
   }, []);
   async function onGoogleButtonPress() {
     try {
+      await GoogleSignin.signOut();
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       const signInResult = await GoogleSignin.signIn();
       // console.log('Google Sign-In Result:', signInResult);
@@ -57,21 +59,15 @@ const RegisterForm = () => {
         avatar: userCredential.user?.photoURL,
         partner_id: userCredential.user.uid,
         password: '',
-        phone:userCredential.user.phoneNumber
+        phone: userCredential.user.phoneNumber,
       };
-      // console.log(body);
-      dispatch(APIAuthThirdPartner(body))
-        .unwrap()
-        .then(res => {
-          Alert.alert('Đăng nhập thành công với Google!');
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
+      await dispatch(APIAuthThirdPartner(body)).unwrap();
+
+      Alert.alert('Đăng nhập thành công với Google!');
     } catch (error) {
-      console.error('Lỗi khi đăng nhập với Google:', error.message);
-      Alert.alert('Đăng nhập thất bại:', error.message);
-    }
+      // console.error('Lỗi khi đăng nhập với Google:', error.message);
+      // Alert.alert('Đăng nhập thất bại:', error.message);
+    } 
   }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {

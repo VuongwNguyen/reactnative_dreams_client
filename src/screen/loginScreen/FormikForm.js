@@ -16,7 +16,7 @@ import {useFormikH} from '../../configs/hooks/useFormikH';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
 import {stackName} from '../../navigations/screens';
 import {APIAuthThirdPartner, APILogin} from '../../store/api/AccountAPI';
-import {Assets, Typography} from '../../styles';
+import {Assets, Colors, Typography} from '../../styles';
 import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -35,6 +35,8 @@ const FormikForm = () => {
   }, []);
   async function onGoogleButtonPress() {
     try {
+      await GoogleSignin.signOut();
+
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       const signInResult = await GoogleSignin.signIn();
       // console.log('Google Sign-In Result:', signInResult);
@@ -56,18 +58,11 @@ const FormikForm = () => {
         password: '',
         phone: userCredential.user.phoneNumber,
       };
-      // console.log(body);
-      dispatch(APIAuthThirdPartner(body))
-        .unwrap()
-        .then(res => {
-          Alert.alert('Đăng nhập thành công với Google!');
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
+      await dispatch(APIAuthThirdPartner(body)).unwrap();
+      Alert.alert('Đăng nhập thành công với Google!');
     } catch (error) {
-      console.error('Lỗi khi đăng nhập với Google:', error.message);
-      Alert.alert('Đăng nhập thất bại:', error.message);
+      // console.error('Lỗi khi đăng nhập với Google:', error.message);
+      // Alert.alert('Đăng nhập thất bại:', error.message);
     }
   }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -76,7 +71,7 @@ const FormikForm = () => {
       password: '',
     },
     loginSchema,
-    (val, {resetForm}) => {      
+    (val, {resetForm}) => {
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
