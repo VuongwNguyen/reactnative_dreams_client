@@ -35,6 +35,8 @@ const FormikForm = () => {
   }, []);
   async function onGoogleButtonPress() {
     try {
+      await GoogleSignin.signOut();
+
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       const signInResult = await GoogleSignin.signIn();
       // console.log('Google Sign-In Result:', signInResult);
@@ -56,18 +58,11 @@ const FormikForm = () => {
         password: '',
         phone: userCredential.user.phoneNumber,
       };
-      // console.log(body);
-      dispatch(APIAuthThirdPartner(body))
-        .unwrap()
-        .then(res => {
-          Alert.alert('Đăng nhập thành công với Google!');
-        })
-        .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
-        });
+      await dispatch(APIAuthThirdPartner(body)).unwrap();
+      Alert.alert('Đăng nhập thành công với Google!');
     } catch (error) {
-      console.error('Lỗi khi đăng nhập với Google:', error.message);
-      Alert.alert('Đăng nhập thất bại:', error.message);
+      // console.error('Lỗi khi đăng nhập với Google:', error.message);
+      // Alert.alert('Đăng nhập thất bại:', error.message);
     }
   }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
@@ -76,7 +71,7 @@ const FormikForm = () => {
       password: '',
     },
     loginSchema,
-    (val, {resetForm}) => {      
+    (val, {resetForm}) => {
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
@@ -86,6 +81,7 @@ const FormikForm = () => {
         .unwrap()
         .then(res => {
           // resetForm();
+          // ToastAndroid.show('Login success');
           // ToastAndroid.show('Login success');
         })
         .catch(err => {
@@ -118,14 +114,6 @@ const FormikForm = () => {
         )}
       </View>
       <View style={[LoginStyle.rowContainer, {justifyContent: 'flex-end'}]}>
-        {/* <TouchableOpacity
-          style={LoginStyle.checkBoxContainer}
-          onPress={() => setIsRememberMe(!isRememberMe)}>
-          <View style={LoginStyle.dot}>
-            {isRememberMe && <View style={LoginStyle.checkBox} />}
-          </View>
-          <Text>{t('loginScreen.remmberMe')}</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
