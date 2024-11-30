@@ -22,7 +22,7 @@ import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {setIds} from '../../store/slices/IdsTagUserSlice';
 import TagUserMention from './TagUserMention';
-import { setPostCreated } from '../../store/slices/PostTrendingSlice';
+import {setPostCreated} from '../../store/slices/PostTrendingSlice';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -118,22 +118,40 @@ const NewPostScreen = props => {
   }, []);
 
   const handleCreatePost = async () => {
+    let words;
+    // kiểm tra dữ liệu tại input hashtag
+    if (!!hashTag) {
+      words = hashTag.split(' ');
+      const invalidWords = words.filter(word => !/^#\w+$/.test(word));
+
+      if (invalidWords.length > 0) {
+        ToastAndroid.show(
+          `Hashtag chưa hợp lệ: ${invalidWords.join(
+            ', ',
+          )}. Vui lòng kiểm tra lại.`,
+          ToastAndroid.LONG,
+        );
+        return;
+      }
+    }
+
     setPostStatus('loading');
     const formData = new FormData();
     formData.append('content', postContent);
     formData.append('title', openLine);
     formData.append('privacy_status', privacyStatus);
+
     ids.length > 0 &&
       ids.forEach(id => {
         formData.append('tagUsers', id);
       });
+
     if (!!hashTag) {
-      const result = hashTag
-        ?.match(/#(\w+)/g)
-        ?.map(word => word.replace('#', ''));
-      result.length > 0 &&
-        result.forEach(item => {
-          formData.append('hashtags', item);
+      words
+        .filter(word => /^#\w+$/.test(word))
+        .map(word => word.replace('#', ''))
+        .forEach(tag => {
+          formData.append('hashtags', tag);
         });
     }
 

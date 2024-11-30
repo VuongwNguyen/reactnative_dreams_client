@@ -1,10 +1,14 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../app/Colors';
+import {Spacings} from '../app/Spacings';
+import {Fonts} from '../app/Fonts';
 export const FlingStyle = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
     backgroundColor: 'white',
+  },
+  bodyContainer: {
+    padding: Spacings.pd,
   },
   avatar: {
     width: 50,
@@ -15,9 +19,8 @@ export const FlingStyle = StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     marginTop: 10,
-    marginHorizontal: 12,
     alignItems: 'center',
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   userInfContainer: {
     flexDirection: 'row',
@@ -29,30 +32,34 @@ export const FlingStyle = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  flowwing: {
-    height: 30,
+  followed: {
+    height: 34,
     width: 100,
     backgroundColor: Colors.primary,
     borderRadius: 12,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  flowwed: {
-    height: 30,
+  follow: {
+    height: 34,
     width: 100,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'black',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  flowwedText: {
+  followText: {
     fontSize: 12,
     color: Colors.primary,
     textAlign: 'center',
+    fontFamily: Fonts.roboto.medium,
   },
-  flowwingText: {
+  followedText: {
     fontSize: 12,
     color: 'white',
     textAlign: 'center',
     alignSelf: 'center',
+    fontFamily: Fonts.roboto.medium,
   },
 });

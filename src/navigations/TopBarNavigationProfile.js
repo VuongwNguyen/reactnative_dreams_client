@@ -24,7 +24,7 @@ const TopBarNavigationProfile = props => {
         )}
       />
       <Tab.Screen
-        name={t('profileScreen.posted')}
+        name={t('profileScreen.timeline')}
         children={() => (
           <PostedTab
             scrollHandler={scrollHandler}

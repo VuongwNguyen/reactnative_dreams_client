@@ -9,13 +9,12 @@ export const privacySettingStyle = {
   },
   container: {
     flex: 1,
-    padding: Spacings.lg,
   },
 
   bodyContainer: {
     flex: 1,
     gap: 30,
-    marginTop: Spacings.lg,
+    padding: 16,
   },
   desc: {
     marginTop: Spacings.lg,

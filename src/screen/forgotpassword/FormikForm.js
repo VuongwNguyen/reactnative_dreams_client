@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { apiSendOtpResetPW, APIVerifyAccount } from '../../store/api/AccountAPI';
 import { useNavigation } from '@react-navigation/native';
 import { stackName } from '../../navigations/screens';
+import AppButton from '../../components/Button';
 
 export const FormikFG = props => {
   const navigation = useNavigation();
@@ -66,13 +67,7 @@ export const FormikFG = props => {
           </Text>
         )}
       </View>
-      <TouchableOpacity
-        style={forgotPasswordStyles.button}
-        onPress={handleSubmit}>
-        <Text style={forgotPasswordStyles.buttonText}>
-          {t('forgotPasswordScreen.buttonText')}
-        </Text>
-      </TouchableOpacity>
+      <AppButton title={t('forgotPasswordScreen.buttonText')} onPress={handleSubmit}/>
     </View>
   );
 };

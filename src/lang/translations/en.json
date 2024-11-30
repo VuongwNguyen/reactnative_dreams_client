@@ -125,7 +125,7 @@
     "followed": "Followed",
     "editProfile": "Edit your profile",
     "information": "Information",
-    "posted": "Posted",
+    "timeline": "Timeline",
     "infomationTab": {
       "zone": "Location",
       "natl": "Nationality",
@@ -173,6 +173,11 @@
   "notificationScreen": {
     "title": "Notifications"
   },
+  "languageSetting": {
+    "title": "Language Setting",
+    "en": "English",
+    "vi": "Vietnamese"
+  },
   "privacySettingScreen": {
     "title": "Privacy Setting",
     "desc": "Manage the privacy of your information items and decide what information is publicly visible to other users. Protect your personal data and customize the level of sharing to suit your needs.",
@@ -182,10 +187,11 @@
   "educationDialog": {
     "title": "What is your education?",
     "desc": "Please select your highest level of education to help us provide better recommendations and connect you with people of similar backgrounds.",
-    "level1": "Basic Education",
+    "level1": "General Education",
     "level2": "Undergraduate Education",
     "level3": "Postgraduate Education",
     "placeholder": "Choose your educaton level",
+    "at":"at",
     "school": "Your school",
     "confirm": "CONFIRM"
   },
@@ -193,7 +199,9 @@
     "title": "What is your current job?",
     "desc": "Share your work to reach out to like-minded professionals.",
     "job": "Your job",
-    "workplace": "Workplace"
+    "workplace": "Workplace",
+    "at":"at",
+    "confirm": "CONFIRM"
   },
   "usernameDialog": {
     "title": "What is your name?",
@@ -279,12 +287,13 @@
     "warm": "Description maximum 100 characters"
   },
   "rlstStatusDialog": {
-    "title": "Tình trạng hôn nhân",
+    "title": "Relationship status",
     "desc": "Please select your marital status to display on your profile..",
     "single": "Single",
     "dating": "Dating",
     "married": "Married",
-    "placeholder": "Chọn trạng thái"
+    "placeholder": "Chọn trạng thái",
+    "confirm": "CONFIRM"
   },
   "navigation": {
     "home": "Home",
@@ -302,6 +311,7 @@
     }
   },
   "reportScreen": {
+    "title": "Report",
     "reasonTitle": "Please state the reason you are making this report!",
     "descTitle": "Please describe the report further",
     "placeholder": "Description",
@@ -326,7 +336,7 @@
     "title": "Settings",
     "account": "Account",
     "privacy_safety": "Privacy & Safety",
-    "notification": "Notifications",
+    "notification": "Push notification",
     "language": "Language",
     "logout": "Logout",
     "password": "Change password",

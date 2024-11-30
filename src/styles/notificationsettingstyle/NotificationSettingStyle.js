@@ -1,24 +1,22 @@
-import { StyleSheet} from 'react-native';
-import {Colors} from '../';
+import {StyleSheet} from 'react-native';
+import {Colors, Spacings} from '../';
 
 export const NotificationSettingStyle = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#fff',
-    paddingTop:10,
-    paddingHorizontal:10
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  title:{
-    flex:1,
-    fontSize:16,
-    color:'black'
+  title: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
   },
-  row:{
-    flexDirection:'row',
+  row: {
+    flexDirection: 'row',
   },
-  content:{
-    paddingHorizontal:20,
-    paddingTop:20,
-    gap:5
-  }
+  content: {
+    marginTop: 30,
+    paddingHorizontal: Spacings.pd,
+    gap: 20,
+  },
 });

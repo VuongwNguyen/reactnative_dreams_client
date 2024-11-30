@@ -12,11 +12,11 @@ export const accountDetailStyle = {
   },
   scrollContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: 16,
+    padding: Spacings.pd,
   },
 
   bodyContainer: {

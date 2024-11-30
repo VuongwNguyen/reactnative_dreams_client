@@ -2,6 +2,7 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Formik} from 'formik';
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {onChangeText, onKeyPress} from './Handle';
+import AppButton from '../../components/Button';
 
 export const FormmikOtp = props => {
   const {inputRefs, t, error, setError, handleCheckOutOTP} = props;
@@ -29,7 +30,12 @@ export const FormmikOtp = props => {
               />
             ))}
           </View>
-          <TouchableOpacity
+          <AppButton
+            title={t('otpScreen.buttonTextOtp')}
+            onPress={handleSubmit}
+            isDisable={values.otp.some(val => val === '')}
+          />
+          {/* <TouchableOpacity
             style={[
               OtpStyles.button,
               {
@@ -43,7 +49,7 @@ export const FormmikOtp = props => {
             <Text style={OtpStyles.buttonText}>
               {t('otpScreen.buttonTextOtp')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
     </Formik>
