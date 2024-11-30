@@ -19,13 +19,15 @@ import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const DescriptionDialog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(props?.data);
-  const isDiable = !desc;
+  const isDisable = !desc;
+  const [inputEditable, setInputEditable] = useState(true);
 
   useEffect(() => {
     if (props?.data) {
@@ -78,21 +80,28 @@ const DescriptionDialog = forwardRef((props, ref) => {
               placeholder={t('descDialog.placeholder')}
               placeholderTextColor={Colors.secondary}
               value={desc}
-              onChangeText={text => setDesc(text)}
+              onChangeText={text => {
+                if (text.length <= 100) {
+                  setDesc(text);
+                  setInputEditable(true);
+                } else {
+                  setInputEditable(false);
+                }
+              }}
               multiline={true}
             />
-
-            <TouchableOpacity
-              disabled={isDiable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDiable && {opacity: 0.5},
-              ]}
-              onPress={() => handleSubmit()}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('descDialog.confirm')}
+            {!inputEditable && (
+              <Text style={bottomSheetStyle.warmText}>
+                {t('descDialog.warm')}
               </Text>
-            </TouchableOpacity>
+            )}
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('descDialog.confirm')}
+                onPress={() => handleSubmit()}
+                isDisabled={isDisable}
+              />
+            </View>
           </View>
         </View>
       </View>

@@ -19,8 +19,10 @@ const DropDownText = props => {
       </TouchableOpacity>
       <View>
         {expand &&
-          contents.map(content => (
-            <Text style={DropDownTextStyle.content}>{'\t' + content}</Text>
+          contents.map((content, index) => (
+            <Text style={DropDownTextStyle.content} key={index}>
+              {`${index + 1} - ` + content.title + 'ᡣ𐭩'}
+            </Text>
           ))}
       </View>
     </View>

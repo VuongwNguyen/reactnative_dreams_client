@@ -48,7 +48,7 @@
     "or": "Hoặc",
     "rememberMe": "Nhớ tài khoản",
     "forgotPassword": "Quên mật khẩu?",
-    "notAccount": "Chưa tài khoản ?",
+    "notAccount": "Chưa có tài khoản ?",
     "register": "Đăng ký",
     "emailOrPhoneNumber": "Email hoặc số điện thoại",
     "error": {
@@ -131,7 +131,7 @@
     "followed": "Đã theo dõi",
     "editProfile": "Chỉnh sửa trang cá nhân",
     "information": "Thông tin",
-    "posted": "Đã đăng",
+    "timeline": "Dòng thời gian",
     "infomationTab": {
       "zone": "Vị trí",
       "natl": "Quốc tịch",
@@ -171,7 +171,9 @@
     "view": "Xem",
     "moreReplies": "câu trả lời khác",
     "hideReplies": "Ẩn câu trả lời",
-    "writeComment": "Viết bình luận"
+    "writeComment": "Viết bình luận",
+    "replyingTo": "Đang trả lời",
+    "cancel": "Hủy"
   },
   "newPostScreen": {
     "title": "Tạo bài viết",
@@ -189,19 +191,25 @@
   "notificationScreen": {
     "title": "Thông báo"
   },
+  "languageSetting": {
+    "title": "Cài đặt ngôn ngữ",
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt"
+  },
   "privacySettingScreen": {
     "title": "Cài đặt quyền riêng tư",
-    "desc": "Vui lòng xem lại thông tin này từ hồ sơ của bạn và quyết định xem bạn muốn ai xem thông tin này. Hồ sơ của bạn có thể có nhiều thông tin hơn những thông tin được liệt kê ở đây.",
+    "desc": "Quản lý quyền riêng tư cho các mục thông tin của bạn và quyết định thông tin nào sẽ được hiển thị công khai với người dùng khác. Bảo vệ dữ liệu cá nhân của bạn và tùy chỉnh mức độ chia sẻ phù hợp với nhu cầu.",
     "public": "Cộng đồng",
     "private": "Riêng tư"
   },
   "educationDialog": {
     "title": "Trình độ học vấn của bạn là gì",
     "desc": "Vui lòng chọn trình độ học vấn cao nhất của bạn để chúng tôi có thể cung cấp những đề xuất tốt hơn và kết nối bạn với những người có cấp bậc tương tự.",
-    "level1": "Cấp độ cơ bản",
-    "level2": "Cấp độ đại học ",
-    "level3": "Cấp độ sau đại học",
+    "level1": "Giáo dục phổ thông",
+    "level2": "Giáo dục đại học ",
+    "level3": "Giáo dục sau đại học",
     "placeholder": "Chọn cấp độ học vấn ",
+    "at":"tại",
     "school": "Trường học của bạn",
     "confirm": "XÁC NHẬN"
   },
@@ -209,7 +217,9 @@
     "title": "Công việc hiện tại của bạn là gì?",
     "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
     "job": "Công việc của bạn",
-    "workplace": "Nơi làm việc"
+    "workplace": "Nơi làm việc",
+    "at":"tại",
+    "confirm": "XÁC NHẬN"
   },
   "usernameDialog": {
     "title": "Tên của bạn là gì",
@@ -290,16 +300,18 @@
   "descDialog": {
     "title": "Nhập mô tả về bạn",
     "desc": "Cung cấp thông tin mô tả chi tiết hơn về bạn.",
-    "placeholder": "Điều gì đó về bạn",
-    "confirm": "XÁC NHẬN"
+    "placeholder": "Viết một vài điều về bạn tối đa 100 kí tự",
+    "confirm": "XÁC NHẬN",
+    "warm": "Mô tả tối đa 100 kí tự !"
   },
   "rlstStatusDialog": {
-    "title": "Relationship status",
+    "title": "Tình trạng hôn nhân",
     "desc": "Vui lòng chọn tình trạng hôn nhân của bạn để hiển thị trên hồ sơ cá nhân.",
     "single": "Độc thân",
     "dating": "Hẹn hò",
     "married": "Đã kết hôn",
-    "placeholder": "Choose your status"
+    "placeholder": "Choose your status",
+    "confirm": "XÁC NHẬN"
   },
   "navigation": {
     "home": "Trang chủ",
@@ -308,11 +320,18 @@
     "setting": "Cài đặt"
   },
   "itemPost": {
-    "timeStatus": "vi"
+    "timeStatus": "vi",
+    "menu": {
+      "report": "Báo cáo",
+      "delete": "Xóa bài viết",
+      "edit": "Chỉnh sửa",
+      "privacy": "Quyền riêng tư"
+    }
   },
   "reportScreen": {
+    "title": "Báo cáo",
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
-    "descTitle": "Please describe the report further",
+    "descTitle": "Hãy mô tả thêm về lí do của bạn",
     "placeholder": "Nhập mô tả",
     "post": {
       "r1": "Nội dung người lớn",
@@ -323,12 +342,25 @@
       "r6": "Vấn đề bản quyền"
     },
     "user": {
-      "r1":"Giả mạo người khác",
-      "r2":"Tài khoản giả mạo",
-      "r3":"Tên giả mạo",
-      "r4":"Quấy rối hoặc bắt nạt",
-      "r5":"Vấn đề khác"
+      "r1": "Giả mạo người khác",
+      "r2": "Tài khoản giả mạo",
+      "r3": "Tên giả mạo",
+      "r4": "Quấy rối hoặc bắt nạt",
+      "r5": "Vấn đề khác"
     },
     "submit": "Gửi"
+  },
+  "settingScreen": {
+    "title": "Cài đặt",
+    "account": "Tài khoản",
+    "privacy_safety": "Quyền riêng tư và an toàn",
+    "notification": "Thông báo đẩy",
+    "language": "Ngôn ngữ",
+    "logout": "Đăng xuất",
+    "password": "Đổi mật khẩu",
+    "privacyPolicy": "Chính sách bảo mật"
+  },
+  "policyScreen":{
+    "title":"Tiêu chuẩn cộng đồng"
   }
 }

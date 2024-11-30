@@ -7,16 +7,22 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const HometownDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [hometown, setHometown] = useState(props?.data);
   const isDisabled = !hometown;
   const [visible, setVisible] = useState(false);
@@ -76,18 +82,13 @@ const HometownDialog = forwardRef((props, ref) => {
               value={hometown}
               onChangeText={text => setHometown(text)}
             />
-
-            <TouchableOpacity
-            onPress={()=>handleSubmit()}
-              disabled={isDisabled}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('hometownDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('hometownDialog.confirm')}
+                isDisable={isDisabled}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

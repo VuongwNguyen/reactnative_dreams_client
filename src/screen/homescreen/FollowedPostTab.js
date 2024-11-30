@@ -30,7 +30,6 @@ const FollowedPostTab = props => {
       .then(res => {
         const { list, page } = res;
         setPage(page);
-        console.log(page)
         if (currentPage === 1) {
           setDataPosts(list);
         } else {
@@ -90,7 +89,6 @@ const FollowedPostTab = props => {
 
   const onEndReached = useCallback(() => {
     if (currentPage <= page.maxPage && !isLoading) {
-      console.log("page: " + currentPage)
       setCurrentPage(prevPage => prevPage + 1);
       setNextPage(true)
     }

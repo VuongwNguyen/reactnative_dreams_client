@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {APILogin, APILogout} from '../api/AccountAPI';
+import {APIAuthThirdPartner, APILogin, APILogout} from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -56,6 +56,13 @@ export const accountSlice = createSlice({
       .addCase(APILogout.rejected, (state, _) => {
         state.loading = false;
         state.error = true;
+      })
+      .addCase(APIAuthThirdPartner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.authenticated = true;
+        state.token.accessToken = action.payload.data.accessToken;
+        state.token.refreshToken = action.payload.data.refreshToken;
       });
   },
 });

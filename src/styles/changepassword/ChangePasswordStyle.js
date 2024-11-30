@@ -4,7 +4,6 @@ export const changePasswordStyle = {
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    padding: Spacings.lg,
   },
   headerContainer: {
     height: Spacings.xl,
@@ -15,6 +14,7 @@ export const changePasswordStyle = {
   bodyContainer: {
     flexDirection: 'column',
     gap: 30,
+    padding: 16,
   },
   textContanier: {
     flexDirection: 'column',

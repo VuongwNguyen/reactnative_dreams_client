@@ -18,6 +18,7 @@ import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const HobbyDialog = forwardRef((props, ref) => {
   const [arrHobby, setArrHobby] = useState([]);
@@ -207,17 +208,13 @@ const HobbyDialog = forwardRef((props, ref) => {
                 />
               </View>
             )}
-            <TouchableOpacity
-              onPress={onConfirm}
-              disabled={!isTouchable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                !isTouchable && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('hobbyDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('hobbyDialog.confirm')}
+                isDisable={!isTouchable}
+                onPress={onConfirm}
+              />
+            </View>
           </View>
         </View>
       </View>

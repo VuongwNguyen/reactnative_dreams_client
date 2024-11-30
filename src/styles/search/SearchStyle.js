@@ -5,7 +5,11 @@ export const searchStyle = {
     backgroundColor: 'white',
     padding: Spacings.lg,
   },
-
+  noContent:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -29,6 +33,8 @@ export const searchStyle = {
     position: 'absolute',
     top: 15,
     right: 15,
+  },
+  rightIcon:{
     height: 20,
     width: 20,
   },
@@ -64,4 +70,9 @@ export const searchStyle = {
     flex: 1,
     gap: 20,
   },
+  noResult:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 };

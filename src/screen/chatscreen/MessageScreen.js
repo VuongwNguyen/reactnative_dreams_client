@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Assets, Colors} from '../../styles';
-import {Loading, Message} from './components';
+import {Loading, Message, User} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {useSocket} from '../../contexts/SocketContext';
@@ -22,8 +22,9 @@ import {fetchGroup, fetchMessages, fetchRoom} from '../../store/api/ChatAPI';
 import {newMessage, reset} from '../../store/slices';
 import {parseJwt} from '../../utils/token';
 import throttle from '../../utils/throttle';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AxiosInstance from '../../configs/axiosInstance';
+import {useCallContext} from '../../contexts/CallContext';
 
 const {width} = Dimensions.get('window');
 
@@ -31,16 +32,17 @@ const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
   const [isOnline, setIsOnline] = useState(false);
   const [mess, setMess] = useState('');
+  const [showMembers, setShowMembers] = useState(false);
+  const [images, setImages] = useState([]);
+  const [uploadStatus, setUploadStatus] = useState(false);
+  const [replied, setReplied] = useState(null);
+  const {token} = useSelector(state => state.account);
+  const {registerCall} = useCallContext();
   const {socket} = useSocket();
   const dispatch = useDispatch();
-  const [showMembers, setShowMembers] = useState(false);
   const {room, initial, messages, page, count, loading} = useSelector(
     state => state.chatMessage,
   );
-  const [images, setImages] = useState([]);
-  const [uploadStatus, setUploadStatus] = useState(false);
-  const {token} = useSelector(state => state.account);
-  const [replied, setReplied] = useState(null);
 
   const renderMesssage = useCallback(
     ({item}) => {
@@ -177,7 +179,7 @@ const MessageScreen = props => {
   const renderImages = useCallback(() => {
     return (
       <View style={styles.wrapper}>
-        {room?.members?.slice(0, 3)?.map(mem => {
+        {room?.members?.slice(0, 4)?.map(mem => {
           if (!mem.isMe) {
             return (
               <Image
@@ -195,16 +197,20 @@ const MessageScreen = props => {
   }, [messages]);
 
   const handleChooseImages = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 10,
-    });
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 10,
+      });
 
-    if (result.didCancel) {
-      return;
+      if (result.didCancel) {
+        return;
+      }
+
+      setImages(result?.assets || []);
+    } catch (e) {
+      console.log('[MessageScreen] choose images error: ', e);
     }
-
-    setImages(result.assets);
   };
 
   const handleUploadImages = async () => {
@@ -227,6 +233,8 @@ const MessageScreen = props => {
 
       socket.emit('message', {images: res.data}, room._id);
       setUploadStatus(false);
+      setImages([]);
+      ToastAndroid.show('Gửi ảnh thành công', 300);
     } catch (e) {
       setUploadStatus(false);
       console.log('[MessageScreen] upload images failed: ', e);
@@ -234,9 +242,43 @@ const MessageScreen = props => {
     }
   };
 
+  const handleTakeImage = async () => {
+    try {
+      const result = await launchCamera({
+        mediaType: 'photo',
+      });
+
+      if (result.didCancel) {
+        return;
+      }
+
+      setImages(result?.assets || []);
+    } catch (e) {
+      console.log('[MessageScreen] error when take picture: ', e);
+    }
+  };
+
   if (!initial) {
     return <Loading />;
   }
+
+  const createAudioCall = () => {
+    registerCall(
+      room.members.map(mem => ({user_id: mem.account_id})),
+      0,
+    ).catch(err =>
+      console.log('[MessageScreen] create call audio error: ', err),
+    );
+  };
+
+  const createVideoCall = () => {
+    registerCall(
+      room.members.map(mem => ({user_id: mem.account_id})),
+      1,
+    ).catch(err =>
+      console.log('[MessageScreen] create call video error: ', err),
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -255,7 +297,9 @@ const MessageScreen = props => {
           {renderImages()}
           {/* name */}
           <View>
-            <Text style={styles.name}>{room?.name}</Text>
+            <Text style={styles.name} numberOfLines={2}>
+              {room?.name}
+            </Text>
             {!isGroup && (
               <Text style={[styles.status, isOnline && styles.online]}>
                 {!isOnline ? 'Offline' : 'Active now'}
@@ -265,20 +309,12 @@ const MessageScreen = props => {
         </View>
         {/* call */}
         <View style={styles.row}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={createAudioCall}>
             <Image source={Assets.icons.call} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={createVideoCall}>
             <Image source={Assets.icons.video} style={styles.icon} />
           </TouchableOpacity>
-          {room.is_group && (
-            <TouchableOpacity
-              style={[styles.row, {gap: 2}]}
-              onPress={() => setShowMembers(true)}>
-              <Image source={Assets.icons.group} style={styles.icon} />
-              <Text>({room.members.length})</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
 
@@ -336,8 +372,7 @@ const MessageScreen = props => {
           <TouchableOpacity onPress={handleChooseImages}>
             <Image source={Assets.icons.attach} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(stackName.camera.name)}>
+          <TouchableOpacity onPress={handleTakeImage}>
             <Image source={Assets.icons.camera} style={styles.icon} />
           </TouchableOpacity>
         </View>
@@ -362,21 +397,6 @@ const MessageScreen = props => {
           <TouchableOpacity onPress={() => setShowMembers(false)}>
             <Text>Đóng</Text>
           </TouchableOpacity>
-
-          {room.members.map(member => {
-            return (
-              <TouchableOpacity key={member.account_id} style={styles.row}>
-                <Image
-                  source={{uri: member.avatar}}
-                  style={{width: 50, height: 50, borderRadius: 25}}
-                />
-                <View>
-                  <Text>{member.fullname}</Text>
-                  <Text>Thành viên</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
         </View>
       )}
 
@@ -527,6 +547,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     fontWeight: '500',
+    maxWidth: '85%',
   },
   row: {
     flexDirection: 'row',

@@ -30,6 +30,7 @@ const ChatScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [isAuthorizedPermission, setIsAuthorizedPermission] = useState(true);
+  const {userBasicInfData} = useSelector(state => state.userBasicInf);
 
   const renderUsersOnline = ({item}) => {
     return (
@@ -72,70 +73,79 @@ const ChatScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* container */}
-      <View>
-        <ScrollView
-          scrollEnabled={false}
-          refreshControl={
-            <RefreshControl onRefresh={refreshData} refreshing={loading} />
-          }>
-          {/* navigate to setting  */}
-          {!isAuthorizedPermission && (
-            <Text style={{textAlign: 'center'}}>
-              Thông báo đã bị tắt,
-              <Text
-                style={{color: Colors.primary, fontWeight: 'bold'}}
-                onPress={() => Linking.openSettings()}>
-                bấm vào đây để bật lại
-              </Text>
-            </Text>
-          )}
-          {/* Header */}
-          <View style={styles.header}>
-            <Image source={{uri: mock_image}} style={styles.avatar} />
-            <Text style={styles.label}>CHATS</Text>
-            <TouchableOpacity>
-              <Image source={Assets.icons.add} style={styles.icon} />
-            </TouchableOpacity>
-          </View>
-          {/* Search */}
-          <TouchableOpacity
-            style={styles.search}
-            onPress={() => {
-              Linking.openURL('https://google.com/');
-            }}>
-            <Image source={Assets.icons.search} style={styles.searchIcon} />
-            <Text>Search ...</Text>
-          </TouchableOpacity>
-
-          {/* users online */}
-          <View>
-            {list.length > 0 ? (
-              <FlatList
-                contentContainerStyle={styles.user}
-                data={list}
-                renderItem={renderUsersOnline}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{width: 20}} />}
-              />
-            ) : (
-              <View style={styles.center}>
-                <Text style={styles.empty}>
-                  Currently there are no online followers
+    <>
+      <View style={styles.container}>
+        {/* container */}
+        <View>
+          <ScrollView
+            scrollEnabled={false}
+            refreshControl={
+              <RefreshControl onRefresh={refreshData} refreshing={loading} />
+            }>
+            {/* navigate to setting  */}
+            {!isAuthorizedPermission && (
+              <Text style={{textAlign: 'center'}}>
+                Thông báo đã bị tắt,
+                <Text
+                  style={{color: Colors.primary, fontWeight: 'bold'}}
+                  onPress={() => Linking.openSettings()}>
+                  bấm vào đây để bật lại
                 </Text>
-              </View>
+              </Text>
             )}
-          </View>
-        </ScrollView>
+            {/* Header */}
+            <View style={styles.header}>
+              {!!userBasicInfData.avatar && (
+                <Image
+                  source={{uri: userBasicInfData.avatar}}
+                  style={styles.avatar}
+                />
+              )}
+              <Text style={styles.label}>CHATS</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate(stackName.createGroup.name);
+                }}>
+                <Image source={Assets.icons.add} style={styles.icon} />
+              </TouchableOpacity>
+            </View>
+            {/* Search */}
+            <TouchableOpacity
+              style={styles.search}
+              onPress={() => {
+                navigation.navigate(stackName.chatSearch.name);
+              }}>
+              <Image source={Assets.icons.search} style={styles.searchIcon} />
+              <Text>Search ...</Text>
+            </TouchableOpacity>
+
+            {/* users online */}
+            <View>
+              {list.length > 0 ? (
+                <FlatList
+                  contentContainerStyle={styles.user}
+                  data={list}
+                  renderItem={renderUsersOnline}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  ItemSeparatorComponent={() => <View style={{width: 20}} />}
+                />
+              ) : (
+                <View style={styles.center}>
+                  <Text style={styles.empty}>
+                    Currently there are no online followers
+                  </Text>
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        </View>
+
+        <View style={styles.divider} />
       </View>
-
-      <View style={styles.divider} />
-
       {/* tab bar */}
       <TabChatScreen />
-    </View>
+    </>
   );
 };
 
@@ -197,8 +207,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   container: {
-    width: width,
-    height: height,
     backgroundColor: 'white',
   },
   avatar: {
@@ -207,6 +215,3 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
 });
-
-const mock_image =
-  'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d07bca98931623.5ee79b6a8fa55.jpg';

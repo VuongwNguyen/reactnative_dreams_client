@@ -1,15 +1,16 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import AxiosInstance from '../../configs/axiosInstance';
+import axios from 'axios';
 
 export const APILogin = createAsyncThunk(
   'account/login',
   async (data, {rejectWithValue}) => {
-    try {
-      const response = await AxiosInstance().post('/account/login', data);
+    try {      
+      // await axios.post('http://192.168.1.8:8012/api/account/login', data);
+      const response = await AxiosInstance().post('/account/login', data);            
       return response;
     } catch (error) {
-      console.log(error.message);
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -23,7 +24,7 @@ export const APIVerifyAccount = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -34,7 +35,7 @@ export const APISendOtpCode = createAsyncThunk(
       const response = await AxiosInstance().post('account/verify-email', data);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -49,7 +50,7 @@ export const apiSendOtpResetPW = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -65,7 +66,7 @@ export const apiVerifyCodeResetPW = createAsyncThunk(
       console.log(response);
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -78,9 +79,7 @@ export const APIRegister = createAsyncThunk(
       console.log(response, 'register response');
       return response;
     } catch (error) {
-      console.log('register error');
-
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -95,7 +94,7 @@ export const APIResetPassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -110,7 +109,7 @@ export const APIChangePassword = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
@@ -122,19 +121,31 @@ export const APILogout = createAsyncThunk(
       const response = await AxiosInstance().post('/account/logout');
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   },
 );
 
 export const APIGetUserBasicInf = createAsyncThunk(
-  'account/get-name-avatar-user',
-  async (_,{rejectWithValue}) => {
+  'account/get-info',
+  async (_, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('/account/get-name-avatar-user');
+      const response = await AxiosInstance().get('/account/get-info');
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
+export const APIAuthThirdPartner = createAsyncThunk(
+  'account/auth-third-partner',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().post('/account/auth-third-partner',body);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
     }
   },
 );

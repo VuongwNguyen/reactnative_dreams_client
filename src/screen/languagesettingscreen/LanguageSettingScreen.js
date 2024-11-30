@@ -1,28 +1,50 @@
-import {Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import {Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import Header from '../../components/Header';
 import CheckBoxLanguage from '../../components/CheckBoxLanguage';
 import {LanguageSettingStyle} from '../../styles/languagesettingstyle/LanguageSettingStyle';
+import {lng} from '../../lang';
 
-const langObject = {
-  eng: 'English',
-  vi: 'Vietnamese',
-};
 const LanguageSettingScreen = () => {
-  const [curLang, setCurLang] = useState(langObject.eng);
+  const {i18n, t} = useTranslation();
+  const [curLang, setCurLang] = useState(lng); // Khởi tạo ngôn ngữ mặc định
+
+  const langObject = {
+    en: t('languageSetting.en'),
+    vi: t('languageSetting.vi'),
+  };
+  // Cập nhật ngôn ngữ khi component mount
+  useEffect(() => {
+    setCurLang(i18n.language);
+    // Đặt ngôn ngữ hiện tại từ i18n
+  }, []);
+
+  const handleLanguageChange = lng => {
+    setCurLang(lng); // Cập nhật ngôn ngữ hiện tại
+    ToastAndroid.show(
+      `Change language to ${langObject[lng]}`,
+      ToastAndroid.SHORT,
+    ); // Hiển thị thông báo
+    i18n.changeLanguage(lng); // Thay đổi ngôn ngữ của i18next
+  };
+
   return (
     <View style={LanguageSettingStyle.container}>
-      <Header title={'Language Settings'} />
+      <Header title={t('languageSetting.title')} />
       <View style={LanguageSettingStyle.content}>
-        {Object.keys(langObject).map((item, index) => (
+        {Object.keys(langObject).map(item => (
           <TouchableOpacity
-            key={index}
+            key={item}
             style={LanguageSettingStyle.row}
-            onPress={() => setCurLang(langObject[item])}>
+            onPress={() => {
+              handleLanguageChange(item);
+            }} // Gọi hàm thay đổi ngôn ngữ
+          >
             <Text style={LanguageSettingStyle.title}>{langObject[item]}</Text>
             <CheckBoxLanguage
-              isCheck={curLang === langObject[item]}
-              onPress={() => setCurLang(langObject[item])}
+              isCheck={curLang === item} // Kiểm tra xem ngôn ngữ hiện tại có khớp không
+              onPress={() => handleLanguageChange(item)} // Gọi hàm thay đổi ngôn ngữ
             />
           </TouchableOpacity>
         ))}

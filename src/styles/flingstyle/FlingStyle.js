@@ -1,57 +1,65 @@
-import { StyleSheet } from 'react-native'
-import { Colors } from '../app/Colors'
+import {StyleSheet} from 'react-native';
+import {Colors} from '../app/Colors';
+import {Spacings} from '../app/Spacings';
+import {Fonts} from '../app/Fonts';
 export const FlingStyle = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+  },
+  bodyContainer: {
+    padding: Spacings.pd,
   },
   avatar: {
     width: 50,
     height: 50,
-    borderRadius: 25
+    borderRadius: 25,
   },
   item: {
     flexDirection: 'row',
     height: 60,
     marginTop: 10,
-    alignContent: 'center',
-    marginHorizontal: 12,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  userInfContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
-    marginTop: 5,
-    marginBottom: 5,
-    flex: 1,
-    paddingHorizontal: 12
   },
-  flowwing: {
-    height: 30,
+  followed: {
+    height: 34,
     width: 100,
     backgroundColor: Colors.primary,
     borderRadius: 12,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  flowwed: {
-    height: 30,
+  follow: {
+    height: 34,
     width: 100,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'black',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  flowwedText: {
+  followText: {
     fontSize: 12,
     color: Colors.primary,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: Fonts.roboto.medium,
   },
-  flowwingText: {
+  followedText: {
     fontSize: 12,
     color: 'white',
     textAlign: 'center',
-    alignSelf: 'center'
-  }
-})
+    alignSelf: 'center',
+    fontFamily: Fonts.roboto.medium,
+  },
+});

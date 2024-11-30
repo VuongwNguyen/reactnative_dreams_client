@@ -1,7 +1,6 @@
 import {io} from 'socket.io-client';
 
-const BASE_URL =
-  'https://91eb-2402-800-637c-9e22-54ac-eb16-37e5-b470.ngrok-free.app';
+const BASE_URL = 'https://dreams-server-bmd-4sx0.onrender.com';
 
 class SocketIO {
   constructor(token) {

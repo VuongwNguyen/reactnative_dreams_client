@@ -11,6 +11,7 @@ const TopBarNavigationProfile = props => {
   const {t} = useTranslation();
   return (
     <Tab.Navigator
+      initialRouteName={t('profileScreen.information')}
       screenOptions={topBarOptions}
       style={{flex: 1}}>
       <Tab.Screen
@@ -23,7 +24,7 @@ const TopBarNavigationProfile = props => {
         )}
       />
       <Tab.Screen
-        name={t('profileScreen.posted')}
+        name={t('profileScreen.timeline')}
         children={() => (
           <PostedTab
             scrollHandler={scrollHandler}

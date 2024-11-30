@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "650950443769",
     "project_id": "social-760d1",
-    "storage_bucket": "social-760d1.appspot.com"
+    "storage_bucket": "social-760d1.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,20 @@
           "package_name": "com.social"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "650950443769-nm6siq99i9pnnnhpja7lc8cl4v1tbqd8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.social",
+            "certificate_hash": "8224faa61b181fb3f8c6b1426bb93e198684f27e"
+          }
+        },
+        {
+          "client_id": "650950443769-ogc8o7mqb2viqkrct0ls5vqtt4ajei9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB_zEEBaGmCxNSfyhWj9AKT4xuUChKpg_M"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650950443769-f7i4uimhuh6bru16p13db1ik86pbv0la.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

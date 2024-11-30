@@ -12,11 +12,11 @@ export const accountDetailStyle = {
   },
   scrollContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: Spacings.lg,
+    padding: Spacings.pd,
   },
 
   bodyContainer: {
@@ -35,6 +35,11 @@ export const accountDetailStyle = {
     height: '100%',
     borderRadius: avtRadius,
   },
+  loadingAvt: {
+    position: 'absolute',
+    top: avtSize * 0.4,
+    left: avtSize * 0.4,
+  },
   changeAvtButton: {
     width: changeBtnSize,
     height: changeBtnSize,
@@ -51,11 +56,11 @@ export const accountDetailStyle = {
     gap: 10,
   },
   infBox: {
+    flex: 1,
     borderWidth: 1,
     borderColor: Colors.secondary,
     borderRadius: 15,
     paddingVertical: 15,
-    paddingHorizontal: 20,
     gap: 12,
   },
   typeInf: {

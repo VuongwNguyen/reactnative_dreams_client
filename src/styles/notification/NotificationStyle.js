@@ -20,9 +20,8 @@ export const notificationStyle = {
     borderBottomWidth: 0.5,
   },
   tagContainer: {
-    margin: 24,
+    margin: 18,
     flexDirection: 'row',
-    gap: 24,
   },
   tagSelected: {
     paddingHorizontal: 15,

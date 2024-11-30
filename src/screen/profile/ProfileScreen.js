@@ -1,6 +1,6 @@
-import { View, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {View, Image, TouchableOpacity, Text, ToastAndroid} from 'react-native';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
+import {useTranslation} from 'react-i18next';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -8,16 +8,15 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
-
-import { stackName } from '../../navigations/screens';
-import { ProfileStyle } from '../../styles/profileStyle/ProfileStyle';
+import {useDispatch} from 'react-redux';
+import {stackName} from '../../navigations/screens';
+import {ProfileStyle} from '../../styles/profileStyle/ProfileStyle';
 import AppHeader from '../../components/Header';
 import TopBarNavigationProfile from '../../navigations/TopBarNavigationProfile';
-import { APIGetInf } from '../../store/api/InfAPI';
-import { useFocusEffect } from '@react-navigation/native';
-import { Assets } from '../../styles';
-import { APIToggleFollow } from '../../store/api/FollowAPI';
+import {APIGetInf} from '../../store/api/InfAPI';
+import {useFocusEffect} from '@react-navigation/native';
+import {Assets} from '../../styles';
+import {APIToggleFollow} from '../../store/api/FollowAPI';
 
 const getInterpolation = (
   value,
@@ -34,12 +33,11 @@ const getInterpolation = (
 };
 
 const ProfileScreen = props => {
-  const { navigation, route } = props;
+  const {navigation, route} = props;
   const userViewId = route?.params?.userViewId;
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [coreInf, setCoreInf] = useState('');
-
   const [isFollowedStatus, setIsFollowedStatus] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
@@ -62,19 +60,19 @@ const ProfileScreen = props => {
   });
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(APIGetInf(userViewId))
         .unwrap()
         .then(res => {
           setCoreInf(res?.data);
         })
         .catch(err => {
-          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          console.log(err);
         });
     }, [userViewId]),
   );
 
-  const InforItem = ({ title = '', subtitle = '' }) => {
+  const InforItem = ({title = '', subtitle = ''}) => {
     return (
       <View style={ProfileStyle.countItem}>
         <Text style={ProfileStyle.title}>{title}</Text>
@@ -88,7 +86,7 @@ const ProfileScreen = props => {
   }, [coreInf.isFollowed]);
 
   const handleFollow = () => {
-    dispatch(APIToggleFollow({ following: userViewId }))
+    dispatch(APIToggleFollow({following: userViewId}))
       .unwrap()
       .then(res => {
         if (res.message == 'Followed successfully') {
@@ -98,7 +96,7 @@ const ProfileScreen = props => {
         }
       })
       .catch(err => {
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        console.log(err);
       });
   };
   useEffect(() => {
@@ -132,7 +130,7 @@ const ProfileScreen = props => {
         )}
       </View>
       <Animated.View ref={headerRef} style={headerStyle}>
-        <View style={{ padding: 16 }}>
+        <View style={{padding: 16}}>
           <View style={ProfileStyle.infoContainer}>
             {!!coreInf.avatar && (
               <Image
@@ -145,11 +143,10 @@ const ProfileScreen = props => {
 
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(stackName.following.name,
-                  {
-                    type: 'Followers',
-                    user_id_view: coreInf._id,
-                  });
+                navigation.navigate(stackName.following.name, {
+                  type: 'Followers',
+                  user_id_view: coreInf._id,
+                });
               }}>
               <InforItem
                 title={coreInf?.followerCount}
@@ -158,12 +155,10 @@ const ProfileScreen = props => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(stackName.following.name,
-                  {
-                    type: 'Following',
-                    user_id_view: coreInf._id,
-                  }
-                );
+                navigation.navigate(stackName.following.name, {
+                  type: 'Following',
+                  user_id_view: coreInf._id,
+                });
               }}>
               <InforItem
                 title={coreInf?.followingCount}

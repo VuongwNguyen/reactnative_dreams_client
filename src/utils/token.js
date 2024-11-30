@@ -1,3 +1,5 @@
+import AxiosInstance from '../configs/axiosInstance';
+
 function parseJwt(token) {
   // Tách JWT thành các phần bởi dấu '.'
   const base64Url = token.split('.')[1];
@@ -15,4 +17,10 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
-export {parseJwt};
+async function streamTokenProvider() {
+  const res = await AxiosInstance().post('/account/get-stream-token');
+
+  return res.data;
+}
+
+export {parseJwt, streamTokenProvider};

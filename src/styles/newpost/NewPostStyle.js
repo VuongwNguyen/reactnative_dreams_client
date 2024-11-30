@@ -53,11 +53,11 @@ export const newPostStyle = {
   openLine: {
     minHeight: 50,
     ...Typography.postContent,
-    color: Colors.black,
+    fontFamily: Fonts.roboto.medium,
   },
   contentPost: {
     ...Typography.postContent,
-    color: Colors.black,
+    
   },
   privacyDropdown: {
     minWidth: 110,
@@ -123,8 +123,6 @@ export const newPostStyle = {
   modalView: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItem: 'center',
   },
   centeredView: {
     top: 0.25 * height,

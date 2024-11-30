@@ -11,10 +11,8 @@ import BottomTab from '../navigations/BottomTab';
 import NotificationScreen from '../screen/notification/NotificationScreen';
 import ChatScreen from '../screen/chatscreen/ChatScreen';
 import SearchSceen from '../screen/search/SearchSceen';
-import PrivacySettingScreen from '../screen/privacysetting/PrivacySettingScreen';
 import RegisterScreen from '../screen/register/RegisterScreen';
 import SettingScreen from '../screen/setting/SettingScreen';
-import NotificationSettingScreen from '../screen/notificationsetting/NotificationSettingScreen';
 import LanguageSettingScreen from '../screen/languagesettingscreen/LanguageSettingScreen';
 import PolicyPrivacyScreen from '../screen/privacypolicy/PolicyPrivacyScreen';
 import FlingScreen from '../screen/flingscreen/FlingScreen';
@@ -23,7 +21,12 @@ import MessageScreen from '../screen/chatscreen/MessageScreen';
 import AccountDetailScreen from '../screen/accountdetail/AccountDetailScreen';
 import CameraScreen from '../screen/chatscreen/CameraScreen';
 import ReportScreen from '../screen/report/ReportScreen';
+import PrivacySettingScreen from '../screen/privacysetting/PrivacySettingScreen';
 
+import ChatSearch from '../screen/chatscreen/ChatSearch';
+import CreateGroup from '../screen/chatscreen/CreateGroup';
+import {name} from '@stream-io/video-react-native-sdk';
+import Call from '../screen/callscreen/Call';
 
 export const stackName = {
   login: {name: 'login', component: LoginScreen},
@@ -42,10 +45,6 @@ export const stackName = {
   bottomTab: {name: 'bottomTab', component: BottomTab},
   search: {name: 'search', component: SearchSceen},
   privacySetting: {name: 'privacySetting', component: PrivacySettingScreen},
-  notificationSetting: {
-    name: 'notificationSetting',
-    component: NotificationSettingScreen,
-  },
   languageSetting: {
     name: 'languageSetting',
     component: LanguageSettingScreen,
@@ -73,6 +72,18 @@ export const stackName = {
   report: {
     name: 'report',
     component: ReportScreen,
+  },
+  chatSearch: {
+    name: 'chat_search',
+    component: ChatSearch,
+  },
+  createGroup: {
+    name: 'create_group',
+    component: CreateGroup,
+  },
+  call: {
+    name: 'call',
+    component: Call,
   },
 };
 

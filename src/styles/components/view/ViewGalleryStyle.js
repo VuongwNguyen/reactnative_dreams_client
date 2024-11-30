@@ -33,7 +33,7 @@ export const ViewGalleryStyle = StyleSheet.create({
   },
   videoContainer: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height * (19/20), // 16:9 aspect ratio
+    height: Dimensions.get('window').height * (19/20) - 100, // 16:9 aspect ratio
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
