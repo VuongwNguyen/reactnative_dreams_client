@@ -37,7 +37,10 @@ export const postTrendingSlice = createSlice({
         return post;
       })
       
-      state.currentPostDetail = state.data.find(post => post._id === id);
+      state.currentPostDetail = {
+        ...state.currentPostDetail,
+        commentCount
+      }
     },
     setToggleLike: (state, action) => {      
       const {id} = action.payload;
