@@ -77,10 +77,24 @@ const fetchMessages = createAsyncThunk('chat/messages', async (body, thunk) => {
   }
 });
 
+const deleteMessages = createAsyncThunk(
+  'chat/delete-messages',
+  async (body, thunk) => {
+    try {
+      await AxiosInstance().delete(`/message/${body}`);
+
+      return body;
+    } catch (e) {
+      return thunk.rejectWithValue(e.message);
+    }
+  },
+);
+
 export {
   fetchFollowingUsers,
   fetchListRooms,
   fetchRoom,
   fetchGroup,
   fetchMessages,
+  deleteMessages,
 };
