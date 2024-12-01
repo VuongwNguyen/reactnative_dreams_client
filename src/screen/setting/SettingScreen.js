@@ -13,19 +13,23 @@ import {SettingStyle} from '../../styles/settingstyle/SettingStyle';
 import {stackName} from '../../navigations/screens';
 import {AppHeaderStyle} from '../../styles/components/header/HeaderStyle';
 import {useDispatch, useSelector} from 'react-redux';
-import {APILogout} from '../../store/api/AccountAPI';
+import {APIGetUserBasicInf, APILogout} from '../../store/api/AccountAPI';
 import {useSocket} from '../../contexts/SocketContext';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 import SwitchButton from '../../components/SwitchButton';
+import AxiosInstance from '../../configs/axiosInstance';
+import {use} from 'i18next';
 
 const SettingScreen = props => {
   const {t} = useTranslation();
   const {navigation} = props;
   const dispatch = useDispatch();
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
-  const [notiStatus, setNotiStatus] = useState('true');
+  const [notiStatus, setNotiStatus] = useState(
+    userBasicInfData?.toggleNotification,
+  );
   const {socket} = useSocket();
   const SettingList = [
     {
@@ -159,7 +163,18 @@ const SettingScreen = props => {
           <SwitchButton
             isOn={notiStatus}
             onPress={() => {
-              setNotiStatus(!notiStatus);
+              AxiosInstance()
+                .put('/notify/toggle-notification')
+                .then(res => {
+                  if (res.status) {
+                    dispatch(APIGetUserBasicInf())
+                      .unwrap()
+                      .then(res => {
+                        setNotiStatus(res.data.toggleNotification);
+                        ToastAndroid.show('Update notification success', 1000);
+                      });
+                  }
+                });
             }}
           />
         </View>

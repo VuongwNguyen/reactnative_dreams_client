@@ -6,21 +6,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {FlingStyle} from '../../styles/flingstyle/FlingStyle';
+import React, { useEffect, useState } from 'react';
+import { FlingStyle } from '../../styles/flingstyle/FlingStyle';
 import Header from '../../components/Header';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   APIGetFollowers,
   APIGetFollowing,
   APIToggleFollow,
 } from '../../store/api/FollowAPI';
-import {current} from '@reduxjs/toolkit';
-import {id} from 'rn-emoji-keyboard';
-import {stackName} from '../../navigations/screens';
+import { current } from '@reduxjs/toolkit';
+import { id } from 'rn-emoji-keyboard';
+import { stackName } from '../../navigations/screens';
 
 const FlingScreen = props => {
-  const {navigation, route} = props;
+  const { navigation, route } = props;
   const params = route.params;
   const type = params?.type;
   const user_id_view = params?.user_id_view;
@@ -35,13 +35,13 @@ const FlingScreen = props => {
       setIsLoading(true);
       if (type === 'Followers') {
         const result = await dispatch(
-          APIGetFollowers({user_id_view, page}),
+          APIGetFollowers({ user_id_view, page }),
         ).unwrap();
         setData(result.list);
       }
       if (type === 'Following') {
         const result = await dispatch(
-          APIGetFollowing({user_id_view, page}),
+          APIGetFollowing({ user_id_view, page }),
         ).unwrap();
         setData(result.list);
       }
@@ -63,13 +63,13 @@ const FlingScreen = props => {
     fetchData();
   };
 
-  const RenderItems = ({item}) => {
+  const RenderItems = ({ item }) => {
     const id_user = item.follower?._id || item.user?._id;
     const [isFollowing, setIsFollowing] = useState(item.isFollowing);
 
     const handleFollow = async () => {
       try {
-        const body = {following: id_user};
+        const body = { following: id_user };
         const result = await dispatch(APIToggleFollow(body)).unwrap();
         // console.log(result);
 
@@ -91,7 +91,7 @@ const FlingScreen = props => {
           }}>
           <Image
             style={FlingStyle.avatar}
-            source={{uri: item.follower?.avatar || item.user.avatar}}
+            source={{ uri: item.follower?.avatar || item.user.avatar }}
           />
           <Text style={FlingStyle.name}>
             {item.follower?.fullname || item.user?.fullname}
@@ -119,7 +119,7 @@ const FlingScreen = props => {
       <Header title={type} />
       <FlatList
         data={data}
-        renderItem={({item}) => <RenderItems item={item} />}
+        renderItem={({ item }) => <RenderItems item={item} />}
         keyExtractor={(item, index) => index.toString()}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
