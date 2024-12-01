@@ -248,6 +248,7 @@ export default React.memo(
                 dispatch(
                   APICreatePost({
                     children_post_id: item._id,
+                    privacy_status: 'public',
                   }),
                 );
                 ToastAndroid.show('Chia sẻ bài viết thành công !', 1000);

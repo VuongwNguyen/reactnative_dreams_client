@@ -1,6 +1,5 @@
 {
-  "hello": "Hello world",
-  "counter": "Counter",
+  "hello": "Hello,",
   "register": {
     "welcome": "Sign in",
     "createAnAccount": "Create an account",
