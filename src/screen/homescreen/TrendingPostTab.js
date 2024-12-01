@@ -3,22 +3,21 @@ import {
   RefreshControl,
   StyleSheet,
 } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Animated from 'react-native-reanimated';
-import { useDispatch, useSelector } from 'react-redux';
-import ItemPost, { ItemSeparator } from '../../components/ItemPost';
+import {useDispatch, useSelector} from 'react-redux';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
 import {
   APICountViewPost,
   APIGetTrendingPost,
   APISetPostViewd,
 } from '../../store/api/PostAPI';
-import { Colors } from '../../styles';
-import { resetPostCreated, setData } from '../../store/slices';
+import {Colors} from '../../styles';
+import {resetPostCreated,setListData,setListLoading} from '../../store/slices';
 
 const TrendingPostTab = props => {
-  const { scrollHandler } = props;
+  const {scrollHandler} = props;
   const dispatch = useDispatch();
-  // const [dataPosts, setDataPosts] = useState([]);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +25,8 @@ const TrendingPostTab = props => {
   const [nextPage, setNextPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { isPostCreated, data } = useSelector(state => state.postTrending);
+  const isPostCreated = useSelector(state => state.post);
+  const trendingPosts = useSelector(state => state.post.trending.data);
   const flatListRef = useRef(null);
 
   const fetchPosts = () => {
@@ -34,15 +34,13 @@ const TrendingPostTab = props => {
     dispatch(APIGetTrendingPost(currentPage))
       .unwrap()
       .then(res => {
-        const { list, page } = res;
+        const {list, page} = res;
         setPage(page);
         if (currentPage === 1) {
-          //setDataPosts(list);
-          dispatch(setData(list));
+          dispatch(setListData({ listKey: 'trending', data: list}));
         } else {
-          //setDataPosts(prevDataPosts => [...prevDataPosts, ...list]);
-          const newData = [...data, ...list];
-          dispatch(setData(newData));
+          const newData = [...trendingPosts, ...list];
+          dispatch(setListData({ listKey: 'trending', data: newData}));
         }
       })
       .catch(err => {
@@ -65,7 +63,7 @@ const TrendingPostTab = props => {
 
   useEffect(() => {
     if (isPostCreated) {
-      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+      flatListRef.current.scrollToOffset({animated: true, offset: 0});
       setCurrentPage(1);
       fetchPosts();
       dispatch(resetPostCreated());
@@ -73,7 +71,7 @@ const TrendingPostTab = props => {
   }, [isPostCreated]);
 
   const onViewableItemsChanged = useCallback(
-    ({ viewableItems }) => {
+    ({viewableItems}) => {
       if (viewableItems.length > 0) {
         clearTimeout(timeOutId.current);
         timeOutId.current = setTimeout(() => {
@@ -109,8 +107,6 @@ const TrendingPostTab = props => {
     }
   }, [currentPage, nextPage, isLoading, dispatch]);
 
-
-
   const renderLoader = () => {
     return isLoading ? (
       <ActivityIndicator size="large" color={Colors.primary} />
@@ -122,8 +118,8 @@ const TrendingPostTab = props => {
       ref={flatListRef}
       style={styles.container}
       onScroll={scrollHandler}
-      data={data}
-      renderItem={({ item }) => <ItemPost item={item} />}
+      data={trendingPosts}
+      renderItem={({item}) => <ItemPost item={item} type="trending"/>}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       onEndReached={onEndReached}

@@ -11,7 +11,7 @@ import {useDispatch} from 'react-redux';
 import {APIToggleFollow} from '../store/api/FollowAPI';
 import {APICreatePost, APILikePost} from '../store/api/PostAPI';
 import {useDayjs} from '../configs/hooks/useDayjs';
-import { setToggleLike } from '../store/slices';
+import {setToggleLike} from '../store/slices';
 
 export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
@@ -19,7 +19,7 @@ export const ItemSeparator = () => (
 
 export default React.memo(
   (ItemPost = props => {
-    const {item, setItemClickId} = props;
+    const {item, setItemClickId, type} = props;
     const {t} = useTranslation();
     const [isShowMore, setIsShowMore] = useState(false);
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default React.memo(
 
     const toggleLike = async () => {
       dispatch(APILikePost({post_id: item._id})).then(res => {
-        dispatch(setToggleLike({id: item._id}));
+        dispatch(setToggleLike({id: item._id, listKey: type}));
       });
     };
 
@@ -227,7 +227,9 @@ export default React.memo(
             onPress={() => toggleLike(!item.isLiked)}>
             <Image
               style={{height: 20, width: 20}}
-              source={item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart}
+              source={
+                item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart
+              }
             />
             <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
           </TouchableOpacity>
@@ -264,7 +266,10 @@ export default React.memo(
         </View>
         {/* header more modal */}
         {isShowMore && (
-          <MenuItemPost handleItemMenuClick={handleItemMenuClick} isSelf={item?.isSelf}/>
+          <MenuItemPost
+            handleItemMenuClick={handleItemMenuClick}
+            isSelf={item?.isSelf}
+          />
         )}
       </View>
     );

@@ -1,5 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { APIGetPostDetail, APIGetPostsTrending } from '../api/PostAPI';
+import {createSlice} from '@reduxjs/toolkit';
+import {
+  APIFollowingPost,
+  APIGetPostByUser,
+  APIGetPostDetail,
+  APIGetPostsTrending,
+} from '../api/PostAPI';
 
 export const postTrendingSlice = createSlice({
   name: 'postTrending',
@@ -10,13 +15,13 @@ export const postTrendingSlice = createSlice({
     isPostCreated: false,
   },
   reducers: {
-    setData: (state, action) => {      
+    setData: (state, action) => {
       state.data = action.payload;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setPostCreated: (state) => {
+    setPostCreated: state => {
       state.isPostCreated = true; // Đặt lại trạng thái khi đã tạo bài viết
     },
     getPostDetail: (state, action) => {
@@ -25,8 +30,8 @@ export const postTrendingSlice = createSlice({
       state.currentPostDetail = action.payload;
     },
     setCommentCount: (state, action) => {
-      const { id, commentCount } = action.payload;      
-      
+      const {id, commentCount} = action.payload;
+
       state.data = state.data.map(post => {
         if (post._id === id) {
           return {
@@ -35,18 +40,18 @@ export const postTrendingSlice = createSlice({
           };
         }
         return post;
-      })
-      
+      });
+
       state.currentPostDetail = {
         ...state.currentPostDetail,
-        commentCount
-      }
+        commentCount,
+      };
     },
-    setToggleLike: (state, action) => {      
+    setToggleLike: (state, action) => {
       const {id} = action.payload;
       if (state.data.length > 0) {
         state.data = state.data.map(post => {
-          if (post._id === id) {          
+          if (post._id === id) {
             return {
               ...post,
               isLiked: !post.isLiked,
@@ -54,7 +59,7 @@ export const postTrendingSlice = createSlice({
             };
           }
           return post;
-        })
+        });
       }
       if (id === state.currentPostDetail._id) {
         state.currentPostDetail = {
@@ -63,23 +68,36 @@ export const postTrendingSlice = createSlice({
           likeCount: state.currentPostDetail.isLiked
             ? state.currentPostDetail.likeCount - 1
             : state.currentPostDetail.likeCount + 1,
-        }
+        };
       }
     },
-    resetPostCreated: (state) => {
+    resetPostCreated: state => {
       state.isPostCreated = false; // Đặt lại trạng thái khi đã xử lý
-    }
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(APIGetPostsTrending.fulfilled, (state, action) => {
-        // state.data = action.payload.data;
+        state.data = action.payload.data;
         state.loading = false;
+      })
+      .addCase(APIFollowingPost.fulfilled, (state, action) => {
+        state.data = action.payload.data;
+      })
+      .addCase(APIGetPostByUser.fulfilled, (state, action) => {
+        state.data = action.payload.data;
       })
       .addCase(APIGetPostDetail.fulfilled, (state, action) => {
         state.currentPostDetail = action.payload.data.post;
-      })
+      });
   },
 });
 
-export const { setPostCreated, resetPostCreated, setData, getPostDetail, setCommentCount, setToggleLike } = postTrendingSlice.actions;
+export const {
+  setPostCreated,
+  resetPostCreated,
+  setData,
+  getPostDetail,
+  setCommentCount,
+  setToggleLike,
+} = postTrendingSlice.actions;

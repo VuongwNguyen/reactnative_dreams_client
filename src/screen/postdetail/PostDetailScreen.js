@@ -18,15 +18,15 @@ import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
 import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
-import { getPostDetail, setCommentCount } from '../../store/slices';
+import {getPostDetail, setCommentCount} from '../../store/slices';
 
 const PostDetailScreen = props => {
-  const post_id = props.route?.params?.post_id;  
+  const post_id = props.route?.params?.post_id;
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
-  const {currentPostDetail} = useSelector(state => state.postTrending);
+  const currentPostDetail = useSelector(state => state.post);
   const [data, setPost] = useState(null);
   const [list, setList] = useState(currentPostDetail?.comments?.list || []);
   const [loading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ const PostDetailScreen = props => {
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
-      .then(res => {                
+      .then(res => {
         //setPost(res.data.post);
         setList(res.data?.comments?.list);
         setLoading(false);
@@ -87,7 +87,12 @@ const PostDetailScreen = props => {
             };
             dispatch(childCommentSlice.actions.setPushChildComment(newComment));
           }
-          dispatch(setCommentCount({id: post_id, commentCount: currentPostDetail.commentCount + 1}));
+          dispatch(
+            setCommentCount({
+              id: post_id,
+              commentCount: currentPostDetail.commentCount + 1,
+            }),
+          );
           setContent('');
           setCommentFocus(null);
           inputRef.current.clear();
@@ -123,9 +128,7 @@ const PostDetailScreen = props => {
             keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={
-              <ItemPost item={currentPostDetail} />
-            }
+            ListHeaderComponent={<ItemPost item={currentPostDetail} />}
           />
           {commentFocus && (
             <View
