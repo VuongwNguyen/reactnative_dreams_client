@@ -1,11 +1,10 @@
 import {
-  FlatList,
   Image,
   Text,
   ToastAndroid,
-  TouchableOpacity,
   View,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
@@ -14,7 +13,7 @@ import {useTranslation} from 'react-i18next';
 import {InfomationTabStyle} from '../../styles/profileStyle/InformationTabStyle';
 import Animated from 'react-native-reanimated';
 import {APIGetInfList} from '../../store/api/InfAPI';
-import {Assets} from '../../styles';
+import {Assets, Colors} from '../../styles';
 
 const InfomationTab = props => {
   const {scrollHandler, user_id_view} = props;
@@ -24,7 +23,7 @@ const InfomationTab = props => {
   const [infAPI, setInfAPI] = useState('');
   const [infData, setInfData] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const infUI = [
     {key: 'gender', title: t('profileScreen.infomationTab.gender')},
     {key: 'dob', title: t('profileScreen.infomationTab.dob')},
@@ -44,6 +43,7 @@ const InfomationTab = props => {
       .then(res => {
         setInfAPI(res?.data?.infomation);
         setRefreshing(false);
+        setIsLoading(false);
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -53,6 +53,7 @@ const InfomationTab = props => {
 
   useFocusEffect(
     useCallback(() => {
+      setIsLoading(true);
       fetchGetInflist();
       setRefreshing(true);
     }, [user_id_view]),
@@ -93,7 +94,13 @@ const InfomationTab = props => {
 
   return (
     <View style={InfomationTabStyle.container}>
-      {infAPI.length !== 0 ? (
+      {isLoading ? (
+        <ActivityIndicator
+          size="small"
+          color={Colors.primary}
+          style={{margin: 'auto'}} 
+        />
+      ) : infAPI.length !== 0 ? (
         <Animated.FlatList
           onScroll={scrollHandler}
           data={infData}

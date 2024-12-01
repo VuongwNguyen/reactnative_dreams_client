@@ -1,36 +1,37 @@
 import {
   ActivityIndicator,
-  FlatList,
   RefreshControl,
   ToastAndroid,
   View,
 } from 'react-native';
-import React, { useEffect, useState, useCallback } from 'react';
-import ItemPost, { ItemSeparator } from '../../components/ItemPost';
-import { useDispatch } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
-import { PostedTabStyle } from '../../styles/profileStyle/PostedTabStyle';
-import { APIGetPostByUser } from '../../store/api/PostAPI';
+import React, {useState, useCallback} from 'react';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
+import {useDispatch, useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
+import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
+import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
-import { Colors } from '../../styles';
+import {Colors} from '../../styles';
+import {setData} from '../../store/slices';
 
 const PostedTab = props => {
-  const { scrollHandler, user_id_view } = props;
+  const {scrollHandler, user_id_view} = props;
   const dispatch = useDispatch();
-  const [dataPosts, setDataPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const {data} = useSelector(state => state.postTrending);
 
   const fetchPosts = () => {
     setIsLoading(true);
-    dispatch(APIGetPostByUser({ user_id_view, _page: currentPage }))
+    dispatch(APIGetPostByUser({user_id_view, _page: currentPage}))
       .unwrap()
       .then(res => {
-        const { list, page } = res;
+        const {list, page} = res;
         setPage(page);
-        setDataPosts(prevDataPosts => [...prevDataPosts, ...list]);
+        const newData = [...data, ...list];
+        dispatch(setData(newData));
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -44,13 +45,12 @@ const PostedTab = props => {
   useFocusEffect(
     useCallback(() => {
       fetchPosts();
-    }, [user_id_view, currentPage])
+    }, [user_id_view, currentPage]),
   );
 
   const onRefresh = () => {
     setRefreshing(true);
     setCurrentPage(1);
-    setDataPosts([])
     fetchPosts();
   };
 
@@ -70,9 +70,9 @@ const PostedTab = props => {
     <View style={PostedTabStyle.container}>
       <Animated.FlatList
         onScroll={scrollHandler}
-        data={dataPosts}
+        data={data}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <ItemPost item={item} />}
+        renderItem={({item}) => <ItemPost item={item} />}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => <ItemSeparator />}
         onEndReached={onEndReached}
