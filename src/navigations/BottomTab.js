@@ -81,7 +81,7 @@ const BottomTab = () => {
   return (
     <tab.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={tabName.notification.name}
+      initialRouteName={tabName.home.name}
       tabBar={props => <TabBar {...props} />}>
       <tab.Screen name={tabName.home.name} component={tabName.home.component} />
       <tab.Screen name={tabName.chat.name} component={tabName.chat.component} />

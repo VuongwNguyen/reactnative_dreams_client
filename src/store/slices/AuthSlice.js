@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {APILogin, APILogout} from '../api/AccountAPI';
+import {APIAuthThirdPartner, APILogin, APILogout} from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -11,6 +11,7 @@ export const accountSlice = createSlice({
     authenticated: false,
     loading: false,
     error: false,
+    ggSigninLoading: false,
   },
   reducers: {
     updateTokens: (state, action) => {
@@ -48,6 +49,7 @@ export const accountSlice = createSlice({
       })
       .addCase(APILogout.fulfilled, (state, _) => {
         state.loading = false;
+        state.ggSigninLoading = false;
         state.error = false;
         state.authenticated = false;
         state.token.accessToken = null;
@@ -56,6 +58,18 @@ export const accountSlice = createSlice({
       .addCase(APILogout.rejected, (state, _) => {
         state.loading = false;
         state.error = true;
+      })
+      .addCase(APIAuthThirdPartner.pending, (state, _) => {
+        state.ggSigninLoading = true;
+      })
+      .addCase(APIAuthThirdPartner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.authenticated = true;
+        state.token.accessToken = action.payload.data.accessToken;
+        state.token.refreshToken = action.payload.data.refreshToken;
+      })
+      .addCase(APIAuthThirdPartner.rejected, (state, _) => {
+        state.ggSigninLoading = false;
       });
   },
 });

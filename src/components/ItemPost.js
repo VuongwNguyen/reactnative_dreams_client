@@ -11,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import {APIToggleFollow} from '../store/api/FollowAPI';
 import {APICreatePost, APILikePost} from '../store/api/PostAPI';
 import {useDayjs} from '../configs/hooks/useDayjs';
+import { setToggleLike } from '../store/slices';
 
 export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
@@ -19,8 +20,6 @@ export const ItemSeparator = () => (
 export default React.memo(
   (ItemPost = props => {
     const {item, setItemClickId} = props;
-    const [liked, setLiked] = useState(item.isLiked);
-    const [countLike, setCountLike] = useState(item.likeCount);
     const {t} = useTranslation();
     const [isShowMore, setIsShowMore] = useState(false);
     const dispatch = useDispatch();
@@ -28,12 +27,7 @@ export default React.memo(
 
     const toggleLike = async () => {
       dispatch(APILikePost({post_id: item._id})).then(res => {
-        setLiked(!liked);
-        if (liked) {
-          setCountLike(countLike - 1);
-        } else {
-          setCountLike(countLike + 1);
-        }
+        dispatch(setToggleLike({id: item._id}));
       });
     };
 
@@ -141,7 +135,7 @@ export default React.memo(
             />
           </TouchableOpacity>
         </View>
-        {item.childrenPost && (
+        {item?.childrenPost && (
           <ItemShare item={item.childrenPost} setItemClickId={setItemClickId} />
         )}
 
@@ -230,12 +224,12 @@ export default React.memo(
           {/* like */}
           <TouchableOpacity
             style={itemPostStyle.itemInteract}
-            onPress={() => toggleLike(!liked)}>
+            onPress={() => toggleLike(!item.isLiked)}>
             <Image
               style={{height: 20, width: 20}}
-              source={liked ? Assets.icons.heartFill : Assets.icons.heart}
+              source={item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart}
             />
-            <Text style={itemPostStyle.interactLabel}>{countLike}</Text>
+            <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
           </TouchableOpacity>
           {/* comment */}
           <TouchableOpacity style={itemPostStyle.itemInteract}>

@@ -3,7 +3,7 @@ import AxiosInstance from '../../configs/axiosInstance';
 
 export const APIGetFollowing = createAsyncThunk(
   'follow/get-followings',
-  async ({user_id_view, page,limit}, {rejectWithValue}) => {
+  async ({user_id_view, page=1,limit=10}, {rejectWithValue}) => {
     try {
       const response = await AxiosInstance().get(
         `/follow/get-followings?user_id_view=${user_id_view}&_page=${page}&_limit=${limit}`,

@@ -97,7 +97,7 @@ const CreateGroup = () => {
             {loading ? (
               <ActivityIndicator size={'small'} color={'white'} />
             ) : (
-              <Text style={styles.textButton}>Tạo nhóm</Text>
+              <Text style={styles.textButton}>Tạo</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -112,8 +112,9 @@ const CreateGroup = () => {
         </View>
 
         <TouchableOpacity
-          style={styles.wrapperInput}
+          style={[styles.wrapperInput, styles.searchInput]}
           onPress={() => setShowSearch(true)}>
+          <Image source={Assets.icons.search} style={styles.searchIcon} />
           <Text style={styles.input}>Tìm kiếm</Text>
         </TouchableOpacity>
 
@@ -179,6 +180,16 @@ export const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
+  searchInput: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  searchIcon: {
+    width: 24,
+    height: 24,
+  },
   dot: {
     width: 15,
     height: 15,
@@ -191,15 +202,15 @@ export const styles = StyleSheet.create({
     maxWidth: 80,
   },
   selected: {
-    marginTop: 12,
+    marginTop: 15,
   },
   checked: {
     backgroundColor: Colors.primary,
     borderWidth: 0,
   },
   check: {
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     borderWidth: 1,
     borderRadius: 15,
     borderColor: 'black',

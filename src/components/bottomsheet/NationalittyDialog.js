@@ -13,6 +13,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { APIUpdateInf } from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const NationalityDialog = forwardRef((props, ref) => {
   const dispatch = useDispatch()
@@ -118,17 +119,13 @@ const NationalityDialog = forwardRef((props, ref) => {
                 )}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              disabled={isDisable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('nationalityDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title= {t('nationalityDialog.confirm')}
+                isDisable={isDisable}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

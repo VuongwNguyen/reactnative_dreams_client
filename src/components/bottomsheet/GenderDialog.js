@@ -6,16 +6,23 @@ import {
   Modal,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, forwardRef, useImperativeHandle, useEffect} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {bottomSheetStyle} from '../../styles/bottomsheet/BottomSheetStyle';
 import {Assets, Colors} from '../../styles';
 import {useTranslation} from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { APIUpdateInf } from '../../store/api/InfAPI';
+import {useDispatch} from 'react-redux';
+import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
+import { styles } from '@stream-io/video-react-native-sdk';
 
 const GenderDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [selectedGender, setSelectedGender] = useState(props?.data);
   const isDisabled = !selectedGender;
   const [visible, setVisible] = useState(false);
@@ -25,7 +32,7 @@ const GenderDialog = forwardRef((props, ref) => {
       setSelectedGender(props.data);
     }
   }, [props?.data]);
-  
+
   useImperativeHandle(ref, () => ({
     open() {
       setVisible(true);
@@ -130,17 +137,13 @@ const GenderDialog = forwardRef((props, ref) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity
-              disabled={isDisabled}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisabled && {opacity: 0.5},
-              ]}
-              onPress={() => handleSubmit()}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('genderDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('genderDialog.confirm')}
+                isDisable={isDisabled}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

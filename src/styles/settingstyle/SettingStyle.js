@@ -1,20 +1,25 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../';
+import {Colors, Spacings} from '../';
 
 export const SettingStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 10,
-    paddingHorizontal: 10,
+  },
+  bodyContainer: {
+    padding: Spacings.pd,
+  },
+  userTag: {
+    flexDirection: 'row',
+    gap: 20,
+    marginBottom: 25,
   },
   itemSettingContainer: {
     flexDirection: 'row',
-    gap: 10,
-    paddingVertical: 10,
+    gap: 20,
+    paddingVertical: 12,
   },
   title: {
-    flex: 1,
     fontSize: 16,
     color: 'black',
     fontWeight: '500',
@@ -29,5 +34,10 @@ export const SettingStyle = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: 'red',
+  },
+  notiRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

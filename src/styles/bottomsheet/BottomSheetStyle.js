@@ -1,8 +1,8 @@
 import {Colors, Fonts, Typography} from '../../styles';
 export const bottomSheetStyle = {
   // common
-  warmText:{
-    ...Typography.errorText
+  warmText: {
+    ...Typography.errorText,
   },
   normalText: {
     fontFamily: Fonts.roboto.regular,
@@ -35,11 +35,6 @@ export const bottomSheetStyle = {
   },
   btnContainer: {
     marginTop: 30,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 25,
   },
   btnLabel: {
     ...Typography.btnLabelDialog,

@@ -19,6 +19,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {APIUpdateInf} from '../../store/api/InfAPI';
+import AppButton from '../Button';
 
 const RlstStatusDialog = forwardRef((props, ref) => {
   const {t} = useTranslation();
@@ -94,17 +95,13 @@ const RlstStatusDialog = forwardRef((props, ref) => {
               }}
               style={bottomSheetStyle.educationLevel}
             />
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              disabled={isDisable}
-              style={[
-                bottomSheetStyle.btnContainer,
-                isDisable && {opacity: 0.5},
-              ]}>
-              <Text style={bottomSheetStyle.btnLabel}>
-                {t('educationDialog.confirm')}
-              </Text>
-            </TouchableOpacity>
+            <View style={bottomSheetStyle.btnContainer}>
+              <AppButton
+                title={t('rlstStatusDialog.confirm')}
+                isDisable={isDisable}
+                onPress={handleSubmit}
+              />
+            </View>
           </View>
         </View>
       </View>

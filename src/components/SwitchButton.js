@@ -2,9 +2,9 @@ import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 const SwitchButton = props => {
-  const {isOn, onPress, disabled = false} = props;
+  const {isOn, onPress=()=>{}} = props;
   return (
-    <TouchableOpacity onPress={onPress} disabled={disabled}>
+    <TouchableOpacity onPress={onPress}>
       <Image
         style={styles.icon}
         source={

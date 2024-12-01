@@ -34,41 +34,7 @@ import EducationDialog from '../../components/bottomsheet/EducationDialog';
 import GenderDialog from '../../components/bottomsheet/GenderDialog';
 import JobDialog from '../../components/bottomsheet/JobDialog';
 import RlstStatusDialog from '../../components/bottomsheet/RltsStatusDialog';
-
-import {basicInfArr, otherInfArr} from './InfoArr';
-import { APIGetUserBasicInf } from '../../store/api/AccountAPI';
-
-const showBasicInf = () => {
-  return (
-    <View style={accountDetailStyle.infBox}>
-      {basicInfArr.map((item, index) => (
-        <TagInf
-          key={index}
-          tagTitle={item.title}
-          content={item.content}
-          icon={item.icon}
-          func={item.func}
-        />
-      ))}
-    </View>
-  );
-};
-
-const showOtherInf = () => {
-  return (
-    <View style={accountDetailStyle.infBox}>
-      {otherInfArr.map((item, index) => (
-        <TagInf
-          key={index}
-          tagTitle={item.title}
-          content={item.content}
-          icon={item.icon}
-          func={item.func}
-        />
-      ))}
-    </View>
-  );
-};
+import {APIGetUserBasicInf} from '../../store/api/AccountAPI';
 
 const AccountDetailScreen = ({navigation}) => {
   const {t} = useTranslation();
@@ -325,13 +291,37 @@ const AccountDetailScreen = ({navigation}) => {
   const genderValue = getValueByKey(basicInfData, 'gender');
   const rlstValue = getValueByKey(otherInfData, 'rlst');
   const jobValue = getValueByKey(otherInfData, 'job');
-  const [job, , workplace] = jobValue ? jobValue.split(' ') : ['', , ''];
+  let job = '';
+  let workplace = '';
+  if (jobValue && jobValue.includes('tại')) {
+    const [jobPart, ...workplaceParts] = jobValue.split(`${t('jobDialog.at')}`);
+    job = jobPart.trim();
+    workplace = workplaceParts.join(' ').trim();
+  } else {
+    job = jobValue || '';
+    workplace = '';
+  }
+
   const eduValue = getValueByKey(otherInfData, 'edu');
-  const [level, , school] = eduValue ? eduValue.split(' ') : ['', , ''];
+  let level = '';
+  let school = '';
+
+  if (eduValue && eduValue.includes('tại')) {
+    const [levelPart, ...schoolParts] = eduValue.split(
+      `${t('educationDialog.at')}`,
+    );
+    level = levelPart.trim();
+    school = schoolParts.join(' ').trim();
+  } else {
+    level = eduValue || '';
+    school = '';
+  }
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={accountDetailStyle.scrollContainer}>
+      <AppHeader title={t('accountDetailScreen.infTitle')} />
       <View style={accountDetailStyle.container}>
-        <AppHeader title={t('accountDetailScreen.infTitle')} />
         {!!basicInfData && !!otherInfData && !!personalInf ? (
           <View style={accountDetailStyle.bodyContainer}>
             <View style={accountDetailStyle.avtContainer}>

@@ -6,36 +6,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Assets} from '../../styles';
 import Header from '../../components/Header';
 import {SettingStyle} from '../../styles/settingstyle/SettingStyle';
 import {stackName} from '../../navigations/screens';
 import {AppHeaderStyle} from '../../styles/components/header/HeaderStyle';
 import {useDispatch, useSelector} from 'react-redux';
-import {APILogout} from '../../store/api/AccountAPI';
+import {APIGetUserBasicInf, APILogout} from '../../store/api/AccountAPI';
 import {useSocket} from '../../contexts/SocketContext';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
+import SwitchButton from '../../components/SwitchButton';
+import AxiosInstance from '../../configs/axiosInstance';
+import {use} from 'i18next';
 
 const SettingScreen = props => {
   const {t} = useTranslation();
   const {navigation} = props;
   const dispatch = useDispatch();
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
-
+  const [notiStatus, setNotiStatus] = useState(
+    userBasicInfData?.toggleNotification,
+  );
   const {socket} = useSocket();
   const SettingList = [
     {
       title: t('settingScreen.privacy_safety'),
       icon: Assets.icons.privacy,
       onClick: () => navigation.navigate(stackName.privacySetting.name),
-    },
-    {
-      title: t('settingScreen.notification'),
-      icon: Assets.icons.notification,
-      onClick: () => navigation.navigate(stackName.notificationSetting.name),
     },
     {
       title: t('settingScreen.language'),
@@ -56,7 +56,7 @@ const SettingScreen = props => {
     {
       title: t('settingScreen.logout'),
       icon: Assets.icons.logout,
-      onClick: ()=> logout(),
+      onClick: () => logout(),
     },
   ];
 
@@ -97,79 +97,106 @@ const SettingScreen = props => {
   return (
     <View style={SettingStyle.container}>
       <Header title={t('settingScreen.title')} />
-      <TouchableOpacity
-        style={{flexDirection: 'row', gap: 20, marginBottom: 14}}
-        onPress={() => navigation.navigate(stackName.profile.name)}>
-        <Image
-          source={{
-            uri: userBasicInfData?.avatar,
-          }}
-          style={{
-            height: 60,
-            width: 60,
-            borderRadius: 40,
-          }}
-          resizeMode="cover"
-        />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 1,
-            borderBottomColor: '#d8d8d8',
-            paddingBottom: 10,
-          }}>
+      <View style={SettingStyle.bodyContainer}>
+        <TouchableOpacity
+          style={SettingStyle.userTag}
+          onPress={() => navigation.navigate(stackName.profile.name)}>
+          <Image
+            source={{
+              uri: userBasicInfData?.avatar,
+            }}
+            style={{
+              height: 60,
+              width: 60,
+              borderRadius: 40,
+            }}
+            resizeMode="cover"
+          />
           <View
             style={{
-              flexDirection: 'column',
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottomWidth: 1,
+              borderBottomColor: '#d8d8d8',
+              paddingBottom: 10,
             }}>
-            <Text
+            <View
               style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: 'black',
+                flexDirection: 'column',
               }}>
-              {userBasicInfData?.fullname}
-            </Text>
-            <Text
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: 'black',
+                }}>
+                {userBasicInfData?.fullname}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'black',
+                }}>
+                {userBasicInfData?.email}
+              </Text>
+            </View>
+            <Image
+              source={Assets.icons.arrowRight}
               style={{
-                fontSize: 14,
-                color: 'black',
-              }}>
-              {userBasicInfData?.email}
+                height: 20,
+                width: 20,
+                alignSelf: 'center',
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+        <View style={SettingStyle.notiRow}>
+          <View style={SettingStyle.itemSettingContainer}>
+            <Image source={Assets.icons.notification} />
+            <Text style={SettingStyle.title}>
+              {t('settingScreen.notification')}
             </Text>
           </View>
-          <Image
-            source={Assets.icons.arrowRight}
-            style={{
-              height: 20,
-              width: 20,
-              alignSelf: 'center',
+
+          <SwitchButton
+            isOn={notiStatus}
+            onPress={() => {
+              AxiosInstance()
+                .put('/notify/toggle-notification')
+                .then(res => {
+                  if (res.status) {
+                    dispatch(APIGetUserBasicInf())
+                      .unwrap()
+                      .then(res => {
+                        setNotiStatus(res.data.toggleNotification);
+                        ToastAndroid.show('Update notification success', 1000);
+                      });
+                  }
+                });
             }}
           />
         </View>
-      </TouchableOpacity>
-
-      {SettingList.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          style={SettingStyle.itemSettingContainer}
-          onPress={item.onClick}>
-          <Image source={item.icon} style={AppHeaderStyle.icon} />
-          <Text
-            style={[
-              SettingStyle.title,
-              {
-                color:
-                  item.title === t('settingScreen.logout') ? 'red' : 'black',
-              },
-            ]}>
-            {item.title}
-          </Text>
-        </TouchableOpacity>
-      ))}
+        {SettingList.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={SettingStyle.itemSettingContainer}
+            onPress={item.onClick}>
+            <Image source={item.icon} style={AppHeaderStyle.icon} />
+            <Text
+              style={[
+                SettingStyle.title,
+                {
+                  color:
+                    item.title === t('settingScreen.logout') ? 'red' : 'black',
+                },
+              ]}>
+              {item.title}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };

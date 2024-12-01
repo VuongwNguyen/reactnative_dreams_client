@@ -1,8 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Text,
   ToastAndroid,
@@ -14,17 +15,56 @@ import Input from '../../components/Input';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
 import {stackName} from '../../navigations/screens';
-import {APIGetUserBasicInf, APILogin} from '../../store/api/AccountAPI';
+import {APIAuthThirdPartner, APILogin} from '../../store/api/AccountAPI';
 import {Assets, Typography} from '../../styles';
 import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const FormikForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {loading} = useSelector(state => state.account);
   const {t} = useTranslation();
-  const [isRememberMe, setIsRememberMe] = useState(false);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '650950443769-ogc8o7mqb2viqkrct0ls5vqtt4ajei9n.apps.googleusercontent.com',
+    });
+  }, []);
+  async function onGoogleButtonPress() {
+    try {
+      await GoogleSignin.signOut();
+
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      const signInResult = await GoogleSignin.signIn();
+      // console.log('Google Sign-In Result:', signInResult);
+      const idToken = signInResult.data.idToken;
+      if (!idToken) {
+        throw new Error('Không thể lấy được ID token từ Google Sign-In.');
+      }
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userCredential = await auth().signInWithCredential(
+        googleCredential,
+      );
+      // console.log('Google Sign-In thành công:', userCredential);
+      const body = {
+        email: userCredential.user.email,
+        first_name: userCredential.additionalUserInfo.profile?.family_name,
+        last_name: userCredential.additionalUserInfo.profile?.given_name,
+        avatar: userCredential.user?.photoURL,
+        partner_id: userCredential.user.uid,
+        password: '',
+        phone: userCredential.user.phoneNumber,
+      };
+      await dispatch(APIAuthThirdPartner(body)).unwrap();
+      Alert.alert('Đăng nhập thành công với Google!');
+    } catch (error) {
+      // console.error('Lỗi khi đăng nhập với Google:', error.message);
+      // Alert.alert('Đăng nhập thất bại:', error.message);
+    }
+  }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
       emailOrPhoneNumber: '',
@@ -32,8 +72,6 @@ const FormikForm = () => {
     },
     loginSchema,
     (val, {resetForm}) => {
-      console.log('ssssss');
-      
       dispatch(
         APILogin({
           UserIF: val.emailOrPhoneNumber,
@@ -43,7 +81,8 @@ const FormikForm = () => {
         .unwrap()
         .then(res => {
           // resetForm();
-          // ToastAndroid.show('Login success', 1000);
+          // ToastAndroid.show('Login success');
+          // ToastAndroid.show('Login success');
         })
         .catch(err => {
           // ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -75,17 +114,8 @@ const FormikForm = () => {
         )}
       </View>
       <View style={[LoginStyle.rowContainer, {justifyContent: 'flex-end'}]}>
-        {/* <TouchableOpacity
-          style={LoginStyle.checkBoxContainer}
-          onPress={() => setIsRememberMe(!isRememberMe)}>
-          <View style={LoginStyle.dot}>
-            {isRememberMe && <View style={LoginStyle.checkBox} />}
-          </View>
-          <Text>{t('loginScreen.remmberMe')}</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() => navigation.navigate(stackName.forgotPassword.name)}
-          style={{}}>
+          onPress={() => navigation.navigate(stackName.forgotPassword.name)}>
           <Text style={LoginStyle.link}>{t('loginScreen.forgotPassword')}</Text>
         </TouchableOpacity>
       </View>
@@ -102,7 +132,7 @@ const FormikForm = () => {
       <View style={{gap: 20}}>
         <Text style={LoginStyle.orText}>{t('loginScreen.or')}</Text>
         <View style={LoginStyle.differentLoginContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onGoogleButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>
           <TouchableOpacity>

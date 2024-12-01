@@ -131,7 +131,7 @@
     "followed": "Đã theo dõi",
     "editProfile": "Chỉnh sửa trang cá nhân",
     "information": "Thông tin",
-    "posted": "Đã đăng",
+    "timeline": "Dòng thời gian",
     "infomationTab": {
       "zone": "Vị trí",
       "natl": "Quốc tịch",
@@ -191,6 +191,11 @@
   "notificationScreen": {
     "title": "Thông báo"
   },
+  "languageSetting": {
+    "title": "Cài đặt ngôn ngữ",
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt"
+  },
   "privacySettingScreen": {
     "title": "Cài đặt quyền riêng tư",
     "desc": "Quản lý quyền riêng tư cho các mục thông tin của bạn và quyết định thông tin nào sẽ được hiển thị công khai với người dùng khác. Bảo vệ dữ liệu cá nhân của bạn và tùy chỉnh mức độ chia sẻ phù hợp với nhu cầu.",
@@ -200,10 +205,11 @@
   "educationDialog": {
     "title": "Trình độ học vấn của bạn là gì",
     "desc": "Vui lòng chọn trình độ học vấn cao nhất của bạn để chúng tôi có thể cung cấp những đề xuất tốt hơn và kết nối bạn với những người có cấp bậc tương tự.",
-    "level1": "Cấp độ cơ bản",
-    "level2": "Cấp độ đại học ",
-    "level3": "Cấp độ sau đại học",
+    "level1": "Giáo dục phổ thông",
+    "level2": "Giáo dục đại học ",
+    "level3": "Giáo dục sau đại học",
     "placeholder": "Chọn cấp độ học vấn ",
+    "at":"tại",
     "school": "Trường học của bạn",
     "confirm": "XÁC NHẬN"
   },
@@ -211,7 +217,9 @@
     "title": "Công việc hiện tại của bạn là gì?",
     "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
     "job": "Công việc của bạn",
-    "workplace": "Nơi làm việc"
+    "workplace": "Nơi làm việc",
+    "at":"tại",
+    "confirm": "XÁC NHẬN"
   },
   "usernameDialog": {
     "title": "Tên của bạn là gì",
@@ -297,12 +305,13 @@
     "warm": "Mô tả tối đa 100 kí tự !"
   },
   "rlstStatusDialog": {
-    "title": "Relationship status",
+    "title": "Tình trạng hôn nhân",
     "desc": "Vui lòng chọn tình trạng hôn nhân của bạn để hiển thị trên hồ sơ cá nhân.",
     "single": "Độc thân",
     "dating": "Hẹn hò",
     "married": "Đã kết hôn",
-    "placeholder": "Choose your status"
+    "placeholder": "Choose your status",
+    "confirm": "XÁC NHẬN"
   },
   "navigation": {
     "home": "Trang chủ",
@@ -320,8 +329,9 @@
     }
   },
   "reportScreen": {
+    "title": "Báo cáo",
     "reasonTitle": "Hãy cho biết lí do bạn thực hiện báo cáo này !",
-    "descTitle": "Please describe the report further",
+    "descTitle": "Hãy mô tả thêm về lí do của bạn",
     "placeholder": "Nhập mô tả",
     "post": {
       "r1": "Nội dung người lớn",
@@ -344,10 +354,13 @@
     "title": "Cài đặt",
     "account": "Tài khoản",
     "privacy_safety": "Quyền riêng tư và an toàn",
-    "notification": "Thông báo",
+    "notification": "Thông báo đẩy",
     "language": "Ngôn ngữ",
     "logout": "Đăng xuất",
     "password": "Đổi mật khẩu",
     "privacyPolicy": "Chính sách bảo mật"
+  },
+  "policyScreen":{
+    "title":"Tiêu chuẩn cộng đồng"
   }
 }

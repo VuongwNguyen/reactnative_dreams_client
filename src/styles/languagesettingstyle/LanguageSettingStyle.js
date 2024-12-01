@@ -1,12 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../';
+import {Colors, Spacings} from '../';
 
 export const LanguageSettingStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 10,
-    paddingHorizontal: 10,
   },
   row: {
     flexDirection: 'row',
@@ -16,8 +14,8 @@ export const LanguageSettingStyle = StyleSheet.create({
     color: 'black',
   },
   content: {
-    paddingHorizontal: 10,
-    paddingTop: 20,
-    gap: 10,
+    marginTop: 30,
+    paddingHorizontal: Spacings.pd,
+    gap: 20,
   },
 });

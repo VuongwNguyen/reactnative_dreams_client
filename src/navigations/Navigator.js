@@ -138,10 +138,6 @@ export function Navigator() {
               component={stackName.privacySetting.component}
             />
             <Stack.Screen
-              name={stackName.notificationSetting.name}
-              component={stackName.notificationSetting.component}
-            />
-            <Stack.Screen
               name={stackName.languageSetting.name}
               component={stackName.languageSetting.component}
             />
