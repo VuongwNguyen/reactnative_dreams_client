@@ -33,7 +33,7 @@ export const store = configureStore({
     childComment: slices.childCommentSlice.reducer,
     notification: slices.notificationSlice.reducer,
     idsTagUser: slices.idsTagUserSlice.reducer,
-    post: slices.postSlice.reducer
+    post: slices.postSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({

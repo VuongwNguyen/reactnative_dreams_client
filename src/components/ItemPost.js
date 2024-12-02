@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
@@ -11,15 +11,14 @@ import {useDispatch} from 'react-redux';
 import {APIToggleFollow} from '../store/api/FollowAPI';
 import {APICreatePost, APILikePost} from '../store/api/PostAPI';
 import {useDayjs} from '../configs/hooks/useDayjs';
-import {setToggleLike} from '../store/slices';
+import {setToggleLike, setToggleLikeTrending} from '../store/slices';
 
 export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
 );
 
 export default React.memo(
-  (ItemPost = props => {
-    const {item, setItemClickId, type} = props;
+  (ItemPost = ({item, setItemClickId, type}) => {
     const {t} = useTranslation();
     const [isShowMore, setIsShowMore] = useState(false);
     const dispatch = useDispatch();
@@ -147,7 +146,8 @@ export default React.memo(
               onPress={() => {
                 navigation.navigate(stackName.postDetail.name, {
                   post_id: item._id,
-                  setItemClickId,
+                  // setItemClickId,
+                  type: type,
                 });
               }}>
               {!!item?.title && (

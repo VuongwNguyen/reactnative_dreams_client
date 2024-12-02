@@ -18,16 +18,17 @@ import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
 import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
-import {getPostDetail, setCommentCount} from '../../store/slices';
+import {setCommentCount} from '../../store/slices';
 
 const PostDetailScreen = props => {
   const post_id = props.route?.params?.post_id;
+  const type = props.route?.params?.type;
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
-  const currentPostDetail = useSelector(state => state.post);
-  const [data, setPost] = useState(null);
+  const {currentPostDetail} = useSelector(state => state.post);
+  const [post, setPost] = useState(null);
   const [list, setList] = useState(currentPostDetail?.comments?.list || []);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
@@ -39,7 +40,7 @@ const PostDetailScreen = props => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
-        //setPost(res.data.post);
+        // setPost(res.data.post);
         setList(res.data?.comments?.list);
         setLoading(false);
       });
@@ -91,6 +92,7 @@ const PostDetailScreen = props => {
             setCommentCount({
               id: post_id,
               commentCount: currentPostDetail.commentCount + 1,
+              listKey: type,
             }),
           );
           setContent('');
@@ -101,7 +103,6 @@ const PostDetailScreen = props => {
       console.log('Error', error);
     }
   };
-
   return (
     <View style={postDetailStyle.container}>
       {loading ? (
@@ -128,7 +129,9 @@ const PostDetailScreen = props => {
             keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={<ItemPost item={currentPostDetail} />}
+            ListHeaderComponent={
+              <ItemPost item={currentPostDetail} type={type} />
+            }
           />
           {commentFocus && (
             <View

@@ -1,8 +1,4 @@
-import {
-  ActivityIndicator,
-  RefreshControl,
-  StyleSheet,
-} from 'react-native';
+import {ActivityIndicator, RefreshControl, StyleSheet} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Animated from 'react-native-reanimated';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,7 +9,11 @@ import {
   APISetPostViewd,
 } from '../../store/api/PostAPI';
 import {Colors} from '../../styles';
-import {resetPostCreated,setListData,setListLoading} from '../../store/slices';
+import {
+  setListLoading,
+  setListData,
+  resetPostCreated,
+} from '../../store/slices';
 
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
@@ -22,14 +22,15 @@ const TrendingPostTab = props => {
   const timeOutId = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState({});
-  const [nextPage, setNextPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const isPostCreated = useSelector(state => state.post);
+  const {isPostCreated} = useSelector(state => state.post);
   const trendingPosts = useSelector(state => state.post.trending.data);
+
   const flatListRef = useRef(null);
 
   const fetchPosts = () => {
+    dispatch(setListLoading({listKey: 'trending', loading: true}));
     setIsLoading(true);
     dispatch(APIGetTrendingPost(currentPage))
       .unwrap()
@@ -37,10 +38,10 @@ const TrendingPostTab = props => {
         const {list, page} = res;
         setPage(page);
         if (currentPage === 1) {
-          dispatch(setListData({ listKey: 'trending', data: list}));
+          dispatch(setListData({listKey: 'trending', data: list}));
         } else {
           const newData = [...trendingPosts, ...list];
-          dispatch(setListData({ listKey: 'trending', data: newData}));
+          dispatch(setListData({listKey: 'trending', data: newData}));
         }
       })
       .catch(err => {
@@ -51,9 +52,14 @@ const TrendingPostTab = props => {
         setRefreshing(false);
       });
   };
+
   useEffect(() => {
     fetchPosts();
   }, [currentPage]);
+
+  // useEffect(() => {
+  //   console.log('CurrentPage:', currentPage);
+  // }, [currentPage]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -103,9 +109,8 @@ const TrendingPostTab = props => {
   const onEndReached = useCallback(() => {
     if (currentPage < page.maxPage && !isLoading) {
       setCurrentPage(prevPage => prevPage + 1);
-      setNextPage(true);
     }
-  }, [currentPage, nextPage, isLoading, dispatch]);
+  }, [currentPage, isLoading]);
 
   const renderLoader = () => {
     return isLoading ? (
@@ -119,16 +124,16 @@ const TrendingPostTab = props => {
       style={styles.container}
       onScroll={scrollHandler}
       data={trendingPosts}
-      renderItem={({item}) => <ItemPost item={item} type="trending"/>}
+      renderItem={({item}) => <ItemPost item={item} type="trending" />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-      onEndReached={onEndReached}
       showsVerticalScrollIndicator={false}
-      onEndReachedThreshold={0.5}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.7}
+      ItemSeparatorComponent={() => <ItemSeparator />}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-      ItemSeparatorComponent={ItemSeparator}
       ListFooterComponent={renderLoader}
     />
   );
@@ -142,6 +147,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   footerIndicator: {
-    padding: 10, // Thêm padding để tạo khoảng cách
+    padding: 10,
   },
 });

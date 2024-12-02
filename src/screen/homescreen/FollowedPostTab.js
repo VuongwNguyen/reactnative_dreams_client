@@ -9,7 +9,7 @@ import {
 } from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 import {Colors} from '../../styles';
-import {setListData} from '../../store/slices';
+import {setListData,setListLoading} from '../../store/slices';
 
 const FollowedPostTab = props => {
   const {scrollHandler} = props;
@@ -24,6 +24,7 @@ const FollowedPostTab = props => {
   const followedPosts = useSelector(state => state.post.followed.data);
 
   const fetchPosts = () => {
+    dispatch(setListLoading({ listKey: 'followed', loading: true }));
     setIsLoading(true);
     dispatch(APIFollowingPost(currentPage))
       .unwrap()

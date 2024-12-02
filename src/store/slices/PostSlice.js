@@ -1,9 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
-  APIGetPostsTrending,
   APIFollowingPost,
   APIGetPostByUser,
   APIGetPostDetail,
+  APIGetTrendingPost,
+  APILikePost,
 } from '../api/PostAPI';
 
 export const postSlice = createSlice({
@@ -23,14 +24,15 @@ export const postSlice = createSlice({
     },
     currentPostDetail: {},
     isPostCreated: false,
+    postLike: {},
   },
   reducers: {
     setListData: (state, action) => {
       const {listKey, data} = action.payload;
-      if (state[listKey]) {
+      if (state[listKey] && !state[listKey].loading) {
         state[listKey].data = data;
-        state[listKey].loading = false;
       }
+      state[listKey].loading = false;
     },
     setListLoading: (state, action) => {
       const {listKey, loading} = action.payload;
@@ -49,17 +51,21 @@ export const postSlice = createSlice({
         state.currentPostDetail.commentCount = commentCount;
       }
     },
+    setPostCreated: state => {
+      state.isPostCreated = true;
+    },
+    resetPostCreated: state => {
+      state.isPostCreated = false;
+    },
     setToggleLike: (state, action) => {
       const {listKey, id} = action.payload;
       if (state[listKey]) {
-        state[listKey].data = state[listKey].data?.map(post =>
+        state[listKey].data = state[listKey].data.map(post =>
           post._id === id
             ? {
                 ...post,
-                isLiked: !post.isLiked,
-                likeCount: post.isLiked
-                  ? post.likeCount - 1
-                  : post.likeCount + 1,
+                isLiked: state.postLike.isLiked,
+                likeCount: state.postLike.currentLike,
               }
             : post,
         );
@@ -67,33 +73,28 @@ export const postSlice = createSlice({
       if (state.currentPostDetail._id === id) {
         state.currentPostDetail = {
           ...state.currentPostDetail,
-          isLiked: !state.currentPostDetail.isLiked,
-          likeCount: state.currentPostDetail.isLiked
-            ? state.currentPostDetail.likeCount - 1
-            : state.currentPostDetail.likeCount + 1,
+          isLiked: state.postLike.isLiked,
+          likeCount: state.postLike.currentLike,
         };
       }
-    },
-    setPostCreated: state => {
-      state.isPostCreated = true;
-    },
-    resetPostCreated: state => {
-      state.isPostCreated = false;
     },
   },
   extraReducers: builder => {
     builder
-      .addCase(APIGetPostsTrending.fulfilled, (state, action) => {
-        state.trending.data = action.payload.data;
+      .addCase(APIGetTrendingPost.fulfilled, (state, action) => {
+        state.trending.data = action.payload.list;
         state.trending.loading = false;
       })
       .addCase(APIFollowingPost.fulfilled, (state, action) => {
-        state.followed.data = action.payload.data;
+        state.followed.data = action.payload.list;
         state.followed.loading = false;
       })
       .addCase(APIGetPostByUser.fulfilled, (state, action) => {
-        state.posted.data = action.payload.data;
+        state.posted.data = action.payload.list;
         state.posted.loading = false;
+      })
+      .addCase(APILikePost.fulfilled, (state, action) => {
+        state.postLike = action.payload.data;
       })
       .addCase(APIGetPostDetail.fulfilled, (state, action) => {
         state.currentPostDetail = action.payload.data.post;
@@ -105,9 +106,9 @@ export const {
   setListData,
   setListLoading,
   setCommentCount,
-  setToggleLike,
   setPostCreated,
   resetPostCreated,
+  setToggleLike,
 } = postSlice.actions;
 
 export default postSlice.reducer;
