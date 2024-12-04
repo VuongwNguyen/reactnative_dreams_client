@@ -22,7 +22,7 @@ import {stackName} from '../../navigations/screens';
 import {APICreatePost} from '../../store/api/PostAPI';
 import {setIds} from '../../store/slices/IdsTagUserSlice';
 import TagUserMention from './TagUserMention';
-import {setPostCreated} from '../../store/slices/PostTrendingSlice';
+import {setPostCreated} from '../../store/slices';
 
 const NewPostScreen = props => {
   const {navigation} = props;

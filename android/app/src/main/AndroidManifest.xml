@@ -13,41 +13,12 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:ignore="ScopedStorage"/>
   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-  <!--  -->
-  <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission android:name="android.permission.USE_CREDENTIALS" /> -->
-  <!--  -->
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
-   <!-- Thêm dòng này để liên kết Firebase -->
-    <!-- <meta-data
-        android:name="com.google.firebase.messaging.default_notification_icon"
-        android:resource="@drawable/firebase" /> -->
-    
-    <!-- Cấu hình Google Play Services -->
-    <!-- <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" /> -->
-
-    <!-- Cấu hình OAuth Client -->
-    <!-- <meta-data
-        android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="@string/google_app_id" /> -->
-    <!--  -->
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-          <!-- Thêm cấu hình cho Google Sign-In -->
-    <!-- <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <data
-            android:scheme="com.googleusercontent.apps.650950443769-ogc8o7mqb2viqkrct0ls5vqtt4ajei9n.apps.googleusercontent.com"
-            android:host="oauthredirect" />
-    </intent-filter> -->
-    <!--  -->
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>

@@ -1,9 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  ActivityIndicator,
-  RefreshControl,
-  StyleSheet,
-} from 'react-native';
+import {ActivityIndicator, RefreshControl, StyleSheet} from 'react-native';
 import ItemPost, {ItemSeparator} from '../../components/ItemPost';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -13,7 +9,8 @@ import {
 } from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 import {Colors} from '../../styles';
-import {setData} from '../../store/slices';
+import {setListData,setListLoading} from '../../store/slices';
+
 
 const FollowedPostTab = props => {
   const {scrollHandler} = props;
@@ -25,9 +22,11 @@ const FollowedPostTab = props => {
   const timeOutId = useRef(null);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const {data} = useSelector(state => state.postTrending);
+  const followedPosts = useSelector(state => state.post.followed.data);
+
 
   const fetchPosts = () => {
+    dispatch(setListLoading({ listKey: 'followed', loading: true }));
     setIsLoading(true);
     dispatch(APIFollowingPost(currentPage))
       .unwrap()
@@ -35,10 +34,10 @@ const FollowedPostTab = props => {
         const {list, page} = res;
         setPage(page);
         if (currentPage === 1) {
-          dispatch(setData(list));
+          dispatch(setListData({listKey: 'followed', data: list}));
         } else {
-          const newData = [...data, ...list];
-          dispatch(setData(newData));
+          const newData = [...followedPosts, ...list];
+          dispatch(setListData({listKey: 'followed', data: newData}));
         }
       })
       .catch(err => {
@@ -110,8 +109,8 @@ const FollowedPostTab = props => {
     <Animated.FlatList
       style={styles.container}
       onScroll={scrollHandler}
-      data={data}
-      renderItem={({item}) => <ItemPost item={item} />}
+      data={followedPosts}
+      renderItem={({item}) => <ItemPost item={item} type="followed" />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       showsVerticalScrollIndicator={false}

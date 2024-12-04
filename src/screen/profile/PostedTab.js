@@ -12,7 +12,7 @@ import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
 import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 import {Colors} from '../../styles';
-import {setData} from '../../store/slices';
+import {setListData,setListLoading} from '../../store/slices';
 
 const PostedTab = props => {
   const {scrollHandler, user_id_view} = props;
@@ -21,17 +21,22 @@ const PostedTab = props => {
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const {data} = useSelector(state => state.postTrending);
+  const postedPosts = useSelector(state => state.post.posted.data);
 
   const fetchPosts = () => {
+    dispatch(setListLoading({listKey: 'posted', loading: true}));
     setIsLoading(true);
     dispatch(APIGetPostByUser({user_id_view, _page: currentPage}))
       .unwrap()
       .then(res => {
         const {list, page} = res;
         setPage(page);
-        const newData = [...data, ...list];
-        dispatch(setData(newData));
+        if (currentPage === 1) {
+          dispatch(setListData({listKey: 'posted', data: list}));
+        } else {
+          const newData = [...postedPosts, ...list];
+          dispatch(setListData({listKey: 'posted', data: newData}));
+        }
       })
       .catch(err => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
@@ -70,9 +75,9 @@ const PostedTab = props => {
     <View style={PostedTabStyle.container}>
       <Animated.FlatList
         onScroll={scrollHandler}
-        data={data}
+        data={postedPosts}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <ItemPost item={item} />}
+        renderItem={({item}) => <ItemPost item={item} type="posted" />}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => <ItemSeparator />}
         onEndReached={onEndReached}
