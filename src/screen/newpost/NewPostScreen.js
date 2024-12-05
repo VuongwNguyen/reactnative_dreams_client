@@ -247,8 +247,6 @@ const NewPostScreen = props => {
           ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
         })
         .catch(err => {
-          console.log(err);
-
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     } else {
@@ -256,7 +254,7 @@ const NewPostScreen = props => {
         .unwrap()
         .then(res => {
           setPostStatus('successfully');
-          navigation.navigate(stackName.bottomTab.name);
+          navigation.goBack();
           dispatch(setIds([]));
           ToastAndroid.show(
             'Cập nhật bài viết thành công!',
@@ -264,8 +262,6 @@ const NewPostScreen = props => {
           );
         })
         .catch(err => {
-          console.log(err);
-
           ToastAndroid.show(err.message, ToastAndroid.SHORT);
         });
     }

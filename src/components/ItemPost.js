@@ -85,8 +85,6 @@ export default React.memo(
           dispatch(APIEditPost(formData))
             .unwrap()
             .then(res => {
-              console.log(res);
-
               Alert.alert(
                 'Thành công',
                 'Thay đổi trạng thái bài viết thành công!',
