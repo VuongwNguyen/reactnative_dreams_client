@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  deleteMessages,
   fetchFollowingUsers,
   fetchGroup,
   fetchListRooms,
@@ -110,8 +111,11 @@ const roomsSlice = createSlice({
         state.list = action.payload.data.list;
         state.page = action.payload.data.page;
       })
-      .addCase(fetchListRooms.rejected, state => {
+      .addCase(fetchListRooms.rejected, (state, action) => {
         state.loading = false;
+      })
+      .addCase(deleteMessages.fulfilled, (state, action) => {
+        state.list = state.list.filter(room => room._id !== action.payload);
       });
   },
 });
