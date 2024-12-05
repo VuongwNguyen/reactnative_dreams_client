@@ -161,7 +161,8 @@
     "title": "Create post",
     "openLine": "Write an opening line...",
     "contentPost": "Write something...",
-    "post": "Post"
+    "post": "Post",
+    "update": "Save"
   },
   "createGroupScreen": {
     "newgroup": "New Group",
@@ -191,7 +192,7 @@
     "level2": "Undergraduate Education",
     "level3": "Postgraduate Education",
     "placeholder": "Choose your educaton level",
-    "at":"at",
+    "at": "at",
     "school": "Your school",
     "confirm": "CONFIRM"
   },
@@ -200,7 +201,7 @@
     "desc": "Share your work to reach out to like-minded professionals.",
     "job": "Your job",
     "workplace": "Workplace",
-    "at":"at",
+    "at": "at",
     "confirm": "CONFIRM"
   },
   "usernameDialog": {
@@ -342,7 +343,7 @@
     "password": "Change password",
     "privacyPolicy": "Privacy Policy"
   },
-  "policyScreen":{
-    "title":"Community Standards"
+  "policyScreen": {
+    "title": "Community Standards"
   }
 }
