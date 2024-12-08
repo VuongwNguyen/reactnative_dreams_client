@@ -5,9 +5,9 @@ import axios from 'axios';
 export const APILogin = createAsyncThunk(
   'account/login',
   async (data, {rejectWithValue}) => {
-    try {      
+    try {
       // await axios.post('http://192.168.1.8:8012/api/account/login', data);
-      const response = await AxiosInstance().post('/account/login', data);            
+      const response = await AxiosInstance().post('/account/login', data);
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -142,7 +142,25 @@ export const APIAuthThirdPartner = createAsyncThunk(
   'account/auth-third-partner',
   async (body, {rejectWithValue}) => {
     try {
-      const response = await AxiosInstance().post('/account/auth-third-partner',body);
+      const response = await AxiosInstance().post(
+        '/account/auth-third-partner',
+        body,
+      );
+      return response;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
+export const APIAuthGithub = createAsyncThunk(
+  'account/auth-github',
+  async ({code}, {rejectWithValue}) => {
+    try {
+      const response = await AxiosInstance().get(
+        'account/auth-github?code=' + code,
+      );
+      console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

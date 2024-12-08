@@ -13,23 +13,63 @@ import {useTranslation} from 'react-i18next';
 import FormikForm from './FormikForm';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {stackName} from '../../navigations/screens';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {WebView} from 'react-native-webview';
+import {APIAuthGithub} from '../../store/api/AccountAPI';
+import queryString from 'query-string';
 
 const LoginScreen = ({navigation}) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   const {ggSigninLoading} = useSelector(state => state.account);
   const [github, setGithub] = useState(false);
+  const [processedUrl, setProcessedUrl] = useState('');
+  const uri =
+    'https://github.com/login/oauth/authorize?client_id=Ov23li7sDDRAuyabl4JK&redirect_uri=https://dreams-server-bmd-4sx0.onrender.com/api&scope=read:user';
+
+  const handleNavigationStateChange = event => {
+    // Kiểm tra nếu URL chứa code
+    if (event.url !== processedUrl && event.url.includes('?code=')) {
+      setGithub(false);
+      setProcessedUrl(event.url); // Lưu URL để ngăn xử lý lặp lại
+      const parsed = queryString.parseUrl(event.url);
+      const code = parsed.query.code;
+
+      if (code) {
+        // Gửi code này về server backend của bạn để lấy access token
+        dispatch(APIAuthGithub({code})).unwrap();
+      }
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={LoginStyle.viewContainer}>
       {github ? (
-        <View>
-          <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-            <Text>Huỷ</Text>
+        <View
+          style={{
+            flex: 1,
+          }}>
+          <TouchableOpacity
+            style={{
+              alignSelf: 'flex-end',
+              padding: 10,
+              backgroundColor: 'red',
+              borderRadius: 10,
+              marginHorizontal: 10,
+            }}
+            onPress={() => setGithub(false)}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'bold',
+                fontStyle: 'normal',
+              }}>
+              Huỷ
+            </Text>
           </TouchableOpacity>
           <WebView
-            source={{uri: ''}}
+            onNavigationStateChange={handleNavigationStateChange}
+            source={{uri: uri}}
             style={{
               width: '100%',
               height: '100%',
