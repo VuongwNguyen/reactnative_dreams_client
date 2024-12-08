@@ -1,10 +1,18 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useCallback, useEffect} from 'react';
 import {Chat} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {stackName} from '../../navigations/screens';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchListRooms} from '../../store/api/ChatAPI';
+import {deleteMessages, fetchListRooms} from '../../store/api/ChatAPI';
 import dayjs from 'dayjs';
 
 const TabChatScreen = () => {
@@ -26,7 +34,27 @@ const TabChatScreen = () => {
                 : null,
               roomId: item._id,
             })
-          }>
+          }
+          onLongPress={() => {
+            Alert.alert(
+              `Xóa đoạn chat với ${item.name}`,
+              'Các tin nhắn cũ sẽ không còn được hiển thị lại',
+              [
+                {
+                  text: 'Hủy',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Đồng ý',
+                  onPress: () =>
+                    dispatch(deleteMessages(item._id))
+                      .unwrap()
+                      .then(() => ToastAndroid.show('Xóa thành công', 300))
+                      .catch(() => ToastAndroid.show('Xóa thất bại', 300)),
+                },
+              ],
+            );
+          }}>
           <Chat
             name={item.name}
             message={

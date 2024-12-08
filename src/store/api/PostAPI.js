@@ -52,17 +52,17 @@ export const APIGetPostByUser = createAsyncThunk(
   },
 );
 
-export const APIGetPostsTrending = createAsyncThunk(
-  'post/get-posts-trending',
-  async (page, { rejectWithValue }) => {
-    try {
-      const response = await AxiosInstance().get(`/post/trending-posts`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
+// export const APIGetPostsTrending = createAsyncThunk(
+//   'post/get-posts-trending',
+//   async (page, { rejectWithValue }) => {
+//     try {
+//       const response = await AxiosInstance().get(`/post/trending-posts`);
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   },
+// );
 
 export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
