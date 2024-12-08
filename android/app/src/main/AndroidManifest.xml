@@ -23,7 +23,10 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="socialmedia"/>
+       <data android:scheme="socialmedia"/>
+        <!-- <data android:scheme="https"
+              android:host="dreams-server-bmd-4sx0.onrender.com"
+              android:path="/api/account/auth-github" /> -->
       </intent-filter>
     </activity>
   </application>

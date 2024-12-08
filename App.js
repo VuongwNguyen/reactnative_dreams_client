@@ -19,6 +19,7 @@ export default function App() {
     SplashScreen.hide();
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
     );
   }, []);
 
