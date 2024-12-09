@@ -1,6 +1,5 @@
 {
-  "hello": "Xin Chào",
-  "counter": "Đếm",
+  "hello": "Xin Chào,",
   "register": {
     "welcome": "Đăng ký tài khoản",
     "createAnAccount": "Tạo tài khoản",

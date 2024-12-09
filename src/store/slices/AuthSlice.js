@@ -1,5 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {APIAuthThirdPartner, APILogin, APILogout} from '../api/AccountAPI';
+import {
+  APIAuthGithub,
+  APIAuthThirdPartner,
+  APILogin,
+  APILogout,
+} from '../api/AccountAPI';
 
 export const accountSlice = createSlice({
   name: 'account',
@@ -69,6 +74,18 @@ export const accountSlice = createSlice({
         state.token.refreshToken = action.payload.data.refreshToken;
       })
       .addCase(APIAuthThirdPartner.rejected, (state, _) => {
+        state.ggSigninLoading = false;
+      })
+      .addCase(APIAuthGithub.pending, (state, _) => {
+        state.ggSigninLoading = true;
+      })
+      .addCase(APIAuthGithub.fulfilled, (state, action) => {
+        state.loading = false;
+        state.authenticated = true;
+        state.token.accessToken = action.payload.data.accessToken;
+        state.token.refreshToken = action.payload.data.refreshToken;
+      })
+      .addCase(APIAuthGithub.rejected, (state, _) => {
         state.ggSigninLoading = false;
       });
   },
