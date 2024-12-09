@@ -4,9 +4,13 @@ import {useTranslation} from 'react-i18next';
 
 export const MenuItemPost = props => {
   const {t} = useTranslation();
-  const {handleItemMenuClick, isSelf} = props;
+  const {handleItemMenuClick, isSelf, isShared} = props;
   const selfMenu = [
-    {title: t('itemPost.menu.edit'), key: 'edit'},
+    {
+      title: t('itemPost.menu.edit'),
+      key: 'edit',
+      isSharedPost: !!isShared ? true : false,
+    },
     {title: t('itemPost.menu.privacy'), key: 'privacy'},
     {title: t('itemPost.menu.delete'), key: 'delete', isDelete: true},
   ];
@@ -14,21 +18,25 @@ export const MenuItemPost = props => {
   return (
     <View style={menuItemPostStyle.headerMoreContainer}>
       {isSelf ? (
-        selfMenu.map((item, index) => (
-          <TouchableOpacity
-            onPress={() => handleItemMenuClick(item.key)}
-            style={menuItemPostStyle.itemContainer}
-            key={index}>
-            <Text
-              style={
-                item.isDelete
-                  ? menuItemPostStyle.itemTextDelete
-                  : menuItemPostStyle.itemText
-              }>
-              {item.title}
-            </Text>
-          </TouchableOpacity>
-        ))
+        selfMenu.map((item, index) =>
+          !item.isSharedPost ? (
+            <TouchableOpacity
+              onPress={() => handleItemMenuClick(item.key)}
+              style={menuItemPostStyle.itemContainer}
+              key={index}>
+              <Text
+                style={
+                  item.isDelete
+                    ? menuItemPostStyle.itemTextDelete
+                    : menuItemPostStyle.itemText
+                }>
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            ''
+          ),
+        )
       ) : (
         <TouchableOpacity
           onPress={() => handleItemMenuClick(reportMenu.key)}

@@ -81,7 +81,7 @@ export default React.memo(
             'privacy_status',
             item.privacy_status == 'private' ? 'public' : 'private',
           );
-        
+
           dispatch(APIEditPost(formData))
             .unwrap()
             .then(res => {
@@ -89,6 +89,15 @@ export default React.memo(
                 'Thành công',
                 'Thay đổi trạng thái bài viết thành công!',
               );
+              const newPosts = postedPosts.map(post =>
+                post._id == item._id
+                  ? {
+                      ...post,
+                      privacy_status: res?.data?.post?.privacy_status,
+                    }
+                  : post,
+              );
+              dispatch(setListData({listKey: 'posted', data: newPosts}));
             })
             .catch(error => {
               console.log('Lỗi thay đổi trạng thái của bài viết: ', error);
@@ -332,6 +341,7 @@ export default React.memo(
           <MenuItemPost
             handleItemMenuClick={handleItemMenuClick}
             isSelf={item?.isSelf}
+            isShared={item?.childrenPost}
           />
         )}
       </View>
