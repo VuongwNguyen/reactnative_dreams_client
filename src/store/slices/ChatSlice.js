@@ -100,6 +100,25 @@ const roomsSlice = createSlice({
         state.list = [newRoom, ...state.list];
       }
     },
+    updateRoomName: (state, action) => {
+      const room = state.list.find(room => room._id === action.payload.roomId);
+      if (!room) {
+        return;
+      }
+      room.name = action.payload.name;
+    },
+    deleteRoom: (state, action) => {
+      state.list = state.list.filter(room => room._id !== action.payload);
+    },
+    deleteMember: (state, action) => {
+      const room = state.list.find(room => room._id === action.payload.roomId);
+
+      if (room) {
+        room.members = room.members.filter(
+          mem => mem._id !== action.payload.memberId,
+        );
+      }
+    },
   },
   extraReducers: builder => {
     builder
@@ -129,6 +148,7 @@ const chatSlice = createSlice({
       members: [],
       is_group: false,
       name: null,
+      host: null,
     },
     messages: [],
     page: {},
@@ -172,6 +192,18 @@ const chatSlice = createSlice({
       state.messages = [incomming].concat(state.messages);
       state.count++;
     },
+    rename: (state, action) => {
+      if (state.room._id === action.payload.roomId) {
+        state.room.name = action.payload.name;
+      }
+    },
+    updateMember: (state, action) => {
+      if (state.room._id === action.payload.roomId) {
+        state.room.members = state.room.members.filter(
+          mem => mem.account_id !== action.payload.userId,
+        );
+      }
+    },
   },
   extraReducers: builder => {
     builder
@@ -200,31 +232,6 @@ const chatSlice = createSlice({
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         const messages = action.payload.data.list;
-        if (messages.length <= 1 && messages.length > 0) {
-          messages[0].showAvatar = true;
-        } else {
-          for (let i = 0; i < messages.length - 1; i++) {
-            const prev = messages[i];
-            const next = messages[i + 1];
-
-            const timeDiff = Math.abs(
-              Date.parse(prev.send_at) - Date.parse(next.send_at),
-            );
-
-            if (
-              prev.author._id === next.author._id &&
-              timeDiff <= THIRTY_MINUTES
-            ) {
-              next.isNext = true;
-            } else {
-              prev.showAvatar = true;
-            }
-            if (i + 1 === messages.length - 1) {
-              next.showAvatar = true;
-            }
-          }
-        }
-
         state.loading = false;
         state.page = action.payload.data.page;
         state.messages = state.messages.concat(messages);
@@ -236,6 +243,7 @@ const chatSlice = createSlice({
 });
 
 export {usersOnlineSlice, roomsSlice, chatSlice};
-export const {reset, newMessage} = chatSlice.actions;
-export const {updateRoom} = roomsSlice.actions;
+export const {reset, newMessage, rename, updateMember} = chatSlice.actions;
+export const {updateRoom, deleteRoom, updateRoomName, deleteMember} =
+  roomsSlice.actions;
 export const {updateOfflineUser, updateOnlineUser} = usersOnlineSlice.actions;
