@@ -133,7 +133,7 @@ const ChatScreen = () => {
               ) : (
                 <View style={styles.center}>
                   <Text style={styles.empty}>
-                    Currently there are no online followers
+                    Hiện không có đề xuất người dùng nào
                   </Text>
                 </View>
               )}

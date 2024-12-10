@@ -1,6 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import AxiosInstance from '../../configs/axiosInstance';
 
+const THIRTY_MINUTES = 30 * 60 * 1000;
+
 const fetchFollowingUsers = createAsyncThunk(
   'chat/following',
   async (body, thunk) => {
@@ -71,8 +73,39 @@ const fetchMessages = createAsyncThunk('chat/messages', async (body, thunk) => {
       },
     });
 
-    return res;
+    const messages = res.data.list;
+
+    if (messages.length <= 1 && messages.length > 0) {
+      messages[0].showAvatar = true;
+    } else {
+      for (let i = 0; i < messages.length - 1; i++) {
+        const prev = messages[i];
+        const next = messages[i + 1];
+
+        const timeDiff = Math.abs(
+          Date.parse(prev.send_at) - Date.parse(next.send_at),
+        );
+
+        if (prev.author._id === next.author._id && timeDiff <= THIRTY_MINUTES) {
+          next.isNext = true;
+        } else {
+          prev.showAvatar = true;
+        }
+        if (i + 1 === messages.length - 1) {
+          next.showAvatar = true;
+        }
+      }
+    }
+
+    return {
+      message: res?.message,
+      data: {
+        list: messages,
+        page: res.data.page,
+      },
+    };
   } catch (e) {
+    console.log(e);
     return thunk.rejectWithValue(e.message);
   }
 });

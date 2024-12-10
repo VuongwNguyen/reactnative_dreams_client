@@ -36,8 +36,10 @@ async function onMessageReceived(message) {
 
     await notifee.displayNotification({
       id: unique_id,
-      title: name,
-      body: `<b>${messages?.[messages.length - 1].author}</b>: ${main_message}`,
+      title: `Tin nhắn từ: ${name}`,
+      body: `<b>${
+        messages?.[0].author === user_id ? 'Tôi' : messages?.[0].author
+      }</b>: ${main_message}`,
       data: {
         room_id: informations?.room_id,
         participant: informations?.participant
@@ -56,7 +58,7 @@ async function onMessageReceived(message) {
               message =>
                 `${
                   user_id === message.author_id
-                    ? `<b style="color: ${Colors.primary}>Tôi</b>:`
+                    ? `<b style="color: ${Colors.primary}">Tôi</b>:`
                     : `<b>${message.author}</b>`
                 } ${
                   message.images > 0
