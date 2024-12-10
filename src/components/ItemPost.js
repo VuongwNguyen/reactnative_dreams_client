@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {Image, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  Image,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import GridImage from './GirdImage';
 import {itemPostStyle} from '../styles/components/itemPost/itemPostStyle';
@@ -7,30 +14,51 @@ import {stackName} from '../navigations/screens';
 import {Assets, Typography} from './../styles';
 import {useTranslation} from 'react-i18next';
 import {MenuItemPost} from './MenuItemPost';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {APIToggleFollow} from '../store/api/FollowAPI';
-import {APICreatePost, APILikePost} from '../store/api/PostAPI';
+import {
+  APICreatePost,
+  APIDeletePost,
+  APIEditPost,
+  APIGetPostByUser,
+  APILikePost,
+} from '../store/api/PostAPI';
 import {useDayjs} from '../configs/hooks/useDayjs';
-import { setToggleLike } from '../store/slices';
+import {setToggleLike, setListData} from '../store/slices';
 
 export const ItemSeparator = () => (
   <View style={{height: 5, backgroundColor: '#b5b5b5'}} />
 );
 
 export default React.memo(
-  (ItemPost = props => {
-    const {item, setItemClickId} = props;
+  (ItemPost = ({item, setItemClickId, type}) => {
     const {t} = useTranslation();
     const [isShowMore, setIsShowMore] = useState(false);
     const dispatch = useDispatch();
     const [isFollowed, setIsFollowed] = useState(item?.followedStatus);
+    const postedPosts = useSelector(state => state.post.posted.data);
 
     const toggleLike = async () => {
       dispatch(APILikePost({post_id: item._id})).then(res => {
-        dispatch(setToggleLike({id: item._id}));
+        dispatch(setToggleLike({id: item._id, listKey: type}));
       });
     };
 
+    const deletePost = () => {
+      const bodyDelete = {
+        post_id: item._id,
+      };
+      dispatch(APIDeletePost(bodyDelete))
+        .unwrap()
+        .then(res => {
+          Alert.alert('Thành công', 'Xóa bài viết thành công!');
+          const newPosts = postedPosts.filter(post => post._id !== item._id);
+          dispatch(setListData({listKey: 'posted', data: newPosts}));
+        })
+        .catch(error => {
+          console.log('Lỗi xóa bài viết: ', error);
+        });
+    };
     const handleItemMenuClick = key => {
       switch (key) {
         case 'report':
@@ -41,13 +69,55 @@ export default React.memo(
           setIsShowMore(false);
           break;
         case 'edit':
-          console.log('edit');
+          navigation.navigate(stackName.newPost.name, {
+            post: item,
+          });
+          setIsShowMore(false);
           break;
         case 'privacy':
-          console.log('privacy');
+          const formData = new FormData();
+          formData.append('post_id', item._id);
+          formData.append(
+            'privacy_status',
+            item.privacy_status == 'private' ? 'public' : 'private',
+          );
+
+          dispatch(APIEditPost(formData))
+            .unwrap()
+            .then(res => {
+              Alert.alert(
+                'Thành công',
+                'Thay đổi trạng thái bài viết thành công!',
+              );
+              const newPosts = postedPosts.map(post =>
+                post._id == item._id
+                  ? {
+                      ...post,
+                      privacy_status: res?.data?.post?.privacy_status,
+                    }
+                  : post,
+              );
+              dispatch(setListData({listKey: 'posted', data: newPosts}));
+            })
+            .catch(error => {
+              console.log('Lỗi thay đổi trạng thái của bài viết: ', error);
+            });
+          setIsShowMore(false);
           break;
         case 'delete':
-          console.log('delete');
+          Alert.alert(
+            'Xác nhận xóa',
+            'Bạn có chắc chắn muốn xóa bài viết này?',
+            [
+              {text: 'Hủy', style: 'cancel'},
+              {
+                text: 'Xác nhận',
+                onPress: deletePost,
+              },
+            ],
+            {cancelable: true},
+          );
+          setIsShowMore(false);
           break;
         default:
           console.log('default');
@@ -147,7 +217,8 @@ export default React.memo(
               onPress={() => {
                 navigation.navigate(stackName.postDetail.name, {
                   post_id: item._id,
-                  setItemClickId,
+                  // setItemClickId,
+                  type: type,
                 });
               }}>
               {!!item?.title && (
@@ -227,7 +298,9 @@ export default React.memo(
             onPress={() => toggleLike(!item.isLiked)}>
             <Image
               style={{height: 20, width: 20}}
-              source={item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart}
+              source={
+                item?.isLiked ? Assets.icons.heartFill : Assets.icons.heart
+              }
             />
             <Text style={itemPostStyle.interactLabel}>{item?.likeCount}</Text>
           </TouchableOpacity>
@@ -248,6 +321,7 @@ export default React.memo(
                 dispatch(
                   APICreatePost({
                     children_post_id: item._id,
+                    privacy_status: 'public',
                   }),
                 );
                 ToastAndroid.show('Chia sẻ bài viết thành công !', 1000);
@@ -264,7 +338,11 @@ export default React.memo(
         </View>
         {/* header more modal */}
         {isShowMore && (
-          <MenuItemPost handleItemMenuClick={handleItemMenuClick} isSelf={item?.isSelf}/>
+          <MenuItemPost
+            handleItemMenuClick={handleItemMenuClick}
+            isSelf={item?.isSelf}
+            isShared={item?.childrenPost}
+          />
         )}
       </View>
     );

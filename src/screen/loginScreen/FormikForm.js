@@ -9,6 +9,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Input from '../../components/Input';
@@ -22,7 +23,7 @@ import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
-const FormikForm = () => {
+const FormikForm = ({setGithub}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {loading} = useSelector(state => state.account);
@@ -64,6 +65,10 @@ const FormikForm = () => {
       // console.error('Lỗi khi đăng nhập với Google:', error.message);
       // Alert.alert('Đăng nhập thất bại:', error.message);
     }
+  }
+
+  async function onGithubButtonPress() {
+    setGithub(true);
   }
   const {handleSubmit, handleChange, values, errors, touched} = useFormikH(
     {
@@ -135,7 +140,7 @@ const FormikForm = () => {
           <TouchableOpacity onPress={onGoogleButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.google} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onGithubButtonPress}>
             <Image style={LoginStyle.image} source={Assets.image.github} />
           </TouchableOpacity>
         </View>

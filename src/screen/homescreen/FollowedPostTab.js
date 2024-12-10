@@ -1,39 +1,41 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet } from 'react-native';
-import ItemPost, { ItemSeparator } from '../../components/ItemPost';
-import { useDispatch } from 'react-redux';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, RefreshControl, StyleSheet} from 'react-native';
+import ItemPost, {ItemSeparator} from '../../components/ItemPost';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   APICountViewPost,
   APIFollowingPost,
   APISetPostViewd,
 } from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
-import { Colors } from '../../styles';
+import {Colors} from '../../styles';
+import {setListData,setListLoading} from '../../store/slices';
 
 const FollowedPostTab = props => {
-  const { scrollHandler } = props;
+  const {scrollHandler} = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState({});
   const [nextPage, setNextPage] = useState(false);
-  const [dataPosts, setDataPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [viewedItemIds, setViewedItemIds] = useState([]);
   const timeOutId = useRef(null);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-
+  const followedPosts = useSelector(state => state.post.followed.data);
 
   const fetchPosts = () => {
+    dispatch(setListLoading({ listKey: 'followed', loading: true }));
     setIsLoading(true);
     dispatch(APIFollowingPost(currentPage))
       .unwrap()
       .then(res => {
-        const { list, page } = res;
+        const {list, page} = res;
         setPage(page);
         if (currentPage === 1) {
-          setDataPosts(list);
+          dispatch(setListData({listKey: 'followed', data: list}));
         } else {
-          setDataPosts(prevDataPosts => [...prevDataPosts, ...list]);
+          const newData = [...followedPosts, ...list];
+          dispatch(setListData({listKey: 'followed', data: newData}));
         }
       })
       .catch(err => {
@@ -43,7 +45,7 @@ const FollowedPostTab = props => {
         setIsLoading(false);
         setRefreshing(false);
       });
-  }
+  };
 
   useEffect(() => {
     fetchPosts();
@@ -61,7 +63,7 @@ const FollowedPostTab = props => {
       viewabilityConfig: {
         itemVisiblePercentThreshold: 100,
       },
-      onViewableItemsChanged: ({ viewableItems }) => {
+      onViewableItemsChanged: ({viewableItems}) => {
         clearTimeout(timeOutId.current);
         timeOutId.current = setTimeout(() => {
           if (viewableItems.length > 0) {
@@ -90,23 +92,23 @@ const FollowedPostTab = props => {
   const onEndReached = useCallback(() => {
     if (currentPage <= page.maxPage && !isLoading) {
       setCurrentPage(prevPage => prevPage + 1);
-      setNextPage(true)
+      setNextPage(true);
     }
-    setNextPage(false)
+    setNextPage(false);
   }, [currentPage, nextPage, isLoading, dispatch]);
 
-
   const renderLoader = () => {
-    return isLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : null;
+    return isLoading ? (
+      <ActivityIndicator size="large" color={Colors.primary} />
+    ) : null;
   };
-
 
   return (
     <Animated.FlatList
       style={styles.container}
       onScroll={scrollHandler}
-      data={dataPosts}
-      renderItem={({ item }) => <ItemPost item={item} />}
+      data={followedPosts}
+      renderItem={({item}) => <ItemPost item={item} type="followed" />}
       keyExtractor={(item, index) => index.toString()}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       showsVerticalScrollIndicator={false}

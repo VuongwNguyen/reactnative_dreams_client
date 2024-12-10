@@ -30,10 +30,10 @@ export const store = configureStore({
     chatRoom: slices.roomsSlice.reducer,
     chatMessage: slices.chatSlice.reducer,
     postDetail: slices.postDetailSlice.reducer,
-    postTrending: slices.postTrendingSlice.reducer,
     childComment: slices.childCommentSlice.reducer,
     notification: slices.notificationSlice.reducer,
     idsTagUser: slices.idsTagUserSlice.reducer,
+    post: slices.postSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({

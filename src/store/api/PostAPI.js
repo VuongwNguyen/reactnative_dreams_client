@@ -41,7 +41,6 @@ export const APIGetPostByUser = createAsyncThunk(
       }).toString();
 
       const response = await AxiosInstance().get(
-        // `/post/get-post-by-user?_page=1&_limit=10`,
         `/post/get-post-by-user?${query}`,
       );
 
@@ -52,17 +51,7 @@ export const APIGetPostByUser = createAsyncThunk(
   },
 );
 
-export const APIGetPostsTrending = createAsyncThunk(
-  'post/get-posts-trending',
-  async (page, { rejectWithValue }) => {
-    try {
-      const response = await AxiosInstance().get(`/post/trending-posts`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
+
 
 export const APIFollowingPost = createAsyncThunk(
   'post/following-posts',
@@ -131,3 +120,28 @@ export const APILikePost = createAsyncThunk(
     }
   },
 )
+
+export const APIEditPost = createAsyncThunk(
+  'post/edit-post',
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance('multipart/form-data').put('/post/edit-post', body);
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const APIDeletePost = createAsyncThunk(
+  'post/remove-post',
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance().delete('/post/remove-post', { data: body });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);

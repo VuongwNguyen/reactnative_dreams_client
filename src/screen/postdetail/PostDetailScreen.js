@@ -18,16 +18,16 @@ import {APIGetPostDetail} from '../../store/api/PostAPI';
 import ItemPost from '../../components/ItemPost';
 import AxiosInstance from '../../configs/axiosInstance';
 import {childCommentSlice} from '../../store/slices/ChildCommentSlice';
-import { getPostDetail, setCommentCount } from '../../store/slices';
+import {setCommentCount} from '../../store/slices';
 
 const PostDetailScreen = props => {
-  const post_id = props.route?.params?.post_id;  
+  const post_id = props.route?.params?.post_id;
+  const type = props.route?.params?.type;
 
   const {t} = useTranslation();
   const inputRef = useRef(null);
   const dispatch = useDispatch();
-  const {currentPostDetail} = useSelector(state => state.postTrending);
-  const [data, setPost] = useState(null);
+  const {currentPostDetail} = useSelector(state => state.post);
   const [list, setList] = useState(currentPostDetail?.comments?.list || []);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
@@ -38,8 +38,7 @@ const PostDetailScreen = props => {
   useEffect(() => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
-      .then(res => {                
-        //setPost(res.data.post);
+      .then(res => {
         setList(res.data?.comments?.list);
         setLoading(false);
       });
@@ -87,7 +86,13 @@ const PostDetailScreen = props => {
             };
             dispatch(childCommentSlice.actions.setPushChildComment(newComment));
           }
-          dispatch(setCommentCount({id: post_id, commentCount: currentPostDetail.commentCount + 1}));
+          dispatch(
+            setCommentCount({
+              id: post_id,
+              commentCount: currentPostDetail.commentCount + 1,
+              listKey: type,
+            }),
+          );
           setContent('');
           setCommentFocus(null);
           inputRef.current.clear();
@@ -96,7 +101,6 @@ const PostDetailScreen = props => {
       console.log('Error', error);
     }
   };
-
   return (
     <View style={postDetailStyle.container}>
       {loading ? (
@@ -104,75 +108,85 @@ const PostDetailScreen = props => {
       ) : (
         <>
           <AppHeader title={t('postDetailScreen.post')} />
-          <FlatList
-            style={{flex: 1}}
-            key={currentPostDetail?._id}
-            data={list}
-            renderItem={({item}) => (
-              <View style={{padding: 10}} key={item._id}>
-                <CommentItem
-                  comment={item}
-                  inputRef={inputRef}
-                  commentFocus={commentFocus}
-                  setCommentFocus={setCommentFocus}
-                  replyId={replyId}
-                  setReplyId={setReplyId}
-                />
-              </View>
-            )}
-            keyExtractor={item => item._id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={
-              <ItemPost item={currentPostDetail} />
-            }
-          />
-          {commentFocus && (
-            <View
-              style={{
-                paddingHorizontal: 10,
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-              }}>
-              <Text>
-                {t('postDetailScreen.replyingTo')}{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {commentFocus?.author?.fullname}
-                </Text>
-              </Text>
-              <TouchableOpacity onPress={() => handleCancelReply()}>
-                <Text
+          {!!currentPostDetail ? (
+            <>
+              <FlatList
+                style={{flex: 1}}
+                key={currentPostDetail?._id}
+                data={list}
+                renderItem={({item}) => (
+                  <View style={{padding: 10}} key={item._id}>
+                    <CommentItem
+                      comment={item}
+                      inputRef={inputRef}
+                      commentFocus={commentFocus}
+                      setCommentFocus={setCommentFocus}
+                      replyId={replyId}
+                      setReplyId={setReplyId}
+                    />
+                  </View>
+                )}
+                keyExtractor={item => item._id}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                  <ItemPost item={currentPostDetail} type={type} />
+                }
+              />
+              {commentFocus && (
+                <View
                   style={{
-                    color: 'red',
-                    fontWeight: 'bold',
+                    paddingHorizontal: 10,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
                   }}>
-                  {t('postDetailScreen.cancel')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          <View style={postDetailStyle.footer}>
-            <Image
-              style={postDetailStyle.avatarFooter}
-              source={{uri: userBasicInfData?.avatar}}
-            />
-            <TextInput
-              ref={inputRef}
-              onChangeText={text => setContent(text)}
-              style={postDetailStyle.inputComment}
-              placeholder={t('postDetailScreen.writeComment')}
-            />
-            {content && (
-              <TouchableOpacity
-                onPress={handleSendComment}
-                style={postDetailStyle.buttonSendComment}>
+                  <Text>
+                    {t('postDetailScreen.replyingTo')}{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {commentFocus?.author?.fullname}
+                    </Text>
+                  </Text>
+                  <TouchableOpacity onPress={() => handleCancelReply()}>
+                    <Text
+                      style={{
+                        color: 'red',
+                        fontWeight: 'bold',
+                      }}>
+                      {t('postDetailScreen.cancel')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <View style={postDetailStyle.footer}>
                 <Image
-                  source={Assets.icons.send}
-                  style={postDetailStyle.iconSend}
+                  style={postDetailStyle.avatarFooter}
+                  source={{uri: userBasicInfData?.avatar}}
                 />
-              </TouchableOpacity>
-            )}
-          </View>
+                <TextInput
+                  ref={inputRef}
+                  onChangeText={text => setContent(text)}
+                  style={postDetailStyle.inputComment}
+                  placeholder={t('postDetailScreen.writeComment')}
+                />
+                {content && (
+                  <TouchableOpacity
+                    onPress={handleSendComment}
+                    style={postDetailStyle.buttonSendComment}>
+                    <Image
+                      source={Assets.icons.send}
+                      style={postDetailStyle.iconSend}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </>
+          ) : (
+            <View style={postDetailStyle.notFoundContainer}>
+
+            <Text style={postDetailStyle.notFound}>Post not found</Text>
+            </View>
+
+          )}
         </>
       )}
     </View>

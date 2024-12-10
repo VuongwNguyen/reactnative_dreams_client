@@ -96,7 +96,9 @@ const HomeScreen = props => {
           </TouchableOpacity>
           {!!userBasicInfData?.fullname && (
             <View>
-              <Text>Xin chào,</Text>
+              <Text>{
+                  t('hello')
+                }</Text>
               <Text style={HomeStyles.name}>{userBasicInfData?.fullname}</Text>
             </View>
           )}

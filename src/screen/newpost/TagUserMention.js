@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {APIGetFollowing} from '../../store/api/FollowAPI';
 import {setIds} from '../../store/slices/IdsTagUserSlice';
 
-const TagUserMention = () => {
+const TagUserMention = ({tagList}) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const [followingUserList, setFollowingUserList] = useState([]);
@@ -84,7 +84,16 @@ const TagUserMention = () => {
         </View>
       );
     };
+  useEffect(() => {
+    if (!!tagList) {
+      const tagString = tagList
+        .map(user => `@[${user.fullname}](${user._id})`)
+        .join(' ');
 
+      console.log(tagString);
+      setValue(tagString);
+    }
+  }, []);
   useEffect(() => {
     const idMatches = value.match(/\(([^)]+)\)/g);
     const ids = idMatches ? idMatches.map(id => id.replace(/[()]/g, '')) : [];
