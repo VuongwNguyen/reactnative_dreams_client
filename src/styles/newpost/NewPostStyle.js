@@ -18,7 +18,7 @@ export const newPostStyle = {
   activityIndicator: {
     position: 'absolute',
     top: 10,
-    right: 28,
+    right: 32,
   },
   container: {
     flex: 1,

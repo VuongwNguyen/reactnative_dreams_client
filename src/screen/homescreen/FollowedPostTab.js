@@ -11,7 +11,6 @@ import Animated from 'react-native-reanimated';
 import {Colors} from '../../styles';
 import {setListData,setListLoading} from '../../store/slices';
 
-
 const FollowedPostTab = props => {
   const {scrollHandler} = props;
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +22,6 @@ const FollowedPostTab = props => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const followedPosts = useSelector(state => state.post.followed.data);
-
 
   const fetchPosts = () => {
     dispatch(setListLoading({ listKey: 'followed', loading: true }));

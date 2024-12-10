@@ -12,7 +12,7 @@ import {PostedTabStyle} from '../../styles/profileStyle/PostedTabStyle';
 import {APIGetPostByUser} from '../../store/api/PostAPI';
 import Animated from 'react-native-reanimated';
 import {Colors} from '../../styles';
-import {setListData,setListLoading} from '../../store/slices';
+import {setListData, setListLoading} from '../../store/slices';
 
 const PostedTab = props => {
   const {scrollHandler, user_id_view} = props;

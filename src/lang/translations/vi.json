@@ -178,7 +178,8 @@
     "title": "Tạo bài viết",
     "openLine": "Viết dòng mở đầu...",
     "contentPost": "Viết gì đó...",
-    "post": "Post"
+    "post": "Post",
+    "update": "Lưu"
   },
   "createGroupScreen": {
     "newgroup": "Nhóm Mới",
@@ -208,7 +209,7 @@
     "level2": "Giáo dục đại học ",
     "level3": "Giáo dục sau đại học",
     "placeholder": "Chọn cấp độ học vấn ",
-    "at":"tại",
+    "at": "tại",
     "school": "Trường học của bạn",
     "confirm": "XÁC NHẬN"
   },
@@ -217,7 +218,7 @@
     "desc": "Chia sẻ công việc của bạn để tiếp cận với những người cùng chuyên môn.",
     "job": "Công việc của bạn",
     "workplace": "Nơi làm việc",
-    "at":"tại",
+    "at": "tại",
     "confirm": "XÁC NHẬN"
   },
   "usernameDialog": {
@@ -359,7 +360,7 @@
     "password": "Đổi mật khẩu",
     "privacyPolicy": "Chính sách bảo mật"
   },
-  "policyScreen":{
-    "title":"Tiêu chuẩn cộng đồng"
+  "policyScreen": {
+    "title": "Tiêu chuẩn cộng đồng"
   }
 }

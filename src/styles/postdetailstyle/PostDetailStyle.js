@@ -86,4 +86,12 @@ export const postDetailStyle = {
     top: 10,
     left: 7,
   },
+  notFoundContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFound: {
+    fontSize: 20,
+  },
 };

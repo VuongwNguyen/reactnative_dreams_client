@@ -8,6 +8,7 @@ import {
   Keyboard,
   ToastAndroid,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useState, useMemo, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -19,18 +20,18 @@ import {newPostStyle} from '../../styles/newpost/NewPostStyle';
 import {Assets, Colors} from '../../styles';
 import useImagePicker from './ImagePickerPost';
 import {stackName} from '../../navigations/screens';
-import {APICreatePost} from '../../store/api/PostAPI';
+import {APICreatePost, APIEditPost} from '../../store/api/PostAPI';
 import {setIds} from '../../store/slices/IdsTagUserSlice';
 import TagUserMention from './TagUserMention';
 import {setPostCreated} from '../../store/slices';
 
 const NewPostScreen = props => {
   const {navigation} = props;
+  const postItem = props.route?.params?.post;
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
   const ids = useSelector(state => state.idsTagUser.ids);
-
   const {
     images,
     videos,
@@ -45,17 +46,65 @@ const NewPostScreen = props => {
     {label: 'Public', value: 'public'},
     {label: 'Private', value: 'private'},
   ];
-  const itemSelected = [...images, ...videos];
 
   const [isPreviewed, setIsPreviewed] = useState(true);
-  const [value, setValue] = useState(pricvacyData[0].value);
-  const [openLine, setOpenLine] = useState('');
-  const [postContent, setPostContent] = useState('');
-  const [privacyStatus, setPrivacyStatus] = useState('public');
+  const [value, setValue] = useState(
+    !!postItem ? postItem.privacy_status : pricvacyData[0].value,
+  );
+  const [openLine, setOpenLine] = useState(!!postItem ? postItem.title : '');
+  const [postContent, setPostContent] = useState(
+    !!postItem ? postItem.content : '',
+  );
+  const [privacyStatus, setPrivacyStatus] = useState(value);
   const [postStatus, setPostStatus] = useState('');
   const [hashTag, setHashTag] = useState('');
   const [editableTextInput, setEditableTextInput] = useState(true);
   const [buttonDisable, setPostClickable] = useState(false);
+  const typeImgs = ['jpeg', 'png', 'jpg'];
+  const typeVideos = ['mp4', 'mkv'];
+
+  useEffect(() => {
+    const hashTagsEdit = postItem?.hashtags;
+    if (!!hashTagsEdit && hashTagsEdit.length > 0) {
+      const hashtagString = hashTagsEdit
+        .map(item => `#${item.title}`)
+        .join(' ');
+      setHashTag(hashtagString);
+    }
+    // Chuyển đổi cấu trúc mảng ảnh từ api để phù hợp với tham số truyền đi
+    const imgsEdit = postItem?.images;
+    if (!!imgsEdit && imgsEdit.length > 0) {
+      const transformedImages = imgsEdit.map(image => {
+        const urlParts = image.url.split('/');
+        const fileName = urlParts[urlParts.length - 1]; // Lấy phần cuối cùng của URL (tên tệp)
+        const fileType = fileName.split('.').pop(); // Lấy phần mở rộng từ tên tệp
+
+        return {
+          uri: image.url,
+          fileName: fileName,
+          type: `image/${fileType}`,
+        };
+      });
+      setImages(transformedImages);
+    }
+    // tương tự chuyển đổi mảng video
+    const videosEdit = postItem?.videos;
+    if (!!videosEdit && videosEdit.length > 0) {
+      const transformedVideos = videosEdit.map(video => {
+        const urlParts = video.url.split('/');
+        const fileName = urlParts[urlParts.length - 1];
+        const fileType = fileName.split('.').pop();
+
+        return {
+          uri: video.url,
+          fileName: fileName,
+          type: `image/${fileType}`,
+        };
+      });
+      setVideos(transformedVideos);
+    }
+  }, []);
+  const itemSelected = [...images, ...videos];
 
   const handleRemoveImage = index => {
     const newImages = [...images];
@@ -117,7 +166,7 @@ const NewPostScreen = props => {
     };
   }, []);
 
-  const handleCreatePost = async () => {
+  const handlePost = async () => {
     let words;
     // kiểm tra dữ liệu tại input hashtag
     if (!!hashTag) {
@@ -137,6 +186,9 @@ const NewPostScreen = props => {
 
     setPostStatus('loading');
     const formData = new FormData();
+    if (!!postItem) {
+      formData.append('post_id', postItem._id);
+    }
     formData.append('content', postContent);
     formData.append('title', openLine);
     formData.append('privacy_status', privacyStatus);
@@ -156,35 +208,63 @@ const NewPostScreen = props => {
     }
 
     images.forEach((image, index) => {
+      const imgType = image.type.split('/')[1];
+      if (!typeImgs.includes(imgType)) {
+        Alert.alert(
+          'Nền tảng chỉ hỗ trợ các định dạng đính kèm như sau: png, jpeg, jpg, mp4, mkv',
+        );
+        return;
+      }
       formData.append('images', {
         uri: image.uri,
-        name: `image_${image.fileName}.${image.type.split('/')[1]}`,
+        name: `image_${image.fileName}`,
         type: image.type,
       });
     });
 
     videos.forEach((video, index) => {
+      const videoType = video.type.split('/')[1];
+      if (!typeVideos.includes(videoType)) {
+        Alert.alert(
+          'Nền tảng chỉ hỗ trợ các định dạng đính kèm như sau: png, jpeg, jpg, mp4, mkv',
+        );
+        return;
+      }
       formData.append('videos', {
         uri: video.uri,
-        name: `video_${video.fileName}.${video.type.split('/')[1]}`,
+        name: `video_${video.fileName}`,
         type: video.type,
       });
     });
-
-    dispatch(APICreatePost(formData))
-      .unwrap()
-      .then(res => {
-        setPostStatus('successfully');
-        navigation.navigate(stackName.bottomTab.name);
-        dispatch(setPostCreated(true));
-        dispatch(setIds([]));
-        ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
-      })
-      .catch(err => {
-        console.log(err);
-
-        ToastAndroid.show(err.message, ToastAndroid.SHORT);
-      });
+    if (!postItem) {
+      dispatch(APICreatePost(formData))
+        .unwrap()
+        .then(res => {
+          setPostStatus('successfully');
+          navigation.navigate(stackName.bottomTab.name);
+          dispatch(setPostCreated(true));
+          dispatch(setIds([]));
+          ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    } else {
+      dispatch(APIEditPost(formData))
+        .unwrap()
+        .then(res => {
+          setPostStatus('successfully');
+          navigation.goBack();
+          dispatch(setIds([]));
+          ToastAndroid.show(
+            'Cập nhật bài viết thành công!',
+            ToastAndroid.SHORT,
+          );
+        })
+        .catch(err => {
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        });
+    }
   };
 
   useEffect(() => {
@@ -200,8 +280,11 @@ const NewPostScreen = props => {
         <AppHeader
           title={t('newPostScreen.title')}
           rightButton={true}
-          rightButtonTitle={!buttonDisable && t('newPostScreen.post')}
-          rightButtonAction={handleCreatePost}
+          rightButtonTitle={
+            !buttonDisable &&
+            (!!postItem ? t('newPostScreen.update') : t('newPostScreen.post'))
+          }
+          rightButtonAction={handlePost}
           isDisabled={!postContent || !openLine || buttonDisable}
         />
 
@@ -277,7 +360,7 @@ const NewPostScreen = props => {
               onChangeText={text => setPostContent(text)}
               style={newPostStyle.contentPost}
             />
-            <TagUserMention />
+            <TagUserMention tagList={postItem?.tagUsers} />
             <MentionInput
               value={hashTag}
               onChange={setHashTag}

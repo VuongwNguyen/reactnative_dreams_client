@@ -28,7 +28,6 @@ const PostDetailScreen = props => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const {currentPostDetail} = useSelector(state => state.post);
-  const [post, setPost] = useState(null);
   const [list, setList] = useState(currentPostDetail?.comments?.list || []);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
@@ -40,7 +39,6 @@ const PostDetailScreen = props => {
     dispatch(APIGetPostDetail(post_id))
       .unwrap()
       .then(res => {
-        // setPost(res.data.post);
         setList(res.data?.comments?.list);
         setLoading(false);
       });
@@ -110,75 +108,85 @@ const PostDetailScreen = props => {
       ) : (
         <>
           <AppHeader title={t('postDetailScreen.post')} />
-          <FlatList
-            style={{flex: 1}}
-            key={currentPostDetail?._id}
-            data={list}
-            renderItem={({item}) => (
-              <View style={{padding: 10}} key={item._id}>
-                <CommentItem
-                  comment={item}
-                  inputRef={inputRef}
-                  commentFocus={commentFocus}
-                  setCommentFocus={setCommentFocus}
-                  replyId={replyId}
-                  setReplyId={setReplyId}
-                />
-              </View>
-            )}
-            keyExtractor={item => item._id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={
-              <ItemPost item={currentPostDetail} type={type} />
-            }
-          />
-          {commentFocus && (
-            <View
-              style={{
-                paddingHorizontal: 10,
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-              }}>
-              <Text>
-                {t('postDetailScreen.replyingTo')}{' '}
-                <Text style={{fontWeight: 'bold'}}>
-                  {commentFocus?.author?.fullname}
-                </Text>
-              </Text>
-              <TouchableOpacity onPress={() => handleCancelReply()}>
-                <Text
+          {!!currentPostDetail ? (
+            <>
+              <FlatList
+                style={{flex: 1}}
+                key={currentPostDetail?._id}
+                data={list}
+                renderItem={({item}) => (
+                  <View style={{padding: 10}} key={item._id}>
+                    <CommentItem
+                      comment={item}
+                      inputRef={inputRef}
+                      commentFocus={commentFocus}
+                      setCommentFocus={setCommentFocus}
+                      replyId={replyId}
+                      setReplyId={setReplyId}
+                    />
+                  </View>
+                )}
+                keyExtractor={item => item._id}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                  <ItemPost item={currentPostDetail} type={type} />
+                }
+              />
+              {commentFocus && (
+                <View
                   style={{
-                    color: 'red',
-                    fontWeight: 'bold',
+                    paddingHorizontal: 10,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
                   }}>
-                  {t('postDetailScreen.cancel')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          <View style={postDetailStyle.footer}>
-            <Image
-              style={postDetailStyle.avatarFooter}
-              source={{uri: userBasicInfData?.avatar}}
-            />
-            <TextInput
-              ref={inputRef}
-              onChangeText={text => setContent(text)}
-              style={postDetailStyle.inputComment}
-              placeholder={t('postDetailScreen.writeComment')}
-            />
-            {content && (
-              <TouchableOpacity
-                onPress={handleSendComment}
-                style={postDetailStyle.buttonSendComment}>
+                  <Text>
+                    {t('postDetailScreen.replyingTo')}{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {commentFocus?.author?.fullname}
+                    </Text>
+                  </Text>
+                  <TouchableOpacity onPress={() => handleCancelReply()}>
+                    <Text
+                      style={{
+                        color: 'red',
+                        fontWeight: 'bold',
+                      }}>
+                      {t('postDetailScreen.cancel')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <View style={postDetailStyle.footer}>
                 <Image
-                  source={Assets.icons.send}
-                  style={postDetailStyle.iconSend}
+                  style={postDetailStyle.avatarFooter}
+                  source={{uri: userBasicInfData?.avatar}}
                 />
-              </TouchableOpacity>
-            )}
-          </View>
+                <TextInput
+                  ref={inputRef}
+                  onChangeText={text => setContent(text)}
+                  style={postDetailStyle.inputComment}
+                  placeholder={t('postDetailScreen.writeComment')}
+                />
+                {content && (
+                  <TouchableOpacity
+                    onPress={handleSendComment}
+                    style={postDetailStyle.buttonSendComment}>
+                    <Image
+                      source={Assets.icons.send}
+                      style={postDetailStyle.iconSend}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </>
+          ) : (
+            <View style={postDetailStyle.notFoundContainer}>
+
+            <Text style={postDetailStyle.notFound}>Post not found</Text>
+            </View>
+
+          )}
         </>
       )}
     </View>
