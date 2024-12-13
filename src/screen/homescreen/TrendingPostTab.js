@@ -59,6 +59,8 @@ const TrendingPostTab = props => {
 
   // useEffect(() => {
   //   console.log('CurrentPage:', currentPage);
+  //   console.log("data",trendingPosts);
+
   // }, [currentPage]);
 
   const onRefresh = () => {

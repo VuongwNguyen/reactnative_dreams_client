@@ -103,7 +103,7 @@ const TabChatScreen = () => {
           />
         ) : (
           <View style={styles.center}>
-            <Text>Chat room is empty</Text>
+            <Text>Đoạn chat trống</Text>
           </View>
         )}
       </View>

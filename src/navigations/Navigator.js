@@ -55,22 +55,7 @@ export function Navigator() {
   }, [authenticated]);
 
   useEffect(() => {
-    const bootstrap = async () => {
-      const initialNotification = await notifee.getInitialNotification();
-
-      if (
-        initialNotification &&
-        initialNotification?.notification?.data?.type === 'message'
-      ) {
-        navigatorRef.current.navigate(stackName.bottomTab.name, {
-          screen: tabName.chat.name,
-        });
-      }
-    };
-
-    bootstrap();
-
-    return notifee.onForegroundEvent(({type, detail}) => {
+    const unsubNotifee = notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
         case EventType.DISMISSED:
           console.log('User dismissed notification', detail.notification);
@@ -80,6 +65,39 @@ export function Navigator() {
           break;
       }
     });
+
+    let first = false;
+
+    const unsubNavigation = navigatorRef.current?.addListener(
+      'state',
+      async state => {
+        if (state?.data?.state) {
+          if (first) {
+            return;
+          }
+          first = true;
+
+          const initialNotification = await notifee.getInitialNotification();
+
+          if (
+            initialNotification &&
+            initialNotification?.notification?.data?.type === 'message'
+          ) {
+            if (navigatorRef.current.isReady()) {
+              navigatorRef.current.navigate(stackName.bottomTab.name, {
+                screen: tabName.chat.name,
+              });
+            }
+          }
+        }
+        // Bạn có thể thực hiện logic khác tại đây
+      },
+    );
+
+    return () => {
+      unsubNotifee();
+      unsubNavigation();
+    };
   }, []);
 
   useEffect(() => {
@@ -99,6 +117,10 @@ export function Navigator() {
           <Stack.Navigator
             screenOptions={{headerShown: false}}
             initialRouteName={stackName.bottomTab.name}>
+            <Stack.Screen
+              name={stackName.settingGroup.name}
+              component={stackName.settingGroup.component}
+            />
             <Stack.Screen
               name={stackName.bottomTab.name}
               component={stackName.bottomTab.component}

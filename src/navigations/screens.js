@@ -27,8 +27,10 @@ import ChatSearch from '../screen/chatscreen/ChatSearch';
 import CreateGroup from '../screen/chatscreen/CreateGroup';
 import {name} from '@stream-io/video-react-native-sdk';
 import Call from '../screen/callscreen/Call';
+import SettingGroup from '../screen/chatscreen/SettingGroup';
 
 export const stackName = {
+  settingGroup: {name: 'settingGroup', component: SettingGroup},
   login: {name: 'login', component: LoginScreen},
   register: {name: 'register', component: RegisterScreen},
   profile: {name: 'profile', component: ProfileScreen},
