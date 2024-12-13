@@ -3,7 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'http://192.168.1.29:8012/api';
+const BASEURL = 'https://dreams-server-bmd-4sx0.onrender.com/api';
 
 let isRefreshing = false;
 let queue = [];
