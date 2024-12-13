@@ -106,7 +106,7 @@ const TagUserMention = ({tagList}) => {
 
   return (
     <View>
-      {followingUserList?.length == 0 ? (
+      {listTagUser?.length == 0 ? (
         ''
       ) : (
         <MentionInput

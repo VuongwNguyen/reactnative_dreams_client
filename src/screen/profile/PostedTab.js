@@ -3,6 +3,7 @@ import {
   RefreshControl,
   ToastAndroid,
   View,
+  Text,
 } from 'react-native';
 import React, {useState, useCallback} from 'react';
 import ItemPost, {ItemSeparator} from '../../components/ItemPost';
@@ -73,20 +74,26 @@ const PostedTab = props => {
 
   return (
     <View style={PostedTabStyle.container}>
-      <Animated.FlatList
-        onScroll={scrollHandler}
-        data={postedPosts}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <ItemPost item={item} type="posted" />}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={() => <ItemSeparator />}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        ListFooterComponent={renderLoader}
-      />
+      {postedPosts.lengh > 0 ? (
+        <Animated.FlatList
+          onScroll={scrollHandler}
+          data={postedPosts}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => <ItemPost item={item} type="posted" />}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={() => <ItemSeparator />}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListFooterComponent={renderLoader}
+        />
+      ) : (
+        <Text style={PostedTabStyle.placeholder}>
+          Dòng thời gian trống!
+        </Text>
+      )}
     </View>
   );
 };

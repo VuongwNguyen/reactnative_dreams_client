@@ -113,7 +113,7 @@ const InfomationTab = props => {
         />
       ) : (
         <Text style={InfomationTabStyle.placeholder}>
-          Thông tin đang ở chế độ riêng tư
+          Thông tin trống hoặc đang ở chế độ riêng tư
         </Text>
       )}
     </View>
