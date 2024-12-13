@@ -88,7 +88,13 @@ const NotificationScreen = () => {
                     ? notificationStyle.tagLabelSelected
                     : notificationStyle.tagLabelUnSelected
                 }>
-                {item}
+                {
+                  {
+                    All: t('notificationScreen.all'),
+                    Read: t('notificationScreen.read'),
+                    Unread: t('notificationScreen.unread'),
+                  }[item]
+                }
               </Text>
             </TouchableOpacity>
           )}
