@@ -21,6 +21,7 @@ import {useTranslation} from 'react-i18next';
 import SwitchButton from '../../components/SwitchButton';
 import AxiosInstance from '../../configs/axiosInstance';
 import {use} from 'i18next';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const SettingScreen = props => {
   const {t} = useTranslation();
@@ -61,14 +62,10 @@ const SettingScreen = props => {
   ];
 
   const logout = () => {
-    Alert.alert('Logout', 'Are you sure you want to log out?', [
-      {
-        text: 'cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'logout',
-        onPress: () =>
+    alertRef.current.alert('Thông báo', 'Bạn có chắc chắn muốn đăng xuất?', {
+      resolve: {
+        text: 'Đăng xuất',
+        onPress: () => {
           dispatch(APILogout())
             .unwrap()
             .then(res => {
@@ -89,9 +86,45 @@ const SettingScreen = props => {
                 'Something when wrong. please try again!',
                 1000,
               ),
-            ),
+            );
+        },
       },
-    ]);
+      reject: {
+        text: 'Hủy',
+      },
+    });
+
+    // Alert.alert('Logout', 'Are you sure you want to log out?', [
+    //   {
+    //     text: 'cancel',
+    //     style: 'cancel',
+    //   },
+    //   {
+    //     text: 'logout',
+    //     onPress: () =>
+    //       dispatch(APILogout())
+    //         .unwrap()
+    //         .then(res => {
+    //           socket?.disconnect();
+    //           ToastAndroid.show('Logout success', 1000);
+    //           return Promise.all([
+    //             messaging().deleteToken(),
+    //             AsyncStorage.removeItem('credential'),
+    //           ]);
+    //         })
+    //         .then(() => {
+    //           console.log(
+    //             '[SettingScreen] revoke token and remove credential success',
+    //           );
+    //         })
+    //         .catch(err =>
+    //           ToastAndroid.show(
+    //             'Something when wrong. please try again!',
+    //             1000,
+    //           ),
+    //         ),
+    //   },
+    // ]);
   };
 
   return (
@@ -163,18 +196,35 @@ const SettingScreen = props => {
           <SwitchButton
             isOn={notiStatus}
             onPress={() => {
-              AxiosInstance()
-                .put('/notify/toggle-notification')
-                .then(res => {
-                  if (res.status) {
-                    dispatch(APIGetUserBasicInf())
-                      .unwrap()
-                      .then(res => {
-                        setNotiStatus(res.data.toggleNotification);
-                        ToastAndroid.show('Update notification success', 1000);
-                      });
-                  }
-                });
+              alertRef.current.alert(
+                'Thông báo',
+                'Bạn có chắc chắn muốn thay đổi cài đặt thông báo?',
+                {
+                  resolve: {
+                    text: 'Đồng ý',
+                    onPress: () => {
+                      AxiosInstance()
+                        .put('/notify/toggle-notification')
+                        .then(res => {
+                          if (res.status) {
+                            dispatch(APIGetUserBasicInf())
+                              .unwrap()
+                              .then(res => {
+                                setNotiStatus(res.data.toggleNotification);
+                                ToastAndroid.show(
+                                  'Thay đổi cài đặt thông báo thành công',
+                                  300,
+                                );
+                              });
+                          }
+                        });
+                    },
+                  },
+                  reject: {
+                    text: 'Hủy',
+                  },
+                },
+              );
             }}
           />
         </View>

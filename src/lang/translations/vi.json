@@ -189,7 +189,15 @@
     "suggest": "Đề xuất"
   },
   "notificationScreen": {
-    "title": "Thông báo"
+    "title": "Thông báo",
+    "likeStatus": "thích bài viết của bạn",
+    "commentStatus": "bình luận về bài viết của bạn",
+    "followStatus": "đã theo dõi bạn",
+    "newPostStatus": "đã đăng một bài viết mới",
+    "taggedStatus": "đã tag bạn trong một bài viết",
+    "all": "Tất cả",
+    "unread": "Chưa đọc",
+    "read": "Đã đọc"
   },
   "languageSetting": {
     "title": "Cài đặt ngôn ngữ",

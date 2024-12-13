@@ -171,7 +171,15 @@
     "suggest": "Suggest"
   },
   "notificationScreen": {
-    "title": "Notifications"
+    "title": "Notifications",
+    "likeStatus": "liked your post",
+    "commentStatus": "commented on your post",
+    "followStatus": "started following you",
+    "newPostStatus": "has a new post",
+    "taggedStatus": "tagged you in a post",
+    "all": "All",
+    "read": "Read",
+    "unread": "Unread"
   },
   "languageSetting": {
     "title": "Language Setting",

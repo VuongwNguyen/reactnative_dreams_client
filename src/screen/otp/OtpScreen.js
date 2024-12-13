@@ -1,21 +1,19 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {
-  Text,
-  View,
-  Alert,
-  ToastAndroid,
-} from 'react-native';
+import {Text, View, Alert, ToastAndroid} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import {OtpStyles} from '../../styles/otpstyle/OtpStyle';
 import {FormmikOtp} from './FormikForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {APISendOtpCode, apiVerifyCodeResetPW} from '../../store/api/AccountAPI';
+import {
+  APISendOtpCode,
+  APIVerifyAccount,
+  apiVerifyCodeResetPW,
+} from '../../store/api/AccountAPI';
 import {stackName} from '../../navigations/screens';
-
 import AppHeader from '../../components/Header';
-
+import AppButton from '../../components/Button';
 
 const OtpScreen = props => {
   const {navigation, route} = props;
@@ -27,6 +25,19 @@ const OtpScreen = props => {
   const useAppDispatch = () => useDispatch();
   const useAppSelector = useSelector;
   const dispatch = useAppDispatch();
+  const [time, setTime] = useState(60);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prev => {
+        if (prev === 0) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [time]);
 
   const handleCheckOutOTP = () => (values, actions) => {
     try {
@@ -62,7 +73,6 @@ const OtpScreen = props => {
 
   return (
     <View style={OtpStyles.container}>
-
       <AppHeader title={t('otpScreen.headerTextOtp')} />
       <View style={OtpStyles.spacingHeight} />
       <View style={OtpStyles.formContainer}>
@@ -89,8 +99,19 @@ const OtpScreen = props => {
         />
         <Text style={OtpStyles.textCodeSentResend}>
           {t('otpScreen.textCodeSentResendOtp')}{' '}
-          <Text style={OtpStyles.testTime}>00:50</Text>
+          <Text style={OtpStyles.testTime}>00:{time}</Text>
         </Text>
+        <AppButton
+          title={'gửi lại mã'}
+          onPress={() => {
+            dispatch(APIVerifyAccount({email}))
+              .unwrap()
+              .then(res => {
+                setTime(60);
+              });
+          }}
+          isDisable={time !== 0}
+        />
       </View>
     </View>
   );
