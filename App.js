@@ -13,6 +13,7 @@ import {Provider as ReduxProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Navigator, navigatorRef} from './src/navigations/Navigator';
 import {persistor, store} from './src/store';
+import AlertDialog, {alertRef} from './src/components/dialog/AlertDialog';
 
 export default function App() {
   React.useEffect(() => {
@@ -46,6 +47,7 @@ export default function App() {
           </GestureHandlerRootView>
         </SafeAreaProvider>
       </PersistGate>
+      <AlertDialog ref={alertRef} />
     </ReduxProvider>
   );
 }

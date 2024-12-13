@@ -22,6 +22,7 @@ import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const FormikForm = ({setGithub}) => {
   const navigation = useNavigation();
@@ -85,12 +86,48 @@ const FormikForm = ({setGithub}) => {
       )
         .unwrap()
         .then(res => {
-          // resetForm();
-          // ToastAndroid.show('Login success');
-          // ToastAndroid.show('Login success');
+          if (res) {
+            resetForm();
+            ToastAndroid.show('Đăng nhập thành công', 300);
+          }
         })
         .catch(err => {
-          // ToastAndroid.show(err.message, ToastAndroid.SHORT);
+          ToastAndroid.show('Đăng nhập thất bại', 300);
+          if (err.message === 'User has been suspended') {
+            alertRef.current.alert(
+              'Đăng nhập thất bại',
+              'Tài khoản đã bị khoá',
+              {
+                resolve: {
+                  text: 'OK',
+                },
+              },
+            );
+          } else if (err.message === 'Username or password is incorrect') {
+            alertRef.current.alert(
+              'Đăng nhập thất bại',
+              'Sai tên đăng nhập hoặc mật khẩu',
+              {
+                resolve: {
+                  text: 'OK',
+                },
+              },
+            );
+          } else if (err.message === 'User is not verified') {
+            alertRef.current.alert(
+              'Đăng nhập thất bại',
+              'Tài khoản chưa được xác thực',
+              {
+                resolve: {
+                  text: 'Đi đến xác thực',
+                  onPress: () => {}, // làm đây nè :))
+                },
+                cancel: {
+                  text: 'Hủy',
+                },
+              },
+            );
+          }
         });
     },
   );
