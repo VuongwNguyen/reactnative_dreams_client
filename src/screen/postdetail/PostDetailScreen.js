@@ -34,14 +34,23 @@ const PostDetailScreen = props => {
   const [replyId, setReplyId] = useState(null);
   const [commentFocus, setCommentFocus] = useState(null);
   const {userBasicInfData} = useSelector(state => state.userBasicInf);
+  const [isPostValid, setIsPostValid] = useState(true);
 
   useEffect(() => {
-    dispatch(APIGetPostDetail(post_id))
-      .unwrap()
-      .then(res => {
+    const fetchData = async () => {
+      try {
+        const res = await dispatch(APIGetPostDetail(post_id)).unwrap();
         setList(res.data?.comments?.list);
+        console.log('success');
+      } catch (error) {
+        // console.error('Error fetching data:', error);
+        setIsPostValid(false);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleCancelReply = () => {
@@ -108,7 +117,7 @@ const PostDetailScreen = props => {
       ) : (
         <>
           <AppHeader title={t('postDetailScreen.post')} />
-          {!!currentPostDetail ? (
+          {isPostValid ? (
             <>
               <FlatList
                 style={{flex: 1}}
@@ -182,10 +191,8 @@ const PostDetailScreen = props => {
             </>
           ) : (
             <View style={postDetailStyle.notFoundContainer}>
-
-            <Text style={postDetailStyle.notFound}>Post not found</Text>
+              <Text style={postDetailStyle.notFound}>Post not found</Text>
             </View>
-
           )}
         </>
       )}

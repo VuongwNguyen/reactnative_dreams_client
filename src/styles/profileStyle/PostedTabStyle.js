@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native';
 import {Typography} from '../app/Typographys';
+import { Fonts } from '../app/Fonts';
 export const PostedTabStyle = StyleSheet.create({
+  placeholder: {
+    margin: 'auto',
+    fontFamily: Fonts.roboto.regular,
+    fontSize: 18,
+    color: 'black',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
