@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   BackHandler,
   Dimensions,
   FlatList,
@@ -25,6 +26,8 @@ import throttle from '../../utils/throttle';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AxiosInstance from '../../configs/axiosInstance';
 import {useCallContext} from '../../contexts/CallContext';
+import {navigatorRef} from '../../navigations/Navigator';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const {width} = Dimensions.get('window');
 
@@ -32,7 +35,6 @@ const MessageScreen = props => {
   const {isGroup, participant, roomId} = props.route.params;
   const [isOnline, setIsOnline] = useState(false);
   const [mess, setMess] = useState('');
-  const [showMembers, setShowMembers] = useState(false);
   const [images, setImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState(false);
   const [replied, setReplied] = useState(null);
@@ -107,6 +109,8 @@ const MessageScreen = props => {
   useEffect(() => {
     if (!socket) return;
 
+    const userId = parseJwt(token.accessToken)?.user_id;
+
     socket.on('message', message => {
       dispatch(newMessage(message));
     });
@@ -135,11 +139,49 @@ const MessageScreen = props => {
       });
     });
 
+    socket.on('remove-member', (roomId, memberId) => {
+      if (memberId === userId && room._id === roomId) {
+        alertRef.current.alert(
+          'Thông báo',
+          'Bạn đã bị xóa khỏi nhóm chat này',
+          {
+            resolve: {
+              text: 'Thoát',
+              onPress: () => {
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                  dispatch(reset());
+                }
+              },
+            },
+          },
+        );
+      }
+    });
+
+    socket.on('delete-room', roomId => {
+      if (roomId === room._id) {
+        if (userId !== room.host) {
+          alertRef.current.alert('Thông báo', 'Nhóm này đã bị giải tán', {
+            resolve: {
+              text: 'Thoát',
+              onPress: () => {
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                }
+                dispatch(reset());
+              },
+            },
+          });
+        }
+      }
+    });
+
     return () => {
       socket.off('message');
       socket.off('participant-status');
     };
-  }, [socket]);
+  }, [socket, token, room]);
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -302,7 +344,7 @@ const MessageScreen = props => {
             </Text>
             {!isGroup && (
               <Text style={[styles.status, isOnline && styles.online]}>
-                {!isOnline ? 'Offline' : 'Active now'}
+                {!isOnline ? 'Không trực tuyến' : 'Trực tuyến'}
               </Text>
             )}
           </View>
@@ -315,6 +357,12 @@ const MessageScreen = props => {
           <TouchableOpacity onPress={createVideoCall}>
             <Image source={Assets.icons.video} style={styles.icon} />
           </TouchableOpacity>
+          {isGroup && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate(stackName.settingGroup)}>
+              <Image source={Assets.icons.edit} style={styles.icon} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -390,15 +438,6 @@ const MessageScreen = props => {
           )}
         </View>
       </View>
-
-      {/* show members */}
-      {showMembers && (
-        <View style={styles.fill}>
-          <TouchableOpacity onPress={() => setShowMembers(false)}>
-            <Text>Đóng</Text>
-          </TouchableOpacity>
-        </View>
-      )}
 
       {/* preview images */}
       {images.length > 0 && (

@@ -14,6 +14,7 @@ import {stackName} from '../../navigations/screens';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteMessages, fetchListRooms} from '../../store/api/ChatAPI';
 import dayjs from 'dayjs';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const TabChatScreen = () => {
   const navigation = useNavigation();
@@ -36,23 +37,23 @@ const TabChatScreen = () => {
             })
           }
           onLongPress={() => {
-            Alert.alert(
+            alertRef.current.alert(
               `Xóa đoạn chat với ${item.name}`,
               'Các tin nhắn cũ sẽ không còn được hiển thị lại',
-              [
-                {
-                  text: 'Hủy',
-                  style: 'cancel',
-                },
-                {
+              {
+                resolve: {
                   text: 'Đồng ý',
-                  onPress: () =>
+                  onPress: () => {
                     dispatch(deleteMessages(item._id))
                       .unwrap()
                       .then(() => ToastAndroid.show('Xóa thành công', 300))
-                      .catch(() => ToastAndroid.show('Xóa thất bại', 300)),
+                      .catch(() => ToastAndroid.show('Xóa thất bại', 300));
+                  },
                 },
-              ],
+                reject: {
+                  text: 'Hủy',
+                },
+              },
             );
           }}>
           <Chat
@@ -103,7 +104,7 @@ const TabChatScreen = () => {
           />
         ) : (
           <View style={styles.center}>
-            <Text>Chat room is empty</Text>
+            <Text>Đoạn chat trống</Text>
           </View>
         )}
       </View>
