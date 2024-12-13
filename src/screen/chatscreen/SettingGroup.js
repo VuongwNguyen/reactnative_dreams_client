@@ -18,6 +18,7 @@ import {useSelector} from 'react-redux';
 import {parseJwt} from '../../utils/token';
 import AxiosInstance from '../../configs/axiosInstance';
 import {stackName} from '../../navigations/screens';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const {width} = Dimensions.get('window');
 
@@ -111,19 +112,17 @@ const SettingGroup = () => {
                   onDelete={() => {
                     const isDeleteRoom = room.members.length <= 3;
 
-                    Alert.alert(
+                    alertRef.current.alert(
                       `Xóa thành viên`,
                       isDeleteRoom
                         ? 'Nhóm chỉ còn dưới 3 thành viên, bạn có muốn xóa nhóm ?'
                         : `Bạn có chắc muốn xóa ${item.fullname} khỏi nhóm?`,
-                      [
-                        {
-                          text: 'Không',
-                          style: 'cancel',
+                      {
+                        reject: {
+                          text: 'Hủy',
                         },
-                        {
-                          text: `Có`,
-                          style: 'default',
+                        resolve: {
+                          text: 'Đồng ý',
                           onPress: () => {
                             if (isDeleteRoom) {
                               AxiosInstance()
@@ -161,7 +160,7 @@ const SettingGroup = () => {
                             }
                           },
                         },
-                      ],
+                      },
                     );
                   }}
                 />
@@ -190,16 +189,11 @@ const SettingGroup = () => {
           <TouchableOpacity
             style={styles.btn}
             onPress={() => {
-              Alert.alert(
+              alertRef.current.alert(
                 'Cảnh báo',
                 'Bạn có chắc chắn muốn giải tán nhóm này.',
-                [
-                  {
-                    style: 'cancel',
-                    text: 'Hủy',
-                  },
-                  {
-                    style: 'default',
+                {
+                  resolve: {
                     text: 'Đồng ý',
                     onPress: () => {
                       AxiosInstance()
@@ -218,7 +212,10 @@ const SettingGroup = () => {
                         );
                     },
                   },
-                ],
+                  reject: {
+                    text: 'Hủy',
+                  },
+                },
               );
             }}>
             <Text style={styles.textBtn}>Xóa nhóm</Text>

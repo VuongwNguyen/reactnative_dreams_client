@@ -20,7 +20,14 @@ async function onMessageReceived(message) {
   const {type = null} = message?.data;
 
   if (type === 'message') {
-    const {chat, name, main_message, unique_id, info} = message?.data;
+    const {
+      chat,
+      name,
+      main_message,
+      unique_id,
+      info,
+      avatar = null,
+    } = message?.data;
 
     const messages = JSON.parse(chat);
     const informations = JSON.parse(info);
@@ -50,6 +57,9 @@ async function onMessageReceived(message) {
       },
       android: {
         channelId,
+        smallIcon: 'ic_notification',
+        color: '#ffff00',
+        largeIcon: avatar || undefined,
         style: {
           type: AndroidStyle.INBOX,
           lines: messages
