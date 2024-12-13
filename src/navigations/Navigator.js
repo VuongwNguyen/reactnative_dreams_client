@@ -209,7 +209,6 @@ export function Navigator() {
         </CallProvider>
       </StreamProvider>
       <LogoutDialog ref={logoutRef} />
-      <AlertDialog ref={alertRef} />
     </SocketProvider>
   );
 }

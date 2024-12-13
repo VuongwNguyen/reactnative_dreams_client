@@ -2,7 +2,7 @@ import AxiosInstance from '../configs/axiosInstance';
 
 function parseJwt(token) {
   // Tách JWT thành các phần bởi dấu '.'
-  const base64Url = token.split('.')[1];
+  const base64Url = token?.split('.')[1];
 
   // Giải mã từ base64Url sang chuỗi JSON
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

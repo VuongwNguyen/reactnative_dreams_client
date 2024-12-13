@@ -50,7 +50,10 @@ const AlertDialog = (_, ref) => {
         }
 
         if (resolve != null) {
-          setResolveAction({text: resolve.text, onPress: resolve.onPress});
+          setResolveAction({
+            text: resolve.text,
+            onPress: resolve.onPress || onReset,
+          });
         }
 
         setShow(true);
