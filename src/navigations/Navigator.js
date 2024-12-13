@@ -1,4 +1,4 @@
-import notifee from '@notifee/react-native';
+import notifee, {EventType} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createRef, useEffect} from 'react';
@@ -13,6 +13,7 @@ import {parseJwt} from '../utils/token';
 import StreamProvider from '../contexts/StreamContext';
 import {CallProvider} from '../contexts/CallContext';
 import {APIGetUserBasicInf} from '../store/api/AccountAPI';
+import AlertDialog, {alertRef} from '../components/dialog/AlertDialog';
 
 const Stack = createStackNavigator();
 
@@ -208,6 +209,7 @@ export function Navigator() {
         </CallProvider>
       </StreamProvider>
       <LogoutDialog ref={logoutRef} />
+      <AlertDialog ref={alertRef} />
     </SocketProvider>
   );
 }

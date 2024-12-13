@@ -27,6 +27,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AxiosInstance from '../../configs/axiosInstance';
 import {useCallContext} from '../../contexts/CallContext';
 import {navigatorRef} from '../../navigations/Navigator';
+import {alertRef} from '../../components/dialog/AlertDialog';
 
 const {width} = Dimensions.get('window');
 
@@ -140,36 +141,38 @@ const MessageScreen = props => {
 
     socket.on('remove-member', (roomId, memberId) => {
       if (memberId === userId && room._id === roomId) {
-        Alert.alert('Thông báo', 'Bạn đã bị xóa khỏi nhóm chat này', [
+        alertRef.current.alert(
+          'Thông báo',
+          'Bạn đã bị xóa khỏi nhóm chat này',
           {
-            text: 'Thoát',
-            onPress: () => {
-              if (navigation.canGoBack()) {
-                navigation.goBack();
-                dispatch(reset());
-              }
+            resolve: {
+              text: 'Thoát',
+              onPress: () => {
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                  dispatch(reset());
+                }
+              },
             },
-            style: 'default',
           },
-        ]);
+        );
       }
     });
 
     socket.on('delete-room', roomId => {
       if (roomId === room._id) {
         if (userId !== room.host) {
-          Alert.alert('Thông báo', 'Nhóm này đã bị giải tán', [
-            {
+          alertRef.current.alert('Thông báo', 'Nhóm này đã bị giải tán', {
+            resolve: {
+              text: 'Thoát',
               onPress: () => {
                 if (navigation.canGoBack()) {
                   navigation.goBack();
                 }
                 dispatch(reset());
               },
-              text: 'Thoát',
-              style: 'default',
             },
-          ]);
+          });
         }
       }
     });
