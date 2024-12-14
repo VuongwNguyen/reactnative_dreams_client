@@ -13,7 +13,7 @@ import AxiosInstance from '../configs/axiosInstance';
 import {useDayjs} from '../configs/hooks/useDayjs';
 import {useSelector} from 'react-redux';
 
-const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
+const INITIAL_REPLIES = 1; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
 const CommentItem = memo(props => {
@@ -86,7 +86,7 @@ const CommentItem = memo(props => {
       setChildComments(res.data.list);
     };
     fetchChildComment();
-  }, [comment]);
+  }, [comment,childCommentData]);
 
   return (
     <TouchableOpacity
