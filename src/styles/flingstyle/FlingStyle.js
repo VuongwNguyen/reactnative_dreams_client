@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '../app/Colors';
-import {Spacings} from '../app/Spacings';
-import {Fonts} from '../app/Fonts';
+import { StyleSheet } from 'react-native';
+import { Colors } from '../app/Colors';
+import { Spacings } from '../app/Spacings';
+import { Fonts } from '../app/Fonts';
 export const FlingStyle = StyleSheet.create({
   placeholder: {
     margin: 'auto',
@@ -14,7 +14,8 @@ export const FlingStyle = StyleSheet.create({
     backgroundColor: 'white',
   },
   bodyContainer: {
-    padding: Spacings.pd,
+    paddingStart: Spacings.pd,
+    paddingEnd: Spacings.pd,
   },
   avatar: {
     width: 50,
@@ -37,6 +38,7 @@ export const FlingStyle = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
+    width: '50%'
   },
   followed: {
     height: 34,
