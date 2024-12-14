@@ -7,22 +7,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {FlingStyle} from '../../styles/flingstyle/FlingStyle';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlingStyle } from '../../styles/flingstyle/FlingStyle';
 import Header from '../../components/Header';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   APIGetFollowers,
   APIGetFollowing,
   APIToggleFollow,
 } from '../../store/api/FollowAPI';
-import {current} from '@reduxjs/toolkit';
-import {id} from 'rn-emoji-keyboard';
-import {stackName} from '../../navigations/screens';
+import { current } from '@reduxjs/toolkit';
+import { id } from 'rn-emoji-keyboard';
+import { stackName } from '../../navigations/screens';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const FlingScreen = props => {
-  const {navigation, route} = props;
+  const { navigation, route } = props;
   const params = route.params;
   const type = params?.type;
   const user_id_view = params?.user_id_view;
@@ -30,6 +30,7 @@ const FlingScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState({})
   const dispatch = useDispatch();
 
   const fetchData = async () => {
@@ -37,15 +38,21 @@ const FlingScreen = props => {
       setIsLoading(true);
       if (type === 'Followers') {
         const result = await dispatch(
-          APIGetFollowers({user_id_view, page}),
+          APIGetFollowers({ user_id_view, page }),
         ).unwrap();
-        setData(result.list);
+        setTotalPages(result.page)
+        setData(prevData =>
+          page === 1 ? result.list : [...prevData, ...result.list],
+        );
       }
       if (type === 'Following') {
         const result = await dispatch(
-          APIGetFollowing({user_id_view, page}),
+          APIGetFollowing({ user_id_view, page }),
         ).unwrap();
-        setData(result.list);
+        setTotalPages(result.page)
+        setData(prevData =>
+          page === 1 ? result.list : [...prevData, ...result.list],
+        );
       }
     } catch (error) {
       setIsLoading(false);
@@ -65,13 +72,24 @@ const FlingScreen = props => {
     fetchData();
   };
 
-  const RenderItems = ({item}) => {
+  const onEndReached = useCallback(() => {
+    if (page < totalPages.maxPage && !isLoading) {
+      setPage(prevPage => prevPage + 1);
+    }
+  }, [page, isLoading]);
+  const renderLoader = () => {
+    return isLoading ? (
+      <ActivityIndicator size="large" color={Colors.primary} />
+    ) : null;
+  };
+
+  const RenderItems = ({ item }) => {
     const id_user = item.follower?._id || item.user?._id;
     const [isFollowing, setIsFollowing] = useState(item.isFollowing);
 
     const handleFollow = async () => {
       try {
-        const body = {following: id_user};
+        const body = { following: id_user };
         const result = await dispatch(APIToggleFollow(body)).unwrap();
         // console.log(result);
 
@@ -93,7 +111,7 @@ const FlingScreen = props => {
           }}>
           <Image
             style={FlingStyle.avatar}
-            source={{uri: item.follower?.avatar || item.user.avatar}}
+            source={{ uri: item.follower?.avatar || item.user.avatar }}
           />
           <Text style={FlingStyle.name}>
             {item.follower?.fullname || item.user?.fullname}
@@ -118,25 +136,25 @@ const FlingScreen = props => {
 
   return (
     <View style={FlingStyle.container}>
-      <Header title={type} />
-      {isLoading ? (
-        <ActivityIndicator
-          size="large"
-          color={Colors.primary}
-          style={{margin: 'auto'}}
-        />
-      ) : data.length > 0 ? (
+      <View style={{ height: 50 }}>
+        <Header title={type} />
+      </View>
+      {data.length > 0 ? (
         <FlatList
           data={data}
-          renderItem={({item}) => <RenderItems item={item} />}
+          renderItem={({ item }) => <RenderItems item={item} />}
           keyExtractor={(item, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           style={FlingStyle.bodyContainer}
+          ListFooterComponent={renderLoader}
         />
       ) : (
-        <Text style={FlingStyle.placeholder}>Danh sách trống!</Text>
+        !isLoading && <Text style={FlingStyle.placeholder}>Danh sách trống!</Text>
       )}
     </View>
   );
