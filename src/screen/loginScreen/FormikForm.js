@@ -16,7 +16,11 @@ import Input from '../../components/Input';
 import {useFormikH} from '../../configs/hooks/useFormikH';
 import {loginSchema} from '../../configs/validateSchema/LoginSchema';
 import {stackName} from '../../navigations/screens';
-import {APIAuthThirdPartner, APILogin} from '../../store/api/AccountAPI';
+import {
+  APIAuthThirdPartner,
+  APILogin,
+  APIVerifyAccount,
+} from '../../store/api/AccountAPI';
 import {Assets, Typography} from '../../styles';
 import {ButtonStyle} from '../../styles/components/button/ButtonStyle';
 import {LoginStyle} from '../../styles/loginStyle/LoginStyle';
@@ -120,7 +124,12 @@ const FormikForm = ({setGithub}) => {
               {
                 resolve: {
                   text: 'Đi đến xác thực',
-                  onPress: () => {}, // làm đây nè :))
+                  onPress: () => {
+                    dispatch(APIVerifyAccount({email: val.emailOrPhoneNumber}));
+                    navigation.navigate(stackName.otp.name, {
+                      email: val.emailOrPhoneNumber,
+                    });
+                  },
                 },
                 cancel: {
                   text: 'Hủy',

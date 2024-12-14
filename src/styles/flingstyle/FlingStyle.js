@@ -3,6 +3,12 @@ import {Colors} from '../app/Colors';
 import {Spacings} from '../app/Spacings';
 import {Fonts} from '../app/Fonts';
 export const FlingStyle = StyleSheet.create({
+  placeholder: {
+    margin: 'auto',
+    fontFamily: Fonts.roboto.regular,
+    fontSize: 18,
+    color: 'black',
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',

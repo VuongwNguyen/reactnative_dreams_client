@@ -22,7 +22,9 @@ const PostedTab = props => {
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const postedPosts = useSelector(state => state.post.posted.data);
+  // console.log(postedPosts.length);
 
   const fetchPosts = () => {
     dispatch(setListLoading({listKey: 'posted', loading: true}));
@@ -43,6 +45,7 @@ const PostedTab = props => {
         ToastAndroid.show(err.message, ToastAndroid.SHORT);
       })
       .finally(() => {
+        setFirstRender(false);
         setIsLoading(false);
         setRefreshing(false);
       });
@@ -74,7 +77,13 @@ const PostedTab = props => {
 
   return (
     <View style={PostedTabStyle.container}>
-      {postedPosts.lengh > 0 ? (
+      {firstRender ? (
+        <ActivityIndicator
+          size="large"
+          color={Colors.primary}
+          style={{margin: 'auto'}}
+        />
+      ) : postedPosts.length > 0 ? (
         <Animated.FlatList
           onScroll={scrollHandler}
           data={postedPosts}
@@ -90,9 +99,7 @@ const PostedTab = props => {
           ListFooterComponent={renderLoader}
         />
       ) : (
-        <Text style={PostedTabStyle.placeholder}>
-          Dòng thời gian trống!
-        </Text>
+        <Text style={PostedTabStyle.placeholder}>Dòng thời gian trống!</Text>
       )}
     </View>
   );
