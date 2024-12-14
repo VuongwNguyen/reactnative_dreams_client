@@ -41,7 +41,6 @@ const PostDetailScreen = props => {
       try {
         const res = await dispatch(APIGetPostDetail(post_id)).unwrap();
         setList(res.data?.comments?.list);
-        console.log('success');
       } catch (error) {
         // console.error('Error fetching data:', error);
         setIsPostValid(false);
