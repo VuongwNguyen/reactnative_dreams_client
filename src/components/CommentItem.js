@@ -13,10 +13,10 @@ import AxiosInstance from '../configs/axiosInstance';
 import {useDayjs} from '../configs/hooks/useDayjs';
 import {useSelector} from 'react-redux';
 
-const INITIAL_REPLIES = 1; // Hiển thị 1 reply ban đầu
+const INITIAL_REPLIES = 0; // Hiển thị 1 reply ban đầu
 const INCREMENT_REPLIES = 9;
 
-const CommentItem = memo(props => {
+const CommentItem = props => {
   const {
     comment,
     level = 0,
@@ -28,7 +28,7 @@ const CommentItem = memo(props => {
   const {t} = useTranslation();
   const [visibleReplies, setVisibleReplies] = useState(INITIAL_REPLIES);
   const [currentItem, setCurrentItem] = useState(comment);
-  const [childComments, setChildComments] = useState([]);
+  const [childComments, setChildComments] = useState(comment.childs || []);
   const childCommentData = useSelector(state => state.childComment.data);
 
   const handleRefInput = () => {
@@ -86,13 +86,13 @@ const CommentItem = memo(props => {
       setChildComments(res.data.list);
     };
     fetchChildComment();
-  }, [comment,childCommentData]);
+  }, [comment]);
 
   return (
     <TouchableOpacity
       key={comment._id}
       onLongPress={() => setCommentFocus(comment._id)}
-      style={[styles.container, {marginLeft: level * 10}]}>
+      style={[styles.container, {marginLeft: (level > 2 ? 0 : level) * 20}]}>
       <View style={styles.commentRow}>
         <Image
           style={styles.avatar}
@@ -160,44 +160,46 @@ const CommentItem = memo(props => {
               showsVerticalScrollIndicator={false}
               style={styles.replyList}
             />
-            {childComments.length > visibleReplies ? (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setVisibleReplies(childComments.length)}>
-                <View
-                  style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-                  <View
-                    style={{
-                      height: 1,
-                      width: 40,
-                      borderColor: '#6c757d',
-                      borderWidth: 0.5,
-                    }}
-                  />
-                  <Text style={styles.showMoreText}>
-                    {t('postDetailScreen.view')}{' '}
-                    {Math.min(
-                      childComments.length - visibleReplies,
-                      INCREMENT_REPLIES,
-                    )}{' '}
-                    {t('postDetailScreen.moreReplies')}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <>
+            { level < 2 &&
+              (childComments.length > visibleReplies ? (
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => setVisibleReplies(0)}>
-                  <View style={[styles.commentRow, {alignItems: 'center'}]}>
-                    <View style={styles.lineShow} />
+                  onPress={() => setVisibleReplies(childComments.length)}>
+                  <View
+                    style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+                    <View
+                      style={{
+                        height: 1,
+                        width: 40,
+                        borderColor: '#6c757d',
+                        borderWidth: 0.5,
+                      }}
+                    />
                     <Text style={styles.showMoreText}>
-                      {t('postDetailScreen.hideReplies')}
+                      {t('postDetailScreen.view')}{' '}
+                      {Math.min(
+                        childComments.length - visibleReplies,
+                        INCREMENT_REPLIES,
+                      )}{' '}
+                      {t('postDetailScreen.moreReplies')}
                     </Text>
                   </View>
                 </TouchableOpacity>
-              </>
-            )}
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setVisibleReplies(0)}>
+                    <View style={[styles.commentRow, {alignItems: 'center'}]}>
+                      <View style={styles.lineShow} />
+                      <Text style={styles.showMoreText}>
+                        {t('postDetailScreen.hideReplies')}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ))
+            }
           </>
         )}
       </>
@@ -223,7 +225,7 @@ const CommentItem = memo(props => {
       )}
     </TouchableOpacity>
   );
-});
+};
 
 export default CommentItem;
 
@@ -277,7 +279,6 @@ const styles = StyleSheet.create({
   },
   replyList: {
     flex: 1,
-    marginLeft: 10,
     marginTop: 10,
   },
   button: {
