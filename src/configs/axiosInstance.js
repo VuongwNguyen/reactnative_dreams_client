@@ -3,7 +3,7 @@ import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
 
-const BASEURL = 'https://a433-115-77-22-38.ngrok-free.app/api';
+const BASEURL = 'https://dreams-server-bmd-4sx0.onrender.com/api';
 
 let isRefreshing = false;
 let queue = [];
