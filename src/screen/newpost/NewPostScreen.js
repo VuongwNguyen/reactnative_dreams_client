@@ -23,7 +23,6 @@ import {stackName} from '../../navigations/screens';
 import {APICreatePost, APIEditPost} from '../../store/api/PostAPI';
 import {setIds} from '../../store/slices/IdsTagUserSlice';
 import TagUserMention from './TagUserMention';
-import {setPostCreated} from '../../store/slices';
 
 const NewPostScreen = props => {
   const {navigation} = props;
@@ -242,7 +241,6 @@ const NewPostScreen = props => {
         .then(res => {
           setPostStatus('successfully');
           navigation.navigate(stackName.bottomTab.name);
-          dispatch(setPostCreated(true));
           dispatch(setIds([]));
           ToastAndroid.show('Đăng bài thành công!', ToastAndroid.SHORT);
         })

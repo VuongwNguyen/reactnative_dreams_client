@@ -5,6 +5,7 @@ import {
   APIGetPostDetail,
   APIGetTrendingPost,
   APILikePost,
+  APICreatePost,
 } from '../api/PostAPI';
 
 export const postSlice = createSlice({
@@ -23,7 +24,6 @@ export const postSlice = createSlice({
       loading: true,
     },
     currentPostDetail: {},
-    isPostCreated: false,
     postLike: {},
   },
   reducers: {
@@ -51,12 +51,7 @@ export const postSlice = createSlice({
         state.currentPostDetail.commentCount = commentCount;
       }
     },
-    setPostCreated: state => {
-      state.isPostCreated = true;
-    },
-    resetPostCreated: state => {
-      state.isPostCreated = false;
-    },
+
     setToggleLike: (state, action) => {
       const {listKey, id} = action.payload;
       if (state[listKey]) {
@@ -98,6 +93,10 @@ export const postSlice = createSlice({
       })
       .addCase(APIGetPostDetail.fulfilled, (state, action) => {
         state.currentPostDetail = action.payload.data.post;
+      })
+      .addCase(APICreatePost.fulfilled, (state, action) => {
+        if (action?.payload?.childrenPost) return;
+        state.trending.data = [action.payload, ...state.trending.data];
       });
   },
 });

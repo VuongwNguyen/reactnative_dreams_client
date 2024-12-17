@@ -9,11 +9,7 @@ import {
   APISetPostViewd,
 } from '../../store/api/PostAPI';
 import {Colors} from '../../styles';
-import {
-  setListLoading,
-  setListData,
-  resetPostCreated,
-} from '../../store/slices';
+import {setListLoading, setListData} from '../../store/slices';
 
 const TrendingPostTab = props => {
   const {scrollHandler} = props;
@@ -74,7 +70,6 @@ const TrendingPostTab = props => {
       flatListRef.current.scrollToOffset({animated: true, offset: 0});
       setCurrentPage(1);
       fetchPosts();
-      dispatch(resetPostCreated());
     }
   }, [isPostCreated]);
 
