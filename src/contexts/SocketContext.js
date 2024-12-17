@@ -36,6 +36,7 @@ export const SocketProvider = ({children}) => {
 
   useEffect(() => {
     if (!socket) return;
+    if (!token.accessToken) return;
 
     const userId = parseJwt(token.accessToken)?.user_id;
 
