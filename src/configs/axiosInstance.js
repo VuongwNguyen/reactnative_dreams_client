@@ -2,8 +2,13 @@ import axios from 'axios';
 import {store} from '../store';
 import {updateTokens} from '../store/slices';
 import {logoutRef} from '../components/LogoutDialog';
+import {logout as logoutAction} from '../store/slices/AuthSlice';
+import {alertRef} from '../components/dialog/AlertDialog';
+import messaging from '@react-native-firebase/messaging';
+import {parseJwt} from '../utils/token';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASEURL = 'https://dreams-server-bmd-4sx0.onrender.com/api';
+const BASEURL = 'https://a433-115-77-22-38.ngrok-free.app/api';
 
 let isRefreshing = false;
 let queue = [];
@@ -58,6 +63,30 @@ const AxiosInstance = (contentType = 'application/json') => {
     async err => {
       if (!err?.response || !err?.response?.data)
         return await Promise.reject(err);
+
+      if (err?.response?.status === 403) {
+        alertRef.current?.alert(
+          'Thông báo',
+          'Bạn đã bị khóa tài khoản, vui lòng liên hệ với quản trị viên',
+          {
+            resolve: {
+              text: 'Đồng ý',
+              onPress: () => {
+                const {token} = store.getState().account;
+                store.dispatch(logoutAction());
+                messaging().deleteToken();
+                if (token?.accessToken) {
+                  AxiosInstance().post('/account/revoke-fcm', {
+                    user_id: parseJwt(token.accessToken)?.user_id,
+                  });
+                }
+
+                AsyncStorage.removeItem('credentials');
+              },
+            },
+          },
+        );
+      }
 
       const refreshToken = store.getState().account.token.refreshToken;
       const originRequest = err.config;
