@@ -98,15 +98,15 @@ const FormikForm = ({setGithub}) => {
         .catch(err => {
           ToastAndroid.show('Đăng nhập thất bại', 300);
           if (err.message === 'User has been suspended') {
-            alertRef.current.alert(
-              'Đăng nhập thất bại',
-              'Tài khoản đã bị khoá',
-              {
-                resolve: {
-                  text: 'OK',
-                },
-              },
-            );
+            // alertRef.current.alert(
+            //   'Đăng nhập thất bại',
+            //   'Tài khoản đã bị khoá',
+            //   {
+            //     resolve: {
+            //       text: 'OK',
+            //     },
+            //   },
+            // );
           } else if (err.message === 'Username or password is incorrect') {
             alertRef.current.alert(
               'Đăng nhập thất bại',
