@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  dreams-client:
+    build: .
+    container_name: dreams-client
+    ports:
+      - "8081:8081" # Metro bundler
+      - "9090:9090" # Debug port
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - API_URL=https://dreams-server-bmd-4sx0.onrender.com
+      - GOOGLE_WEB_CLIENT_ID=650950443769-ogc8o7mqb2viqkrct0ls5vqtt4ajei9n.apps.googleusercontent.com
+    command: npm start

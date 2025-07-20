@@ -8,7 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import {parseJwt} from '../utils/token';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASEURL = 'https://a433-115-77-22-38.ngrok-free.app/api';
+const BASEURL = 'https://dreams-server-bmd-4sx0.onrender.com/api';
 
 let isRefreshing = false;
 let queue = [];

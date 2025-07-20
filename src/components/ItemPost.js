@@ -308,7 +308,7 @@ export default React.memo(
           <TouchableOpacity style={itemPostStyle.itemInteract}>
             <Image
               source={Assets.icons.comment}
-              style={itemPostStyle.image}></Image>
+              style={itemPostStyle.image}/>
             <Text style={itemPostStyle.interactLabel}>
               {item?.commentCount || 0}
             </Text>
